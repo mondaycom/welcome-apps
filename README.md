@@ -1,2 +1,3 @@
 # welcome-apps
-A collection of hello word apps for monday.com apps
+This repository holds various hello word type of apps, from different abilities to different framworks
+
