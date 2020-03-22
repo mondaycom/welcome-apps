@@ -20,7 +20,7 @@ class App extends React.Component {
     const maxUsers = settings.maxUsers || 500;
     const query = `query { users(kind: non_guests, limit: ${maxUsers} ) { id, name, photo_thumb, title } }`;
     monday.api(query).then(res => {
-      const users = res && res.data && res.data.users;
+      const users = (res && res.data && res.data.users) || [];
       this.setState({ users });
     });
   };
