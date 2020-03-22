@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <div>Hello {{ user.name }}</div>
-    <div>Your context: {{ context }}</div>
-    <div>Your settings: {{ settings }}</div>
+    <div>Your context: {{ JSON.stringify(context) }}</div>
+    <div>Your settings: {{ JSON.stringify(settings) }}</div>
   </div>
 </template>
 
