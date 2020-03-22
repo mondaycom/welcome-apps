@@ -1,1 +1,1 @@
-# Hello-world-vanilla-js
+# hello-world-vanilla-js
