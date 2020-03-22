@@ -16,7 +16,9 @@ class App extends React.Component {
   }
 
   fetchUsers = () => {
-    const query = `query { users(kind: non_guests) { id, name, photo_thumb, title } }`;
+    const { settings } = this.state;
+    const maxUsers = settings.maxUsers || 500;
+    const query = `query { users(kind: non_guests, limit: ${maxUsers} ) { id, name, photo_thumb, title } }`;
     monday.api(query).then(res => {
       const users = res && res.data && res.data.users;
       this.setState({ users });
@@ -24,11 +26,7 @@ class App extends React.Component {
   };
 
   getSettings = res => {
-    this.setState({ settings: res.data });
-  };
-
-  getContext = res => {
-    this.setState({ context: res.data });
+    this.setState({ settings: res.data }, this.fetchUsers);
   };
 
   render() {
