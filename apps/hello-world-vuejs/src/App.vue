@@ -1,25 +1,56 @@
 <template>
   <div id="app">
-    <h1>{{ msg }}</h1>
+    <div>Hello {{ user.name }}</div>
+    <div>Your context: {{ context }}</div>
+    <div>Your settings: {{ settings }}</div>
   </div>
 </template>
 
 <script>
+import mondaySdk from "monday-sdk-js";
+const monday = mondaySdk();
+
 export default {
   name: "app",
   data() {
     return {
-      msg: "Welcome to Your Vue.js App"
+      settings: "",
+      context: "",
+      user: ""
     };
+  },
+
+  created() {
+    monday.listen("settings", this.getSettings);
+    monday.listen("context", this.getContext);
+    this.fetchUserName();
+  },
+
+  methods: {
+    beforeCreate() {
+      this.fetchUserName();
+    },
+
+    getSettings: function(res) {
+      this.$set(this, "settings", res.data);
+    },
+
+    getContext: function(res) {
+      this.$set(this, "context", res.data);
+    },
+
+    fetchUserName: function() {
+      monday.api(`query { me { name } }`).then(res => {
+        this.$set(this, "user", res.data.me);
+      });
+    }
   }
 };
 </script>
 
 <style lang="scss">
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
   text-align: center;
-  color: #2c3e50;
   margin-top: 60px;
 }
 </style>

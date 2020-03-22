@@ -2,7 +2,8 @@
   "_from": "hello-world-vue",
   "bundleDependencies": false,
   "dependencies": {
-    "vue": "^2.5.11"
+    "vue": "^2.5.11",
+    "monday-sdk-js": "^0.0.9"
   },
   "deprecated": false,
   "description": "A Vue.js project",
