@@ -45,12 +45,12 @@ class App extends React.Component {
 
     return (
       <div className="monday-app">
-        <div>Exampe of executing monday actions on items using our sdk</div>
-        <ul className="board-items">
+        <div className="description">Exampe of executing monday actions on items using our sdk</div>
+        <div className="board-items">
           {board && board.items && board.items.map( (item, key) => (
-              <li key={key} onClick={this.openItemCard.bind(this, item.id)}>{item.name}</li>
+              <div key={key} onClick={this.openItemCard.bind(this, item.id)}>{item.name}</div>
             ))}
-        </ul>
+        </div>
       </div>
     );
   }
