@@ -14,11 +14,15 @@ body {
     margin:15px;
   }
 
-  .boards-list {
+  .items {
     margin:15px;
-  }
-
-  .add-item-form {
-    margin:15px;
+    
+    .item {
+      padding:10px;
+      display:inline-block;
+      margin:5px;
+      background-color: #e7e7e7; 
+      color: black;
+    }
   }
 }
