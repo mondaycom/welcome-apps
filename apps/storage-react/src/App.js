@@ -21,9 +21,7 @@ class App extends React.Component {
   saveNotes(e) {
     let notes = e.target.value;
     this.setState({ notes });
-    monday.storage.instance.setItem("notes", notes).then(() => {
-      console.log("Saved notes to storage");
-    });
+    monday.storage.instance.setItem("notes", notes);
   };
   
   render() {
