@@ -9,13 +9,31 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    monday
-      .api(`query { boards(limit:1) { name,id, items {name, id} }}`)
-      .then(this.getBoards);
+    monday.listen("context", this.getContext);
   }
 
-  getBoards = res => {
-    this.setState({ board: res.data.boards[0] });
+  getContext = res => {
+    this.setState({ context: res.data });
+
+    // normalize the data as it can be retrieved from board view or widget that
+    // supports multiple boards
+    let boardIds;
+    if (this.state.context.boardIds) {
+      boardIds = this.state.context.boardIds;
+    }
+    if (this.state.context.boardId) {
+      boardIds = [this.state.context.boardId];
+    }
+
+    this.getBoards(boardIds);
+  };
+
+  getBoards(boardIds) {
+    monday
+    .api(`query { boards(limit:1, ids: ${boardIds}) { name,id, items {name, id} }}`)
+    .then((res) => {
+      this.setState({ board: res.data.boards[0] });
+    });
   };
 
   openItemCard(itemId,boardId) {
