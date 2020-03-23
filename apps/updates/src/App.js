@@ -12,7 +12,6 @@ class App extends React.Component {
 
   componentDidMount() {
     monday.listen("settings", this.getSettings);
-    this.fetchUpdates();
   }
 
   fetchUpdates = () => {
