@@ -5,7 +5,14 @@ const monday = mondaySdk();
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { settings: {}, context: {}, boardIds: [], boards: [] };
+    this.state = {
+      settings: {},
+      context: {},
+      boardIds: [],
+      boards: [],
+      newItemName: "",
+      errors: null
+    };
   }
 
   componentDidMount() {
@@ -20,70 +27,117 @@ class App extends React.Component {
   getContext = res => {
     this.setState({ context: res.data });
 
-    // normalize the data as it can be retrieved from board view or widget that 
+    // normalize the data as it can be retrieved from board view or widget that
     // supports multiple boards
     let boardIds;
-    if(this.state.context.boardIds) {
+    if (this.state.context.boardIds) {
       boardIds = this.state.context.boardIds;
     }
-    if(this.state.context.boardId) {
+    if (this.state.context.boardId) {
       boardIds = [this.state.context.boardId];
     }
-    this.setState({ boardIds });
 
-    // get boards data
-    this.getBoards(boardIds);
+    this.setState({ boardIds });
   };
 
-  getBoards(boardIds) {
-    monday.api(`query {
+  getBoards() {
+    const { boardIds } = this.state;
+    if(boardIds.length <= 0) {
+      return;
+    }
+    
+    monday
+      .api(
+        `query {
       boards(ids: ${boardIds}) {
         id,
         name
 
         items {
-          name
+          name,
+          id
         }
       }
-    }`).then( (res) => {
-      this.setState({ boards: res.data.boards });
-    } );
+    }`
+      )
+      .then(res => {
+        this.setState({ boards: res.data.boards });
+      });
+  }
+
+  addNewItem = event => {
+    event.preventDefault();
+    this.createNewItem(this.state.newItemName, this.state.newItemBoard);
+  };
+
+  createNewItem(title, boardId) {
+    monday
+      .api(
+        `mutation {
+          create_item (board_id: ${boardId}, item_name: "${title}") {
+          name,
+          id
+          }
+          }`
+      )
+      .then(() => {
+        this.getBoards()
+      });
+  }
+
+  changedNewItemName = event => {
+    this.setState({ newItemName: event.target.value });
+  };
+
+  changedNewItemBoard = event => {
+    this.setState({ newItemBoard: event.target.value });
   };
 
   render() {
-    const { settings, context, boards, boardIds } = this.state;
+    const { boards } = this.state;
 
-    let boardOptions = boards.map((board) =>
-      <option value={board.id}>{board.name}</option>
-    );
+    this.getBoards();
+
+    let boardOptions = boards.map(board => (
+      <option value={board.id} key={`sb-${board.id}`}>
+        {board.name}
+      </option>
+    ));
 
     return (
       <div className="monday-app">
         <div>This is an example of how to retrieve and create board data</div>
-        <div>Your context: {JSON.stringify(context)}</div>
-        <div>Your settings: {JSON.stringify(settings)}</div>
-        <div>Your boardIds: {JSON.stringify(boardIds)}</div>
-        <div>Your boards: {JSON.stringify(boards)}</div>
+
         <div className="boards-list">
-          {boards && boards.map((board, key) =>
-              <ul className="board">
-                <li><h2>{board.name}</h2>
+          {boards &&
+            boards.map((board, key) => (
+              <ul className="board" key={`board-${board.id}`}>
+                <li>
+                  <h2>{board.name}</h2>
                   <ul className="items">
-                    {board.items && board.items.map((item, key) =>
-                        <li>{item.name}</li>
-                    )}
+                    {board.items &&
+                      board.items.map(item => (
+                        <li key={`item-${item.id}`}>{item.name}</li>
+                      ))}
                   </ul>
                 </li>
               </ul>
-          )}
+            ))}
         </div>
 
-        <form onSubmit={this.mySubmitHandler} className="add-item">
-          <input type="text" placeholder=""></input>
-          <select>
+        <form onSubmit={this.addNewItem} className="add-item">
+          <input
+            type="text"
+            placeholder=""
+            onChange={this.changedNewItemName}
+          ></input>
+          <select onChange={this.changedNewItemBoard}>
+            <option name="selected-board-id" id="empty-board">
+              select board
+            </option>
             {boardOptions}
           </select>
-          <button>Add new item</button>
+          <button type="submit">Add new item</button>
         </form>
       </div>
     );
