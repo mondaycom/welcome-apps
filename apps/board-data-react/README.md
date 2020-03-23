@@ -1,3 +1,11 @@
+# board-data-react
+example of how to create a monday app that reads and writes board data
+
+## Required permissions
+ - boards:read
+ - boards:write
+
+# Instructions
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
