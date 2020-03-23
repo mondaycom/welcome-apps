@@ -21,7 +21,7 @@ export class AppComponent {
 
   ngOnInit() {
     this.fetchUserName();
-    var self = this;
+    const self = this;
     this.monday.listen("settings", res => self.getSettings(res));
     this.monday.listen("context", res => self.getContext(res));
   }
