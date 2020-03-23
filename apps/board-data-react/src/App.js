@@ -88,50 +88,59 @@ class App extends React.Component {
     this.setState({ newItemBoard: event.target.value });
   };
 
-  render() {
-    const { boards } = this.state;
-
-    let boardOptions = boards.map(board => (
-      <option value={board.id} key={`sb-${board.id}`}>
+  renderBoardsOptions(boards) {
+    return boards.map((board, key) => (
+      <option value={board.id} key={key}>
         {board.name}
       </option>
     ));
+  }
 
+  renderAddNewItemForm() {
+    const { boards } = this.state;
+    let boardOptions = this.renderBoardsOptions(boards);
     return (
-      <div className="monday-app">
-        <div>This is an example of how to retrieve and create board data</div>
-
-        <div className="boards-list">
-          {boards &&
-            boards.map((board, key) => (
-              <ul className="board" key={`board-${board.id}`}>
-                <li>
-                  <h2>{board.name}</h2>
-                  <ul className="items">
-                    {board.items &&
-                      board.items.map(item => (
-                        <li key={`item-${item.id}`}>{item.name}</li>
-                      ))}
-                  </ul>
-                </li>
-              </ul>
-            ))}
-        </div>
-
-        <form onSubmit={this.addNewItem} className="add-item">
+      <form onSubmit={this.addNewItem} className="add-item-form">
           <input
             type="text"
             placeholder=""
             onChange={this.changedNewItemName}
           ></input>
           <select onChange={this.changedNewItemBoard}>
-            <option name="selected-board-id" id="empty-board">
-              select board
+            <option id="empty-board">
+              Select board
             </option>
             {boardOptions}
           </select>
           <button type="submit">Add new item</button>
         </form>
+    );
+  }
+
+  render() {
+    const { boards } = this.state;
+    const addNewItemForm = this.renderAddNewItemForm();
+
+    return (
+      <div className="monday-app">
+        <div className="description">This is an example of how to retrieve and create board data</div>
+        <div className="boards-list">
+          {boards &&
+            boards.map((board, key) => (
+              <ul className="board" key={key}>
+                <li>
+                  <h2>{board.name}</h2>
+                  <ul className="items">
+                    {board.items &&
+                      board.items.map((item, key) => (
+                        <li key={key}>{item.name}</li>
+                      ))}
+                  </ul>
+                </li>
+              </ul>
+            ))}
+        </div>
+        {addNewItemForm}
       </div>
     );
   }

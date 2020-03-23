@@ -1,6 +1,5 @@
 {
   "name": "board-data-react",
-  "version": "0.1",
   "private": true,
   "dependencies": {
     "lodash": "^4.17.15",
