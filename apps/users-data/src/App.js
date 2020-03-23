@@ -7,7 +7,10 @@ const monday = mondaySdk();
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { users: [], settings: {} };
+    this.state = {
+      users: [],
+      settings: {}
+    };
   }
 
   componentDidMount() {
@@ -34,7 +37,7 @@ class App extends React.Component {
 
     return (
       <div className="monday-app">
-        <div>Hello monday!</div>
+        <div>This is an example of how to retrieve user data</div>
         {users &&
           users.map(user => {
             return <PersonComponent user={user} key={user.id} />;
