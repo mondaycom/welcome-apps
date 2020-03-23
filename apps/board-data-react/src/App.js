@@ -44,7 +44,7 @@ class App extends React.Component {
     monday
       .api(
         `query {
-      boards(ids: ${boardIds}) {
+      boards(ids: [${boardIds}]) {
         id,
         name
 
