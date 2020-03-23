@@ -16,7 +16,7 @@ class App extends React.Component {
 
   fetchUpdates = () => {
     const { settings } = this.state;
-    const maxUpdates = settings.maxUpdates || 50;
+    const maxUpdates = settings.maxUpdates || 100;
     const query = `query { updates (limit: ${maxUpdates} ) { id, body, text_body }}`;
     monday.api(query).then(res => {
       const updates = (res && res.data && res.data.updates) || [];
@@ -33,7 +33,7 @@ class App extends React.Component {
 
     return (
       <div className="monday-app">
-        <div>Hello monday!</div>
+        <div>This is an example of how to retrieve updates</div>
         <div className="updates-feed">
           {updates &&
             updates.map(update => {
