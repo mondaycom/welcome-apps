@@ -6,7 +6,6 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      settings: {},
       context: {},
       boardIds: [],
       boards: [],
@@ -15,13 +14,8 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    monday.listen("settings", this.getSettings);
     monday.listen("context", this.getContext);
   }
-
-  getSettings = res => {
-    this.setState({ settings: res.data });
-  };
 
   getContext = res => {
     this.setState({ context: res.data });
