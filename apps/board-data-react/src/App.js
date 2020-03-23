@@ -37,6 +37,8 @@ class App extends React.Component {
     }
 
     this.setState({ boardIds });
+    
+    this.getBoards();
   };
 
   getBoards() {
@@ -94,8 +96,6 @@ class App extends React.Component {
 
   render() {
     const { boards } = this.state;
-
-    this.getBoards();
 
     let boardOptions = boards.map(board => (
       <option value={board.id} key={`sb-${board.id}`}>
