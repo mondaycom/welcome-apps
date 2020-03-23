@@ -10,8 +10,7 @@ class App extends React.Component {
       context: {},
       boardIds: [],
       boards: [],
-      newItemName: "",
-      errors: null
+      newItemName: ""
     };
   }
 
