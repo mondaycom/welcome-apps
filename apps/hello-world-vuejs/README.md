@@ -1,4 +1,4 @@
-# Hello-world-vue
+# hello-world-vue
 
 hello world example of how to create a monday app with vue.js
 

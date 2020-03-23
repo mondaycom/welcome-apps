@@ -20,7 +20,7 @@ export default {
     };
   },
 
-  created() {
+  mounted() {
     monday.listen("settings", this.getSettings);
     monday.listen("context", this.getContext);
     this.fetchUserName();
