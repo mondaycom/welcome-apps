@@ -30,7 +30,7 @@ class App extends React.Component {
 
   getBoards(boardIds) {
     monday
-    .api(`query { boards(limit:1, ids: ${boardIds}) { name,id, items {name, id} }}`)
+    .api(`query { boards(limit:1, ids: [${boardIds}]) { name,id, items {name, id} }}`)
     .then((res) => {
       this.setState({ board: res.data.boards[0] });
     });
