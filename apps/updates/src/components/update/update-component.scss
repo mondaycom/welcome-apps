@@ -1,0 +1,19 @@
+.update-component {
+  display: flex;
+  flex-direction: column;
+  width: 720px;
+  margin-bottom: 10px;
+  min-height: 36px;
+  max-height: 180px;
+  overflow-y: scroll;
+  border: 1px solid gray;
+  box-shadow: 0 0 0 1px lightgrey, inset 0 1px 0 0 lightgrey;
+
+  .update-wrapper {
+    font-family: Roboto, helvetica, arial, sans-serif;
+    padding: 8px;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 22px;
+  }
+}
