@@ -30,7 +30,6 @@ class App extends React.Component {
 
   render() {
     const { items } = this.state;
-    console.log("items", items);
     return (
       <div className="monday-app">
         <div className="description">
