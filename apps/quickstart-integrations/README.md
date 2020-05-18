@@ -16,12 +16,15 @@ $ npm install
 
 ## Run
 
-1. Run the server with ngrok tunnel together
+1. Add your MONDAY_SIGNING_SECRET and API_TOKEN to .env file
+
+
+2. Run the server with ngrok tunnel together
 
 ```
 $ npm start
 ```
 
-2. Open http://localhost:4040/status to get your ngrok public url
+3. Open http://localhost:4040/status to get your ngrok public url
 
 
