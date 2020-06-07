@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import mondaySdk from "monday-sdk-js";
 import ReactWordcloud from "react-wordcloud";
 import { stopWords } from "./stop-words";

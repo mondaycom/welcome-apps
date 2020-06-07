@@ -17,10 +17,10 @@
     "ngrok": "^3.2.7"
   },
   "scripts": {
-    "start": "../../../word-cloud/node_modules/.bin/concurrently \\\"npm run server\\\" \\\"npm run expose\\\"",
-    "server": "../../../word-cloud/node_modules/.bin/react-scripts start",
-    "build": "../../../word-cloud/node_modules/.bin/react-scripts build",
-    "expose": "../../../word-cloud/node_modules/.bin/ngrok http 8303"
+    "start": "concurrently \"npm run server\" \"npm run expose\"",
+    "server": "react-scripts start",
+    "build": "react-scripts build",
+    "expose": "ngrok http 8303"
   },
   "eslintConfig": {
     "extends": "react-app"
