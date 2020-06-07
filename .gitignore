@@ -1,6 +1,7 @@
 */**/.DS_STORE
 */**/node_modules
 apps/*/build
+apps/*/.idea
 
 # Logs
 */**/logs
