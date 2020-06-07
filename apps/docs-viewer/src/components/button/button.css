@@ -1,0 +1,63 @@
+.ds-btn {
+  display: inline-block;
+  background-color: #009aff;
+  border-color: #009aff;
+  outline: none;
+  box-shadow: none;
+  color: #fff;
+  font-weight: 300;
+  line-height: 1.25;
+  font-family: "Roboto";
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: 0.641rem 2rem;
+  font-size: 0.875rem;
+  line-height: 1.25;
+  height: 2.50908rem;
+  border-radius: 15rem;
+  -webkit-transition: padding-left 0.35s cubic-bezier(0.19, 1, 0.22, 1), padding-right 0.35s cubic-bezier(0.19, 1, 0.22, 1), color 0.1s ease-in-out, background-color 0.1s ease-in-out, border-color 0.1s ease-in-out;
+  -o-transition: padding-left 0.35s cubic-bezier(0.19, 1, 0.22, 1), padding-right 0.35s cubic-bezier(0.19, 1, 0.22, 1), color 0.1s ease-in-out, background-color 0.1s ease-in-out, border-color 0.1s ease-in-out;
+  transition: padding-left 0.35s cubic-bezier(0.19, 1, 0.22, 1), padding-right 0.35s cubic-bezier(0.19, 1, 0.22, 1), color 0.1s ease-in-out, background-color 0.1s ease-in-out, border-color 0.1s ease-in-out; }
+.ds-btn .ds-i {
+  margin-left: -0.29167rem;
+  margin-right: 0.14583rem; }
+.ds-btn .ds-i.right {
+  margin-right: -0.29167rem;
+  margin-left: 0.14583rem; }
+.ds-btn .loader {
+  font-size: 0.677rem;
+  min-width: 0.677rem;
+  height: 0.677rem;
+  margin: 0.677rem 0.677rem; }
+.ds-btn:focus, .ds-btn.focus, .ds-btn:active:focus, .ds-btn:active.focus, .ds-btn.active:focus, .ds-btn.active.focus {
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px; }
+.ds-btn:focus {
+  text-decoration: none; }
+.ds-btn:hover {
+  text-decoration: none; }
+.ds-btn.focus {
+  text-decoration: none; }
+.ds-btn:active, .ds-btn.active {
+  background-image: none;
+  outline: 0; }
+.ds-btn.disabled, .ds-btn:disabled {
+  cursor: not-allowed;
+  -webkit-box-shadow: none;
+  box-shadow: none; }
+
+.ds-btn-secondary {
+  border-color: transparent;
+  background-color: transparent;
+  color: #009aff;
+  outline: none;
+  box-shadow: none;
+  border-radius: 0px;
+}

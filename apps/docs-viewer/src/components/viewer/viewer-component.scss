@@ -1,0 +1,11 @@
+.viewer-component {
+  flex-grow: 1;
+  padding-right: 8px;
+
+  .doc-viewer {
+    height: 100%;
+    width: 100%;
+    border: none;
+    border-right: 2px inset rgb(238, 238, 238);
+  }
+}

@@ -1,0 +1,51 @@
+.file-item-component {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 300;
+  height: 48px;
+  border-radius: 8px;
+  padding: 0px 12px;
+  color: #323338;
+
+  &:hover {
+    background-color: #f5f6f8;
+  }
+
+  &.selected {
+    background-color: rgba(0, 154, 255, 0.2);
+    color: #009aff;
+  }
+
+  .file-name {
+    flex-grow: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .options-button {
+    font-size: 20px;
+  }
+
+  .icon-container {
+    height: 24px;
+    width: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .app-icon {
+      height: 24px;
+      width: 24px;
+      padding-right: 8px;
+
+      &.elipssis-icon {
+        height: 16px;
+        width: 16px;
+      }
+    }
+  }
+}

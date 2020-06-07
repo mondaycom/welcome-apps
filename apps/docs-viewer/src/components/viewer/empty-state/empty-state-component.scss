@@ -1,0 +1,28 @@
+.empty-state-component {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f5f6f8;
+  height: 100%;
+
+  .add-file-wrapper {
+    width: 536px;
+
+    .add-file-component {
+      .header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .apps-icons {
+        margin-bottom: 48px;
+      }
+
+      .input {
+        .text {
+          height: 48px;
+        }
+      }
+    }
+  }
+}

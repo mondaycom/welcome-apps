@@ -1,0 +1,58 @@
+body {
+  margin: 0;
+  font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.monday-app {
+  height: 100vh;
+  width: 100vw;
+
+  .board {
+    padding: 32px;
+    overflow: auto;
+
+    .board-name {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 32px;
+    }
+
+    .board-groups {
+      .group {
+        margin-bottom: 32px;
+
+        .item,
+        .group-title {
+          display: flex;
+          min-width: 100%;
+
+          .cell {
+            flex: 1 0 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding: 8px;
+            border: 1px solid #a1a1a1;
+            margin-left: -1px;
+            margin-top: -1px;
+          }
+
+          &.group-title {
+            .cell {
+              background-color: #c4c4c4;
+              font-weight: 700;
+            }
+          }
+
+          &.item {
+            .cell {
+              background-color: #e1e1e1;
+            }
+          }
+        }
+      }
+    }
+  }
+}

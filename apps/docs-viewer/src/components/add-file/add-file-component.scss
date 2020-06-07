@@ -1,0 +1,76 @@
+.add-file-component {
+  padding: 48px;
+
+  .header {
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 28px;
+    color: #323338;
+    margin-bottom: 24px;
+  }
+
+  .apps-icons {
+    margin-bottom: 32px;
+    display: flex;
+
+    .app-icon-wrapper {
+      margin-right: 8px;
+      background-color: white;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .input {
+    margin-bottom: 32px;
+    position: relative;
+
+    .label {
+      margin-bottom: 8px;
+      text-indent: 4px;
+      display: flex;
+      justify-content: space-between;
+
+      .learn-more {
+        color: #1f76c2;
+        text-decoration: none;
+      }
+    }
+
+    .text {
+      height: 40px;
+      width: 100%;
+      border: 1px solid #e6e9ef;
+      box-sizing: border-box;
+      border-radius: 4px;
+      outline: none;
+      font-size: 16px;
+      padding-left: 8px;
+
+      &.error {
+        border: 1px solid #e44258;
+      }
+
+      &:focus {
+        border-color: #009aff;
+      }
+    }
+
+    .notice {
+      color: #e44258;
+      margin-top: 4px;
+      text-indent: 4px;
+      font-size: 14px;
+      position: absolute;
+    }
+  }
+
+  .buttons-container {
+    display: flex;
+    justify-content: flex-end;
+  }
+}

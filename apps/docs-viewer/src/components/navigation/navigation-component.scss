@@ -1,0 +1,63 @@
+.navigation-component {
+  display: flex;
+  width: 300px;
+  transition: all 0.2s ease-in-out;
+  position: relative;
+  padding: 0px 16px 0px 16px;
+
+  &.is-collapsed {
+    width: 0px;
+  }
+
+  .arrow-icon-container {
+    position: absolute;
+    cursor: pointer;
+    margin-left: -35px;
+    margin-top: 18px;
+    border: 1px solid #e1e1e1;
+    border-radius: 20px;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 26px;
+    width: 26px;
+
+    &:hover {
+      background: #009aff;
+      .arrow-icon {
+        stroke: #ffffff;
+      }
+    }
+
+    .arrow-icon {
+      height: 10px;
+      stroke: #333;
+    }
+  }
+
+  .navigation-content-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+
+    &.is-collapsed {
+      display: none;
+    }
+
+    .files-list {
+      padding: 16px 0px;
+    }
+
+    .empty-state {
+      padding: 16px 0px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #9699a6;
+      font-size: 15px;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}

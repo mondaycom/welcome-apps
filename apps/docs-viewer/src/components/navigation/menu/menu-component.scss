@@ -1,0 +1,50 @@
+.menu-component {
+  position: absolute;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 17px 7px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  width: 216px;
+  margin-top: 68px;
+  margin-left: -12px;
+  font-size: 16px;
+  font-weight: 400;
+  color: #323338;
+  padding: 8px;
+
+  .menu-item {
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    padding-left: 4px;
+    fill: #323338;
+
+    &:hover {
+      background: #009aff;
+      color: #ffffff;
+      fill: #ffffff;
+    }
+
+    .icon-container {
+      height: 24px;
+      width: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 8px;
+
+      .delete-icon {
+        height: 16px;
+        width: 16px;
+      }
+
+      .edit-icon {
+        height: 16px;
+        width: 16px;
+      }
+    }
+  }
+}
