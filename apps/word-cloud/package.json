@@ -1,0 +1,40 @@
+{
+  "name": "monday-example-app-word-cloud",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "monday-sdk-js": "^0.1.0",
+    "dotenv": "^5.0.1",
+    "react": "^16.10.2",
+    "react-d3-cloud": "^0.7.0",
+    "react-dom": "^16.10.2",
+    "react-scripts": "3.2.0",
+    "react-wordcloud": "^1.1.1",
+    "lodash": "^4.17.15"
+  },
+  "devDependencies": {
+    "concurrently": "^4.1.2",
+    "ngrok": "^3.2.7"
+  },
+  "scripts": {
+    "start": "../../../word-cloud/node_modules/.bin/concurrently \\\"npm run server\\\" \\\"npm run expose\\\"",
+    "server": "../../../word-cloud/node_modules/.bin/react-scripts start",
+    "build": "../../../word-cloud/node_modules/.bin/react-scripts build",
+    "expose": "../../../word-cloud/node_modules/.bin/ngrok http 8303"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
