@@ -6,7 +6,7 @@ This is the "Quickstart Integration" example Monday app.
 - settings 
 - context 
 - API
-
+You can find more info in our QuickStart guide [here](https://monday.com/developers/apps/quickstart-integration/)
 <br>![Screenshot](https://dapulse-res.cloudinary.com/image/upload/f_mp4,f_auto/remote_mondaycom_static/uploads/VladMystetskyi/c3be2380-c5a5-4a4f-bbe6-305ba3bea620_screencast2020-05-1910-49-37.gif)
 
 ## Install
@@ -38,8 +38,8 @@ $ npm install
 3. Click "Choose trigger" and choose "When a column changes" trigger
 4. Type "When {text column, columnId} changes" in "Sentence" field
 5. Configure trigger input fields:
-<br>* boardId - Context
-<br>* columnId - Recipe Sentence (Text Column)
+<br>boardId - Context
+<br>columnId - Recipe Sentence (Text Column)
 <br> ![Screenshot](https://dapulse-res.cloudinary.com/image/upload/f_auto,q_auto/remote_mondaycom_static/uploads/VladMystetskyi/7ca206bf-d494-43f3-bd62-439061d6ec13_monday-Apps2020-06-0722-35-56.png)
 ### Create new custom action
 1. Click "Choose action"
