@@ -1,3 +1,15 @@
+This is the "Docs Viewer" example Monday app. 
+<br>It can be used as a board view or dasbhoard widget, connected to a board and open attached documents directly in Monday.
+<br>This app uses: 
+- settings 
+- context 
+- API
+- execute
+- storage
+
+<br>You can read more about this app [here](https://monday.com/developers/apps-docviewer/)
+<br> ![Screenshot](https://dapulse-res.cloudinary.com/image/upload/f_auto,q_auto/remote_mondaycom_static/uploads/VladMystetskyi/d2634e30-daec-47d2-816e-c9be7d38d392_3VladTestBoardbugwithrecipe2020-06-0800-45-40.png2020-06-0800-48-02.png)
+
 ## Run the project
 
 In the project directory, you should run:
@@ -15,7 +27,7 @@ F.e.: https://021eb6330099.ngrok.io
 
 1. Open monday.com, login to your account and go to a "Developers" section.
 2. Create a new "Docs Viewer Example App"
-3. Open "OAuth & Permissions" section and choose "boards:read" and "me:read" scope
+3. Open "OAuth & Permissions" section and add "boards:read" and "me:read" scopes
 4. Open "Features" section and create a new "Boards View" feature
 5. Open "View setup" tab and fulfill in "Custom URL" field your ngrok public URL, which you got previously (f.e. https://021eb6330099.ngrok.io)
 6. Click "Boards" button and choose one of the boards with some data in it.
@@ -31,4 +43,4 @@ F.e.: https://021eb6330099.ngrok.io
 5. Click "Upload" radio button and upload zip file with your build
 6. Go to any board and add your just released view
 7. Enjoy!
-<br /> ![Screenshot](https://dapulse-res.cloudinary.com/image/upload/f_auto,q_auto/remote_mondaycom_static/uploads/VladMystetskyi/d2634e30-daec-47d2-816e-c9be7d38d392_3VladTestBoardbugwithrecipe2020-06-0800-45-40.png2020-06-0800-48-02.png)
+<br> ![Screenshot](https://dapulse-res.cloudinary.com/image/upload/f_auto,q_auto/remote_mondaycom_static/uploads/VladMystetskyi/d2634e30-daec-47d2-816e-c9be7d38d392_3VladTestBoardbugwithrecipe2020-06-0800-45-40.png2020-06-0800-48-02.png)
