@@ -1,7 +1,8 @@
 ## Overview
 This is the "Docs Viewer" example Monday app. 
 <br>It can be used as a board view or dasbhoard widget, connected to a board and open attached documents directly in Monday.
-<br>This app uses: 
+
+<br>This app demonstrates how to use:
 - settings 
 - context 
 - API

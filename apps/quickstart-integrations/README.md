@@ -2,10 +2,12 @@
 This is the "Quickstart Integration" example Monday app. 
 <br>It can be used as a board recipe, which transforms data from one text column to another
 
-<br>This app uses: 
-- settings 
-- context 
+<br>This app demonstrates how to use: 
+- integration recipe
+- custom action
+- call authentication with JWT
 - API
+- remote options for custom fields
 
 <br>You can find more info in our QuickStart guide [here](https://monday.com/developers/apps/quickstart-integration/)
 <br>![Screenshot](https://dapulse-res.cloudinary.com/image/upload/f_mp4,f_auto/remote_mondaycom_static/uploads/VladMystetskyi/c3be2380-c5a5-4a4f-bbe6-305ba3bea620_screencast2020-05-1910-49-37.gif)

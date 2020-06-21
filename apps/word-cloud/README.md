@@ -1,7 +1,8 @@
 ## Overview
 This is the "Word Cloud" example Monday app. 
 <br>It can be used as a board view or dasbhoard widget, connected to a board and render the word cloud based on the frequency of the words in your board.
-<br>This app uses: 
+
+<br>This app demonstrates how to use: 
 - settings 
 - context 
 - API
