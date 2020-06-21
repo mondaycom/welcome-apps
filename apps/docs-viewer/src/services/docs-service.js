@@ -1,6 +1,5 @@
 import _ from "lodash";
 import mondaySdk from "monday-sdk-js";
-import { bigBrainTrack, BIGBRAIN_KINDS } from "./bigbrain-service";
 import { regexWebUrl } from "./url-validation";
 
 const monday = mondaySdk();
@@ -31,7 +30,6 @@ export const removeDoc = async (docoment) => {
   _.remove(docs, (doc) => doc.id === docoment.id);
 
   await monday.storage.instance.setItem(STORAGE_KEY, JSON.stringify(docs));
-  bigBrainTrack(BIGBRAIN_KINDS.FILE_DELETED, { id: docoment.id, name: docoment.name, url: docoment.url });
 
   return docs;
 };
@@ -54,7 +52,6 @@ export const addDoc = async (name, url) => {
   const type = detectDocType(url);
   docs.push({ id, name, url, type });
   await monday.storage.instance.setItem(STORAGE_KEY, JSON.stringify(docs));
-  bigBrainTrack(BIGBRAIN_KINDS.FILE_ADDED, { id, name, url, type });
   return true;
 };
 
@@ -71,7 +68,6 @@ export const updateDoc = async (id, name, url) => {
   currDoc.url = url;
 
   await monday.storage.instance.setItem(STORAGE_KEY, JSON.stringify(docs));
-  bigBrainTrack(BIGBRAIN_KINDS.FILE_EDITED, { id, oldName, name, oldUrl, url });
 
   return true;
 };

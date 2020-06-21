@@ -3,7 +3,6 @@ import "./app-container-component.scss";
 import NavgiationComponent from "../navigation/navigation-component";
 import ViewerComponent from "../viewer/viewer-component";
 import { getDocs, removeDoc } from "../../services/docs-service";
-import { bigBrainTrack, BIGBRAIN_KINDS } from "../../services/bigbrain-service";
 
 export default class AppContianerComponent extends React.Component {
   constructor(props) {
@@ -31,7 +30,6 @@ export default class AppContianerComponent extends React.Component {
   };
 
   onClick = (item) => {
-    bigBrainTrack(BIGBRAIN_KINDS.FILE_CLICKED, { id: item.id, name: item.name, url: item.url });
     this.setState({ selectedItem: item });
   };
 

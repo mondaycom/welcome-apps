@@ -7,7 +7,6 @@ import { ReactComponent as DriveIcon } from "../../../icons/Drive.svg";
 import { ReactComponent as OtherIcon } from "../../../icons/Others.svg";
 import { TYPES } from "../../../services/docs-service";
 import classnames from "classnames";
-import { bigBrainTrack, BIGBRAIN_KINDS } from "../../../services/bigbrain-service";
 import AddFileDialogComponent from "../top-bar/add-file-dialog/add-file-dialog-component";
 import "./file-item-component.scss";
 
@@ -41,7 +40,6 @@ export default class FileItemComponent extends React.Component {
     e.stopPropagation();
 
     const { optionsMenuOpen } = this.state;
-    bigBrainTrack(BIGBRAIN_KINDS.FILE_MENU_CLICKED, { isMenuOpen: optionsMenuOpen });
     this.setState({ optionsMenuOpen: !optionsMenuOpen });
   };
 

@@ -2,7 +2,6 @@ import React from "react";
 import FileItemComponent from "./file-item/file-item-component";
 import TopBarComponent from "./top-bar/top-bar-component";
 import classnames from "classnames";
-import { bigBrainTrack, BIGBRAIN_KINDS } from "../../services/bigbrain-service";
 import "./navigation-component.scss";
 
 const ArrowComponent = function (props) {
@@ -46,8 +45,6 @@ export default class NavigationComponent extends React.Component {
 
   toggleIsCollapsed = () => {
     const { isCollapsed } = this.state;
-
-    bigBrainTrack(BIGBRAIN_KINDS.COLLAPSE_CLICKED, { isCollapsed });
 
     this.setState({ isCollapsed: !isCollapsed });
   };

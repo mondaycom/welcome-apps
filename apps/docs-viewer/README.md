@@ -6,7 +6,6 @@ This is the "Docs Viewer" example Monday app.
 - settings 
 - context 
 - API
-- execute
 - storage
 
 <br>You can read more about this app [here](https://monday.com/developers/apps-docviewer/)

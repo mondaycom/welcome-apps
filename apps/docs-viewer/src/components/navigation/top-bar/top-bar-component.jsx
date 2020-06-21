@@ -1,6 +1,5 @@
 import React from "react";
 import AddFileDialogComponent from "./add-file-dialog/add-file-dialog-component";
-import { bigBrainTrack, BIGBRAIN_KINDS } from "../../../services/bigbrain-service";
 import { ReactComponent as SearchIcon } from "./search.svg";
 import { ReactComponent as ClearIcon } from "./close.svg";
 import "./top-bar-component.scss";
@@ -22,7 +21,6 @@ export default class TopBarComponent extends React.Component {
   }
 
   onClick = () => {
-    bigBrainTrack(BIGBRAIN_KINDS.ADD_FILE_CLICKED);
     this.setState({ isAddFileDialogOpen: true });
   };
 
