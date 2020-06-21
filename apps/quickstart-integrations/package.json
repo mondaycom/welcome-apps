@@ -5,7 +5,7 @@
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run expose\"",
     "server": "node ./src/app.js",
-    "server-with-debugger": "nodemon --delay 100ms --exec 'fuser -k 9229/tcp; node --inspect=0.0.0.0:9229 ./src/app.js'",
+    "server-with-debugger": "nodemon --delay 100ms --exec 'fuser -k 9228/tcp; node --inspect=0.0.0.0:9228 ./src/app.js'",
     "expose": "ngrok http 8302"
   },
   "dependencies": {
