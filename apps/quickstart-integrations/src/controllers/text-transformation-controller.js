@@ -24,7 +24,20 @@ async function getTransformationTypes(req, res) {
   return res.status(200).send(TRANSFORMATION_TYPES);
 }
 
+async function subscribe(req, res) {
+  return res.status(200).send({
+    webhookId: req.body.payload.subscriptionId,
+    result: 'it was cool'
+  });
+}
+
+async function unsubscribe(req, res) {
+  return res.status(200).send({result: 'it was cool'});
+}
+
 module.exports = {
   transformToMondayColumn,
-  getTransformationTypes
+  getTransformationTypes,
+  subscribe,
+  unsubscribe
 };

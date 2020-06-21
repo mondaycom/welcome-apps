@@ -6,5 +6,7 @@ const authenticationMiddleware = require('../middlewares/authentication').authen
 
 router.post('/transformation/transform', authenticationMiddleware, transformationController.transformToMondayColumn);
 router.post('/transformation/types', authenticationMiddleware, transformationController.getTransformationTypes);
+router.post('/transformation/subscribe', authenticationMiddleware, transformationController.subscribe);
+router.post('/transformation/unsubscribe', authenticationMiddleware, transformationController.unsubscribe);
 
 module.exports = router;
