@@ -3,9 +3,9 @@ This is the "Word Cloud" example Monday app.
 <br>It can be used as a board view or dasbhoard widget, connected to a board and render the word cloud based on the frequency of the words in your board.
 
 <br>This app demonstrates how to use: 
-- settings 
-- context 
-- API
+- [settings](https://github.com/mondaycom/monday-sdk-js#mondaygettype-params--) 
+- [context](https://github.com/mondaycom/monday-sdk-js#mondaygettype-params--) 
+- [API](https://github.com/mondaycom/monday-sdk-js#mondayapiquery-options--)
 
 <br>You can read more about this app [here](https://support.monday.com/hc/en-us/articles/360013111180-Word-Cloud)
 <br /> ![Screenshot](https://dapulse-res.cloudinary.com/image/upload/f_mp4,f_auto/remote_mondaycom_static/uploads/VladMystetskyi/b0eb2f62-5664-440a-8385-3011328f36b8_screencast2020-06-0322-36-16.gif)
