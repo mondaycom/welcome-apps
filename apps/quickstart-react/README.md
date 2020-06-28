@@ -1,6 +1,6 @@
 ## Overview
 This is the "Quickstart React" example Monday app. 
-<br>It can be used as a board view or dasbhoard widget, connected to a board and render data from the board using settings.
+<br>It can be used as a board view or dashboard widget, connected to a board and render data from the board using settings.
 
 <br>This app demonstrates how to use: 
 - [settings](https://github.com/mondaycom/monday-sdk-js#mondaygettype-params--) 
