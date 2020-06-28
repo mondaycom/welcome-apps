@@ -1,0 +1,47 @@
+.board-table-component {
+  .board {
+    padding: 32px;
+    overflow: auto;
+
+    .board-name {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 32px;
+    }
+
+    .board-groups {
+      .group {
+        margin-bottom: 32px;
+
+        .item,
+        .group-title {
+          display: flex;
+          min-width: 100%;
+
+          .cell {
+            flex: 1 0 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding: 6px 8px;
+            border: 1px solid #e1e1e1;
+            margin-left: -1px;
+            margin-top: -1px;
+            font-size: 12px;
+          }
+
+          &.group-title {
+            .cell {
+              background-color: #f5f5f5;
+              font-weight: 700;
+            }
+          }
+
+          &.item {
+            .cell {
+            }
+          }
+        }
+      }
+    }
+  }
+}

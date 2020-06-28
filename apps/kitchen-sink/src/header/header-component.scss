@@ -1,0 +1,25 @@
+.header-component {
+  height: 100%;
+
+  .header-inner {
+    display: flex;
+    height: 100%;
+
+    .logo-wrapper {
+      flex: 0 0 200px;
+      padding: 0px 8px;
+      display: flex;
+      align-items: center;
+
+      .logo {
+        font-size: 15px;
+        font-weight: 700;
+        color: #333;
+      }
+    }
+
+    .header-content {
+      flex: 1;
+    }
+  }
+}
