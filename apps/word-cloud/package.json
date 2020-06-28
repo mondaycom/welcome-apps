@@ -2,6 +2,13 @@
   "name": "monday-example-app-word-cloud",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "npm run stop && concurrently \"npm run server\" \"npm run expose\"",
+    "server": "react-scripts start",
+    "build": "react-scripts build",
+    "expose": "ngrok http 8303",
+    "stop": "kill-port 8303 && kill-port 4049 && kill-port 4040"
+  },
   "dependencies": {
     "monday-sdk-js": "^0.1.0",
     "dotenv": "^5.0.1",
@@ -14,14 +21,10 @@
   },
   "devDependencies": {
     "concurrently": "^4.1.2",
+    "cross-port-killer": "^1.2.1",
     "ngrok": "^3.2.7"
   },
-  "scripts": {
-    "start": "concurrently \"npm run server\" \"npm run expose\"",
-    "server": "react-scripts start",
-    "build": "react-scripts build",
-    "expose": "ngrok http 8303"
-  },
+
   "eslintConfig": {
     "extends": "react-app"
   },

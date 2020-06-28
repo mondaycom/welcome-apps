@@ -18,13 +18,15 @@
   },
   "devDependencies": {
     "concurrently": "^4.1.2",
+    "cross-port-killer": "^1.2.1",
     "ngrok": "^3.2.7"
   },
   "scripts": {
-    "start": "concurrently \"npm run server\" \"npm run expose\"",
+    "start": "npm run stop && concurrently \"npm run server\" \"npm run expose\"",
     "server": "react-scripts start",
     "build": "react-scripts build",
-    "expose": "ngrok http 8304"
+    "expose": "ngrok http 8304",
+    "stop": "kill-port 8304 && kill-port 4049 && kill-port 4040"
   },
   "eslintConfig": {
     "extends": "react-app"
