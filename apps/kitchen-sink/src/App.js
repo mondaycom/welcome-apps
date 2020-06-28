@@ -8,11 +8,15 @@ import CodeViewerComponent from "./code-viewer/code-viewer-component";
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { selectedExample: null, selectedTab: "code" };
+    this.state = { selectedExample: null, selectedTab: "preview" };
   }
 
   onSelectExample = (example) => {
     this.setState({ selectedExample: example });
+  };
+
+  onSelectTab = (tab) => {
+    this.setState({ selectedTab: tab });
   };
 
   getContentComponent() {
@@ -22,13 +26,16 @@ class App extends React.Component {
   }
 
   render() {
-    const { selectedExample } = this.state;
+    const { selectedExample, selectedTab } = this.state;
     const ContentComponent = this.getContentComponent();
     return (
       <div className="App">
         <div className="app-inner">
           <div className="header">
-            <HeaderComponent />
+            <HeaderComponent
+              selectedTab={selectedTab}
+              onSelect={this.onSelectTab}
+            />
           </div>
           <div className="content-wrapper">
             <div className="menu">

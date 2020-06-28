@@ -37,7 +37,11 @@
           }
 
           &.item {
-            .cell {
+            cursor: pointer;
+            &:hover {
+              .cell {
+                background: #f9f9f9;
+              }
             }
           }
         }

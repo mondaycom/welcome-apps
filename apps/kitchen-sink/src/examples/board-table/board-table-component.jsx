@@ -43,6 +43,7 @@ export default class BoardTableComponent extends React.Component {
         }
         
         items {
+          id
           name
           group {
             id
@@ -61,6 +62,10 @@ export default class BoardTableComponent extends React.Component {
       .then((res) => this.setState({ boards: res.data.boards }));
   };
 
+  openItemCard(itemId) {
+    monday.execute("openItemCard", { itemId });
+  }
+
   renderCell = (board, column, item) => {
     const columnValue = item.column_values.find(
       (columnValue) => columnValue.id == column.id
@@ -73,7 +78,7 @@ export default class BoardTableComponent extends React.Component {
   renderItem = (board, item) => {
     const { columns } = board;
     return (
-      <div className="item">
+      <div className="item" onClick={() => this.openItemCard(item.id)}>
         {columns.map((column) => (
           <div className="cell">{this.renderCell(board, column, item)}</div>
         ))}

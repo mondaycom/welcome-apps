@@ -1,0 +1,84 @@
+.todos-component {
+  .todos-inner {
+    padding: 32px;
+    max-width: 500px;
+
+    .title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 32px;
+    }
+
+    .todos {
+      margin-bottom: 16px;
+
+      .todo {
+        padding: 8px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+
+        .todo-check {
+          flex: 0 0 30px;
+        }
+
+        .todo-title {
+          flex: 1;
+          font-size: 15px;
+          margin-right: 16px;
+        }
+
+        .todo-remove {
+          cursor: pointer;
+          color: #333;
+          opacity: 0;
+
+          &:hover {
+            color: #e44258;
+          }
+        }
+
+        &:hover {
+          background: #f5f5f5;
+
+          .todo-remove {
+            opacity: 1;
+          }
+        }
+
+        &:not(:last-child) {
+          border-bottom: 1px solid #e1e1e1;
+        }
+
+        &.checked {
+          color: #00ca72;
+        }
+      }
+    }
+
+    .new-todo {
+      display: flex;
+
+      .new-todo-input {
+        flex: 1;
+        padding: 8px;
+        border-radius: 4px 0px 0px 4px;
+        border: 1px solid #c4c4c4;
+        border-right: none;
+        outline: none;
+
+        &:focus {
+          border-color: #a1a1a1;
+        }
+      }
+
+      .new-todo-button {
+        padding: 8px 16px;
+        cursor: pointer;
+        border-radius: 0px 4px 4px 0px;
+        outline: none;
+        border: 1px solid #c4c4c4;
+      }
+    }
+  }
+}
