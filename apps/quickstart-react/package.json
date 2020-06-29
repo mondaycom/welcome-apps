@@ -1,6 +1,6 @@
 {
-  "name": "my-test-app",
-  "version": "0.1.0",
+  "name": "monday-integration-quickstart-app",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "npm run stop && concurrently \"npm run server\" \"npm run expose\"",
