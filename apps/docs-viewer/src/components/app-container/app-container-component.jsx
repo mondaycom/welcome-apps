@@ -4,7 +4,7 @@ import NavgiationComponent from "../navigation/navigation-component";
 import ViewerComponent from "../viewer/viewer-component";
 import { getDocs, removeDoc } from "../../services/docs-service";
 
-export default class AppContianerComponent extends React.Component {
+export default class AppContainerComponent extends React.Component {
   constructor(props) {
     super(props);
 
