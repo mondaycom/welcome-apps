@@ -1,5 +1,3 @@
-// This file defines routes for transformation
-
 const express = require('express');
 const router = express.Router();
 

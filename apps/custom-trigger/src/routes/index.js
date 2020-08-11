@@ -3,6 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const transformationRoutes = require('./transformation');
+const subscriptionRoutes = require('./subscription');
 
 router.use(subscriptionRoutes, transformationRoutes);
 router.get('/', function(req, res) {

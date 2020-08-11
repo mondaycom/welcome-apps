@@ -1,5 +1,3 @@
-// Helper class to get data from monday.com boards
-
 const initMondayClient = require('monday-sdk-js');
 
 class MondayService {

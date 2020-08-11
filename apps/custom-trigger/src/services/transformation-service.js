@@ -1,5 +1,3 @@
-// Services to transform text for integration
-
 class TransformationService {
   static async transformText(value, type) {
     switch (type) {

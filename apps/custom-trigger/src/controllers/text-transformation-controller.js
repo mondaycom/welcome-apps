@@ -1,6 +1,3 @@
-// This file defines the logic for text transformation. 
-// See ../services for the various services used by this controller
-
 const mondayService = require('../services/monday-service');
 const transformationService = require('../services/transformation-service');
 const { TRANSFORMATION_TYPES } = require('../constants');
