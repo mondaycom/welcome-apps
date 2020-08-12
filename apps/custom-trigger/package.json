@@ -4,10 +4,11 @@
   "license": "UNLICENSED",
   "scripts": {
     "start": "npm run stop && concurrently \"npm run server\" \"npm run expose\"",
+    "build": "npx sequelize db:migrate",
     "server": "nodemon ./src/app.js",
     "server-with-debugger": "nodemon --delay 100ms --exec 'fuser -k 9228/tcp; node --inspect=0.0.0.0:9228 ./src/app.js'",
-    "expose": "ngrok http 8302",
-    "stop": "kill-port 8302 && kill-port 4049 && kill-port 4040"
+    "expose": "ngrok http 8305",
+    "stop": "kill-port 8305 && kill-port 4049 && kill-port 4040"
   },
   "nodemonConfig": {
     "watch": [

@@ -10,7 +10,9 @@ class SubscriptionModelService {
         active: true,
         created_at: new Date(),
         webhook_url: webhookUrl
-      })
+      });
+      // console.log(newSubscription)
+      return newSubscription.dataValues.id;
     }
     catch (err) {
       console.log(err);
@@ -26,8 +28,23 @@ class SubscriptionModelService {
           id: subscriptionId
         }
       });
+      console.log(subscription);
+      return subscription;
     }
     catch (err) {
+      console.log(err);
+    }
+  }
+
+  static async getActiveSubscriptions() {
+    try {
+      const subscriptions = await Subscription.findAll({
+        where: {
+          active: true
+        }
+      });
+      return subscriptions; 
+    } catch (err) {
       console.log(err);
     }
   }

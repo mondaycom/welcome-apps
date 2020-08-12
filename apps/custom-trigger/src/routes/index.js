@@ -2,10 +2,9 @@
 
 const express = require('express');
 const router = express.Router();
-const transformationRoutes = require('./transformation');
 const subscriptionRoutes = require('./subscription');
 
-router.use(subscriptionRoutes, transformationRoutes);
+router.use(subscriptionRoutes);
 router.get('/', function(req, res) {
   res.json(getHealth());
 });

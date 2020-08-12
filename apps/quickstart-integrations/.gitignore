@@ -1,5 +1,8 @@
 node_modules/
 *.log
+database.sqlite
+.env
+.file
 
 # Created by https://www.gitignore.io/api/node,rubymine,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=node,rubymine,visualstudiocode
@@ -216,5 +219,3 @@ vault/data
 vault/logs
 vault/policies
 vault/tmp
-
-
