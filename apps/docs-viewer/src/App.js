@@ -1,7 +1,7 @@
 import React from "react";
 import mondaySdk from "monday-sdk-js";
 import "typeface-roboto";
-import AppContianerComponent from "./components/app-container/app-container-component";
+import AppContainerComponent from "./components/app-container/app-container-component";
 const monday = mondaySdk();
 
 class App extends React.Component {
@@ -135,7 +135,7 @@ class App extends React.Component {
     const { me, boards } = this.state;
     return (
       <div className="monday-app">
-        <AppContianerComponent />
+        <AppContainerComponent />
       </div>
     );
   }
