@@ -6,7 +6,7 @@ const router = express.Router();
 const subscriptionController = require('../controllers/subscription-controller.js');
 const authenticationMiddleware = require('../middlewares/authentication').authenticationMiddleware;
 
-router.post('/subscriptions/subscribe', subscriptionController.subscribe);
-router.post('/subscriptions/unsubscribe', subscriptionController.unsubscribe);
+router.post('/subscriptions/subscribe', authenticationMiddleware, subscriptionController.subscribe);
+router.post('/subscriptions/unsubscribe', authenticationMiddleware, subscriptionController.unsubscribe);
 
 module.exports = router;

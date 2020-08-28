@@ -2,12 +2,14 @@
 This is the "Custom Trigger" example Monday app. 
 <br>It can be used as a board recipe, and will invoke the trigger every 5 seconds. 
 
+![final-app-example](https://dapulse-res.cloudinary.com/image/upload/f_mp4,f_auto/remote_mondaycom_static/uploads/DiproBhowmik/1708bd5c-348b-4547-b1cd-9a9c623e5219_custom-trigger-example.gif)
+
 <br>This app demonstrates how to use: 
 - integration recipe
 - custom trigger
 - call authentication with JWT
 
-<br>You can find more info in our QuickStart guide [here](https://monday.com/developers/apps/quickstart-integration/)
+<br>You can find more info in our Custom Trigger article [here](https://monday.com/developers/apps/custom-trigger)
 
 ## Install
 
@@ -35,14 +37,14 @@ npm run build
 ### Create a new app and integration feature
 1. Open monday.com, login to your account and go to a "Developers" section.
 2. Create new "Integration Example App"
-3. Open "Features" section and create new "Integration" feature
+3. Open "Features" section and create new "Integration" feature. Since we will set up our dev environment ourselves, skip the "Set up your dev environment" step of the new feature wizard. 
 ### Create new recipe and custom trigger
 1. Open "Recipes" tab
 2. Click "Add new recipe"
 3. Click "Choose trigger" and choose "Create new custom trigger"
 4. Configure trigger input fields and click "Update trigger". We will use a placeholder for our subscribe and unsubscribe URLs until we start our server:
 ![Custom Trigger Config](https://dapulse-res.cloudinary.com/image/upload/f_auto,q_auto/remote_mondaycom_static/uploads/DiproBhowmik/18a8a57b-d928-4e66-9a2b-f3514838bbb3_custom-trigger-config.png)
-6. Type "Every 5 seconds" in "Sentence" field
+6. Type "Every 5 seconds," in "Sentence" field
 
 ### Configure action
 

@@ -1,4 +1,3 @@
-const mondayService = require('../services/monday-service');
 const subscriptionModelService = require('../services/subscription-model-service');
 
 // Function to subscribe to a new integration recipe on a board
@@ -14,6 +13,7 @@ async function subscribe(req, res) {
     return res.status(200).send({webhookId: subscriptionId});
   }
   catch(err) {
+    return res.status(500).send("Subscription could not be created.");
     console.log(err);
   }
 }
@@ -27,6 +27,7 @@ async function unsubscribe(req, res) {
     return res.status(200).send({result: 'Unsubscribed successfully.'});
   }
   catch(err) {
+    return res.status(500).send("Subscription could not be removed.");
     console.log(err);
   }
 }

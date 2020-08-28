@@ -8,15 +8,12 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      id: {
+      subscription_id: {
         type: Sequelize.STRING
       },
       active: {
         type: Sequelize.BOOLEAN
-      },
-      created_at: {
-        type: Sequelize.DATE
-      },
+      }, 
       webhook_url: {
         type: Sequelize.STRING
       },

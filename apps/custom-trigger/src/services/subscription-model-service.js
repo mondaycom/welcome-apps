@@ -6,9 +6,8 @@ class SubscriptionModelService {
   static async createSubscription(webhookUrl, subscriptionId) {
     try {
       const newSubscription = await Subscription.create({
-        id: subscriptionId,
+        subscription_id: subscriptionId,
         active: true,
-        created_at: new Date(),
         webhook_url: webhookUrl
       });
       // console.log(newSubscription)
@@ -25,7 +24,7 @@ class SubscriptionModelService {
       // mark active as false
       const subscription = await Subscription.update({ active: false }, {
         where: {
-          id: subscriptionId
+          subscription_id: subscriptionId
         }
       });
       console.log(subscription);
