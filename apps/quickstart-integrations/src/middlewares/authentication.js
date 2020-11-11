@@ -7,11 +7,11 @@ async function authenticationMiddleware(req, res, next) {
     if (!authorization && req.query) {
       authorization = req.query.token;
     }
-    const { accountId, userId, backToUrl } = jwt.verify(
+    const { accountId, userId, backToUrl, shortLivedToken } = jwt.verify(
       authorization,
       process.env.MONDAY_SIGNING_SECRET
     );
-    req.session = { accountId, userId, backToUrl };
+    req.session = { accountId, userId, backToUrl, shortLivedToken };
     next();
   } catch (err) {
     res.status(500).json({ error: 'not authenticated' });
@@ -19,5 +19,5 @@ async function authenticationMiddleware(req, res, next) {
 }
 
 module.exports = {
-  authenticationMiddleware
+  authenticationMiddleware,
 };
