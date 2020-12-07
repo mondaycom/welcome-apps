@@ -17,7 +17,7 @@ async function transformToMondayColumn(req, res) {
     transformationType ? transformationType.value : 'TO_UPPER_CASE'
   );
 
-  await mondayService.changeColumnValue(token, boardId, itemId, targetColumnId, transformedText);
+  await mondayService.changeColumnValue(shortLivedToken, boardId, itemId, targetColumnId, transformedText);
 
   return res.status(200).send({});
 }
