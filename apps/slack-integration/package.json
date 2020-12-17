@@ -1,0 +1,44 @@
+{
+  "name": "monday-integration-quickstart-app",
+  "version": "0.0.1",
+  "license": "MIT",
+  "scripts": {
+    "start": "npm run stop && concurrently \"npm run server\"",
+    "server": "nodemon ./src/app.js",
+    "server-with-debugger": "nodemon --delay 100ms --exec 'fuser -k 9228/tcp; node --inspect=0.0.0.0:9228 ./src/app.js'",
+    "expose": "ngrok http 8302",
+    "stop": "c-port 8302 && kill-port 4049 && kill-port 4040",
+    "db:init": "sequelize db:migrate"
+  },
+  "nodemonConfig": {
+    "watch": [
+      ".env",
+      "src/"
+    ]
+  },
+  "dependencies": {
+    "@slack/web-api": "^5.14.0",
+    "body-parser": "^1.19.0",
+    "cross-port-killer": "^1.2.1",
+    "dotenv": "^5.0.1",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "monday-sdk-js": "0.0.12",
+    "ngrok": "^3.3.0",
+    "node-cache": "^5.1.2",
+    "node-fetch": "^2.6.1",
+    "sequelize": "^6.3.5",
+    "sqlite3": "^4.1.1"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "concurrently": "^5.2.0",
+    "debug": "~2.6.9",
+    "eslint": "^v6.8.0",
+    "mocha": "^5.0.4",
+    "mock-require": "^3.0.1",
+    "nodemon": "^2.0.2",
+    "sequelize-cli": "^6.2.0",
+    "sinon": "^7.4.2"
+  }
+}
