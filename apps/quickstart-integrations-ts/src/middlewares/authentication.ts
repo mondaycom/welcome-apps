@@ -24,7 +24,7 @@ export default async function authenticationMiddleware(
     const authorization = req.headers.authorization ?? req.query?.token;
 
     if (!authorization) {
-      res.status(401).json({ error: "not authenticated" });
+      res.status(401).json({ error: "not authenticated, no credentials in request" });
     }
     const { accountId, userId, backToUrl, shortLivedToken } = jwt.verify(
       authorization,
@@ -35,6 +35,6 @@ export default async function authenticationMiddleware(
 
     next();
   } catch (err) {
-    res.status(500).json({ error: "authentication error" });
+    res.status(500).json({ error: "authentication error, could not verify credentials" });
   }
 }
