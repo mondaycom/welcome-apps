@@ -45,7 +45,7 @@ export default async function authenticationMiddleware(
     next();
   } catch (err) {
     res
-      .status(500)
+      .status(401)
       .json({ error: "authentication error, could not verify credentials" });
   }
 }
