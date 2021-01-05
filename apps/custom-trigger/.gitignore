@@ -1,7 +1,6 @@
 node_modules/
 *.log
 database.sqlite
-.env
 .file
 
 # Created by https://www.gitignore.io/api/node,rubymine,visualstudiocode

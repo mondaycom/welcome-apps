@@ -1,0 +1,19 @@
+{
+  "extends": [
+    "./eslint.shared.json"
+  ],
+  "env": {
+    "es6": true,
+    "node": true,
+    "mocha": true
+  },
+  "globals": {
+    "logger": true,
+    "secrets": true
+  },
+  "settings": {
+    "flowtype": {
+      "onlyFilesWithFlowAnnotation": false
+    }
+  }
+}
