@@ -1,5 +1,4 @@
 const localtunnel = require('localtunnel');
-const { cache, cacheKeys } = require('../services/cache-service');
 
 const MAX_RETRIES = 5;
 
@@ -15,8 +14,6 @@ const createTunnel = async (port, retries = 0) => {
       createTunnel(port, ++retries);
     }, 200);
   }
-
-  cache.set(cacheKeys.SERVER_URL, url);
 
   if (!usedSubDomain) {
     console.warn('could not use requested subdomain, generated a random one');
