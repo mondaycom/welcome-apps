@@ -5,7 +5,7 @@
   "scripts": {
     "start": "npm run stop && npm run server",
     "server": "nodemon ./src/app.js",
-    "stop": "kill-port 8302 && kill-port 4049 && kill-port 4040"
+    "stop": "kill-port 8302"
   },
   "nodemonConfig": {
     "watch": [

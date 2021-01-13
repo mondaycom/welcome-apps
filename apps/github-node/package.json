@@ -3,9 +3,10 @@
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
-    "start": "npm run db:migrate && concurrently \"npm run server\"",
+    "start": "npm run stop && npm run db:migrate && npm run server",
     "server": "nodemon ./src/app.js",
-    "db:migrate": "sequelize db:migrate"
+    "db:migrate": "sequelize db:migrate",
+    "stop": "kill-port 8302"
   },
   "nodemonConfig": {
     "watch": [
