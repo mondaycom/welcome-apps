@@ -3,8 +3,9 @@
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
-    "start": "concurrently \"npm run server\"",
-    "server": "nodemon ./src/app.js"
+    "start": "npm run stop && npm run server",
+    "server": "nodemon ./src/app.js",
+    "stop": "kill-port 8302 && kill-port 4049 && kill-port 4040"
   },
   "nodemonConfig": {
     "watch": [
