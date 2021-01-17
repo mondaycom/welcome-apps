@@ -1,7 +1,9 @@
 ## Overview
 
 This is the "Slack Integration" example Monday app.
-<br>It can be used as a board recipe, which posts a message to a channel when an update is created
+<br>It can be used as a board recipe:
+
+- When an update is created, post it in <b>this channel</b>
 
 <br>This app demonstrates how to use:
 
