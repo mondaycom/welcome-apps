@@ -8,7 +8,7 @@ This is the "Quickstart Integration" example Monday app.
 - integration recipe
 - custom action
 - call authentication with JWT
-- API
+- query monday API using short lived token (seamless authentication)
 - remote options for custom fields
 
 <br>You can find more info in our QuickStart guide [here](https://monday.com/developers/apps/quickstart-integration/)

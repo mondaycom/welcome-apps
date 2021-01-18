@@ -1,8 +1,8 @@
 import express from 'express';
 const router = express.Router();
-import transformationRoutes from './transformation';
+import mondayRoutes from './monday';
 
-router.use(transformationRoutes);
+router.use(mondayRoutes);
 router.get('/', function(req, res) {
   res.json(getHealth());
 });
