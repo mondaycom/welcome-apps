@@ -4,7 +4,11 @@ const { cache, cacheKeys } = require('../services/cache-service');
 const MAX_RETRIES = 5;
 
 const createTunnel = async (port, retries = 0) => {
-  const tunnel = await localtunnel({ port, subdomain: process.env.TUNNEL_SUBDOMAIN });
+  const tunnel = await localtunnel({
+    host: process.env.TUNNEL_SERVER_HOST,
+    port,
+    subdomain: process.env.TUNNEL_SUBDOMAIN,
+  });
   const { url } = tunnel;
 
   const usedSubDomain = url.includes(process.env.TUNNEL_SUBDOMAIN);
