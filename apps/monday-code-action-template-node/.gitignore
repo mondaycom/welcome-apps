@@ -1,3 +1,5 @@
+.env.override
+
 # Created by https://www.gitignore.io/api/node,rubymine,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=node,rubymine,visualstudiocode
 

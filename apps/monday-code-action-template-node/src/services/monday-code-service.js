@@ -1,3 +1,27 @@
+const { functionTypes } = require("../consts/supported-function-types")
+
+/**
+ * This array will determine the project's routing and functionality tied to it.
+ * Every object in this array has to keep the standards of { route, type, function }
+ *
+ * @param obj.route - the access route to the function
+ * @param obj.type - the type of the function (only types from `functionTypes` are supported)
+ * @param obj.func - the logic to run when the route is accessed
+ * @type {({route: string, func: (function(): Promise<*>), type: string})[]}
+ */
+const functionalityMapping = [
+  {
+    route: "/monday_code/execute_action",
+    type: functionTypes.ACTION,
+    func: executeActionLogic
+  },
+  {
+    route: "/monday_code/get_remote_list_options",
+    type: functionTypes.REMOTE_OPTIONS,
+    func: getRemoteOptionsLogic
+  }
+]
+
 /**
  * Action related logic is added in this function's body
  *
@@ -5,7 +29,7 @@
  * @param monday - initialized instance of monday-client, used to perform operations in monday.com on behalf of the user [https://github.com/mondaycom/monday-sdk-js]
  * @returns {Promise<any>}
  */
-async function actionLogic({ requestPayload, monday }) {
+async function executeActionLogic({ requestPayload, monday }) {
   /** ############################################################### *
    *  #### Example implementation of action logic.              ##### *
    *  #### Replace this logic with your action implementation.  ##### *
@@ -35,7 +59,7 @@ async function actionLogic({ requestPayload, monday }) {
  *
  * @returns {Promise<{title: string, value: string}[]>}
  */
-async function getRemoteOptions() {
+async function getRemoteOptionsLogic() {
   /** ##################################################### *
    *  #### Example implementation of remote options.  ##### *
    *  #### Replace this with your remote options.     ##### *
@@ -45,8 +69,7 @@ async function getRemoteOptions() {
 }
 
 module.exports = {
-  actionLogic,
-  getRemoteOptions
+  functionalityMapping
 };
 
 
