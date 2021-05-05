@@ -1,5 +1,5 @@
 {
-  "name": "monday-integration-quickstart",
+  "name": "monday-code-action-template-node",
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
@@ -7,6 +7,9 @@
     "start-dev": "npm run stop && nodemon --exec 'node --inspect=0.0.0.0:9229 ./src/app.js'",
     "server": "nodemon ./src/app.js",
     "stop": "kill-port 8302"
+  },
+  "engines": {
+    "node": ">=14"
   },
   "nodemonConfig": {
     "watch": [

@@ -22,7 +22,7 @@ const createTunnel = async (port, retries = 0) => {
   if (!usedSubDomain) {
     console.warn('could not use requested subdomain, generated a random one');
   }
-  console.log(`listening at localhost:${port} || tunnel: ${url}`);
+  console.log(`tunnel: ${url}`);
 
   tunnel.on('close', () => {
     // tunnels are closed

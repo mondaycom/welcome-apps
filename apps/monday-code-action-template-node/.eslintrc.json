@@ -12,5 +12,9 @@
     "flowtype": {
       "onlyFilesWithFlowAnnotation": false
     }
-  }
+  },
+  "parserOptions": {
+    "ecmaVersion": 2020
+  },
+  "extends": "eslint:recommended"
 }
