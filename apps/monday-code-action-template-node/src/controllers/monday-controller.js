@@ -1,8 +1,12 @@
 const initMondayClient = require('monday-sdk-js');
-const mondayCodeService = require('../services/monday-code-service');
+const { functionTypes } = require('../consts/supported-function-types')
 
-// Accessed through /monday_code/execute_action
-async function executeAction(req, res) {
+const mappedControllerFunctions = Object.freeze({
+  [functionTypes.ACTION]: executeAction,
+  [functionTypes.REMOTE_OPTIONS]: getRemoteListOptions
+})
+
+async function executeAction(req, res, func) {
   const { shortLivedToken } = req.session;
   const { payload } = req.body;
 
@@ -10,7 +14,7 @@ async function executeAction(req, res) {
   mondayClient.setToken(shortLivedToken);
 
   try {
-    const response = await mondayCodeService.actionLogic({ requestPayload: payload, monday: mondayClient }) || {};
+    const response = await func({ requestPayload: payload, monday: mondayClient }) || {};
     return res.status(200).send(response);
   } catch (err) {
     console.error(err);
@@ -18,10 +22,9 @@ async function executeAction(req, res) {
   }
 }
 
-// Accessed through /monday_code/get_remote_list_options
-async function getRemoteListOptions(req, res) {
+async function getRemoteListOptions(req, res, func) {
   try {
-    const remoteOptions = await mondayCodeService.getRemoteOptions();
+    const remoteOptions = await func();
     return res.status(200).send(remoteOptions);
   } catch (err) {
     console.error(err);
@@ -30,6 +33,5 @@ async function getRemoteListOptions(req, res) {
 }
 
 module.exports = {
-  executeAction,
-  getRemoteListOptions
+  mappedControllerFunctions
 };

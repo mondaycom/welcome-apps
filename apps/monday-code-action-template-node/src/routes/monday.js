@@ -1,8 +1,13 @@
 const router = require('express').Router();
+const { mappedControllerFunctions } = require('../controllers/monday-controller');
 const { authenticationMiddleware } = require('../middlewares/authentication');
-const mondayController = require('../controllers/monday-controller');
+const { functionalityMapping } = require("../services/monday-code-service")
+const { validateFunctionalityMapping } = require("../helpers/validators/validate-functionality-mapping")
 
-router.post('/monday_code/execute_action', authenticationMiddleware, mondayController.executeAction);
-router.post('/monday_code/get_remote_list_options', authenticationMiddleware, mondayController.getRemoteListOptions);
+validateFunctionalityMapping(functionalityMapping);
+
+functionalityMapping.forEach(({ route, type, func }) => {
+  router.post(route, authenticationMiddleware, (req, res) => mappedControllerFunctions[type](req, res, func))
+})
 
 module.exports = router;

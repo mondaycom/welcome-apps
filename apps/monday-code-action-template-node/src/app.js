@@ -7,7 +7,7 @@ const { PORT: port, NODE_ENV: env } = process.env;
 
 let createTunnel
 if (env !== 'production') {
-  createTunnel = require('./helpers/tunnel').createTunnel();
+  createTunnel = require('./helpers/tunnel').createTunnel;
 }
 
 const app = express();

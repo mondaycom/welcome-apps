@@ -1,3 +1,28 @@
+const { functionTypes } = require("../consts/supported-function-types")
+
+/**
+ * This array will routing creation
+ * Every object in this array has to keep the standards of { route, type, function }
+ *
+ * @param obj.route - the access route to the function
+ * @param obj.type - the type of the function (only types from `functionTypes` are supported)
+ * @param obj.func - the logic to run when the route is accessed
+ * @type {({route: string, func: (function(): Promise<*>), type: string})[]}
+ */
+
+const functionalityMapping = [
+  {
+    route: "/monday_code/execute_action",
+    type: functionTypes.ACTION,
+    func: actionLogic
+  },
+  {
+    route: "/monday_code/get_remote_list_options",
+    type: functionTypes.REMOTE_OPTIONS,
+    func: getRemoteOptions
+  }
+]
+
 /**
  * Action related logic is added in this function's body
  *
@@ -45,8 +70,7 @@ async function getRemoteOptions() {
 }
 
 module.exports = {
-  actionLogic,
-  getRemoteOptions
+  functionalityMapping
 };
 
 
