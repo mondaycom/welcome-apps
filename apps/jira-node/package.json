@@ -15,15 +15,15 @@
     ]
   },
   "dependencies": {
-    "@octokit/rest": "^16.43.2",
     "body-parser": "^1.19.0",
     "cross-port-killer": "^1.2.1",
     "dotenv": "^5.0.1",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
-    "monday-sdk-js": "0.0.12",
+    "monday-sdk-js": "0.1.2",
     "node-cache": "^5.1.2",
     "node-fetch": "^2.6.1",
+    "npm": "^7.19.0",
     "sequelize": "^6.3.5",
     "simple-oauth2": "^4.2.0",
     "sqlite3": "^4.1.1"

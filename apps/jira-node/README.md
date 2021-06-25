@@ -23,7 +23,7 @@ This integration recipes uses the Jira API with basic authentication to create a
 2. Create a new "Jira JQL App" 
 3. Open the "Features" section and create a new "Integration" feature
 
-### Create a with custom trigger, dynamic mapping custom field, and custom action
+### Create a custom trigger, dynamic mapping custom field, and custom action
 
 1. Open the "Custom Blocks" tab
 2. Click the "Create new" button and select "Trigger." Configure your custom trigger to have the following configuration:
@@ -58,7 +58,7 @@ In order for this integration recipe to work you will need to generate a new API
 
 ## Installing and Starting the Server
 
-1. Make sure you have Node (v10+) and npm installed from the [Node.js website](https://nodejs.org/en/download/).
+1. Due to the syntax utilized in this example code, make sure you have Node version 14+ and npm installed from the [Node.js website](https://nodejs.org/en/download/).
 2. Use the correct node version:
 ```
 $ nvm use
@@ -75,7 +75,7 @@ $ npm install
 $ npm run start
 ```
 
-5. Paste the outputted URL (it should be https://jql-app-803.loca.lt) in the "Feature Details" tab of your "Jira JQL App" in monday.com, under "Base URL."
+5. Paste the outputted URL in the "Feature Details" tab of your "Jira JQL App" in monday.com, under "Base URL."
 6. You're now ready to go and start using this app! Add the recipe to a board to start testing. 
 
 ## Adapting this Example App
@@ -83,3 +83,7 @@ $ npm run start
 As an example app, this code is meant to serve as an inspiration and jumping off point for monday apps developers. It demonstrates how to utilize dynamic mapping in your custom integration recipes, as well as how to create an integration column that will automatically populate with the IDs of your imported Jira issues. 
 
 To modify this code, start by checking out the monday-controller.js file, the integration-controller.js file, as well as the jira-service.js file and the monday-service.js file. These files hold the bulk of what you would potentially be modifying: the logic of the trigger of how a Jira webhook is created, and the logic of the action of how an item is searched for and created or updated. 
+
+## Things to Keep in Mind
+
+The usage of the SQLite database in this example app is just for demo purposes. Apps built for production need to store tokens securely in encrypted databases, such as Vault. 

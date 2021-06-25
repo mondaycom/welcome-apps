@@ -17,18 +17,17 @@ const createWebhook = async (jql, subscriptionId) => {
     "filters": {
       "issue-related-events-section": ${JSON.stringify(jql)}
     },
-    "excludeIssueDetails": false
+    "excludeBody": false
   }`;
   return fetch(fetchUrl, {
-    method: 'post',
+    method: 'POST',
     headers: {
       'Authorization': `Basic ${Buffer.from(user).toString('base64')}`,
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
     body: bodyData
-  }).then(response => { 
-    return response.json() })
+  }).then(response => { return response.json()})
   .then(text => {
     text = text.self;
     const webhookId = text.split("/").pop();
@@ -70,5 +69,5 @@ module.exports = {
   createWebhook,
   deleteWebhook,
   getIssueFieldDefs,
-  convertIssueToPrimitives
+  convertIssueToPrimitives,
 }

@@ -11,9 +11,7 @@ async function integrationEventsHandler(req, res) {
     const { mondayWebhookUrl } = await subscriptionModelService.getSubscription(subscriptionId);
     const convertedIssue = jiraService.convertIssueToPrimitives(issue, fields);
     const issueId = convertedIssue.id;
-
     await mondayTriggersService.triggerMondayIntegration(mondayWebhookUrl, { issueFields: convertedIssue, issueId: issueId });
-
     return res.status(200).send(issueId);
   } catch (err) {
     console.error(err);

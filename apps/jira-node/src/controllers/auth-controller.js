@@ -9,13 +9,12 @@ const authorize = async (req, res) => {
 const callback = async (req, res) => {
   const { userId } = req.params;
   const { code, state: backToUrl } = req.query;
-
   try {
     const token = await authService.getToken(code);
     return res.redirect(backToUrl);
   } catch (err) {
     console.error(err);
-    return res.status(500).send({ message: 'internal server error' });
+    return res.status(401).send({ message: 'failed to authenticate' });
   }
 };
 

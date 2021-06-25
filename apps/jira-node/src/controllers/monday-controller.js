@@ -6,19 +6,33 @@ async function subscribe(req, res) {
   const { payload } = req.body;
   const { webhookUrl, inputFields } = payload;
   const { shortLivedToken } = req.session;
+  const { jql, boardId } = inputFields;
   try {
-    const jql = inputFields.jql;
-    const boardId = inputFields.boardId;
-    var columnId = "";
     const { id: subscriptionId } = await subscriptionModelService.createSubscription({ mondayWebhookUrl: webhookUrl });
     const webhookId = await jiraService.createWebhook(jql, subscriptionId);
-    const columnList = await mondayService.queryColumns(shortLivedToken, boardId)
-    columnList.forEach(column => { if (column.id.search("jira_issue") != -1) { columnId = column.id }})
+    await findOrCreateColumn(shortLivedToken, boardId)
     await subscriptionModelService.updateSubscription(subscriptionId, { webhookId });
     return res.status(200).send({ webhookId: subscriptionId });
   } catch (err) {
     console.error(err);
     return res.status(500).send({ message: 'internal server error' });
+  }
+}
+
+async function findOrCreateColumn(shortLivedToken, boardId){
+  try{
+    var columnId;
+    const columnList = await mondayService.queryColumns(shortLivedToken, boardId)
+    columnList.forEach(column => { 
+      if (column.id.search("jira_issue") != -1) { 
+        columnId = column.id 
+      }
+    })
+    columnId ?? columnId == await mondayService.createColumn(shortLivedToken, boardId);
+    return columnId;
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send({ message: 'internal server error'})
   }
 }
 
@@ -45,21 +59,17 @@ async function getFieldDefs(req, res) {
   }
 }
 
-async function getItemsByIssueId(itemList, issueId) {
-  var itemArray = [];
-  try{
-    for (var item of itemList){
-      var issue = item.column_values[0].value;
-      if (issue != null) {
-        issue = JSON.parse(issue)
-        if (issue.entity_id == issueId)  {
-          itemArray.push(item)
-        }
-      }
+async function getItemByIssueOrCreateIfNotExists(shortLivedToken, boardId, columnId, issueId, name, columnValues) {
+  try {
+    const itemList = await mondayService.queryItemValues(shortLivedToken, boardId, columnId)
+    const itemArray = itemList.filter(item => (item.column_values[0].value !== null && JSON.parse(item.column_values[0].value).entity_id === issueId))
+    if (itemArray.length == 0){ await mondayService.createItem(shortLivedToken, boardId, name, columnValues) } 
+    else { 
+      const itemId = itemArray[0].id;
+      await mondayService.changeMultipleColumnValues(shortLivedToken, boardId, itemId, columnValues) 
     }
-    return itemArray;
-  }catch (err){
-    console.error(err);
+  } catch (err) {
+    console.log(err);
     return res.status(500).send({ message: 'internal server error' });
   }
 }
@@ -70,23 +80,10 @@ async function executeAction(req, res) {
   const { inboundFieldValues } = payload;
   const { issueId, boardId, itemMapping } = inboundFieldValues; 
   const { name } = itemMapping;
-
-  delete itemMapping["__groupId__"];
-  var columnId = "";
-  const columnList = await mondayService.queryColumns(shortLivedToken, boardId);
-  columnList.forEach(column => { if (column.id.search("jira_issue") != -1) { columnId = column.id }})
-  if (columnId == "") { columnId = await mondayService.createColumn(shortLivedToken, boardId) }
-
+  const columnId = await findOrCreateColumn(shortLivedToken, boardId);
   try {
-    const jiraIssueId = { [columnId]: { "entity_id": issueId } };
-    Object.assign(itemMapping, jiraIssueId)
-    const columnValues = JSON.stringify(itemMapping)
-    const itemList = await mondayService.queryItemValues(shortLivedToken, boardId, columnId)
-    var foundItem = await getItemsByIssueId(itemList, issueId); 
-    if (foundItem.length == 0){ await mondayService.createItem(shortLivedToken, boardId, name, columnValues) }
-    else{ 
-      var itemId = foundItem[0].id;
-      await mondayService.changeMultipleColumnValues(shortLivedToken, boardId, itemId, columnValues) }
+    const columnValues = {...itemMapping, [columnId]: { "entity_id": issueId }};
+    await getItemByIssueOrCreateIfNotExists(shortLivedToken, boardId, columnId, issueId, name, columnValues);
     return res.status(200).send({});
   } catch (err) {
     console.error(err);
