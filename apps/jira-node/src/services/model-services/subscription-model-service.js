@@ -2,8 +2,7 @@ const { Subscription } = require('../../db/models');
 
 const getSubscription = async (subscriptionId) => {
   try {
-    const subscription = await Subscription.findByPk(subscriptionId);
-    return subscription;
+    return await Subscription.findByPk(subscriptionId);
   } catch (err) {
     console.error(err);
   }
@@ -11,13 +10,11 @@ const getSubscription = async (subscriptionId) => {
 
 const createSubscription = async (attributes) => {
   const { mondayWebhookUrl } = attributes;
-
   try {
-    const newSubscription = await Subscription.create({
+    return await Subscription.create({
       active: true,
       mondayWebhookUrl,
     });
-    return newSubscription;
   } catch (err) {
     console.error(err);
   }
@@ -26,7 +23,7 @@ const createSubscription = async (attributes) => {
 const updateSubscription = async (subscriptionId, updates) => {
   const { mondayWebhookUrl, webhookId } = updates;
   try {
-    const subscription = await Subscription.update(
+    return await Subscription.update(
       { mondayWebhookUrl, webhookId },
       {
         where: {
@@ -34,7 +31,6 @@ const updateSubscription = async (subscriptionId, updates) => {
         },
       }
     );
-    return subscription;
   } catch (err) {
     console.error(err);
   }
@@ -42,7 +38,7 @@ const updateSubscription = async (subscriptionId, updates) => {
 
 const deleteSubscription = async (subscriptionId) => {
   try {
-    const subscription = await Subscription.update(
+    return await Subscription.update(
       { active: false },
       {
         where: {
@@ -50,7 +46,6 @@ const deleteSubscription = async (subscriptionId) => {
         },
       }
     );
-    return subscription;
   } catch (err) {
     console.error(err);
   }

@@ -23,13 +23,8 @@ async function findOrCreateColumn(shortLivedToken, boardId){
   try{
     var columnId;
     const columnList = await mondayService.queryColumns(shortLivedToken, boardId)
-    columnList.forEach(column => { 
-      if (column.id.search("jira_issue") != -1) { 
-        columnId = column.id 
-      }
-    })
-    columnId ?? columnId == await mondayService.createColumn(shortLivedToken, boardId);
-    return columnId;
+    columnList.forEach(column => { if (column.id.search("jira_issue") !== -1) { columnId = column.id }})
+    return columnId ?? columnId === await mondayService.createColumn(shortLivedToken, boardId);
   } catch (err) {
     console.log(err);
     return res.status(500).send({ message: 'internal server error'})
@@ -62,8 +57,8 @@ async function getFieldDefs(req, res) {
 async function getItemByIssueOrCreateIfNotExists(shortLivedToken, boardId, columnId, issueId, name, columnValues) {
   try {
     const itemList = await mondayService.queryItemValues(shortLivedToken, boardId, columnId)
-    const itemArray = itemList.filter(item => (item.column_values[0].value !== null && JSON.parse(item.column_values[0].value).entity_id === issueId))
-    if (itemArray.length == 0){ await mondayService.createItem(shortLivedToken, boardId, name, columnValues) } 
+    const itemArray = itemList.filter(item => (item?.column_values[0]?.value && JSON.parse(item.column_values[0].value).entity_id === issueId))
+    if (itemArray.length === 0){ await mondayService.createItem(shortLivedToken, boardId, name, columnValues) } 
     else { 
       const itemId = itemArray[0].id;
       await mondayService.changeMultipleColumnValues(shortLivedToken, boardId, itemId, columnValues) 

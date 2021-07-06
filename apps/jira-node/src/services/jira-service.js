@@ -5,49 +5,54 @@ const user = process.env.USERNAME + ':' + process.env.API_KEY.toString();
 const baseUrl = process.env.URL;
 
 const createWebhook = async (jql, subscriptionId) => {
-  var fetchUrl = baseUrl + '/rest/webhooks/1.0/webhook/';
-  var targetUrl = `${cache.get(cacheKeys.SERVER_URL)}/integration/integration-events/${subscriptionId}/`;
-  const bodyData = `{
-    "name": "monday App Webhook",
-    "url": ${JSON.stringify(targetUrl)},
-    "events": [
-        "jira:issue_created",
-        "jira:issue_updated"
-      ],
-    "filters": {
-      "issue-related-events-section": ${JSON.stringify(jql)}
-    },
-    "excludeBody": false
-  }`;
-  return fetch(fetchUrl, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Basic ${Buffer.from(user).toString('base64')}`,
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: bodyData
-  }).then(response => { return response.json()})
-  .then(text => {
-    text = text.self;
-    const webhookId = text.split("/").pop();
-    return webhookId;
-  }).catch(err => console.error(err));
+  try {
+    var fetchUrl = `${baseUrl}/rest/webhooks/1.0/webhook/`;
+    var targetUrl = `${cache.get(cacheKeys.SERVER_URL)}/integration/integration-events/${subscriptionId}/`;
+    const bodyData = `{
+      "name": "monday App Webhook",
+      "url": ${JSON.stringify(targetUrl)},
+      "events": [
+          "jira:issue_created",
+          "jira:issue_updated"
+        ],
+      "filters": {
+        "issue-related-events-section": ${JSON.stringify(jql)}
+      },
+      "excludeBody": false
+    }`;
+    const response = await fetch(fetchUrl, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Basic ${Buffer.from(user).toString('base64')}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: bodyData
+    });
+    const res = await response.json();
+    return res.self.split("/").pop();
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send({ message: 'internal server error' });
+  }
 }
 
 const deleteWebhook = async (webhookId) => {
-  var fetchUrl = baseUrl + '/rest/webhooks/1.0/webhook/' + webhookId;
-  return fetch(fetchUrl, {
-    method: 'delete',
-    headers: {
-      'Authorization': `Basic ${Buffer.from(user).toString('base64')}`,
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-  }).then(response => { 
-    return response.text() })
-  .then(text => console.log(text))
-  .catch(err => console.error(err));
+  try {
+    var fetchUrl = `${baseUrl}/rest/webhooks/1.0/webhook/${webhookId}`;
+    const response = await fetch(fetchUrl, {
+      method: 'delete',
+      headers: {
+        'Authorization': `Basic ${Buffer.from(user).toString('base64')}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    });
+    return await response.text();
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send({ message: 'internal server error' });
+  }
 }
 
 const convertIssueToPrimitives = (issue, fields) => {
