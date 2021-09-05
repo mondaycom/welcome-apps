@@ -1,0 +1,51 @@
+@import "../../../styles/animations.scss";
+
+.action-header-container {
+  grid-area: header;
+  box-shadow: 0 4px 8px -1px rgba(0, 0, 0, 0.2);
+  color: white;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  display: flex;
+  svg {
+    cursor: pointer;
+  }
+  & > svg {
+    position: absolute;
+    right: 10px;
+    color: white;
+    z-index: 5;
+  }
+  & > div.headers {
+    position: relative;
+    box-sizing: border-box;
+    padding-left: 40px;
+    & > h2.board-name {
+      margin-top: 14px;
+      margin-bottom: 0;
+      & > svg:nth-child(1) {
+        margin-right: 10px;
+        position: absolute;
+        left: 16px;
+      }
+      & > svg:nth-child(2) {
+        margin-left: 20px;
+      }
+    }
+
+    & > h5 {
+      margin-top: 6px;
+    }
+  }
+
+  & > .dialog-content-container {
+    width: fit-content;
+    max-height: 125px;
+    overflow: auto;
+    margin-left: 20px;
+    padding: 10px;
+    margin-left: 20px;
+    animation: fadein 500ms;
+  }
+}
