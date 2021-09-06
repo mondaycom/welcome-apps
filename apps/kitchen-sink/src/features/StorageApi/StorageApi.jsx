@@ -59,7 +59,7 @@ const StorageApi = () => {
         {items.map((item) => {
           const isFavourite = favouriteItems.includes(+item.id);
           return (
-            <Card
+            <Item
               key={item.id}
               item={item}
               action={() => changeItemFavouriteState(item.id, !isFavourite)}
@@ -81,7 +81,7 @@ const StorageApi = () => {
 
 export default StorageApi;
 
-const Card = ({ item, action, isFavourite, backgroundColor }) => {
+const Item = ({ item, action, isFavourite, backgroundColor }) => {
   const initialRandomColor = useRef(backgroundColor);
   return (
     <div className="working-with-the-board-item">
