@@ -20,11 +20,11 @@ const StorageApi = () => {
 
   useEffect(() => {
     monday.storage.instance.getItem("FAVOURITE_ITEMS").then((res) => {
-      if (!res.data.value || !res.data.success) {
+      if (!res.data?.value || !res.data?.success) {
         monday.storage.instance.setItem("FAVOURITE_ITEMS", JSON.stringify([]));
         return;
       } else {
-        setFavouriteItems(JSON.parse(res.data.value));
+        setFavouriteItems(JSON.parse(res.data?.value));
       }
     });
 
