@@ -31,7 +31,7 @@ F.e.: https://021eb6330099.ngrok.io
 5. Open "View setup" tab and fulfill in "Custom URL" field your ngrok public URL, which you got previously (f.e. https://021eb6330099.ngrok.io)
 6. Click "Boards" button and choose one of the boards with some data in it.
 7. Click "Preview button"
-8. Enjoy the Word Cloud app!
+8. Enjoy the Kitchen Sink app!
 ## Release your app
 
 1. Run script

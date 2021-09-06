@@ -1,15 +1,15 @@
 {
-  "name": "monday-integration-quickstart-app",
+  "name": "monday-kitchen-sink-app",
   "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "npm run stop && concurrently \"npm run server\" \"npm run expose\"",
     "build": "react-scripts build",
-    "expose": "ngrok http 8301",
+    "expose": "ngrok http 8305",
     "server": "react-scripts start",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "stop": "kill-port 8301 && kill-port 4049 && kill-port 4040"
+    "stop": "kill-port 8305 && kill-port 4049 && kill-port 4040"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free-regular": "^5.0.13",
