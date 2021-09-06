@@ -39,7 +39,7 @@ const GetUpdates = () => {
           setUpdatesData([]);
           return;
         }
-        const updatesData = res.data.boards[0]?.items[0]?.updates.map((update) => {
+        const updatesData = res.data?.boards[0]?.items[0]?.updates.map((update) => {
           return { id: update.id, name: update.text_body };
         });
         setUpdatesData(updatesData);

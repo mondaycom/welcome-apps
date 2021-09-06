@@ -66,12 +66,12 @@ const GetSubItems = () => {
           setSubitemsData([]);
           return;
         }
-        const subitems = JSON.parse(res.data.boards[0].items[0].column_values[0].value).linkedPulseIds;
+        const subitems = JSON.parse(res?.data?.boards[0]?.items[0]?.column_values[0]?.value).linkedPulseIds;
         if (!subitems) {
           noticeNoSubitemsForSelectedItems();
           return;
         }
-        subitemsIds = JSON.parse(res.data.boards[0].items[0].column_values[0].value).linkedPulseIds.map(
+        subitemsIds = JSON.parse(res.data?.boards[0]?.items[0]?.column_values[0]?.value).linkedPulseIds.map(
           (linkedPulse) => {
             return +linkedPulse.linkedPulseId;
           }

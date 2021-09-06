@@ -27,7 +27,7 @@ const ArchiveSubitem = () => {
         variables: { item_id: subitemId },
       })
       .then((res) => {
-        setSubitems(res.data.archive_item.board.items);
+        setSubitems(res.data?.archive_item.board?.items);
         monday.execute("notice", {
           message: "Archived!",
           type: "success",

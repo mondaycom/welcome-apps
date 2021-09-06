@@ -29,7 +29,7 @@ const UpdateSubitem = () => {
         variables: { board_id: subitemsBoardId, item_id: subitemId, column_values },
       })
       .then((res) => {
-        setSubitems(res.data.change_multiple_column_values.board.items);
+        setSubitems(res.data?.change_multiple_column_values?.board?.items);
         monday.execute("notice", {
           message: "Updated!",
           type: "success",
@@ -43,10 +43,7 @@ const UpdateSubitem = () => {
 
   return (
     <div className="update-subitems-container feature-container">
-      <ActionHeader
-        action="Update subitems value"
-        actionDescription="Using the Monday API to update subitems value"
-      />
+      <ActionHeader action="Update subitems value" actionDescription="Using the Monday API to update subitems value" />
       {subitems?.length > 0 ? (
         <RenderItems
           action={(subitem) => handleUpdateSubitem(+subitem.id)}
