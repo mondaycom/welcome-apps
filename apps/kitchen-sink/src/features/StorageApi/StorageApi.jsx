@@ -23,7 +23,9 @@ const StorageApi = () => {
       if (!res.data.value || !res.data.success) {
         monday.storage.instance.setItem("FAVOURITE_ITEMS", JSON.stringify([]));
         return;
-      } else setFavouriteItems(JSON.parse(res.data.value));
+      } else {
+        setFavouriteItems(JSON.parse(res.data.value));
+      }
     });
 
     monday.execute("notice", {
@@ -36,14 +38,18 @@ const StorageApi = () => {
   const changeItemFavouriteState = (itemId, desiredFavouriteState) => {
     let updatedFavourites = [...favouriteItems];
     if (desiredFavouriteState) {
-      if (!favouriteItems.includes(+itemId)) updatedFavourites.push(+itemId);
+      if (!favouriteItems.includes(+itemId)) {
+        updatedFavourites.push(+itemId);
+      }
     } else {
       updatedFavourites = updatedFavourites.filter((favouriteItemId) => {
         return favouriteItemId !== +itemId;
       });
     }
     monday.storage.instance.setItem("FAVOURITE_ITEMS", JSON.stringify(updatedFavourites)).then((res) => {
-      if (res.data.success) setFavouriteItems(updatedFavourites);
+      if (res.data.success) {
+        setFavouriteItems(updatedFavourites);
+      }
     });
   };
 
@@ -87,11 +93,7 @@ const Item = ({ item, action, isFavourite, backgroundColor }) => {
     <div className="working-with-the-board-item">
       <div className="rect" style={{ backgroundColor: `rgb${initialRandomColor.current}` }}></div>
       <span className="item-name ellipsis">{item.name}</span>
-      <FontAwesomeIcon
-        className="heart-icon"
-        icon={isFavourite ? fasHeart : farHeart}
-        onClick={() => action()}
-      />
+      <FontAwesomeIcon className="heart-icon" icon={isFavourite ? fasHeart : farHeart} onClick={() => action()} />
       <div className="circle"></div>
     </div>
   );

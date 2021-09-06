@@ -28,7 +28,9 @@ const Pagination = () => {
         .then((res) => {
           const itemsResponse = res.data.boards[0].items;
           setItems((prevItems) => [...prevItems, ...itemsResponse]);
-          if (itemsResponse.length !== limit) setIsLastPage(true);
+          if (itemsResponse.length !== limit) {
+            setIsLastPage(true);
+          }
         });
     },
     [boardId, limit]
