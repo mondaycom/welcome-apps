@@ -41,15 +41,8 @@ const Confirmation = () => {
         <Button style={{ width: "30%", margin: "30px 0" }} onClick={handleConfirmation}>
           Click Me
         </Button>
-        {count !== 0 ? (
-          confirmed ? (
-            <AttentionBox type="success" text="Confirmed" title="Lets go!" />
-          ) : (
-            <AttentionBox type="danger" text="Denied" title="No way" />
-          )
-        ) : (
-          ""
-        )}
+        {count !== 0 && confirmed && <AttentionBox type="success" text="Confirmed" title="Lets go!" />}
+        {count !== 0 && !confirmed && <AttentionBox type="danger" text="Denied" title="No way" />}
       </div>
       <Instructions
         paragraphs={confirmationConstants.confirmationInstructionsParagraphs}
