@@ -2897,10 +2897,10 @@ mock-require@^3.0.1:
     get-caller-file "^1.0.2"
     normalize-path "^2.1.1"
 
-monday-sdk-js@0.0.12:
-  version "0.0.12"
-  resolved "https://registry.yarnpkg.com/monday-sdk-js/-/monday-sdk-js-0.0.12.tgz#c4140399c83fc07f4df8c2bf7572cc5e0d4d7d4a"
-  integrity sha512-/ND0U6uiclyteCAj6V/pSMSJJB1xfBAHiTApwtQ3KMbUsqI+U+YRdaBQmdW9HTfQ4w1ODqlu4qwMj5/1UbbdUg==
+monday-sdk-js@0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/monday-sdk-js/-/monday-sdk-js-0.1.3.tgz#925b067c85f7ef19843ef85ae1ed949f2251e790"
+  integrity sha512-Yl5mALmf33Q54WmOgGJf0wn4FyWpfCv3Wg8JszcqB/Jx9Ay7PmSB71ytm+jgLBCojzeUupuNANrv9imfftVXaw==
   dependencies:
     "@types/source-map" "^0.5.2"
     node-fetch "^2.6.0"
