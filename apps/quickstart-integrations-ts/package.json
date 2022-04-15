@@ -16,7 +16,7 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "monday-sdk-js": "0.0.12",
-    "querystring": "^0.2.0",
+    "querystring": "^0.2.1",
     "ts-node": "^9.1.1"
   },
   "devDependencies": {
