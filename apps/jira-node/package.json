@@ -23,7 +23,7 @@
     "monday-sdk-js": "0.1.2",
     "node-cache": "^5.1.2",
     "node-fetch": "^2.6.1",
-    "npm": "^7.19.0",
+    "npm": "^7.21.0",
     "sequelize": "^6.3.5",
     "simple-oauth2": "^4.2.0",
     "sqlite3": "^4.2.0"
