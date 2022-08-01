@@ -22,7 +22,7 @@
     "jsonwebtoken": "^8.5.1",
     "monday-sdk-js": "0.1.2",
     "node-cache": "^5.1.2",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^3.2.10",
     "npm": "^7.19.0",
     "sequelize": "^6.3.5",
     "simple-oauth2": "^4.2.0",
