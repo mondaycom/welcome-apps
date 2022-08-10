@@ -14,12 +14,12 @@
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
+    "eslint-config-react-app": "^7.0.1",
     "monday-sdk-js": "^0.1.2",
-    "monday-ui-react-core": "0.0.48",
-    "react": "^16.13.0",
-    "react-dom": "^16.13.0",
-    "react-scripts": "3.4.0"
+    "monday-ui-react-core": "^1.54.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "^5.0.1"
   },
   "eslintConfig": {
     "extends": "react-app"
