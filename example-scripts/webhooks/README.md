@@ -1,4 +1,4 @@
-This video (link) explains the basics of monday.com webhooks and how they work. The webhook integration allows you to subscribe to certain events on your monday.com board. Your app will receive a notification when these events happen so your app can react to those events.
+The video we uploaded to our Youtube channel (https://www.youtube.com/watch?v=-7G03rhRC2U) explains the basics of monday.com webhooks and how they work. The webhook integration allows you to subscribe to certain events on your monday.com board. Your app will receive a notification when these events happen so your app can react to those events.
 
 Here's an example that you can follow to add a webhook to your board.
 
