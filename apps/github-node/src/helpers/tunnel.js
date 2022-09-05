@@ -1,10 +1,10 @@
-const localtunnel = require('localtunnel');
+const mondayTunnel = require('@mondaydotcomorg/tunnel');
 const { cache, cacheKeys } = require('../services/cache-service');
 
 const MAX_RETRIES = 5;
 
 const createTunnel = async (port, retries = 0) => {
-  const tunnel = await localtunnel({
+  const tunnel = await mondayTunnel({
     host: process.env.TUNNEL_SERVER_HOST,
     port,
     subdomain: process.env.TUNNEL_SUBDOMAIN,
