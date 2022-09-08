@@ -20,7 +20,7 @@
     "ts-node": "^9.1.1"
   },
   "devDependencies": {
-    "@mondaydotcomorg/tunnel": "^0.1.2",
+    "@mondaydotcomorg/tunnel": "^0.3.0",
     "@types/express": "^4.17.9",
     "@types/jsonwebtoken": "^8.5.0",
     "chai": "^4.1.2",
