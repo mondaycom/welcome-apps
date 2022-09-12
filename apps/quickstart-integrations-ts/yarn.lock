@@ -118,10 +118,10 @@
   "resolved" "https://registry.npmjs.org/@mondaydotcomorg/tunnel-common/-/tunnel-common-0.0.2.tgz"
   "version" "0.0.2"
 
-"@mondaydotcomorg/tunnel@^0.1.2":
-  "integrity" "sha512-0/lrXlQK0oJxb6XVfAc3bEwPEpMXIucMUVsCrs2ZwecEEcPvKo7Q1PRAa2e7Gm74QPQ9m/2bT6TNYXqs+vvtKw=="
-  "resolved" "https://registry.npmjs.org/@mondaydotcomorg/tunnel/-/tunnel-0.1.2.tgz"
-  "version" "0.1.2"
+"@mondaydotcomorg/tunnel@^0.3.0":
+  "integrity" "sha512-AyNH7NxKJwaoqF7xc9M202l4znJIYNjnU3Sw6N86Xnh43XzOWyLUWvv8MRYzGsktkrIftq5kdqLQwmm7RwVrNw=="
+  "resolved" "https://registry.npmjs.org/@mondaydotcomorg/tunnel/-/tunnel-0.3.0.tgz"
+  "version" "0.3.0"
   dependencies:
     "@mondaydotcomorg/tunnel-common" "*"
     "axios" "^0.27.2"
