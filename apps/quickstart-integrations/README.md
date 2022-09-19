@@ -67,6 +67,6 @@ $ npm start
 
  ### Part Five: Using the custom integration recipe
 
-You're done! Head to any of your boards to add the integration recipe by searching for it's name (in this example the integration name is "New Feature").
+You're done! Head to any of your boards to add the integration recipe by searching for its name (in this example the integration name is "New Feature").
 
 Follow the integration recipe prompts as normal (selecting which Text columns you want) and watch the magic unfold!
