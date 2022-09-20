@@ -15,7 +15,7 @@
     "dotenv": "^5.0.1",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
-    "monday-sdk-js": "0.0.12",
+    "monday-sdk-js": "^0.1.4",
     "querystring": "^0.2.0",
     "ts-node": "^9.1.1"
   },

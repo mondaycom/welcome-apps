@@ -2737,10 +2737,10 @@
     "get-caller-file" "^1.0.2"
     "normalize-path" "^2.1.1"
 
-"monday-sdk-js@0.0.12":
-  "integrity" "sha512-/ND0U6uiclyteCAj6V/pSMSJJB1xfBAHiTApwtQ3KMbUsqI+U+YRdaBQmdW9HTfQ4w1ODqlu4qwMj5/1UbbdUg=="
-  "resolved" "https://registry.npmjs.org/monday-sdk-js/-/monday-sdk-js-0.0.12.tgz"
-  "version" "0.0.12"
+"monday-sdk-js@^0.1.4":
+  "integrity" "sha512-K+x/QWFtx41/mpgAXD2waXGeZtGFeJ0VLb1dlbJp4NyhQwsBcEeS+eim1cmp3MffXddtWs+MwvzwNtzPC44AHw=="
+  "resolved" "https://registry.npmjs.org/monday-sdk-js/-/monday-sdk-js-0.1.4.tgz"
+  "version" "0.1.4"
   dependencies:
     "@types/source-map" "^0.5.2"
     "node-fetch" "^2.6.0"
