@@ -3,7 +3,7 @@
 This is the "Quickstart Integration" example Monday app.
 <br>It can be used as a board recipe, which transforms data from one text column to another
 
-<br>This app demonstrates how to use:
+<br>This app demonstrates how to use the:
 
 - integration recipe
 - custom action
@@ -18,8 +18,7 @@ This is the "Quickstart Integration" example Monday app.
 
 1. Make sure you have Node (v16.16+) and npm installed
 
-<br>
-3. Run node modules install:
+2. Run node modules install:
 
 ```
 $ npm install
@@ -27,7 +26,7 @@ $ npm install
 
 ## Configure your Monday App
 
-### Part 1: Create a new app and integration feature
+### Part One: Create a new app and integration feature
 
 1. Open monday.com, login to your account and go to a "Developers" section.
 2. Create new "Integration Example App"
@@ -36,13 +35,13 @@ $ npm install
 
 <br>![Screenshot](https://dapulse-res.cloudinary.com/image/upload/v1659026516/integration_template.gif)
 
-### Part 2: Update your integration's basic information
+### Part Two: Update your integration's basic information
 
 In the feature editor, open the "Feature Details" tab. This tab allows you to add a title and description to your custom integration recipe. The user will see the title and description when they see your recipe in the Integrations Center.
 
 <br>![Screenshot](https://dapulse-res.cloudinary.com/image/upload/v1659026704/ee5c6e5-Quickstart_1.png)
 
-### Part 3: Recipe configuration
+### Part Three: Recipe configuration
 
 Our new feature templates provide the integration recipe for you, so it is ready to go.
 
@@ -52,7 +51,7 @@ This integration utilizes a custom action that calls our API to update a second 
 
 In short, integrations run off of triggers that invoke certain actions. These triggers are the conditions that must be met before an action can take place.
 
-## Part 4: Run the project
+## Part Four: Run the project
 
 1. Add your MONDAY_SIGNING_SECRET to .env file
    <br> \*\* To get your MONDAY_SIGNING_SECRET go to monday.com, open Developers section, open your app and find the Signing Secret in "Basic Information" section
@@ -63,12 +62,11 @@ In short, integrations run off of triggers that invoke certain actions. These tr
 $ npm start
 ```
 
-<br> 
 3. Open http://localhost:4040/status
  to get your ngrok public url
 
- ### Part 5: Using the custom integration recipe
+ ### Part Five: Using the custom integration recipe
 
-You're done! Head to any of your boards to add the integration recipe by searching up its name (in this example the integration name is "New Feature").
+You're done! Head to any of your boards to add the integration recipe by searching for its name (in this example the integration name is "New Feature").
 
 Follow the integration recipe prompts as normal (selecting which Text columns you want) and watch the magic unfold!
