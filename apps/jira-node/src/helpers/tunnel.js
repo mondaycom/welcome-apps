@@ -1,11 +1,10 @@
-const mondayTunnel = require('@mondaydotcomorg/tunnel');
+const mondayTunnel = require('@mondaydotcomorg/tunnel').default;
 const { cache, cacheKeys } = require('../services/cache-service');
 
 const MAX_RETRIES = 5;
 
 const createTunnel = async (port, retries = 0) => {
   const tunnel = await mondayTunnel({
-    host: process.env.TUNNEL_SERVER_HOST,
     port,
     subdomain: process.env.TUNNEL_SUBDOMAIN,
   });
@@ -26,10 +25,6 @@ const createTunnel = async (port, retries = 0) => {
     console.warn('could not use requested subdomain, generated a random one');
   }
   console.log(`listening at localhost:${port} || tunnel: ${url}`);
-
-  tunnel.on('close', () => {
-    // tunnels are closed
-  });
 };
 
 module.exports = { createTunnel };

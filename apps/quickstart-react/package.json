@@ -37,7 +37,7 @@
     ]
   },
   "devDependencies": {
-    "@mondaydotcomorg/tunnel": "^0.3.0",
+    "@mondaydotcomorg/tunnel": "^0.4.0",
     "concurrently": "^5.2.0",
     "cross-port-killer": "^1.2.1",
     "sass": "^1.54.8"
