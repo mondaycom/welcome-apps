@@ -118,14 +118,15 @@
   "resolved" "https://registry.npmjs.org/@mondaydotcomorg/tunnel-common/-/tunnel-common-0.0.2.tgz"
   "version" "0.0.2"
 
-"@mondaydotcomorg/tunnel@^0.4.0":
-  "integrity" "sha512-x7FaRXKQwgZxDl4f85o42ElCJlLYmikoKgcZdIUCE/+FppmB9wk1iX1MqO5dC4Dtvz6LUwbGPZUGXyGW9GHN1g=="
-  "resolved" "https://registry.npmjs.org/@mondaydotcomorg/tunnel/-/tunnel-0.4.0.tgz"
-  "version" "0.4.0"
+"@mondaydotcomorg/tunnel@^0.4.1":
+  "integrity" "sha512-Z9DCa3g8kx/KR3RF8GobbT1rm6K89ltB1KGxw+C+jUxSLMAfBunB3O+xDoJhU14OtSxje1r/3ZXD4HRvlhyWEQ=="
+  "resolved" "https://registry.npmjs.org/@mondaydotcomorg/tunnel/-/tunnel-0.4.1.tgz"
+  "version" "0.4.1"
   dependencies:
     "@mondaydotcomorg/tunnel-common" "*"
     "axios" "^0.27.2"
     "debug" "^4.3.4"
+    "dotenv" "^16.0.3"
     "openurl" "^1.1.1"
     "pino" "^8.3.1"
     "pino-pretty" "^8.1.0"
@@ -1150,6 +1151,11 @@
   "version" "5.3.0"
   dependencies:
     "is-obj" "^2.0.0"
+
+"dotenv@^16.0.3":
+  "integrity" "sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ=="
+  "resolved" "https://registry.npmjs.org/dotenv/-/dotenv-16.0.3.tgz"
+  "version" "16.0.3"
 
 "dotenv@^5.0.1":
   "integrity" "sha512-4As8uPrjfwb7VXC+WnLCbXK7y+Ueb2B3zgNCePYfhxS1PYeaO1YTeplffTEcbfLhvFNGLAz90VvJs9yomG7bow=="
