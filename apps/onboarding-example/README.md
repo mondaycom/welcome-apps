@@ -35,5 +35,5 @@ Visit http://localhost:4040/inspect/http to find the URL you can then paste in y
 2. Create a new app
 3. Open "OAuth & Permissions" section and add "boards:read", "users:read" and "notifications:write" scopes
 4. Open "Features" section and create a new "Boards View" feature from scratch
-5. Open "View setup" tab and fulfill in "Custom URL" field your ngrok public URL, which you got previously
+5. Open "View setup" tab and fulfill in "Custom URL" field your public URL, which you got previously
 6. Save the feature, go to any of your boards and add the board view to it

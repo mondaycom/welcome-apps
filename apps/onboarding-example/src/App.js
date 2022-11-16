@@ -36,14 +36,12 @@ class App extends React.Component {
     const WhenSettingsAreChanged = res => {
       let namesArray = [];
       let idsArray = [];
+      let usersArray = [res.data.users];
+      let teammatesArray = [res.data.users.teammates]
       if(!res.data.users.teammates){
-        for (let i = 0; i < res.data.users.length; i++) {
-          idsArray.push(res.data.users[i]); 
-        }
+        usersArray.forEach(() => {idsArray.push(res.data.users); })
       } else {
-        for (let i = 0; i < res.data.users.teammates.length; i++) {
-          idsArray.push(res.data.users.teammates[i]); 
-        }
+        teammatesArray.forEach(() => {idsArray.push(res.data.users.teammates)})
       }
       this.setState({userIds: idsArray})
 
@@ -131,7 +129,7 @@ class App extends React.Component {
             <li> How to show <a target="_blank" href="https://developer.monday.com/apps/docs/mondayexecute#example-2">notice messages</a> using the SDK </li>
           </ul>
           <p className="InstructionsParagraph">
-            You can start using the app by clicking on one of the two available features at the top of the screen.
+            You can start using this app by clicking on one of the two available features at the top of the screen.
           </p>
           <div className="InstructionsFooter">
             <div className="CtaText">
