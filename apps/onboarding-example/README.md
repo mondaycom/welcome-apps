@@ -15,7 +15,7 @@ How to use seamless authentication using the SDK
 How to show notice messages using the SDK 
 
 <br>
-You can check our explanatory video [here](https://www.youtube.com/watch?v=MaEHUar1rAY)
+You can check our explanatory video here (https://www.youtube.com/watch?v=MaEHUar1rAY)
 
 ## Run the project
 
