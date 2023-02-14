@@ -1,0 +1,47 @@
+{
+  "name": "monday-workdocs-quickstart-app",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "npm run stop && concurrently \"npm run server\" \"npm run expose\"",
+    "build": "react-scripts build",
+    "expose": "ngrok http 8306",
+    "server": "react-scripts start",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "stop": "kill-port 8301 && kill-port 4049 && kill-port 4040"
+  },
+  "dependencies": {
+    "monday-sdk-js": "^0.1.4",
+    "monday-ui-react-core": "^1.54.0"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "eslint-config-react-app": "^7.0.1",
+    "ngrok": "^4.3.3",
+    "quill-delta": "^5.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "^5.0.1",
+    "@mondaydotcomorg/tunnel": "^0.4.1",
+    "concurrently": "^5.2.0",
+    "cross-port-killer": "^1.2.1",
+    "sass": "^1.54.8"
+  }
+}
