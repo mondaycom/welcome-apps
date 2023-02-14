@@ -5,7 +5,7 @@
   "scripts": {
     "start": "npm run stop && concurrently \"npm run server\" \"npm run expose\"",
     "build": "react-scripts build",
-    "expose": "mtunnel -p 8306",
+    "expose": "ngrok http 8306",
     "server": "react-scripts start",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -17,6 +17,7 @@
     "eslint-config-react-app": "^7.0.1",
     "monday-sdk-js": "^0.1.4",
     "monday-ui-react-core": "^1.54.0",
+    "ngrok": "^4.3.3",
     "quill-delta": "^5.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
