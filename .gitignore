@@ -11,3 +11,4 @@ apps/*/.idea
 */**/yarn-error.log*
 
 .DS_Store
+apps/github-node/database.sqlite3
