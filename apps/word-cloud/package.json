@@ -10,14 +10,14 @@
     "stop": "kill-port 8303 && kill-port 4049 && kill-port 4040"
   },
   "dependencies": {
-    "monday-sdk-js": "^0.1.4",
     "dotenv": "^5.0.1",
+    "lodash": "^4.17.15",
+    "monday-sdk-js": "^0.1.4",
     "react": "^16.10.2",
     "react-d3-cloud": "^0.7.0",
     "react-dom": "^16.10.2",
-    "react-scripts": "3.2.0",
-    "react-wordcloud": "^1.1.1",
-    "lodash": "^4.17.15"
+    "react-scripts": "^5.0.1",
+    "react-wordcloud": "^1.1.1"
   },
   "devDependencies": {
     "@mondaydotcomorg/tunnel": "^0.4.1",
