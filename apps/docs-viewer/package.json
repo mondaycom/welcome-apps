@@ -14,7 +14,7 @@
     "request": "^2.88.2",
     "sass": "^1.54.8",
     "typeface-roboto": "^0.0.75",
-    "webpack": "4.41.0"
+    "webpack": "^5.0.0"
   },
   "devDependencies": {
     "@mondaydotcomorg/tunnel": "^0.4.1",
