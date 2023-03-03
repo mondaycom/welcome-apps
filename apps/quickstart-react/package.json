@@ -1,5 +1,5 @@
 {
-  "name": "monday-integration-quickstart-app",
+  "name": "monday-react-quickstart-app",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -12,14 +12,8 @@
     "stop": "kill-port 8301 && kill-port 4049 && kill-port 4040"
   },
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "eslint-config-react-app": "^7.0.1",
     "monday-sdk-js": "^0.1.4",
-    "monday-ui-react-core": "^1.54.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-scripts": "^5.0.1"
+    "monday-ui-react-core": "^1.54.0"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -40,6 +34,10 @@
     "@mondaydotcomorg/tunnel": "^0.4.1",
     "concurrently": "^5.2.0",
     "cross-port-killer": "^1.2.1",
+    "eslint-config-react-app": "^7.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "^5.0.1",
     "sass": "^1.54.8"
   }
 }
