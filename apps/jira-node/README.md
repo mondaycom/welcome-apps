@@ -24,28 +24,28 @@ This integration recipes uses the Jira API with basic authentication to create a
 2. Create a new "Jira JQL App" 
 3. Open the "Features" section and create a new "Integration" feature
 
-### Create a custom trigger, dynamic mapping custom field, and custom action
+### Create your recipe's blocks: a custom trigger, dynamic mapping custom field, and custom action
 
-1. Open the "Custom Blocks" tab
-2. Click the "Create new" button and select "Trigger." Configure your custom trigger to have the following configuration:
-![trigger1](https://dapulse-res.cloudinary.com/image/upload/v1624650059/remote_mondaycom_static/uploads/HelenLu/Jira%20Node%20Images/trigger2.png)
-![trigger2](https://dapulse-res.cloudinary.com/image/upload/v1624650059/remote_mondaycom_static/uploads/HelenLu/Jira%20Node%20Images/trigger1.png)
-3. Click the "Create new" button again and select "Action." Configure your custom action to have the following configuration:
-![action](https://dapulse-res.cloudinary.com/image/upload/v1624650181/remote_mondaycom_static/uploads/HelenLu/Jira%20Node%20Images/action.png)
-4. Lastly, click the "Create new" button one last time and select "Field Type." In the "Type" dropdown, select "Dynamic Mapping" and give it the following configuration:
-![dynamicmapping](https://dapulse-res.cloudinary.com/image/upload/v1624650181/remote_mondaycom_static/uploads/HelenLu/Jira%20Node%20Images/dynamicmapping.png)
+1. Open the "Field Types" tab
+2. Click the "Create new" button and configure your field to have the following config: 
+![dynamicmapping](/apps/jira-node/public/jira-node-dynamic-mapping.png)
+
+3. Open the "Workflow Blocks" tab
+4. Click the "Create new" button and select "Trigger." Configure your custom trigger to have the following configuration:
+![trigger1](/apps/jira-node/public/jira-node-custom-trigger-1.png)
+![trigger2](/apps/jira-node/public/jira-node-custom-trigger-2.png)
+5. Click the "Create new" button again and select "Action." Configure your custom action to have the following configuration:
+![action](/apps/jira-node/public/jira-node-custom-action-1.png)
+![action2](/apps/jira-node/public/jira-node-custom-action-2.png)
 
 ### Create a recipe with your custom blocks
 
 1. Switch to the "Recipes" tab now, and click "Create Recipe" to use your custom blocks
-2. In the trigger configuration, select the custom trigger block you just created. Your trigger sentence should read: "When an issue with this {JQL, jql} is created or updated,"
-3. The input field for the "jql" field should be "Recipe Sentence," and the input field for the "boardId" field should be "Context."
-![triggerrecipe](https://dapulse-res.cloudinary.com/image/upload/v1624650366/remote_mondaycom_static/uploads/HelenLu/Jira%20Node%20Images/triggerrecipe.png)
-5. Next, set up your action configuration by clicking into the action and selecting the custom action block you created. Your action sentence should read: "create an {item, itemMapping} and keep in sync."
-7. The input field for the "boardId" field should be "Context," the input field for "itemMapping" should be "Recipe Sentence," the "Source Entity" should be "issueFields," the dynamic mapping custom field we created, and the dependency field should be "Trigger-boardId":
-![actionrecipe](https://dapulse-res.cloudinary.com/image/upload/v1624650366/remote_mondaycom_static/uploads/HelenLu/Jira%20Node%20Images/actionrecipe.png)
-6. Lastly, the "issueId" field for your custom block will have "Trigger Output" as its input field, with the trigger output field key being "issueId."
-7. You're done! Click "Save Recipe" to save your new custom recipe. 
+2. In the trigger configuration, select the custom trigger block you just created. 
+3. Next, set up your action configuration by clicking into the action and selecting the custom action block you created. 
+4. For 'itemMapping', the "Source Entity" should be "issueFields," the dynamic mapping custom field we created, and the dependency field should be "Trigger-boardId". 
+5. For 'issueId', set the Trigger output field key to 'issueId'. 
+6. You're done! Click "Save Recipe" to save your new custom recipe. 
 
 ## Setting up Authorization and Credentials
 
