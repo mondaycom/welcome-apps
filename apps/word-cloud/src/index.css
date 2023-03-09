@@ -15,9 +15,9 @@ code {
 .monday-app {
   height: 100vh;
   width: 100vw;
-  /* display: flex;
+  display: flex;
   align-items: center;
-  justify-content: center; */
+  justify-content: center;
   background: white;
 }
 
