@@ -58,7 +58,8 @@ async function unsubscribe(req, res) {
 }
 
 /**
- * Trigger the integration recipe by receive events from Github and then calling the corresponding monday webhook URL. 
+ * Trigger the integration recipe. 
+ * Receives events from a Github webhook and & calls the corresponding monday webhook URL. 
  * Docs: https://developer.monday.com/apps/docs/custom-trigger#calling-your-action
  */
 async function integrationEventsHandler(req, res) {
