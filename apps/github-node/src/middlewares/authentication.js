@@ -1,5 +1,10 @@
 const jwt = require('jsonwebtoken');
 
+/**
+ * Checks that the authorization token in the header is signed with your app's signing secret.
+ * Docs: https://developer.monday.com/apps/docs/integration-authorization#authorization-header
+ * @todo: Attach this middleware to every endpoint that receives requests from monday.com
+ */
 async function authenticationMiddleware(req, res, next) {
   try {
     let { authorization } = req.headers;
