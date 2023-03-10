@@ -1,5 +1,9 @@
 const { Subscription } = require('../../db/models');
 
+/**
+ * Retrieve a Subscription object based on its unique ID. 
+ * A Subscription defines a relation between a monday trigger and a Github repo. 
+ */
 const getSubscription = async (subscriptionId) => {
   try {
     const subscription = await Subscription.findByPk(subscriptionId);
@@ -9,6 +13,11 @@ const getSubscription = async (subscriptionId) => {
   }
 };
 
+/**
+ * Create a Subscription of your trigger. 
+ * The Subscription object defines a relation between a monday trigger and a Github repo. 
+ * @returns The Subscription that was created
+ */
 const createSubscription = async (attributes) => {
   const { mondayWebhookUrl, owner, repo } = attributes;
 
@@ -25,6 +34,9 @@ const createSubscription = async (attributes) => {
   }
 };
 
+/**
+ * Update an existing Subscription. 
+ */
 const updateSubscription = async (subscriptionId, updates) => {
   const { mondayWebhookUrl, owner, repo, webhookId } = updates;
   try {
@@ -42,6 +54,9 @@ const updateSubscription = async (subscriptionId, updates) => {
   }
 };
 
+/**
+ * Delete a Subscription. 
+ */
 const deleteSubscription = async (subscriptionId) => {
   try {
     const subscription = await Subscription.update(
