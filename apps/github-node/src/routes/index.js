@@ -1,11 +1,13 @@
 const router = require('express').Router();
 const authRoutes = require('./auth');
-const mondayRoutes = require('./monday');
-const integrationRoutes = require('./integration');
+const triggerRoutes = require('./trigger');
+const actionRoutes = require('./action');
+const fieldsRoutes = require('./fields');
 
 router.use(authRoutes);
-router.use(mondayRoutes);
-router.use(integrationRoutes);
+router.use(triggerRoutes);
+router.use(actionRoutes);
+router.use(fieldsRoutes);
 
 router.get('/', function (req, res) {
   res.json(getHealth());
