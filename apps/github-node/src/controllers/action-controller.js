@@ -13,10 +13,11 @@ async function executeAction(req, res) {
   const { inputFields } = req.body.payload;
 
   try {
-    // Retrieve the relevant user's OAuth token
+    // Retrieve the relevant user's OAuth token from the DB
     const { token } = await connectionModelService.getConnectionByUserId(userId);
 
     // Gets the blocks' required data from the input fields object.
+    // You can define the input fields for your block by opening your integration feature and selecting Feature Details > Workflow Blocks
     // Input fields docs: https://developer.monday.com/apps/docs/custom-actions#configure-action-input-fields
     const { repository, issue } = inputFields;
     const owner = repository.value.owner;

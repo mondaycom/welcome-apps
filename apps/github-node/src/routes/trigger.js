@@ -14,6 +14,6 @@ router.post('/monday/unsubscribe', authenticationMiddleware, triggerController.u
  * Each instance of the trigger block will use a unique subscription ID. 
  * For implementation, see '/apps/github-node/src/services/github-service.js'
  */ 
-router.post('/integration/integration-events/:subscriptionId', triggerController.integrationEventsHandler);
+router.post('/integration/integration-events/:subscriptionId', triggerController.triggerEventsHandler);
 
 module.exports = router;

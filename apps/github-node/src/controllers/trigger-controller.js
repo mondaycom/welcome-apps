@@ -62,7 +62,7 @@ async function unsubscribe(req, res) {
  * Receives events from a Github webhook and & calls the corresponding monday webhook URL. 
  * Docs: https://developer.monday.com/apps/docs/custom-trigger#calling-your-action
  */
-async function integrationEventsHandler(req, res) {
+async function triggerEventsHandler(req, res) {
   const { subscriptionId } = req.params;
   const body = req.body;
 
@@ -98,5 +98,5 @@ async function integrationEventsHandler(req, res) {
 module.exports = {
   subscribe,
   unsubscribe,
-  integrationEventsHandler,
+  triggerEventsHandler,
 }
