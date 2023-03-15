@@ -50,11 +50,11 @@ class App extends React.Component {
     monday
       .api(`query { boards(ids:[${boardIds}]) { id, items { id, name, column_values { id, text } } }}`)
       .then((res) => {
-        if (res.data.boards.length === 0) {
+        const noBoardsReturned = res.data.boards.length === 0;
+        if (noBoardsReturned) {
           // no boards returned
           this.setState({ hasNoBoards : true })
-        }
-        else {
+        } else {
           this.setState({ boards: res.data.boards, hasNoBoards: false,  hasApiError: false }, () => {
             console.log(res.data.boards[0].items.slice(0, 10).map((item) => item.id));
             this.generateWords();
@@ -133,32 +133,27 @@ class App extends React.Component {
     return settings.padding ? parseInt(settings.padding) : 10;
   };
 
-  render() {
+  contentToRender = () => {
     const { words, hasNoBoards,  hasApiError } = this.state;
     if (hasNoBoards) {
       return (
-        <div className="monday-app">
           <AttentionBox 
             title="No boards connected" 
             text="Please connect a board to continue." 
             type={AttentionBox.types.DANGER}
           />
-        </div>
       )
     }
-    if  (hasApiError) {
+    if (hasApiError) {
       return (
-        <div className="monday-app">
           <AttentionBox 
             title="GraphQL API error" 
             text="Please check the browser console for more details." 
             type={AttentionBox.types.DANGER}
           />
-        </div>
       )
     }
     return (
-      <div className="monday-app">
         <ReactWordcloud
           words={words}
           maxWords={this.maxWords()}
@@ -172,8 +167,16 @@ class App extends React.Component {
             // spiral: "archimedean"
           }}
         />
-      </div>
     );
+  }
+
+  render() {
+    const ContentToRender = this.contentToRender;
+    return (
+      <div className="monday-app">
+        <ContentToRender />
+      </div>
+    )
   }
 }
 
