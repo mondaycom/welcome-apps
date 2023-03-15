@@ -1,6 +1,8 @@
 import React from "react";
 import mondaySdk from "monday-sdk-js";
 import ReactWordcloud from "react-wordcloud";
+import { AttentionBox } from "monday-ui-react-core";
+import "monday-ui-react-core/dist/main.css";
 import { stopWords } from "./stop-words";
 import _ from "lodash";
 
@@ -14,7 +16,9 @@ class App extends React.Component {
       context: {},
       boards: [],
       words: [],
-      itemIds: false
+      itemIds: false,
+      hasNoBoards: false,
+      hasApiError: false,
     };
   }
 
@@ -46,10 +50,21 @@ class App extends React.Component {
     monday
       .api(`query { boards(ids:[${boardIds}]) { id, items { id, name, column_values { id, text } } }}`)
       .then((res) => {
-        this.setState({ boards: res.data.boards }, () => {
-          console.log(res.data.boards[0].items.slice(0, 10).map((item) => item.id));
-          this.generateWords();
-        });
+        const noBoardsReturned = res.data.boards.length === 0;
+        if (noBoardsReturned) {
+          // no boards returned
+          this.setState({ hasNoBoards : true })
+        } else {
+          this.setState({ boards: res.data.boards, hasNoBoards: false,  hasApiError: false }, () => {
+            console.log(res.data.boards[0].items.slice(0, 10).map((item) => item.id));
+            this.generateWords();
+          });
+        }
+      })
+      .catch((err) => {
+        if (err.message === 'Graphql validation errors') {
+          this.setState({ hasApiError : true });
+        }
       });
   };
 
@@ -61,7 +76,7 @@ class App extends React.Component {
 
   getWords = () => {
     const text = this.getText();
-    const lines = text.split(/[,\. ]+/g);
+    const lines = text.split(/[,. ]+/g);
 
     const wordsMap = {};
     lines.forEach((word) => {
@@ -75,6 +90,7 @@ class App extends React.Component {
       if (word && word.length > 2 && wordsMap[word] && !stopWords[word]) {
         words.push({ text: word, value: wordsMap[word] });
       }
+      return word;
     });
     return words;
   };
@@ -117,10 +133,27 @@ class App extends React.Component {
     return settings.padding ? parseInt(settings.padding) : 10;
   };
 
-  render() {
-    const { settings, context, words } = this.state;
+  contentToRender = () => {
+    const { words, hasNoBoards,  hasApiError } = this.state;
+    if (hasNoBoards) {
+      return (
+          <AttentionBox 
+            title="No boards connected" 
+            text="Please connect a board to continue." 
+            type={AttentionBox.types.DANGER}
+          />
+      )
+    }
+    if (hasApiError) {
+      return (
+          <AttentionBox 
+            title="GraphQL API error" 
+            text="Please check the browser console for more details." 
+            type={AttentionBox.types.DANGER}
+          />
+      )
+    }
     return (
-      <div className="monday-app">
         <ReactWordcloud
           words={words}
           maxWords={this.maxWords()}
@@ -134,8 +167,16 @@ class App extends React.Component {
             // spiral: "archimedean"
           }}
         />
-      </div>
     );
+  }
+
+  render() {
+    const ContentToRender = this.contentToRender;
+    return (
+      <div className="monday-app">
+        <ContentToRender />
+      </div>
+    )
   }
 }
 
