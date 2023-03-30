@@ -3,6 +3,9 @@ const { cache, cacheKeys } = require('../services/cache-service');
 
 const SCOPES = ['repo'];
 
+/**
+ * Generate a Github OAuth URL.
+ */
 const getAuthorizationUrl = (userId, state) => {
   const client = getClient();
 
@@ -15,6 +18,9 @@ const getAuthorizationUrl = (userId, state) => {
   return authorizationUrl;
 };
 
+/**
+ * Get a Github OAuth token.
+ */
 const getToken = async (code) => {
   const client = getClient();
   const response = await client.getToken({ code });
@@ -22,6 +28,9 @@ const getToken = async (code) => {
   return token;
 };
 
+/**
+ * Get a temporary OAuth authorization code. 
+ */
 const getClient = () => {
   return new AuthorizationCode({
     client: {

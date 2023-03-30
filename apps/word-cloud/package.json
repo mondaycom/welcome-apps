@@ -6,23 +6,24 @@
     "start": "npm run stop && concurrently \"npm run server\" \"npm run expose\"",
     "server": "react-scripts start",
     "build": "react-scripts build",
-    "expose": "ngrok http 8303",
+    "expose": "mtunnel -p 8303",
     "stop": "kill-port 8303 && kill-port 4049 && kill-port 4040"
   },
   "dependencies": {
-    "monday-sdk-js": "^0.1.2",
     "dotenv": "^5.0.1",
+    "lodash": "^4.17.21",
+    "monday-sdk-js": "^0.3.0",
+    "monday-ui-react-core": "^1.102.1",
     "react": "^16.10.2",
-    "react-d3-cloud": "^0.7.0",
+    "react-d3-cloud": "^1.0.5",
     "react-dom": "^16.10.2",
-    "react-scripts": "3.2.0",
-    "react-wordcloud": "^1.1.1",
-    "lodash": "^4.17.15"
+    "react-scripts": "^5.0.1",
+    "react-wordcloud": "^1.1.1"
   },
   "devDependencies": {
+    "@mondaydotcomorg/tunnel": "^0.4.1",
     "concurrently": "^4.1.2",
-    "cross-port-killer": "^1.2.1",
-    "ngrok": "^3.2.7"
+    "cross-port-killer": "^1.2.1"
   },
   "eslintConfig": {
     "extends": "react-app"

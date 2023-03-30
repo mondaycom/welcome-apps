@@ -2,6 +2,9 @@ const { Octokit } = require('@octokit/rest');
 const { ISSUE_FIELD_DEFS } = require('../constants/github');
 const { cache, cacheKeys } = require('../services/cache-service');
 
+/**
+ * Creates a webhook in Github.
+ */
 const createWebhook = async (token, owner, repo, subscriptionId, events) => {
   const octokit = new Octokit({ auth: token });
 
@@ -26,11 +29,17 @@ const createWebhook = async (token, owner, repo, subscriptionId, events) => {
   return webhookId;
 };
 
+/**
+ * Deletes a webhook in Github.
+ */
 const deleteWebhook = async (token, owner, repo, webhookId) => {
   const octokit = new Octokit({ auth: token });
   await octokit.repos.deleteHook({ owner, repo, hook_id: webhookId });
 };
 
+/**
+ * Gets a list of repositories in Github.
+ */
 const getRepositories = async (token) => {
   const octokit = new Octokit({ auth: token });
 
@@ -51,10 +60,17 @@ const getRepositories = async (token) => {
   return options;
 };
 
+/**
+ * Docs: https://developer.monday.com/apps/docs/dynamic-mapping#field-definitions-url
+ * @returns A list of fields supported on the "Github issue" object. 
+ */
 const getIssueFieldDefs = () => {
   return ISSUE_FIELD_DEFS;
 };
 
+/**
+ * Converts the incoming issue to mappable fields in monday. 
+ */
 const convertIssueToPrimitives = (issue) => {
   return {
     title: issue.title,
@@ -77,6 +93,9 @@ const convertIssueToPrimitives = (issue) => {
   };
 };
 
+/**
+ * Creates a new issue in Github.
+ */
 const createIssue = async (token, owner, repo, issue) => {
   const octokit = new Octokit({ auth: token });
   return await octokit.issues.create({

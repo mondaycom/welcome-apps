@@ -12,5 +12,7 @@
     "flowtype": {
       "onlyFilesWithFlowAnnotation": false
     }
+  }, "parserOptions": {
+    "ecmaVersion": 2018
   }
 }
