@@ -1,25 +1,19 @@
 {
-  "name": "monday-integration-quickstart-app",
+  "name": "monday-react-quickstart-app",
   "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "npm run stop && concurrently \"npm run server\" \"npm run expose\"",
     "build": "react-scripts build",
-    "expose": "ngrok http 8301",
+    "expose": "mtunnel -p 8301",
     "server": "react-scripts start",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "stop": "kill-port 8301 && kill-port 4049 && kill-port 4040"
   },
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
-    "monday-sdk-js": "^0.1.2",
-    "monday-ui-react-core": "0.0.48",
-    "react": "^16.13.0",
-    "react-dom": "^16.13.0",
-    "react-scripts": "3.4.0"
+    "monday-sdk-js": "^0.1.4",
+    "monday-ui-react-core": "^1.54.0"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -37,8 +31,13 @@
     ]
   },
   "devDependencies": {
+    "@mondaydotcomorg/tunnel": "^0.4.1",
     "concurrently": "^5.2.0",
     "cross-port-killer": "^1.2.1",
-    "ngrok": "^3.2.7"
+    "eslint-config-react-app": "^7.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "^5.0.1",
+    "sass": "^1.54.8"
   }
 }

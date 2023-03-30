@@ -17,12 +17,11 @@ In the project directory, you should run:
 
 ### `npm install`
 
-And then to run an application with automatic virtual ngrok tunnel, run:
+And then to run an application with automatic virtual tunnel, run:
 
 ### `npm start`
 
-Visit http://localhost:4040/status and under "command_line section" find the URL. This is the public URL of your app, so you can use it to test it.
-F.e.: https://021eb6330099.ngrok.io
+When you start the app, you will receive a tunnel URL. You should use it in the following section. 
 
 ## Configure Monday App 
 
