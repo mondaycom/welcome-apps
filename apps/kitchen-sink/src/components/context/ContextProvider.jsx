@@ -7,13 +7,14 @@ const monday = mondaySdk();
 export const Context = React.createContext();
 
 const ContextProvider = ({ children }) => {
-  const [state, setState] = useState({ items: [], updateItems: () => {}, isLoading: true });
+  const [state, setState] = useState({ items: [], updateItems: () => {}});
+  const [isLoading, setIsLoading] = useState({isLoading : true});
   useEffect(() => {
     monday.listen("context", (res) => {
       if (res.data.boardIds.length === 0) {
-        setState({ ...state, isLoading: false });
+        setIsLoading({isLoading: false});
       } else {
-        setState({ ...state, isLoading: true });
+        setIsLoading({isLoading: true });
         monday
           .api(getAllBoardItemsQuery, {
             variables: {
@@ -27,16 +28,18 @@ const ContextProvider = ({ children }) => {
               boardId: +res.data?.boardIds[0],
               boardName: itemsResponse?.data?.boards[0]?.name,
               items: itemsResponse.data.boards[0].items.map((item) => {
-                return { id: item.id, name: item.name, isLoading: false };
+                return { id: item.id, name: item.name};
               }),
               updateItems: (state) => setState(state),
             });
+            setIsLoading({isLoading: false});
           });
       }
     });
   }, []);
 
-  return <Context.Provider value={state}>{children}</Context.Provider>;
+  // TODO: fix infinite loading when there is no board connected.
+  return <Context.Provider value={{...state, isLoading}}>{children}</Context.Provider>;
 };
 
 export default ContextProvider;
