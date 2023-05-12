@@ -1,11 +1,12 @@
 ## Overview
 
 ### Setting up the app in Github
+
 In order for this integration to work you will need to create an OAuth app using your github account.
 
 To do so, please follow these steps:
 
-1. Copy the TUNNEL_URL the app printed after running the `scaffold` command or `npm run start`. Example: https://happy-pig-99.tunnel.monday.app
+1. Copy the TUNNEL_URL the app printed after running the `scaffold` command or `npm run start`. Example: <https://happy-pig-99.tunnel.monday.app>
 
 2. Navigate to [github.com](https://github.com/) and login to your github account.
 
@@ -25,4 +26,4 @@ To do so, please follow these steps:
 
 This app uses `sqlite3`, which is included as a dependency. If you receive an error when installing it, refer to the [sqlite3 package documentation](https://www.npmjs.com/package/sqlite3) for troubleshooting tips.
 
-### Happy building! 
+### Happy building
