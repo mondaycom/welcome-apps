@@ -13,9 +13,6 @@ const App = () => {
   const [context, setContext] = useState();
 
   useEffect(() => {
-    // Notice this method notifies the monday platform that user gains a first value in an app.
-    // Read more about it here: https://developer.monday.com/apps/docs/mondayexecute#value-created-for-user/
-    monday.execute("valueCreatedForUser");
 
     // TODO: set up event listeners, Here`s an example, read more here: https://developer.monday.com/apps/docs/mondaylisten/
     monday.listen("context", (res) => {
@@ -24,18 +21,28 @@ const App = () => {
   }, []);
 
   //Some example what you can do with context, read more here: https://developer.monday.com/apps/docs/mondayget#requesting-context-and-settings-data
-  const attentionBoxText = `Hello, your user_id is: ${
-    context ? context.user.id : "still loading"
-  }.
-  Let's start building your amazing app, which will change the world!`;
+  const textareaContent = context ? JSON.stringify(context, 2, 2) : "still loading";
 
+  let controllersDiv = <div></div>
+  if (context) {
+    const  { type: appFeatureType, name: appFeatureName } = context?.appFeature
+    switch (appFeatureType) {
+      case "AppFeatureAiItemUpdateActions":
+        controllersDiv = <div><button onClick={() => {
+          monday.execute('updatePostContentAction', { suggestedRephrase: '<u>Shay</u> ' + Date.now().toString() })}}>Test</button></div>
+          break;
+      case "AppFeatureAiDocTopBar1":
+        break;
+      case "AppFeatureAiDocTopBar2":
+          break
+      case "AppFeatureAiDocTopBar2":
+          break
+    }
+  }
   return (
     <div className="App">
-      <AttentionBox
-        title="Hello Monday Apps!"
-        text={attentionBoxText}
-        type="success"
-      />
+      <textarea value={textareaContent}/>
+      {controllersDiv}
     </div>
   );
 };
