@@ -1,4 +1,6 @@
 import jwt from 'jsonwebtoken';
+import { getSecret } from '../helpers/secret-store';
+import { MONDAY_SIGNING_SECRET } from '../constants/secret-keys';
 
 /**
  * Checks that the authorization token in the header is signed with your app's signing secret.
@@ -13,7 +15,7 @@ export async function authenticationMiddleware(req, res, next) {
     }
     const { accountId, userId, backToUrl, shortLivedToken } = jwt.verify(
       authorization,
-      process.env.MONDAY_SIGNING_SECRET
+      getSecret(MONDAY_SIGNING_SECRET)
     );
     req.session = { accountId, userId, backToUrl, shortLivedToken };
     next();

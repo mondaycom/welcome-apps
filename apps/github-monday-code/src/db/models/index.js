@@ -2,21 +2,23 @@
 import fs from 'fs';
 import path from 'path';
 import Sequelize from 'sequelize';
-import configs from '../config/db.config.js';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import configs from '../config/db.config.js';
+import { getSecret } from '../../helpers/secret-store.js';
+import { NODE_ENV } from '../../constants/secret-keys.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || 'development';
+const env = getSecret(NODE_ENV) || 'development';
 const config = configs[env];
 const db = {};
 
 let sequelize;
 if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+  sequelize = new Sequelize(getSecret(config.use_env_variable), config);
 } else {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }

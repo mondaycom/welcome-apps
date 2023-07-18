@@ -1,5 +1,6 @@
 import { AuthorizationCode } from 'simple-oauth2';
-import { cache, cacheKeys } from '../services/cache-service.js';
+import { AUTHORIZE_PATH, CLIENT_ID, TOKEN_HOST, TOKEN_PATH } from '../constants/secret-keys.js';
+import { getSecret } from '../helpers/secret-store.js';
 
 const SCOPES = ['repo'];
 
@@ -34,13 +35,13 @@ export const getToken = async (code) => {
 export const getClient = () => {
   return new AuthorizationCode({
     client: {
-      id: process.env.CLIENT_ID,
-      secret: process.env.CLIENT_SECRET,
+      id: getSecret(CLIENT_ID),
+      secret: getSecret(CLIENT_SECRET),
     },
     auth: {
-      tokenHost: process.env.TOKEN_HOST,
-      tokenPath: process.env.TOKEN_PATH,
-      authorizePath: process.env.AUTHORIZE_PATH,
+      tokenHost: getSecret(TOKEN_HOST),
+      tokenPath: getSecret(TOKEN_PATH),
+      authorizePath: getSecret(AUTHORIZE_PATH),
     },
   });
 };

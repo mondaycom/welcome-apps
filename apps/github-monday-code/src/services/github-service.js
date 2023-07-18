@@ -1,6 +1,8 @@
 import pkg from '@octokit/rest';
 import { ISSUE_FIELD_DEFS } from '../constants/github.js';
 import { cache, cacheKeys } from '../services/cache-service.js';
+import { getSecret } from '../helpers/secret-store.js';
+import { BASE_URL } from '../constants/secret-keys.js';
 
 const { Octokit } = pkg;
 /**
@@ -9,7 +11,7 @@ const { Octokit } = pkg;
 export const createWebhook = async (token, owner, repo, subscriptionId, events) => {
   const octokit = new Octokit({ auth: token });
 
-  const targetUrl = `${cache.get(cacheKeys.SERVER_URL)}/integration/integration-events/${subscriptionId}`;
+  const targetUrl = `${getSecret(BASE_URL)}/integration/integration-events/${subscriptionId}`;
   const response = await octokit.repos.createHook({
     owner,
     repo,
