@@ -1,4 +1,4 @@
-import * as subscriptionModelService from ('../services/model-services/subscription-model-service.js');
+import * as subscriptionModelService from '../services/model-services/subscription-model-service.js';
 import * as connectionModelService from '../services/model-services/connection-model-service.js';
 import * as githubService from '../services/github-service.js';
 import * as mondayTriggersService from '../services/monday-triggers-service.js';

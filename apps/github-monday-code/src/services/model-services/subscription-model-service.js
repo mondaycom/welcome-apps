@@ -1,11 +1,11 @@
-import db from '../../db/models/index.js';
+import getDbModel from '../../db/models/index.js';
 
-const { Subscription } = db;
 /**
  * Retrieve a Subscription object based on its unique ID.
  * A Subscription defines a relation between a monday trigger and a Github repo.
  */
-const getSubscription = async (subscriptionId) => {
+export const getSubscription = async (subscriptionId) => {
+  const Subscription = getDbModel('Subscription');
   try {
     const subscription = await Subscription.findByPk(subscriptionId);
     return subscription;
@@ -19,7 +19,9 @@ const getSubscription = async (subscriptionId) => {
  * The Subscription object defines a relation between a monday trigger and a Github repo.
  * @returns The Subscription that was created
  */
-const createSubscription = async (attributes) => {
+export const createSubscription = async (attributes) => {
+  const Subscription = getDbModel('Subscription');
+
   const { mondayWebhookUrl, owner, repo } = attributes;
 
   try {
@@ -38,7 +40,9 @@ const createSubscription = async (attributes) => {
 /**
  * Update an existing Subscription.
  */
-const updateSubscription = async (subscriptionId, updates) => {
+export const updateSubscription = async (subscriptionId, updates) => {
+  const Subscription = getDbModel('Subscription');
+
   const { mondayWebhookUrl, owner, repo, webhookId } = updates;
   try {
     const subscription = await Subscription.update(
@@ -58,7 +62,9 @@ const updateSubscription = async (subscriptionId, updates) => {
 /**
  * Delete a Subscription.
  */
-const deleteSubscription = async (subscriptionId) => {
+export const deleteSubscription = async (subscriptionId) => {
+  const Subscription = getDbModel('Subscription');
+
   try {
     const subscription = await Subscription.update(
       { active: false },
@@ -72,11 +78,4 @@ const deleteSubscription = async (subscriptionId) => {
   } catch (err) {
     console.error(err);
   }
-};
-
-module.exports = {
-  getSubscription,
-  createSubscription,
-  updateSubscription,
-  deleteSubscription,
 };

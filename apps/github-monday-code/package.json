@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "npm run stop && npm run db:migrate && npm run server",
-    "server": "nodemon ./src/app.js",
+    "server": "nodemon --inspect=8302 ./src/app.js",
     "db:migrate": "sequelize db:migrate",
     "stop": "kill-port 8302"
   },

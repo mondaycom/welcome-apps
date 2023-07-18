@@ -1,7 +1,8 @@
 import { authenticationMiddleware } from '../middlewares/authentication.js';
 import * as triggerController from '../controllers/trigger-controller.js';
+import { Router } from 'express';
 
-const router = require('express').Router();
+const router = Router();
 
 // Custom trigger endpoints
 // These endpoints are called when someone creates or deletes a recipe with your trigger in monday.

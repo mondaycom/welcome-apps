@@ -217,6 +217,7 @@ vault/logs
 vault/policies
 vault/tmp
 
-# ignore local storage
+# ignore local db files
 local-secure-storage.db.json
+database.sqlite3
 

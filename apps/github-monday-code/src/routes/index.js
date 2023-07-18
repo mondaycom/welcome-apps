@@ -2,7 +2,7 @@ import { Router } from 'express';
 import authRoutes from './auth.js';
 import actionRoutes from './action.js';
 import fieldsRoutes from './fields.js';
-import triggerRoutes from './trigger';
+import triggerRoutes from './trigger.js';
 
 const router = Router();
 
