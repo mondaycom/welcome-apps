@@ -5,7 +5,7 @@ In order for this integration to work you will need to create an OAuth app using
 
 To do so, please follow these steps:
 
-1. Copy the TUNNEL_URL the app printed after running the `scaffold` command or `npm run start`. Example: https://happy-pig-99.tunnel.monday.app
+1. Copy the TUNNEL_URL or NGROK_URL,  Example: https://happy-pig-99.tunnel.monday.app
 
 2. Navigate to [github.com](https://github.com/) and login to your github account.
 
@@ -17,7 +17,7 @@ To do so, please follow these steps:
 
 6. Copy the Client ID and the newly created Client Secret: <br/>![Screenshot](https://dapulse-res.cloudinary.com/image/upload/v1610369018/monday-apps-templates/github-node/Screen_Shot_2021-01-11_at_14.42.26.png)
 
-7. Paste the ClientID & Secret into the .env file inside of your code directory: <br/>![Screenshot](https://dapulse-res.cloudinary.com/image/upload/v1610369294/monday-apps-templates/github-node/Screen_Shot_2021-01-11_at_14.47.58.png)
+7. Paste the ClientID & Secret and your tunnel url into the .env file inside of your code directory: <br/>![Screenshot](https://dapulse-res.cloudinary.com/image/upload/v1689682643/github-monday-code-env-snapshot.png)
 
 8. Save the .env file and your app should be good to go! You can add one of the recipes to your board and try it out :)
 

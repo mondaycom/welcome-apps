@@ -9,6 +9,8 @@ It can implement the following recipes:
 ### Features
 This app demonstrates how to use:
 
+- use monday apps storage
+- deploy to monday code
 - integration recipe
 - custom action
 - custom trigger
@@ -51,3 +53,5 @@ $ npm install
 ```
 $ npm start
 ```
+
+## Deploy

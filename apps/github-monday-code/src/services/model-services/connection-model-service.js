@@ -1,5 +1,6 @@
-import { SecureStorage } from '@mondaycom/apps-sdk';
-import { getConnectionKey } from './key-service.js';
+import ConnectionStorage from '../../storage/connection-storage.js';
+
+const connectionStorage = new ConnectionStorage();
 
 /**
  * Retrieve a Github connection based on a monday user ID.
@@ -7,8 +8,7 @@ import { getConnectionKey } from './key-service.js';
  */
 export const getConnectionByUserId = async (userId) => {
   try {
-    const storage = new SecureStorage();
-    const response = await storage.get(getConnectionKey(userId));
+    const response = await connectionStorage.get(userId);
     return response;
   } catch (err) {
     console.error(err);
@@ -22,8 +22,7 @@ export const getConnectionByUserId = async (userId) => {
 export const createConnection = async (attributes) => {
   const { userId, token } = attributes;
   try {
-    const storage = new SecureStorage();
-    const response = await storage.set(getConnectionKey(userId), { userId, token });
+    const response = await connectionStorage.set(userId, { userId, token });
 
     if (!response) {
       throw new Error('Failed to create connection');
@@ -41,8 +40,7 @@ export const createConnection = async (attributes) => {
 export const updateConnection = async (updates) => {
   const { userId, token } = updates;
   try {
-    const storage = new SecureStorage();
-    const response = await storage.set(getConnectionKey(userId), { userId, token });
+    const response = await connectionStorage.set(userId, { userId, token });
 
     if (!response) {
       throw new Error('Failed to update connection');
@@ -59,9 +57,7 @@ export const updateConnection = async (updates) => {
  */
 export const deleteConnection = async (userId) => {
   try {
-    const storage = new SecureStorage();
-    const key = getConnectionKey(userId);
-    await storage.delete(key);
+    await connectionStorage.delete(userId);
     return key;
   } catch (err) {
     console.error(err);
