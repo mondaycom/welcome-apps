@@ -1,5 +1,5 @@
 import { AuthorizationCode } from 'simple-oauth2';
-import { AUTHORIZE_PATH, CLIENT_ID, TOKEN_HOST, TOKEN_PATH } from '../constants/secret-keys.js';
+import { AUTHORIZE_PATH, CLIENT_ID, CLIENT_SECRET, TOKEN_HOST, TOKEN_PATH } from '../constants/secret-keys.js';
 import { getSecret } from '../helpers/secret-store.js';
 
 const SCOPES = ['repo'];

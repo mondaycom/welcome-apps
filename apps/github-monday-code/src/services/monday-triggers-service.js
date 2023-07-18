@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
-import { getSecret } from '../helpers/secret-store';
-import { MONDAY_SIGNING_SECRET } from '../constants/secret-keys';
+import { getSecret } from '../helpers/secret-store.js';
+import { MONDAY_SIGNING_SECRET } from '../constants/secret-keys.js';
 
 /**
  * Call a monday webhook URL to trigger the integration.

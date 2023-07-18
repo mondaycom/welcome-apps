@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
-import { getSecret } from '../helpers/secret-store';
-import { MONDAY_SIGNING_SECRET } from '../constants/secret-keys';
+import { getSecret } from '../helpers/secret-store.js';
+import { MONDAY_SIGNING_SECRET } from '../constants/secret-keys.js';
 
 /**
  * Checks that the authorization token in the header is signed with your app's signing secret.
