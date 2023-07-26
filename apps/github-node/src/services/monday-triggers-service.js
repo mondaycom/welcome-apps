@@ -1,5 +1,9 @@
 const fetch = require('node-fetch');
 
+/**
+ * Call a monday webhook URL to trigger the integration.
+ * Docs: https://developer.monday.com/apps/docs/custom-trigger#calling-your-action
+ */
 const triggerMondayIntegration = async (webhookUrl, data = {}) => {
   fetch(webhookUrl, {
     method: 'post',

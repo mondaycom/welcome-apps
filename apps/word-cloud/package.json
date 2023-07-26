@@ -13,6 +13,7 @@
     "dotenv": "^5.0.1",
     "lodash": "^4.17.21",
     "monday-sdk-js": "^0.3.0",
+    "monday-ui-react-core": "^1.102.1",
     "react": "^16.10.2",
     "react-d3-cloud": "^1.0.5",
     "react-dom": "^16.10.2",

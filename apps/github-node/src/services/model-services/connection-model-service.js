@@ -1,5 +1,9 @@
 const { Connection } = require('../../db/models');
 
+/**
+ * Retrieve a Github connection based on a monday user ID. 
+ * @returns A Github OAuth token associated with the user.
+ */
 const getConnectionByUserId = async (userId) => {
   try {
     const connection = await Connection.findOne({ where: { userId } });
@@ -9,6 +13,10 @@ const getConnectionByUserId = async (userId) => {
   }
 };
 
+/**
+ * Create a Connection record in the DB.
+ * A connection defines a relation between a monday user and their Github credentials. 
+ */
 const createConnection = async (attributes) => {
   const { userId, token } = attributes;
   try {
@@ -22,6 +30,9 @@ const createConnection = async (attributes) => {
   }
 };
 
+/**
+ * Update an existing Connection. 
+ */
 const updateConnection = async (connectionId, updates) => {
   const { userId, token } = updates;
   try {
@@ -39,6 +50,9 @@ const updateConnection = async (connectionId, updates) => {
   }
 };
 
+/**
+ * Delete a connection.
+ */
 const deleteConnection = async (connectionId) => {
   try {
     const tokenToDelete = await Connection.findByPk(connectionId);
