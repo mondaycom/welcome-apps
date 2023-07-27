@@ -1,6 +1,8 @@
 import * as authService from '../services/auth-service.js';
+import logger from '../services/logger/index.js';
 import * as connectionModelService from '../services/model-services/connection-model-service.js';
 
+const TAG = 'auth_controller';
 /**
  * Begins the Github OAuth flow.
  * Docs: https://developer.monday.com/apps/docs/integration-authorization#the-authorization-url
@@ -27,7 +29,7 @@ export const callback = async (req, res) => {
 
     return res.redirect(backToUrl);
   } catch (err) {
-    console.error(err);
+    logger.error('oauth callback failed', TAG, { userId, error: err });
     return res.status(500).send({ message: 'internal server error' });
   }
 };

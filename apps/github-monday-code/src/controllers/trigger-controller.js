@@ -2,10 +2,12 @@ import * as subscriptionModelService from '../services/model-services/subscripti
 import * as connectionModelService from '../services/model-services/connection-model-service.js';
 import * as githubService from '../services/github-service.js';
 import * as mondayTriggersService from '../services/monday-triggers-service.js';
+import logger from '../services/logger/index.js';
 
+const TAG = 'trigger_controller';
 
 /**
- * Creates a Subscription and Github webhook. 
+ * Creates a Subscription and Github webhook.
  * Called when a user adds the integration to their board.
  * Docs: https://developer.monday.com/apps/docs/custom-trigger#subscribing-to-your-trigger
  */
@@ -18,6 +20,7 @@ export async function subscribe(req, res) {
     const { value: repository } = inputFields.repository;
     const owner = repository.owner;
     const repo = repository.name;
+    logger.info('subscribe trigger received', TAG, { userId, owner, repository: repo });
 
     const { token } = await connectionModelService.getConnectionByUserId(userId);
     const { id: subscriptionId } = await subscriptionModelService.createSubscription({
@@ -31,13 +34,13 @@ export async function subscribe(req, res) {
     await subscriptionModelService.updateSubscription(subscriptionId, { webhookId });
     return res.status(200).send({ webhookId: subscriptionId });
   } catch (err) {
-    console.error(err);
+    logger.error('failed to subscribe to webhook', TAG, { userId, error: err });
     return res.status(500).send({ message: 'internal server error' });
   }
 }
 
 /**
- * Removes the Subscription and webhook associated with a specific integration. 
+ * Removes the Subscription and webhook associated with a specific integration.
  * Called when a user deletes or turns off the integration on their board.
  * Docs: https://developer.monday.com/apps/docs/custom-trigger#unsubscribing-from-your-trigger
  */
@@ -46,6 +49,7 @@ export async function unsubscribe(req, res) {
   const { webhookId: subscriptionId } = req.body.payload;
 
   try {
+    logger.info('unsubscribe trigger received', TAG, { userId, subscriptionId });
     const { token } = await connectionModelService.getConnectionByUserId(userId);
     const { owner, repo, webhookId } = await subscriptionModelService.getSubscription(subscriptionId);
 
@@ -53,14 +57,14 @@ export async function unsubscribe(req, res) {
     await subscriptionModelService.deleteSubscription(subscriptionId);
     return res.status(200).send({ result: 'Unsubscribed successfully.' });
   } catch (err) {
-    console.error(err);
+    logger.error('failed to unsbscribe', TAG, { userId, error: err, subscriptionId });
     return res.status(500).send({ message: 'internal server error' });
   }
 }
 
 /**
- * Trigger the integration recipe. 
- * Receives events from a Github webhook and & calls the corresponding monday webhook URL. 
+ * Trigger the integration recipe.
+ * Receives events from a Github webhook and & calls the corresponding monday webhook URL.
  * Docs: https://developer.monday.com/apps/docs/custom-trigger#calling-your-action
  */
 export async function triggerEventsHandler(req, res) {
@@ -74,6 +78,7 @@ export async function triggerEventsHandler(req, res) {
 
   try {
     const { action, issue } = body;
+    logger.info('trigger received', TAG, { subscriptionId, action, issue });
     if (action != 'opened') {
       // Only invoke trigger when an issue is opened
       return res.status(200).send();
@@ -91,8 +96,7 @@ export async function triggerEventsHandler(req, res) {
 
     return res.status(200).send();
   } catch (err) {
-    console.error(err);
+    logger.error('failed to trigger', TAG, { subscriptionId, error: err, action, issue });
     return res.status(500).send({ message: 'internal server error' });
   }
 }
-

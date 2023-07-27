@@ -1,6 +1,8 @@
 import ConnectionStorage from '../../storage/connection-storage.js';
+import logger from '../logger/index.js';
 
-const connectionStorage = new ConnectionStorage();
+const connectionSecureStorage = new ConnectionStorage();
+const TAG = 'connection_model_service';
 
 /**
  * Retrieve a Github connection based on a monday user ID.
@@ -8,10 +10,10 @@ const connectionStorage = new ConnectionStorage();
  */
 export const getConnectionByUserId = async (userId) => {
   try {
-    const response = await connectionStorage.get(userId);
+    const response = await connectionSecureStorage.get(userId);
     return response;
   } catch (err) {
-    console.error(err);
+    logger.error('Failed to retrieve connection by user ID', TAG, { userId, error: err });
   }
 };
 
@@ -22,7 +24,7 @@ export const getConnectionByUserId = async (userId) => {
 export const createConnection = async (attributes) => {
   const { userId, token } = attributes;
   try {
-    const response = await connectionStorage.set(userId, { userId, token });
+    const response = await connectionSecureStorage.set(userId, { userId, token });
 
     if (!response) {
       throw new Error('Failed to create connection');
@@ -30,7 +32,7 @@ export const createConnection = async (attributes) => {
 
     return { userId, token };
   } catch (err) {
-    console.error(err);
+    logger.error('Failed to create connection', TAG, { userId, error: err });
   }
 };
 
@@ -40,7 +42,7 @@ export const createConnection = async (attributes) => {
 export const updateConnection = async (updates) => {
   const { userId, token } = updates;
   try {
-    const response = await connectionStorage.set(userId, { userId, token });
+    const response = await connectionSecureStorage.set(userId, { userId, token });
 
     if (!response) {
       throw new Error('Failed to update connection');
@@ -48,7 +50,7 @@ export const updateConnection = async (updates) => {
 
     return { userId, token };
   } catch (err) {
-    console.error(err);
+    logger.error('Failed to update connection', TAG, { userId, error: err });
   }
 };
 
@@ -57,9 +59,9 @@ export const updateConnection = async (updates) => {
  */
 export const deleteConnection = async (userId) => {
   try {
-    await connectionStorage.delete(userId);
+    await connectionSecureStorage.delete(userId);
     return key;
   } catch (err) {
-    console.error(err);
+    logger.error('Failed to delete connection', TAG, { userId, error: err });
   }
 };

@@ -1,5 +1,7 @@
 import getDbModel from '../../db/models/index.js';
+import logger from '../logger/index.js';
 
+const TAG = 'subscription_model_service';
 /**
  * Retrieve a Subscription object based on its unique ID.
  * A Subscription defines a relation between a monday trigger and a Github repo.
@@ -10,7 +12,7 @@ export const getSubscription = async (subscriptionId) => {
     const subscription = await Subscription.findByPk(subscriptionId);
     return subscription;
   } catch (err) {
-    console.error(err);
+    logger.error('Failed to retrieve subscription', TAG, { subscriptionId, error: err });
   }
 };
 
@@ -33,7 +35,7 @@ export const createSubscription = async (attributes) => {
     });
     return newSubscription;
   } catch (err) {
-    console.error(err);
+    logger.error('Failed to create subscription', TAG, { attributes, error: err });
   }
 };
 
@@ -55,7 +57,7 @@ export const updateSubscription = async (subscriptionId, updates) => {
     );
     return subscription;
   } catch (err) {
-    console.error(err);
+    logger.error('Failed to update subscription', TAG, { attributes, error: err });
   }
 };
 
@@ -76,6 +78,6 @@ export const deleteSubscription = async (subscriptionId) => {
     );
     return subscription;
   } catch (err) {
-    console.error(err);
+    logger.error('Failed to delete subscription', TAG, { subscriptionId, error: err });
   }
 };

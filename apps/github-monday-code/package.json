@@ -3,11 +3,16 @@
   "version": "0.0.1",
   "license": "MIT",
   "type": "module",
+  "engines": {
+    "node": ">=18.12.0"
+  },
   "scripts": {
-    "start": "npm run stop && npm run db:migrate && npm run server",
-    "server": "nodemon --inspect=8302 ./src/app.js",
+    "start": "npm run db:migrate && npm run server",
+    "server": "nodemon ./src/app.js",
     "db:migrate": "sequelize db:migrate",
-    "stop": "kill-port 8302"
+    "deploy": "mapps code:push --verbose",
+    "logs": "mapps code:logs",
+    "mapps:init": "mapps init"
   },
   "nodemonConfig": {
     "watch": [
@@ -16,7 +21,7 @@
     ]
   },
   "dependencies": {
-    "@mondaycom/apps-sdk": "^0.1.0",
+    "@mondaycom/apps-sdk": "^0.1.1",
     "@octokit/rest": "^16.43.2",
     "body-parser": "^1.19.0",
     "cross-port-killer": "^1.2.1",
@@ -31,6 +36,7 @@
     "sqlite3": "^5.1.6"
   },
   "devDependencies": {
+    "@mondaycom/apps-cli": "^0.1.12",
     "@mondaydotcomorg/tunnel": "^0.4.2",
     "concurrently": "^5.2.0",
     "debug": "~2.6.9",

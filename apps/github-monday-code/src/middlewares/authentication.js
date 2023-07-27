@@ -1,7 +1,9 @@
 import jwt from 'jsonwebtoken';
 import { getSecret } from '../helpers/secret-store.js';
 import { MONDAY_SIGNING_SECRET } from '../constants/secret-keys.js';
+import logger from '../services/logger/index.js';
 
+const TAG = 'authentication_middleware';
 /**
  * Checks that the authorization token in the header is signed with your app's signing secret.
  * Docs: https://developer.monday.com/apps/docs/integration-authorization#authorization-header
@@ -20,7 +22,7 @@ export async function authenticationMiddleware(req, res, next) {
     req.session = { accountId, userId, backToUrl, shortLivedToken };
     next();
   } catch (err) {
-    console.error(err);
+    logger.error('failed to authenticate', TAG, { error: err });
     res.status(500).json({ error: 'not authenticated' });
   }
 }

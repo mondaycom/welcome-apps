@@ -6,13 +6,13 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import configs from '../config/db.config.js';
 import { getSecret } from '../../helpers/secret-store.js';
-import { NODE_ENV } from '../../constants/secret-keys.js';
+import { getEnv } from '../../helpers/environment.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const basename = path.basename(__filename);
-const env = getSecret(NODE_ENV) || 'development';
+const env = getEnv();
 const config = configs[env];
 const db = {};
 

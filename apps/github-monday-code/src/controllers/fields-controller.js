@@ -1,6 +1,8 @@
 import * as connectionModelService from '../services/model-services/connection-model-service.js';
 import * as githubService from '../services/github-service.js';
+import logger from '../services/logger/index.js';
 
+const TAG = 'fields_controller';
 /**
  * This function returns an array of options to populate a dropdown in the recipe editor.
  * In this example, it returns a list of Github repositories.
@@ -14,7 +16,7 @@ export async function getRemoteListOptions(req, res) {
     const options = await githubService.getRepositories(token);
     return res.status(200).send(options);
   } catch (err) {
-    console.error(err);
+    logger.error('failed to get remote list options', TAG, { userId, error: err });
     return res.status(500).send({ message: 'internal server error' });
   }
 }
@@ -31,7 +33,7 @@ export async function getFieldDefs(req, res) {
     const fieldDefs = githubService.getIssueFieldDefs();
     return res.status(200).send(fieldDefs);
   } catch (err) {
-    console.error(err);
+    logger.error('failed to get field definitions', TAG, { error: err });
     return res.status(500).send({ message: 'internal server error' });
   }
 }
