@@ -17,7 +17,7 @@ To do so, please follow these steps:
 
 6. Copy the Client ID and the newly created Client Secret: <br/>![Screenshot](https://dapulse-res.cloudinary.com/image/upload/v1610369018/monday-apps-templates/github-node/Screen_Shot_2021-01-11_at_14.42.26.png)
 
-7. Paste the ClientID & Secret and your tunnel url into the .env file inside of your code directory: <br/>![Screenshot](https://dapulse-res.cloudinary.com/image/upload/v1689682643/github-monday-code-env-snapshot.png)
+7. Paste the ClientID & Secret and your tunnel url into the .env file inside of your code directory: <br/>![Screenshot](https://dapulse-res.cloudinary.com/image/upload/v1689682643/github-monday-code-env-snapshot.png), note: PORT should be 8080
 
 8. Save the .env file and your app should be good to go! You can add one of the recipes to your board and try it out :)
 

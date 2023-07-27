@@ -1,5 +1,6 @@
 export const PORT = 'PORT';
 export const BASE_URL = 'BASE_URL';
+export const SERVICE_TAG_URL = 'SERVICE_TAG_URL';
 export const MONDAY_SIGNING_SECRET = 'MONDAY_SIGNING_SECRET';
 export const CLIENT_ID = 'CLIENT_ID';
 export const CLIENT_SECRET = 'CLIENT_SECRET';

@@ -36,7 +36,7 @@
     "sqlite3": "^5.1.6"
   },
   "devDependencies": {
-    "@mondaycom/apps-cli": "^0.1.12",
+    "@mondaycom/apps-cli": "^0.1.13",
     "@mondaydotcomorg/tunnel": "^0.4.2",
     "concurrently": "^5.2.0",
     "debug": "~2.6.9",

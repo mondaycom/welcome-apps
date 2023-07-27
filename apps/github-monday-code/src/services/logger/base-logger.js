@@ -8,7 +8,7 @@ class BaseLogger {
    * @param {Object} options - (Optional) Additional options for logging.
    * @returns {void}
    */
-  info(message, tag, options) {
+  info(message, tag = '', options) {
     console.info('info: ', tag, message, options ? JSON.stringify(options) : '');
   }
 
@@ -19,7 +19,7 @@ class BaseLogger {
    * @param {Object} options - (Optional) Additional options for logging.
    * @returns {void}
    */
-  warn(message, tag, options) {
+  warn(message, tag = '', options) {
     console.warn('warn: ', tag, message, options ? JSON.stringify(options) : '');
   }
 
@@ -30,7 +30,7 @@ class BaseLogger {
    * @param {Object} options - (Optional) Additional options for logging.
    * @returns {void}
    */
-  error(message, tag, options) {
+  error(message, tag = '', options) {
     console.error('error: ', tag, message, options ? JSON.stringify(options) : '');
   }
 
@@ -41,7 +41,7 @@ class BaseLogger {
    * @param {Object} options - (Optional) Additional options for logging.
    * @returns {void}
    */
-  debug(message, tag, options) {
+  debug(message, tag = '', options) {
     console.debug('debug: ', tag, message, options ? JSON.stringify(options) : '');
   }
 }

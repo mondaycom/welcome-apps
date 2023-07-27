@@ -1,5 +1,8 @@
-export const getSecret = (secretKey) => {
-  const secret = process.env[secretKey];
+import dotenv from 'dotenv';
+import { isDevelopmentEnv } from './environment';
 
-  return secret;
+dotenv.config();
+
+export const getSecret = (secretKey) => {
+  if (isDevelopmentEnv()) return secret;
 };

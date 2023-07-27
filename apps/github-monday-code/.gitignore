@@ -220,4 +220,5 @@ vault/tmp
 # ignore local db files
 local-secure-storage.db.json
 database.sqlite3
+code.tar.gz
 

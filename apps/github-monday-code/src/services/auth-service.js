@@ -1,24 +1,20 @@
 import { AuthorizationCode } from 'simple-oauth2';
-import {
-  AUTHORIZE_PATH,
-  BASE_URL,
-  CLIENT_ID,
-  CLIENT_SECRET,
-  TOKEN_HOST,
-  TOKEN_PATH,
-} from '../constants/secret-keys.js';
+import { AUTHORIZE_PATH, CLIENT_ID, CLIENT_SECRET, TOKEN_HOST, TOKEN_PATH } from '../constants/secret-keys.js';
 import { getSecret } from '../helpers/secret-store.js';
+import { getBaseUrl } from '../helpers/environment.js';
+import logger from './logger/index.js';
 
 const SCOPES = ['repo'];
 
+const redirectUri = `${getBaseUrl()}/auth/callback/`;
+logger.info(`redirectUri: ${redirectUri}`);
 /**
  * Generate a Github OAuth URL.
  */
 export const getAuthorizationUrl = (userId, state) => {
   const client = getClient();
-
   const authorizationUrl = client.authorizeURL({
-    redirect_uri: `${getSecret(BASE_URL)}/auth/callback/${userId}`,
+    redirect_uri: redirectUri,
     scope: SCOPES,
     state,
   });
