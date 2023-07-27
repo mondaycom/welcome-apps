@@ -13,7 +13,7 @@ const __dirname = dirname(__filename);
 
 const basename = path.basename(__filename);
 const env = getEnv();
-const config = configs[env];
+const config = configs[env] || configs.development;
 const db = {};
 
 let sequelize;
