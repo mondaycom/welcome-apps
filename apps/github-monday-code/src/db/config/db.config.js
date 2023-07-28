@@ -1,3 +1,6 @@
+/**
+ * @todo Use your credentials for production, sqlite is not recommended for production
+ */
 const config = {
   development: {
     dialect: 'sqlite',
