@@ -1,6 +1,8 @@
 'use strict';
 import { Model } from 'sequelize';
 
+export const subscriptionModelName = 'Subscription';
+
 const SubscriptionFactory = (sequelize, DataTypes) => {
   class Subscription extends Model {
     static associate(models) {
@@ -17,7 +19,7 @@ const SubscriptionFactory = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'Subscription',
+      modelName: subscriptionModelName,
     }
   );
   return Subscription;

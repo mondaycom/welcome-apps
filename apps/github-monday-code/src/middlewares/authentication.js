@@ -22,7 +22,7 @@ export async function authenticationMiddleware(req, res, next) {
     req.session = { accountId, userId, backToUrl, shortLivedToken };
     next();
   } catch (err) {
-    logger.error('failed to authenticate', TAG, { error: err });
-    res.status(500).json({ error: 'not authenticated' });
+    logger.error('failed to authenticate', TAG, { error: err.message });
+    res.status(401).json({ error: 'not authenticated' });
   }
 }

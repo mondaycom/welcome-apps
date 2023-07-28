@@ -2,7 +2,7 @@ import { getSecret } from './secret-store.js';
 import { DEVELOPMENT_ENV } from '../constants/general.js';
 import { BASE_URL, NODE_ENV, SERVICE_TAG_URL } from '../constants/secret-keys.js';
 
-export const getEnv = () => getSecret(NODE_ENV) || DEVELOPMENT_ENV;
+export const getEnv = () => (getSecret(NODE_ENV) || DEVELOPMENT_ENV).toLowerCase();
 export const isDevelopmentEnv = () => getEnv() === DEVELOPMENT_ENV;
 export const isProductionEnv = () => !isDevelopmentEnv();
 

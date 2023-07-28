@@ -9,7 +9,7 @@ const { Octokit } = pkg;
 export const createWebhook = async (token, owner, repo, subscriptionId, events) => {
   const octokit = new Octokit({ auth: token });
 
-  const targetUrl = `${getBaseUrl}/integration/integration-events/${subscriptionId}`;
+  const targetUrl = `${getBaseUrl()}/integration/integration-events/${subscriptionId}`;
   const response = await octokit.repos.createHook({
     owner,
     repo,

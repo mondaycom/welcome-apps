@@ -4,11 +4,12 @@
   "license": "MIT",
   "type": "module",
   "engines": {
-    "node": ">=18.12.0"
+    "node": "18.12.0"
   },
   "scripts": {
-    "start": "npm run db:migrate && npm run server",
-    "server": "nodemon ./src/app.js",
+    "start": "npm run server",
+    "dev": "nodemon --inspect=8080 ./src/app.js",
+    "server": "node ./src/app.js",
     "db:migrate": "sequelize db:migrate",
     "deploy": "mapps code:push --verbose",
     "logs": "mapps code:logs",
@@ -21,7 +22,7 @@
     ]
   },
   "dependencies": {
-    "@mondaycom/apps-sdk": "^0.1.1",
+    "@mondaycom/apps-sdk": "^0.1.2",
     "@octokit/rest": "^16.43.2",
     "body-parser": "^1.19.0",
     "cross-port-killer": "^1.2.1",

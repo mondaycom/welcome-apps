@@ -34,7 +34,7 @@ export async function subscribe(req, res) {
     await subscriptionModelService.updateSubscription(subscriptionId, { webhookId });
     return res.status(200).send({ webhookId: subscriptionId });
   } catch (err) {
-    logger.error('failed to subscribe to webhook', TAG, { userId, error: err });
+    logger.error('failed to subscribe to webhook', TAG, { userId, error: err.message });
     return res.status(500).send({ message: 'internal server error' });
   }
 }
@@ -57,7 +57,7 @@ export async function unsubscribe(req, res) {
     await subscriptionModelService.deleteSubscription(subscriptionId);
     return res.status(200).send({ result: 'Unsubscribed successfully.' });
   } catch (err) {
-    logger.error('failed to unsbscribe', TAG, { userId, error: err, subscriptionId });
+    logger.error('failed to unsbscribe', TAG, { userId, error: err.message, subscriptionId });
     return res.status(500).send({ message: 'internal server error' });
   }
 }
@@ -78,7 +78,7 @@ export async function triggerEventsHandler(req, res) {
 
   try {
     const { action, issue } = body;
-    logger.info('trigger received', TAG, { subscriptionId, action, issue });
+    logger.info('trigger received', TAG, { subscriptionId, action, issueId: issue.id });
     if (action != 'opened') {
       // Only invoke trigger when an issue is opened
       return res.status(200).send();
@@ -96,7 +96,7 @@ export async function triggerEventsHandler(req, res) {
 
     return res.status(200).send();
   } catch (err) {
-    logger.error('failed to trigger', TAG, { subscriptionId, error: err, action, issue });
+    logger.error('failed to trigger', TAG, { subscriptionId, error: err.message, action, issueId: issue.id });
     return res.status(500).send({ message: 'internal server error' });
   }
 }

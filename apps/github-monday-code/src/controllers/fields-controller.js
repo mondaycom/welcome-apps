@@ -12,11 +12,12 @@ const TAG = 'fields_controller';
 export async function getRemoteListOptions(req, res) {
   const { userId } = req.session;
   try {
+    logger.info('get remote list options', TAG, { userId });
     const { token } = await connectionModelService.getConnectionByUserId(userId);
     const options = await githubService.getRepositories(token);
     return res.status(200).send(options);
   } catch (err) {
-    logger.error('failed to get remote list options', TAG, { userId, error: err });
+    logger.error('failed to get remote list options', TAG, { userId, error: err.message });
     return res.status(500).send({ message: 'internal server error' });
   }
 }
@@ -33,7 +34,7 @@ export async function getFieldDefs(req, res) {
     const fieldDefs = githubService.getIssueFieldDefs();
     return res.status(200).send(fieldDefs);
   } catch (err) {
-    logger.error('failed to get field definitions', TAG, { error: err });
+    logger.error('failed to get field definitions', TAG, { error: err.message });
     return res.status(500).send({ message: 'internal server error' });
   }
 }

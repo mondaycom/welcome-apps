@@ -33,7 +33,7 @@ export async function executeAction(req, res) {
 
     return res.status(200).send();
   } catch (err) {
-    logger.error('create issue action failed', TAG, { ...loggingOptions, error: err });
+    logger.error('create issue action failed', TAG, { ...loggingOptions, error: err.message });
     return res.status(500).send({ message: 'internal server error' });
   }
 }

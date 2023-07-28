@@ -1,4 +1,5 @@
 import getDbModel from '../../db/models/index.js';
+import { subscriptionModelName } from '../../db/models/subscription.js';
 import logger from '../logger/index.js';
 
 const TAG = 'subscription_model_service';
@@ -7,12 +8,12 @@ const TAG = 'subscription_model_service';
  * A Subscription defines a relation between a monday trigger and a Github repo.
  */
 export const getSubscription = async (subscriptionId) => {
-  const Subscription = getDbModel('Subscription');
+  const Subscription = await getDbModel(subscriptionModelName);
   try {
     const subscription = await Subscription.findByPk(subscriptionId);
     return subscription;
   } catch (err) {
-    logger.error('Failed to retrieve subscription', TAG, { subscriptionId, error: err });
+    logger.error('Failed to retrieve subscription', TAG, { subscriptionId, error: err.message });
   }
 };
 
@@ -22,7 +23,7 @@ export const getSubscription = async (subscriptionId) => {
  * @returns The Subscription that was created
  */
 export const createSubscription = async (attributes) => {
-  const Subscription = getDbModel('Subscription');
+  const Subscription = await getDbModel(subscriptionModelName);
 
   const { mondayWebhookUrl, owner, repo } = attributes;
 
@@ -35,7 +36,7 @@ export const createSubscription = async (attributes) => {
     });
     return newSubscription;
   } catch (err) {
-    logger.error('Failed to create subscription', TAG, { attributes, error: err });
+    logger.error('Failed to create subscription', TAG, { attributes, error: err.message });
   }
 };
 
@@ -43,7 +44,7 @@ export const createSubscription = async (attributes) => {
  * Update an existing Subscription.
  */
 export const updateSubscription = async (subscriptionId, updates) => {
-  const Subscription = getDbModel('Subscription');
+  const Subscription = await getDbModel(subscriptionModelName);
 
   const { mondayWebhookUrl, owner, repo, webhookId } = updates;
   try {
@@ -57,7 +58,7 @@ export const updateSubscription = async (subscriptionId, updates) => {
     );
     return subscription;
   } catch (err) {
-    logger.error('Failed to update subscription', TAG, { attributes, error: err });
+    logger.error('Failed to update subscription', TAG, { attributes, error: err.message });
   }
 };
 
@@ -65,7 +66,7 @@ export const updateSubscription = async (subscriptionId, updates) => {
  * Delete a Subscription.
  */
 export const deleteSubscription = async (subscriptionId) => {
-  const Subscription = getDbModel('Subscription');
+  const Subscription = await getDbModel(subscriptionModelName);
 
   try {
     const subscription = await Subscription.update(
@@ -78,6 +79,6 @@ export const deleteSubscription = async (subscriptionId) => {
     );
     return subscription;
   } catch (err) {
-    logger.error('Failed to delete subscription', TAG, { subscriptionId, error: err });
+    logger.error('Failed to delete subscription', TAG, { subscriptionId, error: err.message });
   }
 };

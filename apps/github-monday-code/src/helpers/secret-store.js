@@ -1,6 +1,8 @@
 import { EnvironmentVariablesManager } from '@mondaycom/apps-sdk';
 import dotenv from 'dotenv';
 
+const secretManager = new EnvironmentVariablesManager();
+
 dotenv.config();
 /**
  * Retrieves the value of a secret based on the provided secret key.
@@ -15,9 +17,7 @@ dotenv.config();
  * @returns {string | undefined} The value of the secret, or `undefined` if the secret key is not found or its value is not set.
  */
 export const getSecret = (secretKey, options = {}) => {
-  const { invalidate = false } = options;
-  const secretManager = new EnvironmentVariablesManager();
-  const secret = secretManager.get(secretKey, invalidate);
+  const secret = secretManager.get(secretKey, options);
   return secret;
 };
 
@@ -30,7 +30,6 @@ export const getSecret = (secretKey, options = {}) => {
  * @returns {string[]} An array containing all the keys of environment variables.
  */
 export const getEnvKeys = () => {
-  const secretManager = new EnvironmentVariablesManager();
   const keys = secretManager.getKeys();
   return keys;
 };

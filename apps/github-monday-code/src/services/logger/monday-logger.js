@@ -13,19 +13,19 @@ class MondayLogger extends BaseLogger {
   }
 
   info(message, tag, options) {
-    new Logger(tag).info(message, options);
+    new Logger(tag).info(message + ' PARAMS:- \n' + JSON.stringify(options));
   }
 
   warn(message, tag, options) {
-    new Logger(tag).warn(message, options);
+    new Logger(tag).warn(message + ' PARAMS:- \n' + JSON.stringify(options));
   }
 
   error(message, tag, options) {
-    new Logger(tag).error(message, options);
+    new Logger(tag).error(message + ' PARAMS:- \n' + JSON.stringify(options));
   }
 
   debug(message, tag, options) {
-    new Logger(tag).debug(message, options);
+    new Logger(tag).debug(message + ' PARAMS:- \n' + JSON.stringify(options));
   }
 }
 export default MondayLogger;

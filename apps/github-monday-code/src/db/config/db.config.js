@@ -5,11 +5,11 @@ const config = {
   },
   test: {
     dialect: 'sqlite',
-    storage: ':memory',
+    storage: ':memory:',
   },
   production: {
     dialect: 'sqlite',
-    storage: './database.sqlite3',
+    storage: ':memory:',
   },
 };
 

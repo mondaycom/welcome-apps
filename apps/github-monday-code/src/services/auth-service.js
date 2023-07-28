@@ -10,7 +10,7 @@ const SCOPES = ['repo'];
 */
 export const getAuthorizationUrl = (userId, state) => {
   const client = getClient();
-  const redirectUri = `${getBaseUrl()}/auth/callback/`;
+  const redirectUri = `${getBaseUrl()}/auth/callback/${userId}`;
   const authorizationUrl = client.authorizeURL({
     redirect_uri: redirectUri,
     scope: SCOPES,

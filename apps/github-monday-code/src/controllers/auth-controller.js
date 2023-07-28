@@ -22,6 +22,7 @@ export const authorize = async (req, res) => {
 export const callback = async (req, res) => {
   const { userId } = req.params;
   const { code, state: backToUrl } = req.query;
+  logger.info('oauth callback', TAG, { userId, code, backToUrl, query: req.query, params: req.params });
 
   try {
     const token = await authService.getToken(code);
@@ -29,7 +30,7 @@ export const callback = async (req, res) => {
 
     return res.redirect(backToUrl);
   } catch (err) {
-    logger.error('oauth callback failed', TAG, { userId, error: err });
+    logger.error('oauth callback failed', TAG, { userId, error: err.message });
     return res.status(500).send({ message: 'internal server error' });
   }
 };

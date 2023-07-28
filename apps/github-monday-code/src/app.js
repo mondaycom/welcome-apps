@@ -5,7 +5,9 @@ import { getSecret } from './helpers/secret-store.js';
 import { PORT } from './constants/secret-keys.js';
 import logger from './services/logger/index.js';
 import { getBaseUrl, getEnv } from './helpers/environment.js';
+import { initializeDb } from './db/models/index.js';
 
+initializeDb();
 
 const TAG = 'server_runner';
 

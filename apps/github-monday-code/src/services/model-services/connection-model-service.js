@@ -13,7 +13,7 @@ export const getConnectionByUserId = async (userId) => {
     const response = await connectionSecureStorage.get(userId);
     return response;
   } catch (err) {
-    logger.error('Failed to retrieve connection by user ID', TAG, { userId, error: err });
+    logger.error('Failed to retrieve connection by user ID', TAG, { userId, error: err.message });
   }
 };
 
@@ -32,7 +32,7 @@ export const createConnection = async (attributes) => {
 
     return { userId, token };
   } catch (err) {
-    logger.error('Failed to create connection', TAG, { userId, error: err });
+    logger.error('Failed to create connection', TAG, { userId, error: err.message });
   }
 };
 
@@ -50,7 +50,7 @@ export const updateConnection = async (updates) => {
 
     return { userId, token };
   } catch (err) {
-    logger.error('Failed to update connection', TAG, { userId, error: err });
+    logger.error('Failed to update connection', TAG, { userId, error: err.message });
   }
 };
 
@@ -62,6 +62,6 @@ export const deleteConnection = async (userId) => {
     await connectionSecureStorage.delete(userId);
     return key;
   } catch (err) {
-    logger.error('Failed to delete connection', TAG, { userId, error: err });
+    logger.error('Failed to delete connection', TAG, { userId, error: err.message });
   }
 };
