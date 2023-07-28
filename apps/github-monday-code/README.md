@@ -70,7 +70,7 @@ $ npm run mapps init
 
 You will be prompted to insert your Monday access token. To get your token, go to Developer section > My access tokens.
 
-2. start deployment to monday-code using the following command:
+2. Start deployment to monday-code using the following command [monday apps cli](https://github.com/mondaycom/monday-code-cli#mapps-codepush):
 
 ```bash
 $ npm run deploy
@@ -78,7 +78,7 @@ $ npm run deploy
 
     1. Choose your app that will be associated with the deployment.
     2. Choose the draft version to deploy.
-    3. Optionally, you can run the following command to receive your server logs if you are using Monday logger:
+    3. Optionally, you can run the following command to receive your server logs if you [are] using [Monday logger](https://github.com/mondaycom/monday-code-cli#mapps-codelogs) :
 
 ```bash
 $ npm run logs
@@ -87,7 +87,7 @@ $ npm run logs
 
 # Using Monday Apps CLI
 
-To use Monday apps-cli globally, you can run the following command:
+To use [Monday apps-cli](https://github.com/mondaycom/monday-code-cli) globally, you can run the following command:
 
 ```bash
 $ npm i -g @mondaycom/apps-cli

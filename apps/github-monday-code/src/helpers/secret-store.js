@@ -10,6 +10,7 @@ dotenv.config();
  * This function accesses the `EnvironmentVariablesManager` to fetch the value associated with the given secret key.
  * If the secret is found, its value is returned. If the secret key is not found or its value is not set, the function
  * returns `undefined`.
+ * visit https://github.com/mondaycom/apps-sdk#environment-variables-manager for documentation
  *
  * @param {string} secretKey - The key to identify the secret.
  * @param {object} options - (Optional) Additional options for retrieving the secret.

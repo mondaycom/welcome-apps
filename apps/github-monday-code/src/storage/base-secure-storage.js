@@ -6,6 +6,7 @@ import { SecureStorage } from '@mondaycom/apps-sdk';
  * Secure storage - when used in a deployed <monday-code/> project it will automatically utilize the real secure storage
  * Local "secure storage" - a local mock db which will mimic the api exposed by the real secure storage. Will work in this mode when sdk is used locally.
  * If there are no permissions to write files on the disk, Local "secure storage" will not be persisted
+ * visit https://github.com/mondaycom/apps-sdk#secure-storage for documentation
  */
 class BaseSecureStorage {
   constructor() {
