@@ -1,8 +1,9 @@
-import * as connectionModelService from '../services/model-services/connection-model-service.js';
+import { ConnectionModelService } from '../services/model-services/connection-model-service.js';
 import * as githubService from '../services/github-service.js';
 import logger from '../services/logger/index.js';
 
 const TAG = 'action_controller';
+const connectionModelService = new ConnectionModelService();
 /**
  * This function runs when your action block is called from monday.
  * In this example, it creates an issue in Github.
@@ -24,12 +25,12 @@ export async function executeAction(req, res) {
 
   try {
     // Retrieve the relevant user's OAuth token from the DB
-    const { token } = await connectionModelService.getConnectionByUserId(userId);
+    const { githubToken } = await connectionModelService.getConnectionByUserId(userId);
     const owner = repository.value.owner;
     const repo = repository.value.name;
 
     // Call the Github API to create an issue.
-    await githubService.createIssue(token, owner, repo, issue);
+    await githubService.createIssue(githubToken, owner, repo, issue);
 
     return res.status(200).send();
   } catch (err) {

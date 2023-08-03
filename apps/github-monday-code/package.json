@@ -9,11 +9,11 @@
   "scripts": {
     "start": "npm run server",
     "dev": "nodemon --inspect=8080 ./src/app.js",
-    "server": "node ./src/app.js",
-    "db:migrate": "sequelize db:migrate",
-    "deploy": "mapps code:push --verbose",
-    "logs": "mapps code:logs",
-    "mapps:init": "mapps init"
+    "server": "NODE_ENV=production node ./src/app.js",
+    "deploy": "npm run mapps-updated code:push",
+    "logs": "npm run mapps-updated code:logs",
+    "mapps:init": "npm run mapps-updated init",
+    "mapps-updated": "mapps -u"
   },
   "nodemonConfig": {
     "watch": [

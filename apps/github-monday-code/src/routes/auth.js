@@ -5,6 +5,7 @@ import * as authController from '../controllers/auth-controller.js';
 const router = Router();
 
 router.get('/auth', authenticationMiddleware, authController.authorize);
-router.get('/auth/callback/:userId', authController.callback);
+router.get('/auth/github/callback/:userId', authController.githubCallback);
+router.get('/auth/monday/callback', authController.mondayCallback);
 
 export default router;
