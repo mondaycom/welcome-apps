@@ -1,8 +1,9 @@
-import * as connectionModelService from '../services/model-services/connection-model-service.js';
+import { ConnectionModelService } from '../services/model-services/connection-model-service.js';
 import * as githubService from '../services/github-service.js';
 import logger from '../services/logger/index.js';
 
 const TAG = 'fields_controller';
+const connectionModelService = new ConnectionModelService();
 /**
  * This function returns an array of options to populate a dropdown in the recipe editor.
  * In this example, it returns a list of Github repositories.
@@ -13,8 +14,8 @@ export async function getRemoteListOptions(req, res) {
   const { userId } = req.session;
   try {
     logger.info('get remote list options', TAG, { userId });
-    const { token } = await connectionModelService.getConnectionByUserId(userId);
-    const options = await githubService.getRepositories(token);
+    const { githubToken } = await connectionModelService.getConnectionByUserId(userId);
+    const options = await githubService.getRepositories(githubToken);
     return res.status(200).send(options);
   } catch (err) {
     logger.error('failed to get remote list options', TAG, { userId, error: err.message });

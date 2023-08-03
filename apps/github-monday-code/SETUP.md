@@ -1,10 +1,30 @@
 ## Overview
 
-### Setting up the app in Github
+### Base setup of the app in Monday
+
+To set up the app in Monday, follow these steps:
+
+1. Open monday.com, login to your account and go to a "Developers" section.
+2. Create new "monday-code Github Workflow Example App".
+3. Open "Features" section and create new "Workflow" feature.
+4. Choose the "Github Integration - NodeJS" template to start. **Don't** run the suggested command.
+5. Run this project with `npm run dev` and paste the resulting URL (from the command output) into the URL box and press create.
+
+### Configure OAuth in Monday
+
+1. Press `OAuth` in the `General` section of the left menu.
+2. Enter the `Redirect URLs` tab.
+3. Add the following URL: `https://<YOUR_URL>/auth/monday/callback` and **press save**.
+
+Congrats, you have successfully set up the app in Monday! 🎉
+
+## Setting up the app in Github
 
 To integrate with Github, you need to create an OAuth app using your Github account. Follow these steps to set it up:
 
-1. Copy the `TUNNEL_URL` or `NGROK_URL` from your environment. For example: `https://happy-pig-99.tunnel.monday.app`.
+1. Copy the url outputted by running the `npm run dev` command. For example: `https://happy-pig-99.tunnel.monday.app`.
+
+   2. This url can be made static by setting the followin environment variables in the .env file: `TUNNEL_SUBDOMAIN`.
 
 2. Navigate to [github.com](https://github.com/) and login to your github account.
 
@@ -35,8 +55,4 @@ To integrate with Github, you need to create an OAuth app using your Github acco
       ```
       Choose the app to set environment variables > set > enter the secret key > then enter the value of the secret. The secret will be injected into process.env of your deployment.
 
-### Troubleshooting the sqlite3 server
-
-This app uses `sqlite3`, which is included as a dependency. If you encounter any issues while installing it, refer to the [sqlite3 package documentation](https://www.npmjs.com/package/sqlite3) for troubleshooting tips.
-
-### Happy building!
+### Happy building! 🎉

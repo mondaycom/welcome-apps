@@ -54,18 +54,13 @@ $ npm install
 ```bash
 $ npm run dev
 ```
-or
-```bash
-$ npm start
-```
-to run the server
 
 ## Deploying the App
 
 1. For the first-time deployment, use this command to initialize Monday code:
 
 ```bash
-$ npm run mapps init
+$ npm run mapps:init
 ```
 
 You will be prompted to insert your Monday access token. To get your token, go to Developer section > My access tokens.
