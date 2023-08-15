@@ -1,0 +1,39 @@
+{
+  "name": "currency-conversion-node-monday-code",
+  "version": "0.0.1",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">= 18.12.0"
+  },
+  "scripts": {
+    "start": "npm run server",
+    "dev": "nodemon --inspect=8080 ./src/app.js",
+    "server": "NODE_ENV=production node ./src/app.js",
+    "deploy": "npm run mapps-updated code:push",
+    "logs": "npm run mapps-updated code:logs",
+    "mapps:init": "npm run mapps-updated init",
+    "mapps-updated": "mapps -u"
+  },
+  "nodemonConfig": {
+    "watch": [
+      ".env",
+      "src/"
+    ]
+  },
+  "dependencies": {
+    "@mondaycom/apps-sdk": "^0.1.3",
+    "@mondaydotcomorg/tunnel": "^0.4.2",
+    "axios": "^1.4.0",
+    "body-parser": "^1.19.0",
+    "dotenv": "^5.0.1",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^9.0.0",
+    "monday-sdk-js": "^0.4.8"
+  },
+  "devDependencies": {
+    "@mondaycom/apps-cli": "^0.1.15",
+    "eslint": "^8.47.0",
+    "nodemon": "^3.0.1"
+  }
+}
