@@ -8,8 +8,10 @@ A minimal example to help you get started on monday code.
 
 For the example to work, you need to set it up in the monday UI, deploy the app, and set environment variables. 
 
+> Want a video demo? [Find the link here.](https://www.loom.com/share/b982f6b88fc0491f9e70fa424eb91638)
+
 ### Setup
-- Download the files, unzip them
+- Download the files from Github – `npx degit github:yuhgto/welcome-apps/apps/quickstart-integrations-monday-code`
 - Create an app in monday
 - Create a “workflows” feature and use the “Node JS Quickstart” template
 - Add the scopes and put an arbitrary URL for the server URL
