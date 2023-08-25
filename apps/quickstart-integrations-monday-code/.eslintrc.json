@@ -1,0 +1,20 @@
+{
+  "extends": "eslint:recommended",
+  "env": {
+    "es2018": true,
+    "node": true,
+    "mocha": true
+  },
+  "globals": {
+    "logger": true,
+    "secrets": true
+  },
+  "settings": {
+    "flowtype": {
+      "onlyFilesWithFlowAnnotation": false
+    }
+  },
+  "parserOptions": {
+    "sourceType": "module"
+  }
+}
