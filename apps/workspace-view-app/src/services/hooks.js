@@ -75,7 +75,7 @@ export const useGetWorkspaceData = () => {
     return workspaces;
   }, [context.workspaceId]);
 
-  const { isLoading, data } = useLoading(fetchWorkspaces);
+  const { isLoading, data = [] } = useLoading(fetchWorkspaces);
 
-  return { isLoading, workspaceData: data };
+  return { isLoading, workspaceData: data[0] };
 };
