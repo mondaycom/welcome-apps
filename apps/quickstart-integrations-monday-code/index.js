@@ -1,23 +1,23 @@
 import express from "express";
 import { Logger } from "@mondaycom/apps-sdk";
-import chalk from "chalk";
-import {
-  changeColumnValue,
-  getColumnValue,
-  transformText,
-  authorizeRequest,
-} from "./src/services.js";
+import { transformText } from "./src/transformation-service.js";
+import { authorizeRequest } from "./src/middleware.js";
+import { changeColumnValue, getColumnValue } from "./src/monday-api-service.js";
 import { getSecret, isDevelopmentEnv, getEnv } from "./src/helpers.js";
 import dotenv from "dotenv";
 dotenv.config();
 
 const logTag = "ExpressServer";
+const PORT = "PORT";
+const SERVICE_TAG_URL = "SERVICE_TAG_URL";
+const TO_UPPER_CASE = "TO_UPPER_CASE";
+const TO_LOWER_CASE = "TO_LOWER_CASE";
+
 const logger = new Logger(logTag);
+const currentPort = getSecret(PORT); // Port must be 8080 to work with monday code
+const currentUrl = getSecret(SERVICE_TAG_URL);
 
-// Port must be 8080 in order to work with monday code
-const port = getSecret("PORT");
 const app = express();
-
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -65,32 +65,40 @@ app.post("/monday/execute_action", authorizeRequest, async (req, res) => {
 
     return res.status(200).send({});
   } catch (err) {
-    console.error(err);
+    logger.error(err);
     return res.status(500).send({ message: "internal server error" });
   }
 });
 
-app.post("/monday/get_remote_list_options", authorizeRequest, async (req, res) => {
-  const TRANSFORMATION_TYPES = [
-    { title: "to upper case", value: "TO_UPPER_CASE" },
-    { title: "to lower case", value: "TO_LOWER_CASE" },
-  ];
-  try {
-    return res.status(200).send(TRANSFORMATION_TYPES);
-  } catch (err) {
-    console.error(err);
-    return res.status(500).send({ message: "internal server error" });
+app.post(
+  "/monday/get_remote_list_options",
+  authorizeRequest,
+  async (req, res) => {
+    const TRANSFORMATION_TYPES = [
+      { title: "to upper case", value: TO_UPPER_CASE },
+      { title: "to lower case", value: TO_LOWER_CASE },
+    ];
+    try {
+      return res.status(200).send(TRANSFORMATION_TYPES);
+    } catch (err) {
+      logger.error(err);
+      return res.status(500).send({ message: "internal server error" });
+    }
   }
-});
+);
 
-app.listen(port, () => {
+app.listen(currentPort, () => {
   if (isDevelopmentEnv()) {
-    logger.info(`app running locally on port ${chalk.red(port)}`);
+    logger.info(`app running locally on port ${currentPort}`);
   } else {
-    logger.info(`up and running listening on port:${port}`, 'server_runner', {
-      env: getEnv(),
-      port,
-      url: `https://${getSecret("SERVICE_TAG_URL")}`,
-    });
+    logger.info(
+      `up and running listening on port:${currentPort}`,
+      "server_runner",
+      {
+        env: getEnv(),
+        port: currentPort,
+        url: `https://${currentUrl}`,
+      }
+    );
   }
 });
