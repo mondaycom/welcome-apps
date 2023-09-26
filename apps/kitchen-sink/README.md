@@ -1,3 +1,29 @@
+# new info: 
+Kitchen sink app. Some stuff to know: 
+
+## How to start it
+
+1. Run `nvm use` – this app uses node 14
+2. Run `npm install` then `npm run start`
+3. Open `localhost:4040` to see your ngrok url
+4. Paste ngrok URL into a board view
+
+## Todo: 
+
+### to fix:
+- Fix vulnerabilities
+- Migrate code snippets to react hooks
+- Migrate snippets to v 2023-10
+- Fix how we retrieve code samples
+- Review copy 
+
+### nice to have - 
+- Package as a workspace app or object app
+- Update design and layout
+- Add tests
+
+# old info: 
+
 ## Overview
 
 This is the "Kitchen Sink" example Monday app.
