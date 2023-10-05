@@ -49,6 +49,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "concurrently": "^5.2.0",
     "cross-port-killer": "^1.2.1",
     "ngrok": "^5.0.0-beta.2"
