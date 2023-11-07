@@ -1,14 +1,12 @@
 # monday code - integration quickstart
 
-A minimal example to help you get started on monday code. 
-
-> **Note:** monday code is only available for select testers. It will be available publicly in the next few months (updated: Aug 2023). 
+A minimal example to help you get started on monday code. [Learn more.](https://developer.monday.com/apps/docs/hosting-your-app-with-monday-code)
 
 ## Running the example
 
 For the example to work, you need to set it up in the monday UI, deploy the app, and set environment variables. 
 
-> Want a video demo? [Find the link here.](https://www.loom.com/share/b982f6b88fc0491f9e70fa424eb91638)
+> Prefer a video demo? [Watch here.](https://www.loom.com/share/b982f6b88fc0491f9e70fa424eb91638)
 
 ### Setup
 - Download the files from Github – `npx degit github:yuhgto/welcome-apps/apps/quickstart-integrations-monday-code`
@@ -40,4 +38,4 @@ For the example to work, you need to set it up in the monday UI, deploy the app,
 - Paste your ngrok tunnel URL as the `Base URL` of your feature
 
 ## Need help?
-Ask us in our shared monday-code slack channel! 
+Post in the [monday developers' community!](https://community.monday.com/c/developers/8) 
