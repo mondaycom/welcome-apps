@@ -107,8 +107,8 @@ app.post(
     "/mndy-queue",
     async (req, res) => {
         try {
-            const { headers, body, query } = req;
-            readQueueMessage({ headers, body, query });
+            const { body, query } = req;
+            readQueueMessage({ body, query });
             return res.status(200).send(); // return 200 to ACK the queue message
         } catch (err) {
             logger.error(JSON.stringify(err));

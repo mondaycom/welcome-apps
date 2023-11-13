@@ -18,11 +18,10 @@ export const produceMessage = async ({ body }) => {
     return messageId;
 }
 
-export const readQueueMessage = ({ headers, body, query }) => {
+export const readQueueMessage = ({ body, query }) => {
     const topicMessageSecret = process.env.MNDY_TOPIC_MESSAGES_SECRET
     const receivedSecret = query.secret;
     logger.info(`queue message topic Message Secret: "${topicMessageSecret}"`)
-    logger.info(`queue message received headers ${JSON.stringify(headers)}`)
     logger.info(`queue message received body ${JSON.stringify(body)}`)
     logger.info(`queue message query params ${JSON.stringify(query)}`)
     if (receivedSecret === topicMessageSecret)  {
