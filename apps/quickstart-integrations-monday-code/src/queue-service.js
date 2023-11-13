@@ -25,7 +25,7 @@ export const readQueueMessage = ({ body, query }) => {
     logger.info(`queue message received body ${JSON.stringify(body)}`)
     logger.info(`queue message query params ${JSON.stringify(query)}`)
     if (receivedSecret === topicMessageSecret)  {
-        logger.info("Queue message source validation completed successfully secret is matched., this message come from an MCODE system.");
+        logger.info("Queue message source validation completed successfully secret is matched, this message come from monday code side");
     }
     else {
         logger.info("Queue message received is not valid, since secret is not matched, this message could come from an attacker.");
