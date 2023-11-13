@@ -1,7 +1,6 @@
-import { Logger } from "@mondaycom/apps-sdk";
-import { PubSub } from "@google-cloud/pubsub";
-const pubSubClient = new PubSub();
+import { Logger, Queue } from "@mondaycom/apps-sdk";
 
+const queue = new Queue();
 const logTag = "QueueService";
 const logger = new Logger(logTag);
 
@@ -11,9 +10,7 @@ export const produceMessage = async ({ body }) => {
     logger.info(`produce message received ${JSON.stringify(body)}`);
     logger.info(`about to publish to topic "${topicName}"`);
     const dataBuffer = Buffer.from(JSON.stringify(body));
-    const messageId = await pubSubClient
-        .topic(topicName)
-        .publishMessage({ data: dataBuffer, attributes: { "Content-Type": "application/json" } });
+    const messageId = await queue.publishMessage(topicName, dataBuffer);
     logger.info(`Message ${messageId} published.`);
     return messageId;
 }
