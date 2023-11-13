@@ -94,7 +94,8 @@ app.post(
     async (req, res) => {
         try {
             const { body } = req;
-            const messageId = await produceMessage({ body })
+            const message = JSON.stringify(body);
+            const messageId = await produceMessage(message);
             return res.status(200).send({ messageId });
         } catch (err) {
             logger.error(JSON.stringify(err));

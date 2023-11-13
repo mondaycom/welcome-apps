@@ -5,10 +5,9 @@ const logTag = "QueueService";
 const logger = new Logger(logTag);
 
 
-export const produceMessage = async ({ body }) => {
-    logger.info(`produce message received ${JSON.stringify(body)}`);
-    const dataBuffer = Buffer.from(JSON.stringify(body));
-    const messageId = await queue.publishMessage(dataBuffer);
+export const produceMessage = async (message) => {
+    logger.info(`produce message received ${message}`);
+    const messageId = await queue.publishMessage(message);
     logger.info(`Message ${messageId} published.`);
     return messageId;
 }
