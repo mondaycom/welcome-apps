@@ -6,11 +6,9 @@ const logger = new Logger(logTag);
 
 
 export const produceMessage = async ({ body }) => {
-    const topicName = process.env.MNDY_TOPIC_NAME
     logger.info(`produce message received ${JSON.stringify(body)}`);
-    logger.info(`about to publish to topic "${topicName}"`);
     const dataBuffer = Buffer.from(JSON.stringify(body));
-    const messageId = await queue.publishMessage(topicName, dataBuffer);
+    const messageId = await queue.publishMessage(dataBuffer);
     logger.info(`Message ${messageId} published.`);
     return messageId;
 }
