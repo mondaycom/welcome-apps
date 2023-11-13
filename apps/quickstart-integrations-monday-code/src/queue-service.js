@@ -17,6 +17,7 @@ export const produceMessage = async ({ body }) => {
     logger.info(`Message ${messageId} published.`);
     return messageId;
 }
+
 export const readQueueMessage = ({ headers, body, query }) => {
     const topicMessageSecret = process.env.MNDY_TOPIC_MESSAGES_SECRET
     const receivedSecret = query.secret;
