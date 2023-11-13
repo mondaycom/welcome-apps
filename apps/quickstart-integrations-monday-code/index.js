@@ -5,6 +5,7 @@ import { authorizeRequest } from "./src/middleware.js";
 import { changeColumnValue, getColumnValue } from "./src/monday-api-service.js";
 import { getSecret, isDevelopmentEnv, getEnv } from "./src/helpers.js";
 import dotenv from "dotenv";
+import { readQueueMessage, produceMessage } from "./src/queue-service.js";
 dotenv.config();
 
 const logTag = "ExpressServer";
@@ -85,6 +86,36 @@ app.post(
       return res.status(500).send({ message: "internal server error" });
     }
   }
+);
+
+
+app.post(
+    "/produce",
+    async (req, res) => {
+        try {
+            const { body } = req;
+            const message = JSON.stringify(body);
+            const messageId = await produceMessage(message);
+            return res.status(200).send({ messageId });
+        } catch (err) {
+            logger.error(JSON.stringify(err));
+            return res.status(500).send({ message: "internal server error" });
+        }
+    }
+);
+
+app.post(
+    "/mndy-queue",
+    async (req, res) => {
+        try {
+            const { body, query } = req;
+            readQueueMessage({ body, query });
+            return res.status(200).send({}); // return 200 to ACK the queue message
+        } catch (err) {
+            logger.error(JSON.stringify(err));
+            return res.status(500).send({ message: "internal server error" });
+        }
+    }
 );
 
 app.listen(currentPort, () => {
