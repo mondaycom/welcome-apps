@@ -112,7 +112,7 @@ app.post(
             readQueueMessage({ body, query });
             return res.status(200).send({}); // return 200 to ACK the queue message
         } catch (err) {
-            logger.error(JSON.stringify(err));
+            logger.error(err.error);
             return res.status(500).send({ message: "internal server error" });
         }
     }

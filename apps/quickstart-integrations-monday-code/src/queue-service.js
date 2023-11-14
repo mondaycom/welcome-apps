@@ -13,14 +13,14 @@ export const produceMessage = async (message) => {
 }
 
 export const readQueueMessage = ({ body, query }) => {
-    const topicMessageSecret = process.env.MNDY_TOPIC_MESSAGES_SECRET
-    const receivedSecret = query.secret;
-    logger.info(`queue message topic Message Secret: "${topicMessageSecret}"`)
+    const envMessageSecret = process.env.MNDY_TOPIC_MESSAGES_SECRET;
+    logger.info(`expected queue secret value: ${envMessageSecret}`)
     logger.info(`queue message received body ${JSON.stringify(body)}`)
     logger.info(`queue message query params ${JSON.stringify(query)}`)
-    if (receivedSecret !== topicMessageSecret)  {
+    if (!queue.validateMessageSecret(query.secret))  {
         logger.info("Queue message received is not valid, since secret is not matched, this message could come from an attacker.");
         throw new Error('not allowed');
     }
+    logger.info("Queue message received successfully.");
     // process the queue message payload...
 };
