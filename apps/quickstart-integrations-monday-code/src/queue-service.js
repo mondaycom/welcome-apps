@@ -17,7 +17,7 @@ export const readQueueMessage = ({ body, query }) => {
     logger.info(`expected queue secret value: ${envMessageSecret}`)
     logger.info(`queue message received body ${JSON.stringify(body)}`)
     logger.info(`queue message query params ${JSON.stringify(query)}`)
-    if (!queue.validateMessageOrigin(query.secret))  {
+    if (!queue.validateMessageSecret(query.secret))  {
         logger.info("Queue message received is not valid, since secret is not matched, this message could come from an attacker.");
         throw new Error('not allowed');
     }
