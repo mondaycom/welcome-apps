@@ -9,7 +9,7 @@ For the example to work, you need to set it up in the monday UI, deploy the app,
 > Prefer a video demo? [Watch here.](https://www.loom.com/share/b982f6b88fc0491f9e70fa424eb91638)
 
 ### Setup
-- Download the files from Github – `npx degit github:yuhgto/welcome-apps/apps/quickstart-integrations-monday-code`
+- Download the files from Github – `npx degit github:mondaycom/welcome-apps/apps/quickstart-integrations-monday-code`
 - Create an app in monday
 - Create a “workflows” feature and use the “Node JS Quickstart” template
 - Add the scopes and put an arbitrary URL for the server URL
