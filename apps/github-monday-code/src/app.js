@@ -2,10 +2,10 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import routes from './routes/index.js';
 import { getSecret } from './helpers/secret-store.js';
-import { PORT } from './constants/secret-keys.js';
+import { PORT, LOCAL_SERVER_URL } from './constants/secret-keys.js';
 import logger from './services/logger/index.js';
 import { getBaseUrl, getEnv, isDevelopmentEnv } from './helpers/environment.js';
-import { createDevTunnel } from './helpers/tunnel.js';
+import { cache, cacheKeys } from './services/cache-service.js';
 
 const TAG = 'server_runner';
 
@@ -18,7 +18,7 @@ app.use(routes);
 
 app.listen(port, () => {
   if(isDevelopmentEnv()) {
-    createDevTunnel(port)
+    cache.set(cacheKeys.SERVER_URL, getSecret(LOCAL_SERVER_URL));
   } else {
     logger.info(`up and running listening on port:${port}`, TAG, { env: getEnv(), port, url: getBaseUrl() });
   }

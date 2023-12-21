@@ -4,11 +4,14 @@
   "license": "MIT",
   "type": "module",
   "engines": {
-    "node": "18.12.0"
+    "node": "^18.12.0"
   },
   "scripts": {
     "start": "npm run server",
-    "dev": "nodemon --inspect=8080 ./src/app.js",
+    "dev": "npm run dev:stop && concurrently \"npm run dev:server\" \"npm run dev:expose\"",
+    "dev:server": "nodemon --inspect=8080 ./src/app.js",
+    "dev:expose": "mapps tunnel:create -p 8080",
+    "dev:stop": "kill-port 8080",
     "server": "NODE_ENV=production node ./src/app.js",
     "deploy": "npm run mapps-updated code:push",
     "logs": "npm run mapps-updated code:logs",
@@ -23,7 +26,6 @@
   },
   "dependencies": {
     "@mondaycom/apps-sdk": "^0.1.3",
-    "@mondaydotcomorg/tunnel": "^0.4.2",
     "@octokit/rest": "^16.43.2",
     "body-parser": "^1.19.0",
     "dotenv": "^5.0.1",
@@ -36,8 +38,10 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@mondaycom/apps-cli": "^0.1.14",
+    "@mondaycom/apps-cli": "^2.1.1",
+    "concurrently": "^8.2.2",
     "eslint": "^v6.8.0",
-    "nodemon": "^2.0.2"
+    "kill-port": "^2.0.1",
+    "nodemon": "^3.0.2"
   }
 }
