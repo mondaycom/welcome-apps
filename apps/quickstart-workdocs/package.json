@@ -12,7 +12,8 @@
     "stop": "kill-port 8301 && kill-port 4049 && kill-port 4040"
   },
   "dependencies": {
-    "monday-sdk-js": "^0.1.4",
+    "@mondaycom/apps-sdk": "^2.1.2",
+    "monday-sdk-js": "^0.5.2",
     "monday-ui-react-core": "^1.54.0"
   },
   "eslintConfig": {
@@ -33,15 +34,14 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
+    "concurrently": "^5.2.0",
+    "cross-port-killer": "^1.2.1",
     "eslint-config-react-app": "^7.0.1",
     "ngrok": "^4.3.3",
     "quill-delta": "^5.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "^5.0.1",
-    "@mondaydotcomorg/tunnel": "^0.4.1",
-    "concurrently": "^5.2.0",
-    "cross-port-killer": "^1.2.1",
     "sass": "^1.54.8"
   }
 }
