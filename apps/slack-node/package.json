@@ -30,6 +30,7 @@
     "sqlite3": "^5.1.6"
   },
   "devDependencies": {
+    "@mondaycom/apps-cli": "^2.1.1",
     "concurrently": "^8.2.2",
     "debug": "~2.6.9",
     "eslint": "^v6.8.0",
