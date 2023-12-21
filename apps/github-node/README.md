@@ -51,3 +51,7 @@ $ npm install
 ```
 $ npm start
 ```
+
+## Add server URL to .env file
+
+Add your app's tunnel url as the `LOCAL_SERVER_URL` in .env. 
