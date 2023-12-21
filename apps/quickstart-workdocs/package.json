@@ -5,11 +5,11 @@
   "scripts": {
     "start": "npm run stop && concurrently \"npm run server\" \"npm run expose\"",
     "build": "react-scripts build",
-    "expose": "ngrok http 8306",
+    "expose": "mapps tunnel:create -p 8306",
     "server": "react-scripts start",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "stop": "kill-port 8301 && kill-port 4049 && kill-port 4040"
+    "stop": "kill-port 8306 && kill-port 4049 && kill-port 4040"
   },
   "dependencies": {
     "@mondaycom/apps-sdk": "^2.1.2",
@@ -32,6 +32,7 @@
     ]
   },
   "devDependencies": {
+    "@mondaycom/apps-cli": "^2.1.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "concurrently": "^5.2.0",
