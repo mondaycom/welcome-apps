@@ -5,7 +5,7 @@ In order for this integration to work you will need to create an OAuth app using
 
 To do so, please follow these steps:
 
-1. Copy the TUNNEL_URL the app printed after running the `scaffold` command or `npm run start`. Example: https://happy-pig-99.tunnel.monday.app
+1. Copy the TUNNEL_URL the app printed after running the `scaffold` command or `npm run start`. Example: https://abc1234.apps-tunnel.monday.com
 
 2. Navigate to [github.com](https://github.com/) and login to your github account.
 

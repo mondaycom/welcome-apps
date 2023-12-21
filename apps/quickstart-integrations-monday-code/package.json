@@ -1,12 +1,15 @@
 {
   "name": "monday-code-nodejs-quickstart",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=production node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js"
+    "dev": "npm run dev:stop && concurrently \"npm run dev:server\" \"npm run dev:expose\"",
+    "dev:server": "nodemon index.js",
+    "dev:expose": "mapps tunnel:create -p 8080",
+    "dev:stop": "kill-port 8080"
   },
   "author": "Dipro Bhowmik",
   "license": "ISC",
@@ -19,7 +22,10 @@
   },
   "type": "module",
   "devDependencies": {
+    "@mondaycom/apps-cli": "^2.1.1",
+    "concurrently": "^8.2.2",
     "eslint": "^8.47.0",
+    "kill-port": "^2.0.1",
     "nodemon": "^3.0.1"
   }
 }

@@ -3,8 +3,9 @@
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
-    "start": "npm run stop && npm run db:migrate && npm run server",
+    "start": "npm run stop && npm run db:migrate && concurrently \"npm run server\" \"npm run expose\"",
     "server": "nodemon ./src/app.js",
+    "expose": "mapps tunnel:create -p 8302",
     "db:migrate": "sequelize db:migrate",
     "stop": "kill-port 8302"
   },
@@ -21,7 +22,7 @@
     "dotenv": "^5.0.1",
     "express": "^4.17.1",
     "jsonwebtoken": "^9.0.0",
-    "monday-sdk-js": "^0.1.4",
+    "monday-sdk-js": "^0.5.2",
     "node-cache": "^5.1.2",
     "node-fetch": "^2.6.1",
     "sequelize": "^6.30.0",
@@ -29,11 +30,11 @@
     "sqlite3": "^5.1.6"
   },
   "devDependencies": {
-    "@mondaydotcomorg/tunnel": "^0.4.1",
-    "concurrently": "^5.2.0",
+    "@mondaycom/apps-cli": "^2.1.1",
+    "concurrently": "^8.2.2",
     "debug": "~2.6.9",
     "eslint": "^v6.8.0",
-    "nodemon": "^2.0.2",
+    "nodemon": "^3.0.2",
     "sequelize-cli": "^6.2.0"
   }
 }

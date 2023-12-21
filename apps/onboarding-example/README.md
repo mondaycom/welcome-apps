@@ -27,7 +27,7 @@ And then you can run
 
 ### `npm run start`
 
-Visit http://localhost:4040/inspect/http to find the URL you can then paste in your app's board view feature's custom URL.
+Take the URL from your CLI you can then paste in your app's board view feature's custom URL.
 
 ## Configure Monday App 
 

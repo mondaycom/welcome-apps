@@ -24,8 +24,6 @@ To integrate with Github, you need to create an OAuth app using your Github acco
 
 1. Copy the url outputted by running the `npm run dev` command. For example: `https://happy-pig-99.tunnel.monday.app`.
 
-   2. This url can be made static by setting the followin environment variables in the .env file: `TUNNEL_SUBDOMAIN`.
-
 2. Navigate to [github.com](https://github.com/) and login to your github account.
 
 3. Go to the OAuth apps page by clicking on your avatar > Settings > Developer settings > OAuth Apps, or click [here](https://github.com/settings/developers).
