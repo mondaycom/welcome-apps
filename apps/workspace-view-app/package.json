@@ -1,5 +1,5 @@
 {
-  "name": "awsomeapp",
+  "name": "workspace-view-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -17,10 +17,13 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "npm run stop && concurrently \"npm run server\" \"npm run expose\" ",
+    "server": "react-scripts start",
     "build": "react-scripts build",
+    "expose": "mapps tunnel:create -p 8307",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "stop": "kill-port 8307"
   },
   "eslintConfig": {
     "extends": [
@@ -39,5 +42,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@mondaycom/apps-cli": "^2.2.0",
+    "concurrently": "^8.2.2",
+    "kill-port": "^2.0.1"
   }
 }
