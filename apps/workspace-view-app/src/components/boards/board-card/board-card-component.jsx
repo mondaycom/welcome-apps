@@ -23,8 +23,8 @@ const BoardCardComponent = ({ board }) => {
       />
       <Heading
         value={board.description}
-        type={Heading.types.h3}
-        ellipsisMaxLines={4}
+        type={Heading.types.h5}
+        ellipsisMaxLines={2}
       />
       <Flex
         className={classes.footer}
