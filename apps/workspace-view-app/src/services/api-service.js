@@ -1,7 +1,7 @@
 import mondaySdk from "monday-sdk-js";
 import { handleError } from "./error-handling";
 
-const monday = mondaySdk();
+const monday = mondaySdk({apiVersion: "2024-01"});
 const executeGraphQl = async (query) => {
   try {
     const response = await monday.api(query);
@@ -83,7 +83,7 @@ export const getWorkspaceBoards = async (workspaceId) => {
   if (!finalWorkspaceId) return;
   const response = await executeGraphQl(`
     query {
-      boards(workspace_ids: [${finalWorkspaceId}], order_by: used_at) {
+      boards(workspace_ids: [${finalWorkspaceId}], order_by: used_at, limit:20) {
         id
         name
         description
