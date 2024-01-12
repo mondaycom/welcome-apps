@@ -8605,10 +8605,10 @@
   dependencies:
     "node-fetch" "^2.6.0"
 
-"monday-ui-react-core@^2.15.5":
-  "integrity" "sha512-Mdxv+zh710q7MoVMg3c1PH9l2CTsecC1h6/At/4kSRGlc2DrVQfhrIlzSQckUJM1tXCHYejoq2Zmuw74sgfi3A=="
-  "resolved" "https://registry.npmjs.org/monday-ui-react-core/-/monday-ui-react-core-2.79.1.tgz"
-  "version" "2.79.1"
+"monday-ui-react-core@^2.80.1":
+  "integrity" "sha512-yNO/Bw4pUAimsgt0iDZtAhQSFAkX8xpL2JYmhtCX/O/cCE17M8GgspimNk1d2oVrSC0VG0FjdS1tTgBtvUFxuA=="
+  "resolved" "https://registry.npmjs.org/monday-ui-react-core/-/monday-ui-react-core-2.80.1.tgz"
+  "version" "2.80.1"
   dependencies:
     "@popperjs/core" "2.11.6"
     "a11y-dialog" "^7.5.2"
