@@ -1,0 +1,28 @@
+{
+  "include": ["./src/**/*"],
+  "exclude": ["node_modules", "dist", "__tests__"],
+  "compilerOptions": {
+    "lib": ["es2020"],
+    "module": "commonjs",
+    "target": "es2019",
+    "outDir": "./dist",
+    "allowJs": true,
+    "rootDir": "./",
+    "noEmit": false,
+    "sourceMap": false,
+    "types": ["node"],
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "strict": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "baseUrl": ".",
+    "skipLibCheck": true,
+    "paths": {
+      "src/*": ["./src/*"]
+    },
+    "allowSyntheticDefaultImports": true
+  }
+}
