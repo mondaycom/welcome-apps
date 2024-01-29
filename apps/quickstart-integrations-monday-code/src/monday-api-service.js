@@ -9,7 +9,7 @@ export const getColumnValue = async (token, itemId, columnId) => {
     const mondayClient = initMondayClient();
     mondayClient.setToken(token);
 
-    const query = `query($itemId: [Int], $columnId: [String]) {
+    const query = `query($itemId: [ID!], $columnId: [String!]) {
           items (ids: $itemId) {
             column_values(ids:$columnId) {
               value
@@ -35,7 +35,7 @@ export const changeColumnValue = async (
   try {
     const mondayClient = initMondayClient({ token });
 
-    const query = `mutation change_column_value($boardId: Int!, $itemId: Int!, $columnId: String!, $value: JSON!) {
+    const query = `mutation change_column_value($boardId: ID!, $itemId: ID!, $columnId: String!, $value: JSON!) {
           change_column_value(board_id: $boardId, item_id: $itemId, column_id: $columnId, value: $value) {
             id
           }
