@@ -7,6 +7,7 @@ const logger = new Logger(logTag);
 export const getColumnValue = async (token, itemId, columnId) => {
   try {
     const mondayClient = initMondayClient();
+    mondayClient.setApiVersion('2024-01');
     mondayClient.setToken(token);
 
     const query = `query($itemId: [ID!], $columnId: [String!]) {
@@ -34,6 +35,7 @@ export const changeColumnValue = async (
 ) => {
   try {
     const mondayClient = initMondayClient({ token });
+    mondayClient.setApiVersion('2024-01');
 
     const query = `mutation change_column_value($boardId: ID!, $itemId: ID!, $columnId: String!, $value: JSON!) {
           change_column_value(board_id: $boardId, item_id: $itemId, column_id: $columnId, value: $value) {
