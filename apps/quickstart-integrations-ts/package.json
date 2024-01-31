@@ -7,8 +7,8 @@
     "dev-server": "ts-node-dev --watch ./.env ./src/app.ts",
     "start": "yarn server",
     "server": "ts-node ./src/app.ts",
-    "expose": "mapps tunnel:create -p 8302",
-    "stop": "kill-port 8302 && kill-port 4049 && kill-port 4040"
+    "expose": "mapps tunnel:create -p 8080",
+    "stop": "kill-port 8080 && kill-port 4049 && kill-port 4040"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
