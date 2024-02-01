@@ -6,10 +6,10 @@ This is the "Quickstart fullstack" example Monday app.
 
 ## Install
 
-1. Make sure you have Node (v18+) and yarn installed
+1. Make sure you have Node (v18+) installed
 
 <br>
-3. Install dependencies with yarn:
+3. Install dependencies with npm:
 
 ```bash
 npm run install
