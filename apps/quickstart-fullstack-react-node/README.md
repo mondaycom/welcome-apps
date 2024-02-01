@@ -12,7 +12,7 @@ This is the "Quickstart fullstack" example Monday app.
 3. Install dependencies with yarn:
 
 ```bash
-yarn install
+npm run install
 ```
 
 ## Configure your Monday App
@@ -25,7 +25,7 @@ yarn install
 2. Build the client code and run the server with ngrok tunnel with the command:
 
 ```bash
-yarn dev
+npm run dev-server
 ```
 
 
@@ -41,7 +41,7 @@ When it's time to production, you can deploy your app to monday code hosting.
 
 
 ```bash
-yarn deploy
+npm run deploy
 ```
 
     1. Choose your app that will be associated with the deployment.

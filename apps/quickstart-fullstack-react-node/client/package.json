@@ -3,13 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "npm run stop && concurrently \"npm run server\" \"npm run expose\"",
+    "prebuild": "npm install",
     "build": "react-scripts build",
-    "expose": "mapps tunnel:create -p 8301",
-    "server": "react-scripts start",
+    "dev": "react-scripts start",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "stop": "kill-port 8301 && kill-port 4049 && kill-port 4040"
+    "eject": "react-scripts eject"
   },
   "dependencies": {
     "@mondaycom/apps-sdk": "^2.1.2",
