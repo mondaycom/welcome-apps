@@ -7,11 +7,17 @@ This is the "Quickstart React" example Monday app.
 ## Run the project
 
 In the project directory, you should run:
+ 
 
-### `npm install`
+```bash
+npm install
+```
 
 And then to run an application with the monday tunnel, run:
 
-### `npm dev`
+
+```bash
+npm run dev
+```
 
 Open [http://localhost:8301](http://localhost:8301) to view it in the browser.
