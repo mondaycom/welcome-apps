@@ -12,7 +12,7 @@ This is the "Quickstart fullstack" example Monday app.
 3. Install dependencies with npm:
 
 ```bash
-npm run install
+npm install
 ```
 
 ## Configure your Monday App
