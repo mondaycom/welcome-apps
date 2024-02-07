@@ -1,0 +1,9 @@
+version: '1.1.0'
+app:
+  name: my first integration app
+  features:
+    - type: AppFeatureIntegration
+      name: Hello Integration
+      build:
+        source: custom_url
+        sufix: "/monday"
