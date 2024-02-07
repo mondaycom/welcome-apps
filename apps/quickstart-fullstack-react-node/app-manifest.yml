@@ -1,6 +1,6 @@
 version: '1.1.0'
 app:
-  name: my first fullstack app
+  name: My first fullstack app
   features:
     - type: AppFeatureBoardView
       name: Hello Board
