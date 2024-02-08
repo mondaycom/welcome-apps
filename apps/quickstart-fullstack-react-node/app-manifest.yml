@@ -1,0 +1,14 @@
+version: '1.0.0'
+app:
+  name: My first fullstack app
+  features:
+    - type: AppFeatureBoardView
+      name: Hello Board
+      build:
+        source: customUrl
+        sufix: "/view"
+    - type: AppFeatureIntegration
+      name: Hello Integration
+      build:
+        source: customUrl
+        sufix: "/api/monday"
