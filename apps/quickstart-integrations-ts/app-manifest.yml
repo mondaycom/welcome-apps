@@ -5,5 +5,5 @@ app:
     - type: AppFeatureIntegration
       name: Hello Integration
       build:
-        source: custom_url
+        source: customUrl
         sufix: "/monday"

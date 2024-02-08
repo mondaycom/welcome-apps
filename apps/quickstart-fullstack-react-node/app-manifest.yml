@@ -5,10 +5,10 @@ app:
     - type: AppFeatureBoardView
       name: Hello Board
       build:
-        source: custom_url
+        source: customUrl
         sufix: "/view"
     - type: AppFeatureIntegration
       name: Hello Integration
       build:
-        source: custom_url
+        source: customUrl
         sufix: "/api/monday"
