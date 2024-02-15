@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
-    "start": "npm run stop && concurrently \"npm run server\" \"npm run expose\"",
+    "start" : "node ./src/app.js",
+    "dev": "npm run stop && concurrently \"npm run server\" \"npm run expose\"",
     "server": "nodemon ./src/app.js",
     "expose": "mapps tunnel:create -p 8302",
     "stop": "kill-port 8302"
