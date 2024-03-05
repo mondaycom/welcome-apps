@@ -59,8 +59,8 @@ class App extends React.Component {
       monday.get("context").then(res => {
         const currentBoardId = res.data.boardIds[0];
         this.setState({boardId: currentBoardId})
-        monday.api(`query { boards(ids: ${currentBoardId}){ items (limit: 1) { id } } }`).then (res => {
-          this.setState({firstItemId: Number(res.data.boards[0].items[0].id)})
+        monday.api(`query { boards(ids: ${currentBoardId}){ items_page (limit: 1) { items { id } } } }`).then (res => {
+          this.setState({firstItemId: Number(res.data.boards[0].items_page.items[0].id)})
         })
         let boardSubscribersArray = [];
         monday.api(`query {boards(ids: ${currentBoardId}) {subscribers {id}}}`).then(res => {
