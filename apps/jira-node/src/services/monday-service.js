@@ -21,6 +21,8 @@ const triggerMondayIntegration = async (webhookUrl, data = {}) => {
 const queryColumns = async (token, boardId) => {
   try {
     const mondayClient = initMondayClient({ token });
+    mondayClient.setApiVersion("2024-01");
+
     const query = `query queryBoards($boardId: [ID!]) { boards(ids: $boardId) { columns { id } } }`;
     const variables = { boardId };
     const response = await mondayClient.api(query, { variables });
@@ -34,6 +36,7 @@ const queryColumns = async (token, boardId) => {
 const queryItemValues = async(token, boardId, columnId) => {
   try {
     const mondayClient = initMondayClient({ token });
+    mondayClient.setApiVersion("2024-01");
     const query = `query queryColumnValues($boardId: [ID!], $columnId: [String!]) { boards(ids: $boardId) { items_page (limit:100) { items { id, column_values(ids: $columnId) { value }}}}}`;
     const variables = { boardId, columnId };
     const response = await mondayClient.api(query, { variables });
@@ -47,6 +50,7 @@ const queryItemValues = async(token, boardId, columnId) => {
 const createColumn = async (token, boardId) => {
   try {
     const mondayClient = initMondayClient({ token });
+    mondayClient.setApiVersion("2024-01");
     const query = `mutation create_column($boardId: ID!) { create_column(board_id: $boardId, title: \"Jira Issue Id\", column_type: integration) { id } }`;
     const variables = { boardId };
     return await mondayClient.api(query, { variables });
@@ -59,6 +63,7 @@ const createColumn = async (token, boardId) => {
 const createItem = async (token, boardId, itemName, columnValues) => {
   try {
     const mondayClient = initMondayClient({ token });
+    mondayClient.setApiVersion("2024-01");
     const groupId = columnValues.__groupId__;
     columnValues = JSON.stringify(columnValues)
     const query = `mutation create_item($boardId: ID!, $itemName: String, $groupId: String, $columnValues: JSON) { create_item (board_id: $boardId, item_name: $itemName, group_id: $groupId, column_values: $columnValues, create_labels_if_missing: true) { id } }`;
@@ -76,6 +81,8 @@ const changeMultipleColumnValues = async (token, boardId, itemId, columnValues) 
     delete columnValues["__groupId__"];
     columnValues = JSON.stringify(columnValues)
     const mondayClient = initMondayClient({ token });
+    mondayClient.setApiVersion("2024-01");
+    
     const query = `mutation change_multiple_column_values($boardId: ID!, $itemId: ID!, $columnValues: JSON!) { change_multiple_column_values(board_id: $boardId, item_id: $itemId, column_values: $columnValues, create_labels_if_missing: true) { id } }`;
     const variables = { boardId, itemId, columnValues };
     return await mondayClient.api(query, { variables });

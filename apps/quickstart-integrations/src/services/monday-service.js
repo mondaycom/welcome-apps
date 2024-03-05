@@ -25,6 +25,7 @@ const getColumnValue = async (token, itemId, columnId) => {
 const changeColumnValue = async (token, boardId, itemId, columnId, value) => {
   try {
     const mondayClient = initMondayClient({ token });
+    mondayClient.setApiVersion("2024-01");
 
     const query = `mutation change_column_value($boardId: ID!, $itemId: ID!, $columnId: String!, $value: JSON!) {
         change_column_value(board_id: $boardId, item_id: $itemId, column_id: $columnId, value: $value) {
