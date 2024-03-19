@@ -1,0 +1,66 @@
+@import "../../../styles/animations.scss";
+
+.pre {
+  position: relative;
+  box-shadow: 0 4px 8px -1px rgba(0, 0, 0, 0.2);
+  grid-area: snippet;
+  text-align: left;
+  margin: 1em 0;
+  padding: 0.5em;
+  overflow: scroll;
+  background-color: hsl(236, 15%, 18%);
+  color: #f8f8f2;
+  box-sizing: border-box;
+  margin: 0;
+  height: 100%;
+  box-sizing: border-box;
+  width: 100%;
+
+  &.fullscreen {
+    position: absolute;
+    z-index: 4;
+    width: 99%;
+    height: 99%;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    -webkit-animation: scale-up-center 0.4s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+    animation: scale-up-center 0.4s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  }
+
+  & .token-line {
+    line-height: 1.3em;
+    height: 1.3em;
+  }
+  & > svg:nth-child(1) {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+  }
+  & > svg:nth-child(2) {
+    position: absolute;
+    right: 30px;
+    cursor: pointer;
+  }
+}
+
+.line {
+  display: table-row;
+}
+
+.lineNo {
+  display: table-cell;
+  text-align: right;
+  padding-right: 1em;
+  user-select: none;
+  opacity: 0.5;
+}
+
+.lineContent {
+  display: table-cell;
+}
+
+.code {
+  background-color: red;
+}
