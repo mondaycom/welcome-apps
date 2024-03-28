@@ -6,4 +6,4 @@ app:
       name: Hello Integration
       build:
         source: customUrl
-        sufix: "/monday"
+        suffix: "/monday"
