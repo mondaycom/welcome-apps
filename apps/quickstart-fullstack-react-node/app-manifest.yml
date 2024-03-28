@@ -6,9 +6,9 @@ app:
       name: Hello Board
       build:
         source: customUrl
-        sufix: "/view"
+        suffix: "/view"
     - type: AppFeatureIntegration
       name: Hello Integration
       build:
         source: customUrl
-        sufix: "/api/monday"
+        suffix: "/api/monday"
