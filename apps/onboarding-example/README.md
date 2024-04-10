@@ -4,15 +4,16 @@ This is an onboarding tips and good practices example Monday app.
 
 <br>         
 You will find examples on:
-How toopen and close the view settings using the SDK
-How to change the view settings from the view itself, using the SDK 
-How to implement a webhook to let monday know when your app has given the account real value for the first time (for future reports) 
-How to listen to changes in the view settings using the SDK 
-How to retrieve the selected settingsto use them in your view
-How to use Vibe, our design system 
-How to use tooltips to explain how parts of your app work 
-How to use seamless authentication using the SDK 
-How to show notice messages using the SDK 
+
+- How to open and close the view settings using the SDK
+- How to change the view settings from the view itself, using the SDK 
+- How to implement a webhook to let monday know when your app has given the account real value for the first time (for future reports) 
+- How to listen to changes in the view settings using the SDK 
+- How to retrieve the selected settingsto use them in your view
+- How to use Vibe, our design system 
+- How to use tooltips to explain how parts of your app work 
+- How to use seamless authentication using the SDK 
+- How to show notice messages using the SDK 
 
 <br>
 You can check our explanatory video here (https://www.youtube.com/watch?v=MaEHUar1rAY)
