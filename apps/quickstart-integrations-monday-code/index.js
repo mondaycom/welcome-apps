@@ -6,6 +6,7 @@ import { changeColumnValue, getColumnValue } from "./src/monday-api-service.js";
 import { getSecret, isDevelopmentEnv, getEnv } from "./src/helpers.js";
 import dotenv from "dotenv";
 import { readQueueMessage, produceMessage } from "./src/queue-service.js";
+import { SecretsManager } from "@mondaycom/apps-sdk";
 dotenv.config();
 
 const logTag = "ExpressServer";
@@ -22,7 +23,14 @@ const app = express();
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.status(200).send({ message: "healthy" });
+  const secrets = new SecretsManager();
+  let secretsObject = {};
+  secrets.getKeys().forEach((key) => {
+    secretsObject[key] = secrets.get(key);
+    logger.info(`Secret key: ${key}, value: ${secrets.get(key)}`);
+  });
+
+  res.status(200).send(secretsObject);
 });
 
 app.post("/monday/execute_action", authorizeRequest, async (req, res) => {
