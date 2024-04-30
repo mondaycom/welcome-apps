@@ -1,5 +1,5 @@
 import express from 'express';
-import { Logger, SecretsManager } from '@mondaycom/apps-sdk';
+import { EnvironmentVariablesManager, Logger, SecretsManager } from '@mondaycom/apps-sdk';
 import { transformText } from './src/transformation-service.js';
 import { authorizeRequest } from './src/middleware.js';
 import { changeColumnValue, getColumnValue } from './src/monday-api-service.js';
@@ -25,25 +25,26 @@ app.use(express.json());
 app.get('/', (req, res) => {
   const secrets = new SecretsManager();
   let secretsObject = {};
-  secrets.getKeys().forEach((key) => {
+  for (const key of secrets.getKeys()) {
     secretsObject[key] = secrets.get(key);
     logger.info(`Secret key: ${key}, value: ${secrets.get(key)}`);
-  });
+  }
 
-  const envs = new SecretsManager();
+  const envs = new EnvironmentVariablesManager();
   let envsObject = {};
-  envs.getKeys().forEach((key) => {
+  for (const key of envs.getKeys()) {
     envsObject[key] = envs.get(key);
     logger.info(`Env key: ${key}, value: ${envs.get(key)}`);
-  });
-
-  let processEnv = {};
-  try {
-    processEnv = JSON.parse(process.env);
-  } catch (e) {
-    logger.error(`Error parsing process.env: ${e}`);
   }
-  res.status(200).send({ secretsObject, envsObject, processEnv });
+
+  let processEnv = process.env;
+  res.status(200).send({
+    secretsObject,
+    envsObject,
+    processEnv,
+    created_at: '2024-04-28T09:11:46.301Z',
+    now: new Date().toISOString()
+  });
 });
 
 app.post('/monday/execute_action', authorizeRequest, async (req, res) => {
