@@ -1,14 +1,16 @@
-export const getAllBoardItemsQuery = `query ($boardIds: [Int], $limit: Int) {
+export const getAllBoardItemsQuery = `query ($boardIds: [ID!], $limit: Int) {
   boards(ids: $boardIds, limit: $limit) {
     name
-    items(limit: $limit) {
-      id
-      name
+    items_page(limit: $limit) {
+      items {
+        id
+        name
+      }
     }
   }
 }`;
 
-export const getRelevantItems = `query ($itemIds: [Int]) {
+export const getRelevantItems = `query ($itemIds: [ID]) {
   items(ids: $itemIds) {
     id
     name

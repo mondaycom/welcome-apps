@@ -11,6 +11,7 @@ const ContextProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState({isLoading : true});
   useEffect(() => {
     monday.listen("context", (res) => {
+      console.log({context: res});
       if (res.data.boardIds.length === 0) {
         setIsLoading({isLoading: false});
       } else {
@@ -23,11 +24,12 @@ const ContextProvider = ({ children }) => {
             },
           })
           .then((itemsResponse) => {
+            console.log({itemsResponse});
             // ----- GETS THE ITEMS OF THE BOARD -----
             setState({
               boardId: +res.data?.boardIds[0],
               boardName: itemsResponse?.data?.boards[0]?.name,
-              items: itemsResponse.data.boards[0].items.map((item) => {
+              items: itemsResponse.data.boards[0].items_page.items.map((item) => {
                 return { id: item.id, name: item.name};
               }),
               updateItems: (state) => setState(state),
