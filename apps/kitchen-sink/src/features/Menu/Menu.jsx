@@ -2,10 +2,10 @@ import React from "react";
 import MenuButton from "./components/MenuButton";
 import "./Menu.scss";
 import { menuOptions } from "./MenuConstants";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Menu = () => {
-  const history = useHistory();
+  const history = useNavigate();
 
   const renderSection = (name, subOptions) => {
     return (
@@ -18,7 +18,7 @@ const Menu = () => {
               image={image}
               background={background}
               title={name}
-              onPress={() => history.push(location)}
+              onPress={() => history(location)}
             />
           ))}
         </div>

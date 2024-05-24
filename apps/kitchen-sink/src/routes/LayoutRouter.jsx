@@ -23,7 +23,9 @@ import NoBoardSelected from "../components/common/NoBoardSelected/NoBoardSelecte
 import GetUpdates from "../features/GetUpdates/GetUpdates";
 
 const LayoutRouter = () => {
+  // TODO: move error state somewhere else
   const { items } = useContext(Context);
+  console.log(items);
 
   return items.length > 0 ? (
     <HashRouter>

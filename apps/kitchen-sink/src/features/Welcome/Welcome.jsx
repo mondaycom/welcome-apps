@@ -4,10 +4,10 @@ import "./Welcome.scss";
 import Lottie from "react-lottie";
 import { lottieOptions, buttonStyle } from "./WelcomeConstants";
 import Button from "monday-ui-react-core/dist/Button";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router";
 
 const Welcome = () => {
-  const history = useHistory();
+  const history = useNavigate();
 
   return (
     <div className="container">
@@ -25,7 +25,7 @@ const Welcome = () => {
               <br />
               for our main sdk awesome functionality
             </div>
-            <Button style={buttonStyle} size={Button.sizes.LARGE} onClick={() => history.push("/menu")}>
+            <Button style={buttonStyle} size={Button.sizes.LARGE} onClick={() => history("/menu")}>
               Get Started
             </Button>
           </div>
