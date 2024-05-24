@@ -15,6 +15,7 @@ export const ROUTES = {
   ARCHIVE_SUBITEM: "archive_subitem",
   DELETE_SUBITEM: "delete_subitem",
   UPDATES: "updates",
+  TAB_LAYOUT_TEST: "tab_layout",
 };
 
 const BACKGROUND_COLORS = {
@@ -26,9 +27,20 @@ const BACKGROUND_COLORS = {
   LIGHT_BLUE: "#00CFF4",
 };
 
+// when adding an option - make sure you have a route added to LayoutRouter.jsx & menuConstants.js
 export const menuOptions = [
+  {name: "Trying some stuff out", 
+    subOptions: [
+      {
+        name: "Tab layout",
+        location: ROUTES.TAB_LAYOUT_TEST,
+        image: require("./assets/delete_icon.png"),
+        background: BACKGROUND_COLORS.YELLOW,
+      }
+    ]
+  },
   {
-    name: "Working With The Board",
+    name: "Working With The Board - old",
     subOptions: [
       {
         name: "Delete Item",
@@ -75,7 +87,7 @@ export const menuOptions = [
     ],
   },
   {
-    name: "Subitems",
+    name: "Subitems - old",
     subOptions: [
       {
         id: "GETTING_SUBITEMS_OF_AN_ITEM",
@@ -108,7 +120,7 @@ export const menuOptions = [
     ],
   },
   {
-    name: "UI",
+    name: "UI - old",
     subOptions: [
       {
         id: "CONFIRMATION",
@@ -132,7 +144,7 @@ export const menuOptions = [
     ],
   },
   {
-    name: "Working With Settings",
+    name: "Working With Settings - old",
     subOptions: [
       {
         id: "WORKING_WITH_SETTINGS",

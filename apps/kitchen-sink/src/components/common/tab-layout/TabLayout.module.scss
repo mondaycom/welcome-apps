@@ -1,0 +1,23 @@
+// TODO: fix layout of app
+.tabsWrapper {
+height: 100%;
+}
+
+.codeDisplayBlock {
+  width: 800px;
+  max-height: 60vh;
+  font-family:'Fira Code','Courier New', Courier, monospace;
+  overflow: scroll;
+}
+
+.tabPanelContainer {
+  padding: 10px;
+  border-style: solid;
+  // border-color:
+  width: 550px;
+  height: 70vh;
+}
+
+.tabWrapper {
+  padding-bottom: 8px;
+}

@@ -24,6 +24,7 @@
     "monday-ui-react-core": "0.0.48",
     "prism-react-renderer": "^1.2.1",
     "react": "^16.13.0",
+    "react-code-blocks": "^0.1.6",
     "react-copy-to-clipboard": "^5.0.4",
     "react-dom": "^16.13.0",
     "react-lottie": "^1.2.3",
