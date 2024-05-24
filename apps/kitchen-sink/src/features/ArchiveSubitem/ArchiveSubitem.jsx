@@ -9,13 +9,14 @@ import ActionHeader from "../../components/common/ActionHeader/ActionHeader";
 import { getSubitems } from "../../utils/subitems";
 import { archiveSubitemsConstants } from "./ArchiveSubitemsConstants";
 import NoSubitemsAvailable from "../../components/common/NoSubitemsAvailable/NoSubitemsAvailable";
+import { useBoardContext } from "../../hooks/UseBoardContext.js";
 
 const monday = mondaySdk();
 
 const ArchiveSubitem = () => {
   const [subitems, setSubitems] = useState([]);
   const [, setSubitemsBoardId] = useState();
-  const { boardId } = useContext(Context);
+  const { boardId } = useBoardContext().state;
 
   useEffect(() => {
     getSubitems(boardId, setSubitems, setSubitemsBoardId);

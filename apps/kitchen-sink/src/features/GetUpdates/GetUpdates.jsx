@@ -11,11 +11,12 @@ import { Context } from "../../components/context/ContextProvider";
 import CodeBlock from "../../components/common/CodeBlock/CodeBlock";
 import Instructions from "../../components/common/Instructions/Instructions";
 import ActionHeader from "../../components/common/ActionHeader/ActionHeader";
+import { useBoardContext } from "../../hooks/UseBoardContext.js";
 
 const monday = mondaySdk();
 
 const GetUpdates = () => {
-  const { items, boardId } = useContext(Context);
+  const { items, boardId } = useBoardContext().state;
   const [selectedItem, setSelectedItem] = useState();
   const [updatesData, setUpdatesData] = useState([]);
 

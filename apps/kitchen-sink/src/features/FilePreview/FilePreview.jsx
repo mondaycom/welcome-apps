@@ -13,11 +13,12 @@ import Loader from "monday-ui-react-core/dist/Loader";
 import CodeBlock from "../../components/common/CodeBlock/CodeBlock";
 import ActionHeader from "../../components/common/ActionHeader/ActionHeader";
 import Instructions from "../../components/common/Instructions/Instructions";
+import { useBoardContext } from "../../hooks/UseBoardContext.js";
 
 const monday = mondaySdk();
 
 const FilePreview = () => {
-  const { items, boardId } = useContext(Context);
+  const { items, boardId } = useBoardContext().state;
 
   const [fileColumns, setFileColumns] = useState([]);
   const [selectedItem, setSelectedItem] = useState();

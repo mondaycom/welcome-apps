@@ -11,11 +11,12 @@ import storageApiConstants from "./StorageApiConstants";
 import Instructions from "../../components/common/Instructions/Instructions";
 import ActionHeader from "../../components/common/ActionHeader/ActionHeader";
 import randomColorGenerator from "../../utils/randomColorGenerator";
+import { useBoardContext } from "../../hooks/UseBoardContext";
 
 const monday = mondaySdk();
 
 const StorageApi = () => {
-  const { items } = useContext(Context);
+  const { items } = useBoardContext().state;
   const [favouriteItems, setFavouriteItems] = useState([]);
 
   useEffect(() => {

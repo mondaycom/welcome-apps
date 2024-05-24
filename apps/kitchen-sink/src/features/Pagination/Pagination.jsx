@@ -9,6 +9,7 @@ import Instructions from "../../components/common/Instructions/Instructions";
 import ActionHeader from "../../components/common/ActionHeader/ActionHeader";
 import { paginationConstants } from "./PaginationConstants";
 import Button from "monday-ui-react-core/dist/Button";
+import { useBoardContext } from "../../hooks/UseBoardContext.js";
 
 const monday = mondaySdk();
 
@@ -17,7 +18,7 @@ const Pagination = () => {
   const [page, setPage] = useState(1);
   const [limit] = useState(3);
   const [isLastPage, setIsLastPage] = useState(false);
-  const { boardId } = useContext(Context);
+  const { boardId } = useBoardContext().state;
 
   const loadItems = useCallback(
     (page) => {

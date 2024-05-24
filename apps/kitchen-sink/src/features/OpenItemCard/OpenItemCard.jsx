@@ -8,11 +8,13 @@ import CodeBlock from "../../components/common/CodeBlock/CodeBlock";
 import openItemCardConstants from "./OpenItemCardConstants";
 import Instructions from "../../components/common/Instructions/Instructions";
 import ActionHeader from "../../components/common/ActionHeader/ActionHeader";
+import { useBoardContext } from "../../hooks/UseBoardContext.js";
 
 const monday = mondaySdk();
 
 const OpenItemCard = () => {
-  const { items } = useContext(Context);
+  const boardContext = useBoardContext()
+  const { items } = boardContext.state;
   return (
     <div className="open-item-card-container feature-container">
       <ActionHeader action="Open Item Card" actionDescription="Using the SDK open card of selected item" />

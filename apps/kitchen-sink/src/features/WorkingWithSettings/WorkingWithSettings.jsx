@@ -8,11 +8,12 @@ import { Context } from "../../components/context/ContextProvider";
 import CodeBlock from "../../components/common/CodeBlock/CodeBlock";
 import Instructions from "../../components/common/Instructions/Instructions";
 import ActionHeader from "../../components/common/ActionHeader/ActionHeader";
+import { useBoardContext } from "../../hooks/UseBoardContext.js";
 
 const monday = mondaySdk();
 
 const WorkingWithSettings = () => {
-  const { items } = useContext(Context);
+  const { items } = useBoardContext().state;
 
   const [settings, setSettings] = useState({});
 

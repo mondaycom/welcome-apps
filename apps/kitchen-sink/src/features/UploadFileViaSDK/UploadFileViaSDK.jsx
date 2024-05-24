@@ -12,11 +12,12 @@ import { Context } from "../../components/context/ContextProvider";
 import CodeBlock from "../../components/common/CodeBlock/CodeBlock";
 import Instructions from "../../components/common/Instructions/Instructions";
 import ActionHeader from "../../components/common/ActionHeader/ActionHeader";
+import { useBoardContext } from "../../hooks/UseBoardContext.js";
 
 const monday = mondaySdk();
 
 const UploadFileViaSDK = () => {
-  const { items, boardId } = useContext(Context);
+  const { items, boardId } = useBoardContext().state;
   const [fileColumns, setFileColumns] = useState([]);
   const [selectedItem, setSelectedItem] = useState();
   const isFileColumnsExist = fileColumns.length > 0;
