@@ -1,13 +1,17 @@
-import express from 'express';
 import { EnvironmentVariablesManager, Logger, SecretsManager } from '@mondaycom/apps-sdk';
+import dotenv from 'dotenv';
+import express from 'express';
+
 import { transformText } from './src/transformation-service.js';
 import { authorizeRequest } from './src/middleware.js';
 import { changeColumnValue, getColumnValue } from './src/monday-api-service.js';
 import { getEnv, getSecret, isDevelopmentEnv } from './src/helpers.js';
-import dotenv from 'dotenv';
 import { produceMessage, readQueueMessage } from './src/queue-service.js';
 
+const envs = new EnvironmentVariablesManager({ updateProcessEnv: true });
+
 dotenv.config();
+
 
 const logTag = 'ExpressServer';
 const PORT = 'PORT';
@@ -23,29 +27,39 @@ const app = express();
 app.use(express.json());
 
 app.get('/', (req, res) => {
+  logger.info(`hello from info`);
+  logger.error(`hello from error`);
+  logger.error(`hello from error WITH error string`, { error: 'error string' });
+  logger.error(`hello from error WITH error object`, { error: new Error('error class instance') });
+  logger.warn(`hello from warn`);
+  logger.debug(`hello from debug`);
+
   const secrets = new SecretsManager();
   let secretsObject = {};
   for (const key of secrets.getKeys()) {
     secretsObject[key] = secrets.get(key);
-    logger.info(`Secret key: ${key}, value: ${secrets.get(key)}`);
   }
 
-  const envs = new EnvironmentVariablesManager();
+
   let envsObject = {};
   for (const key of envs.getKeys()) {
     envsObject[key] = envs.get(key);
-    logger.info(`Env key: ${key}, value: ${envs.get(key)}`);
   }
 
   let processEnv = process.env;
   res.status(200).send({
+    hard_coded_data: { // FIXME: change for each deployment
+      region: process.env.MNDY_REGION || 'null',
+      created_at: '2024-05-27T15:47:00.000Z'
+    },
     secretsObject,
     envsObject,
     processEnv,
-    created_at: '2024-04-28T09:11:46.301Z',
     now: new Date().toISOString()
   });
 });
+
+// TODO: MAOR: Dont forget to add the app signing secret as env var in production to make integration work
 
 app.post('/monday/execute_action', authorizeRequest, async (req, res) => {
   logger.info(
@@ -65,8 +79,8 @@ app.post('/monday/execute_action', authorizeRequest, async (req, res) => {
       boardId,
       itemId,
       sourceColumnId,
-      targetColumnId,
-      transformationType
+      targetColumnId
+      // transformationType
     } = inputFields;
 
     const text = await getColumnValue(shortLivedToken, itemId, sourceColumnId);
@@ -75,7 +89,7 @@ app.post('/monday/execute_action', authorizeRequest, async (req, res) => {
     }
     const transformedText = transformText(
       text,
-      transformationType ? transformationType.value : 'TO_UPPER_CASE'
+      TO_UPPER_CASE
     );
 
     await changeColumnValue(

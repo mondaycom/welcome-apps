@@ -10,6 +10,7 @@ export const getColumnValue = async (token, itemId, columnId) => {
     mondayClient.setApiVersion('2024-01');
     mondayClient.setToken(token);
 
+    logger.info('about to get column value');
     const query = `query($itemId: [ID!], $columnId: [String!]) {
           items (ids: $itemId) {
             column_values(ids:$columnId) {
@@ -20,6 +21,7 @@ export const getColumnValue = async (token, itemId, columnId) => {
     const variables = { columnId, itemId };
 
     const response = await mondayClient.api(query, { variables });
+    logger.info(`received column value: ${JSON.stringify(response)}`);
     return response.data.items[0].column_values[0].value;
   } catch (err) {
     logger.error(err);

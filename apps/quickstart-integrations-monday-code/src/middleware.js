@@ -12,7 +12,9 @@ export const authorizeRequest = (req, res, next) => {
     if (!authorization && req.query) {
       authorization = req.query.token;
     }
+    logger.info(`about to verify token: ${authorization}`);
     const signingSecret = getSecret(MONDAY_SIGNING_SECRET);
+    logger.info(`verified token: ${JSON.stringify(signingSecret)}`);
     const { accountId, userId, backToUrl, shortLivedToken } = jwt.verify(
       authorization,
       signingSecret
