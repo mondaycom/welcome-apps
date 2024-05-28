@@ -12,7 +12,17 @@ export const authorizeRequest = (req, res, next) => {
     if (!authorization && req.query) {
       authorization = req.query.token;
     }
+    if (typeof authorization !== "string") {
+      logger.info("No credentials in request");
+      res.status(401).json({ error: "Not authenticated, no credentials in request" });
+      return;
+    }
     const signingSecret = getSecret(MONDAY_SIGNING_SECRET);
+    if (signingSecret === undefined) {
+      logger.error("Missing MONDAY_SIGNING_SECRET");
+      res.status(500).json({error: "Missing MONDAY_SIGNING_SECRET"});
+      return:
+    }
     const { accountId, userId, backToUrl, shortLivedToken } = jwt.verify(
       authorization,
       signingSecret
