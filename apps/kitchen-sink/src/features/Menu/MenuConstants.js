@@ -29,14 +29,37 @@ const BACKGROUND_COLORS = {
 
 // when adding an option - make sure you have a route added to LayoutRouter.jsx & menuConstants.js
 export const menuOptions = [
-  {name: "Trying some stuff out", 
+  {name: "Working examples", 
     subOptions: [
       {
-        name: "Tab layout",
-        location: ROUTES.TAB_LAYOUT_TEST,
+        name: "Open Item Card",
+        location: ROUTES.OPEN_ITEM_CARD,
+        image: require("./assets/table.png"),
+        background: BACKGROUND_COLORS.GREEN,
+      },
+      {
+        id: "CONFIRMATION",
+        name: "Confirmation Pop Up",
+        location: "confirmation",
+        image: require("./assets/confirmation.png"),
+        background: BACKGROUND_COLORS.PURPLE,
+      },
+      {
+        name: "Notice Pop Up",
+        location: "notice",
+        image: require("./assets/notice.png"),
+        background: BACKGROUND_COLORS.BLUE,
+      },
+    ]
+  },
+  {name: "Components in progress", 
+    subOptions: [
+      {
+        name: "Delete Item",
+        location: ROUTES.DELETE_ITEM,
         image: require("./assets/delete_icon.png"),
         background: BACKGROUND_COLORS.YELLOW,
-      }
+      },
     ]
   },
   {

@@ -34,6 +34,10 @@ const router = createBrowserRouter([
       element: <Welcome/>
     },
     {
+      path: "/index.html",
+      element: <Welcome/>
+    },
+    {
       path: `/${ROUTES.MENU}`,
       element: <Menu />
     },
@@ -100,7 +104,7 @@ const router = createBrowserRouter([
   ])
   
 //   const root = createRoot();
-  ReactDOM.render(<RouterProvider router={router} />, document.getElementById("root"));
+ReactDOM.render(<RouterProvider router={router} />, document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
