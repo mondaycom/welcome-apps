@@ -20,7 +20,6 @@ export const authorizeRequest = (req, res, next) => {
     if (signingSecret === undefined) {
       logger.error("Missing MONDAY_SIGNING_SECRET");
       res.status(500).json({error: "Missing MONDAY_SIGNING_SECRET"});
-      return:
     }
     const { accountId, userId, backToUrl, shortLivedToken } = jwt.verify(
       authorization,
