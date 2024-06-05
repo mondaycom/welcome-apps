@@ -15,7 +15,6 @@ export const authorizeRequest = (req, res, next) => {
     if (typeof authorization !== "string") {
       logger.info("No credentials in request");
       res.status(401).json({ error: "Not authenticated, no credentials in request" });
-      return;
     }
     const signingSecret = getSecret(MONDAY_SIGNING_SECRET);
     if (signingSecret === undefined) {
