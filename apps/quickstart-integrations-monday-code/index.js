@@ -49,8 +49,8 @@ app.get('/', (req, res) => {
   let processEnv = process.env;
   res.status(200).send({
     hard_coded_data: { // FIXME: change for each deployment
-      region: process.env.MNDY_REGION || 'null',
-      created_at: '2024-05-27T15:47:00.000Z'
+      'region (from env)': process.env.MNDY_REGION || 'null',
+      'created_at (hard coded)': '2024-05-27T15:47:00.000Z'
     },
     secretsObject,
     envsObject,
