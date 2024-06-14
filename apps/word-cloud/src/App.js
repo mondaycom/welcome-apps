@@ -48,7 +48,23 @@ class App extends React.Component {
 
     const boardIds = context.boardIds || [context.boardId];
     monday
-      .api(`query { boards(ids:[${boardIds}]) { id, items { id, name, column_values { id, text } } }}`)
+      .api(`
+        query {
+          boards(ids: [${boardIds}]) {
+            id
+            items_page {
+              items {
+                id
+                name
+                column_values {
+                  id
+                  text
+                }
+              }
+            }
+          }
+        }
+      `)
       .then((res) => {
         const noBoardsReturned = res.data.boards.length === 0;
         if (noBoardsReturned) {
@@ -56,7 +72,7 @@ class App extends React.Component {
           this.setState({ hasNoBoards : true })
         } else {
           this.setState({ boards: res.data.boards, hasNoBoards: false,  hasApiError: false }, () => {
-            console.log(res.data.boards[0].items.slice(0, 10).map((item) => item.id));
+            console.log(res.data.boards[0].items_page.items.slice(0, 10).map((item) => item.id));
             this.generateWords();
           });
         }
@@ -98,7 +114,7 @@ class App extends React.Component {
   getText = () => {
     const { boards, settings, itemIds } = this.state;
     const result = boards.map((board) => {
-      return board.items
+      return board.items_page.items
         .filter((item) => !itemIds || itemIds[item.id])
         .map((item) => {
           let columnIds, values;
