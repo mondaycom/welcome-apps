@@ -9,24 +9,24 @@ import {
   } from "react-router-dom";
 import * as serviceWorker from "./serviceWorker";
 
-import { ROUTES } from "./features/Menu/MenuConstants";
-import Welcome from "./features/Welcome/Welcome";
-import Menu from "./features/Menu/Menu";
-import DeleteItem from "./features/DeleteItem/DeleteItem";
-import OpenItemCard from "./features/OpenItemCard/OpenItemCard";
-import GetSubItems from "./features/GetSubItems/GetSubItems";
-import UploadFileViaSDK from "./features/UploadFileViaSDK/UploadFileViaSDK";
-import UploadFileViaAPI from "./features/UploadFileViaAPI/UploadFileViaAPI";
-import StorageApi from "./features/StorageApi/StorageApi";
-import ArchiveSubitem from "./features/ArchiveSubitem/ArchiveSubitem";
-import GetUpdates from "./features/GetUpdates/GetUpdates";
-import Confirmation from "./features/Confirmation/Confirmation";
-import Notice from "./features/Notice/Notice";
-import FilePreview from "./features/FilePreview/FilePreview";
-import WorkingWithSettings from "./features/WorkingWithSettings/WorkingWithSettings";
-import Pagination from "./features/Pagination/Pagination";
-import UpdateSubitems from "./features/UpdateSubitems/UpdateSubitems";
-import DeleteSubitem from "./features/DeleteSubitem/DeleteSubitem";
+import { ROUTES } from "./examples/Menu/MenuConstants";
+import Welcome from "./examples/Welcome/Welcome";
+import Menu from "./examples/Menu/Menu";
+import DeleteItem from "./examples/DeleteItem/DeleteItem";
+import OpenItemCard from "./examples/OpenItemCard/OpenItemCard";
+import GetSubItems from "./examples/GetSubItems/GetSubItems";
+import UploadFileViaSDK from "./examples/UploadFileViaSDK/UploadFileViaSDK";
+import UploadFileViaAPI from "./examples/UploadFileViaAPI/UploadFileViaAPI";
+import StorageApi from "./examples/StorageApi/StorageApi";
+import ArchiveSubitem from "./examples/ArchiveSubitem/ArchiveSubitem";
+import GetUpdates from "./examples/GetUpdates/GetUpdates";
+import Confirmation from "./examples/Confirmation/Confirmation";
+import Notice from "./examples/Notice/Notice";
+import FilePreview from "./examples/FilePreview/FilePreview";
+import WorkingWithSettings from "./examples/WorkingWithSettings/WorkingWithSettings";
+import Pagination from "./examples/Pagination/Pagination";
+import UpdateSubitems from "./examples/UpdateSubitems/UpdateSubitems";
+import DeleteSubitem from "./examples/DeleteSubitem/DeleteSubitem";
 
 const router = createBrowserRouter([
     {

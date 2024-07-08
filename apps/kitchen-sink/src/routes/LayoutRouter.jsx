@@ -1,26 +1,26 @@
 import React, { useContext } from "react";
 import { Context } from "../components/context/ContextProvider";
 import { HashRouter, Route } from "react-router-dom";
-import Menu from "../features/Menu/Menu";
-import Welcome from "../features/Welcome/Welcome";
-import GetSubItems from "../features/GetSubItems/GetSubItems";
-import DeleteItem from "../features/DeleteItem/DeleteItem";
-import OpenItemCard from "../features/OpenItemCard/OpenItemCard";
-import WorkingWithSettings from "../features/WorkingWithSettings/WorkingWithSettings";
-import UploadFileViaSDK from "../features/UploadFileViaSDK/UploadFileViaSDK";
-import UploadFileViaAPI from "../features/UploadFileViaAPI/UploadFileViaAPI";
-import StorageApi from "../features/StorageApi/StorageApi";
-import { ROUTES } from "../features/Menu/MenuConstants";
-import Confirmation from "../features/Confirmation/Confirmation";
-import Notice from "../features/Notice/Notice";
-import FilePreview from "../features/FilePreview/FilePreview";
+import Menu from "../examples/Menu/Menu";
+import Welcome from "../examples/Welcome/Welcome";
+import GetSubItems from "../examples/GetSubItems/GetSubItems";
+import DeleteItem from "../examples/DeleteItem/DeleteItem";
+import OpenItemCard from "../examples/OpenItemCard/OpenItemCard";
+import WorkingWithSettings from "../examples/WorkingWithSettings/WorkingWithSettings";
+import UploadFileViaSDK from "../examples/UploadFileViaSDK/UploadFileViaSDK";
+import UploadFileViaAPI from "../examples/UploadFileViaAPI/UploadFileViaAPI";
+import StorageApi from "../examples/StorageApi/StorageApi";
+import { ROUTES } from "../examples/Menu/MenuConstants";
+import Confirmation from "../examples/Confirmation/Confirmation";
+import Notice from "../examples/Notice/Notice";
+import FilePreview from "../examples/FilePreview/FilePreview";
 
-import Pagination from "../features/Pagination/Pagination";
-import UpdateSubitems from "../features/UpdateSubitems/UpdateSubitems";
-import DeleteSubitem from "../features/DeleteSubitem/DeleteSubitem";
-import ArchiveSubitem from "../features/ArchiveSubitem/ArchiveSubitem";
+import Pagination from "../examples/Pagination/Pagination";
+import UpdateSubitems from "../examples/UpdateSubitems/UpdateSubitems";
+import DeleteSubitem from "../examples/DeleteSubitem/DeleteSubitem";
+import ArchiveSubitem from "../examples/ArchiveSubitem/ArchiveSubitem";
 import NoBoardSelected from "../components/common/NoBoardSelected/NoBoardSelected";
-import GetUpdates from "../features/GetUpdates/GetUpdates";
+import GetUpdates from "../examples/GetUpdates/GetUpdates";
 
 const LayoutRouter = () => {
   // TODO: move error state somewhere else

@@ -5,14 +5,14 @@ const path = require("path");
 const filesToGenerateSamples = [
   {
     componentName: "OpenItemCard",
-    sourceFile: "../features/OpenItemCard/OpenItemCard.jsx",
+    sourceFile: "../examples/OpenItemCard/OpenItemCard.jsx",
   },
   {
     componentName: "Confirmation",
-    sourceFile: "../features/Confirmation/Confirmation.jsx",
+    sourceFile: "../examples/Confirmation/Confirmation.jsx",
   },
   { componentName: "Notice", 
-    sourceFile: "../features/Notice/Notice.jsx" 
+    sourceFile: "../examples/Notice/Notice.jsx" 
   },
 ];
 
