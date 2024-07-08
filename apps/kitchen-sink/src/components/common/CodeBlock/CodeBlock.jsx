@@ -33,12 +33,13 @@ const popNotice = () => {
   });
 };
 
-const CodeBlock = ({ contentUrl }) => {
+const CodeBlock = ({ contentUrl, contentText }) => {
   const [content, setContent] = useState("Loading...");
   const [isFullScreenMode, setIsFullScreenMode] = useState(false);
 
   useEffect(() => {
     if (contentUrl) getContentUrl();
+    if (contentText) setContent(contentText);
   }, [contentUrl]);
 
   const getContentUrl = async () => {

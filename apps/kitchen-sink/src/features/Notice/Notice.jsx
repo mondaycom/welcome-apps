@@ -7,7 +7,9 @@ import ActionHeader from "../../components/common/ActionHeader/ActionHeader";
 import noticeConstants from "./NoticeConstants";
 import CodeBlock from "../../components/common/CodeBlock/CodeBlock";
 import Instructions from "../../components/common/Instructions/Instructions";
+import CodeSamples from "../../constants/codeSamples";
 
+// @mondaycom-codesample-start
 const monday = mondaySdk();
 
 const Notice = () => {
@@ -21,23 +23,30 @@ const Notice = () => {
 
   return (
     <div className="notice-container feature-container">
+      {/* @mondaycom-codesample-skip-block-start */}
       <ActionHeader action="Notice Pop Up" actionDescription="Using the SDK, open a notice pop up" />
+      {/* @mondaycom-codesample-skip-block-end */}
       <div className="notice-content working-with-the-board-items">
+        {/* @mondaycom-codesample-skip-block-start */}
         <h3 className="playground-header">Playground</h3>
+        {/* @mondaycom-codesample-skip-block-end */}
         {noticeConstants.notices.map(({ type, text, color }) => (
           <Button color={color} onClick={() => handleNotice(type, text)}>
             {text} Notice
           </Button>
         ))}
       </div>
-      <CodeBlock contentUrl={noticeConstants.githubUrl} />
+      {/* @mondaycom-codesample-skip-block-start */}
+      <CodeBlock contentText={CodeSamples.Notice.codeSample} />
       <Instructions
         paragraphs={noticeConstants.noticeInstructionsParagraphs}
         instructionsListItems={noticeConstants.noticeInstructionsListItems}
         linkToDocumentation={noticeConstants.noticeInstructionslinkToDocumentation}
       />
+      {/* @mondaycom-codesample-skip-block-end */}
     </div>
   );
 };
+// @mondaycom-codesample-end
 
 export default Notice;

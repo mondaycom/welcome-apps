@@ -8,19 +8,13 @@ Kitchen sink app. Some stuff to know:
 3. Open `localhost:4040` to see your ngrok url
 4. Paste ngrok URL into a board view
 
-## Todo: 
+## Build app
 
-### to fix:
-- Fix vulnerabilities
-- Migrate code snippets to react hooks
-- Migrate snippets to v 2023-10
-- Fix how we retrieve code samples
-- Review copy 
+1. `node src/scripts/generateCodeSamples.js` to generate code samples
+2. `npm run build` to generate build folder
+3. Zip files in build folder (not folder itself)
+4. Upload ZIP to monday
 
-### nice to have - 
-- Package as a workspace app or object app
-- Update design and layout
-- Add tests
 
 # old info: 
 
