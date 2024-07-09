@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "npm run stop && concurrently \"npm run server\" \"npm run expose\"",
-    "build": "node src/scripts/generateCodeSamples.js && react-scripts build",
+    "build": "npm run build:generate-samples && react-scripts build",
+    "build:generate-samples": "node src/scripts/generateCodeSamples.js",
     "expose": "mapps tunnel:create -p 8305",
     "server": "react-scripts start",
     "test": "react-scripts test",
@@ -19,8 +20,11 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "@types/node": "^20.14.10",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
     "axios": "^0.21.4",
-    "monday-sdk-js": "^0.1.2",
+    "monday-sdk-js": "^0.5.5",
     "monday-ui-react-core": "0.0.48",
     "prism-react-renderer": "^1.2.1",
     "react": "^16.13.0",
@@ -32,7 +36,8 @@
     "react-router-dom": "^6.23.1",
     "react-scripts": "^5.0.1",
     "react-spring": "^9.2.4",
-    "sass": "^1.68.0"
+    "sass": "^1.68.0",
+    "typescript": "^5.5.3"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -16,6 +16,7 @@ export const ROUTES = {
   DELETE_SUBITEM: "delete_subitem",
   UPDATES: "updates",
   TAB_LAYOUT_TEST: "tab_layout",
+  OPEN_SETTINGS_PANE: "open_settings_pane",
 };
 
 const BACKGROUND_COLORS = {
@@ -27,9 +28,10 @@ const BACKGROUND_COLORS = {
   LIGHT_BLUE: "#00CFF4",
 };
 
-// when adding an option - make sure you have a route added to LayoutRouter.jsx & menuConstants.js
+// when adding an option - make sure you have a route added to menuConstants.js & index.js
 export const menuOptions = [
-  {name: "Working examples", 
+  {
+    name: "Working examples", 
     subOptions: [
       {
         name: "Open Item Card",
@@ -50,6 +52,12 @@ export const menuOptions = [
         image: require("./assets/notice.png"),
         background: BACKGROUND_COLORS.BLUE,
       },
+      {
+        name: "Open/close settings pane",
+        location: ROUTES.OPEN_SETTINGS_PANE,
+        image: require("./assets/notice.png"),
+        background: BACKGROUND_COLORS.RED,
+      },
     ]
   },
   {name: "Components in progress", 
@@ -59,6 +67,12 @@ export const menuOptions = [
         location: ROUTES.DELETE_ITEM,
         image: require("./assets/delete_icon.png"),
         background: BACKGROUND_COLORS.YELLOW,
+      },
+      {
+        name: "Files Preview Dialog",
+        location: "filepreview",
+        image: require("./assets/file_preview.png"),
+        background: BACKGROUND_COLORS.RED,
       },
     ]
   },
@@ -158,12 +172,7 @@ export const menuOptions = [
         image: require("./assets/notice.png"),
         background: BACKGROUND_COLORS.BLUE,
       },
-      {
-        name: "Files Preview Dialog",
-        location: "filepreview",
-        image: require("./assets/file_preview.png"),
-        background: BACKGROUND_COLORS.RED,
-      },
+      
     ],
   },
   {

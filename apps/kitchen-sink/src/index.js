@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 // import { createRoot } from "react-dom/client";
 import "./index.css";
-import App from "./App";
 import {
     createBrowserRouter,
     RouterProvider,
@@ -27,6 +26,7 @@ import WorkingWithSettings from "./examples/WorkingWithSettings/WorkingWithSetti
 import Pagination from "./examples/Pagination/Pagination";
 import UpdateSubitems from "./examples/UpdateSubitems/UpdateSubitems";
 import DeleteSubitem from "./examples/DeleteSubitem/DeleteSubitem";
+import OpenSettingsPane from "./examples/OpenSettingsPane/OpenSettingsPane";
 
 const router = createBrowserRouter([
     {
@@ -48,6 +48,10 @@ const router = createBrowserRouter([
     {
       path: `/menu/${ROUTES.OPEN_ITEM_CARD}`,
       element: <OpenItemCard />
+    },
+    {
+      path: `/menu/${ROUTES.OPEN_SETTINGS_PANE}`,
+      element: <OpenSettingsPane />
     },
     {
       path: `/menu/${ROUTES.GET_SUB_ITEMS}`,

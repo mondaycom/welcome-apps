@@ -39,7 +39,8 @@ const CodeBlock = ({ contentUrl, contentText }) => {
 
   useEffect(() => {
     if (contentUrl) getContentUrl();
-    if (contentText) setContent(contentText);
+    else if (contentText) setContent(contentText);
+    else setContent("No code snippet provided.")
   }, [contentUrl]);
 
   const getContentUrl = async () => {

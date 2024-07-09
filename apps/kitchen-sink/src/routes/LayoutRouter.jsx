@@ -14,6 +14,7 @@ import { ROUTES } from "../examples/Menu/MenuConstants";
 import Confirmation from "../examples/Confirmation/Confirmation";
 import Notice from "../examples/Notice/Notice";
 import FilePreview from "../examples/FilePreview/FilePreview";
+import OpenSettingsPane from "../examples/OpenSettingsPane/OpenSettingsPane";
 
 import Pagination from "../examples/Pagination/Pagination";
 import UpdateSubitems from "../examples/UpdateSubitems/UpdateSubitems";
@@ -34,6 +35,7 @@ const LayoutRouter = () => {
       <Route path={`/${ROUTES.GET_SUB_ITEMS}`} component={GetSubItems} />
       <Route path={`/${ROUTES.DELETE_ITEM}`} component={DeleteItem} />
       <Route path={`/${ROUTES.OPEN_ITEM_CARD}`} component={OpenItemCard} />
+      <Route path={`/${ROUTES.OPEN_SETTINGS_PANE}`} component={OpenSettingsPane} />
       <Route path={`/${ROUTES.UPLOAD_FILE_VIA_SDK}`} component={UploadFileViaSDK} />
       <Route path={`/${ROUTES.UPLOAD_FILE_VIA_API}`} component={UploadFileViaAPI} />
       <Route path={`/${ROUTES.STORAGE_API}`} component={StorageApi} />
