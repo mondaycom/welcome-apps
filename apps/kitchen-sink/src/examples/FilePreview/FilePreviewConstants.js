@@ -6,7 +6,7 @@ const FilePreviewConstants = {
     }
     
     `,
-  getAllColumnsQuery: `query ($boardIds: [Int]) {
+  getAllColumnsQuery: `query ($boardIds: [ID!]) {
       boards(ids: $boardIds) {
         columns {
           id

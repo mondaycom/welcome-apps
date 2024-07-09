@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import "./FilePreview.scss";
 import mondaySdk from "monday-sdk-js";
 import RenderItems from "../RenderItems/RenderItems.jsx";
@@ -7,18 +7,31 @@ import Dropdown from "monday-ui-react-core/dist/Dropdown.js";
 import Button from "monday-ui-react-core/dist/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { Context } from "../../components/context/ContextProvider";
 import filePreviewConstants from "./FilePreviewConstants";
 import Loader from "monday-ui-react-core/dist/Loader";
 import CodeBlock from "../../components/common/CodeBlock/CodeBlock";
 import ActionHeader from "../../components/common/ActionHeader/ActionHeader";
 import Instructions from "../../components/common/Instructions/Instructions";
-import { useBoardContext } from "../../hooks/UseBoardContext.js";
+// import { useBoardContext } from "../../hooks/UseBoardContext.js";
+import { useAppContext } from "../../hooks/UseAppContext.js";
+import { useGetBoardItems } from "../../hooks/UseGetBoardItems.js";
 
 const monday = mondaySdk();
 
 const FilePreview = () => {
-  const { items, boardId } = useBoardContext().state;
+  // const boardContext = useBoardContext();
+  const appContext = useAppContext();
+
+  const boardItems = useGetBoardItems('6980589817');
+  const items = boardItems?.items ?? [];
+  const boardId = '6980589817'
+  // const { items, boardId } = boardContext;
+  console.log(`context is - ${JSON.stringify(appContext)}`);
+  // const { items, boardId } = 0;
+
+  if (appContext) {
+
+  }
 
   const [fileColumns, setFileColumns] = useState([]);
   const [selectedItem, setSelectedItem] = useState();
