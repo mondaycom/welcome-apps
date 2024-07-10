@@ -9,7 +9,8 @@ import Instructions from "../../components/common/Instructions/Instructions";
 import ActionHeader from "../../components/common/ActionHeader/ActionHeader";
 // import { Loader } from "monday-ui-react-core";
 import { useBoardContext } from "../../hooks/UseBoardContext.js";
-
+import CodeSamples from "../../constants/codeSamples";
+// @mondaycom-codesample-start
 const monday = mondaySdk();
 
 const DeleteItem = () => {
@@ -23,7 +24,7 @@ const DeleteItem = () => {
       })
       .then((res) => {
         updateItems({
-          items: res.data.delete_item.board.items,
+          items: res.data.delete_item.board.items_page.items,
           boardName,
           updateItems,
         });
@@ -32,11 +33,12 @@ const DeleteItem = () => {
 
   return (
     <div className="delete-item-container feature-container">
+      {/* @mondaycom-codesample-skip-block-start */}
       <ActionHeader
         action="Delete Item"
         actionDescription="Using the api to delete selected item"
       />
-
+      {/* @mondaycom-codesample-skip-block-end */}
       <RenderItems
         itemsData={items}
         actionButtonContent="Delete me"
@@ -60,7 +62,8 @@ const DeleteItem = () => {
         }}
       />
 
-      <CodeBlock contentUrl={deleteItemConstants.githubUrl} />
+    {/* @mondaycom-codesample-skip-block-start */}
+      <CodeBlock contentText={CodeSamples.DeleteItem.codeSample} />
       <Instructions
         paragraphs={deleteItemConstants.deleteItemInstructionsParagraphs}
         instructionsListItems={
@@ -70,8 +73,9 @@ const DeleteItem = () => {
           deleteItemConstants.deleteItemInstructionslinkToDocumentation
         }
       />
+      {/* @mondaycom-codesample-skip-block-end */}
     </div>
   );
 };
-
+// @mondaycom-codesample-end
 export default DeleteItem;

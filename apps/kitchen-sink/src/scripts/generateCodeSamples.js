@@ -20,6 +20,12 @@ const filesToGenerateSamples = [
   { componentName: "FilePreview", 
     sourceFile: "../examples/FilePreview/FilePreview.jsx" 
   },
+  { componentName: "DeleteItem", 
+    sourceFile: "../examples/DeleteItem/DeleteItem.jsx" 
+  },
+  { componentName: "StorageApi", 
+    sourceFile: "../examples/StorageApi/StorageApi.jsx" 
+  },
 ];
 
 readFilesAndGenerate();

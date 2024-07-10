@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "monday-ui-react-core/dist/main.css";
 import "./StorageApi.scss";
 import mondaySdk from "monday-sdk-js";
-import { Context } from "../../components/context/ContextProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as fasHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
@@ -12,7 +11,8 @@ import Instructions from "../../components/common/Instructions/Instructions";
 import ActionHeader from "../../components/common/ActionHeader/ActionHeader";
 import randomColorGenerator from "../../utils/randomColorGenerator";
 import { useBoardContext } from "../../hooks/UseBoardContext";
-
+import CodeSamples from "../../constants/codeSamples";
+// @mondaycom-codesample-start
 const monday = mondaySdk();
 
 const StorageApi = () => {
@@ -56,11 +56,12 @@ const StorageApi = () => {
 
   return (
     <div className="storage-api-container feature-container">
+      {/* @mondaycom-codesample-skip-block-start */}
       <ActionHeader
         action="Storage API"
         actionDescription="Using the SDK to use the Storage API for upload key-value pairs"
       />
-
+      {/* @mondaycom-codesample-skip-block-end */}
       <div className="working-with-the-board-items playground">
         <h3 className="playground-header">Playground</h3>
         {items.map((item) => {
@@ -76,15 +77,18 @@ const StorageApi = () => {
           );
         })}
       </div>
-      <CodeBlock contentUrl={storageApiConstants.githubUrl} />
+      {/* @mondaycom-codesample-skip-block-start */}
+      <CodeBlock contentText={CodeSamples.StorageApi.codeSample} />
       <Instructions
         paragraphs={storageApiConstants.storageApiInstructionsParagraphs}
         instructionsListItems={storageApiConstants.storageApiInstructionsListItems}
         linkToDocumentation={storageApiConstants.storageApiInstructionslinkToDocumentation}
       />
+      {/* @mondaycom-codesample-skip-block-end */}
     </div>
   );
 };
+// @mondaycom-codesample-end
 
 export default StorageApi;
 

@@ -31,7 +31,7 @@ const BACKGROUND_COLORS = {
 // when adding an option - make sure you have a route added to menuConstants.js & index.js
 export const menuOptions = [
   {
-    name: "Working examples", 
+    name: "Client SDK - perform actions in the monday client", 
     subOptions: [
       {
         name: "Open Item Card",
@@ -41,29 +41,45 @@ export const menuOptions = [
       },
       {
         id: "CONFIRMATION",
-        name: "Confirmation Pop Up",
+        name: "Confirmation modal",
         location: "confirmation",
         image: require("./assets/confirmation.png"),
         background: BACKGROUND_COLORS.PURPLE,
       },
       {
-        name: "Notice Pop Up",
+        name: "Notice Pop-up or Toast",
         location: "notice",
         image: require("./assets/notice.png"),
         background: BACKGROUND_COLORS.BLUE,
       },
       {
-        name: "Open/close settings pane",
+        name: "Open app settings pane",
         location: ROUTES.OPEN_SETTINGS_PANE,
         image: require("./assets/notice.png"),
         background: BACKGROUND_COLORS.RED,
       },
       {
-        name: "Files Preview Dialog",
+        name: "Preview & upload files",
         location: "filepreview",
         image: require("./assets/file_preview.png"),
         background: BACKGROUND_COLORS.RED,
       },
+      {
+        name: "Store app data with Storage API",
+        location: ROUTES.STORAGE_API,
+        image: require("./assets/storage_api.png"),
+        background: BACKGROUND_COLORS.LIGHT_BLUE,
+      },
+    ]
+  },
+  {name: "Platform API - Access & update board data", 
+    subOptions: [
+      {
+        name: "Delete an item",
+        location: ROUTES.DELETE_ITEM,
+        image: require("./assets/delete_icon.png"),
+        background: BACKGROUND_COLORS.YELLOW,
+      }, 
     ]
   },
   {name: "Components in progress", 

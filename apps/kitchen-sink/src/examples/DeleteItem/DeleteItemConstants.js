@@ -1,10 +1,12 @@
 const deleteItemConstants = {
-  deleteItemAndGetUpdatedBoardItemsQuery: `mutation ($itemId: Int!) {
+  deleteItemAndGetUpdatedBoardItemsQuery: `mutation ($itemId: ID!) {
     delete_item(item_id: $itemId) {
       board {
-        items {
-          id
-          name
+        items_page {
+          items {
+            id
+            name
+          }
         }
       }
     }
