@@ -12,7 +12,7 @@
     .logo {
       width: 167px;
       height: 42px;
-      margin-bottom: 10px;
+      // margin-bottom: 10px;
     }
 
     .row {
@@ -24,11 +24,22 @@
     .textContainer {
       display: flex;
       flex-direction: column;
-      margin-right: 100px;
+      margin-left: 16px;
+      margin-right: 16px;
 
       .title {
         font-weight: 900;
         font-size: 63px;
+      }
+
+      @media (height <= 550px) {
+        .title {
+          font-size: 48px;
+        }
+
+        .subTitle {
+          display: none;
+        }
       }
       
       .subTitle {
@@ -37,6 +48,17 @@
         font-size: 18px;
         line-height: 35px;
       }
-    }
-  }
+
+      }
+        .imageContainer {
+          height: 100%;
+        }
+
+        @media (width <= 700px) {
+          .imageContainer {
+            display: none;
+          }
+        }
+   }
 }
+

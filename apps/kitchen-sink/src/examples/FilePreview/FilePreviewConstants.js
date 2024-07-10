@@ -28,9 +28,9 @@ const FilePreviewConstants = {
         }
       }
     `,
-  filePreviewInstructionsParagraphs: [`Opens a modal with the preview of an asset`],
-  filePreviewInstructionslinkToDocumentation: `https://github.com/mondaycom/monday-sdk-js#mondayexecutetype-params`,
-  filePreviewInstructionsListItems: [
+  instructionsParagraphs: [`Opens a modal with the preview of an asset`],
+  instructionslinkToDocumentation: `https://github.com/mondaycom/monday-sdk-js#mondayexecutetype-params`,
+  instructionsListItems: [
     `Fetch the board id from context.`,
     `Select An Item.`,
     `Fetch all the file's column of the board and choose one.`,

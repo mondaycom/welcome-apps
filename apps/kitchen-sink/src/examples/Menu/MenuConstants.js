@@ -28,6 +28,15 @@ const BACKGROUND_COLORS = {
   LIGHT_BLUE: "#00CFF4",
 };
 
+const APP_FEATURE_TYPES = {
+  BOARD_VIEW: "AppFeatureBoardView",
+  BOARD_ITEM_MENU: "AppFeatureItemMenuAction",
+  CUSTOM_OBJECT: "AppFeatureObject",
+  DASHBOARD_WIDGET: "AppFeatureDashboardWidget",
+  ITEM_VIEW: "AppFeatureItemView",
+  AI_ASSISTANT_BOARD_HEADER: "AppFeatureAiBoardMainMenuHeader"
+}
+
 // when adding an option - make sure you have a route added to menuConstants.js & index.js
 export const menuOptions = [
   {
@@ -57,6 +66,7 @@ export const menuOptions = [
         location: ROUTES.OPEN_SETTINGS_PANE,
         image: require("./assets/notice.png"),
         background: BACKGROUND_COLORS.RED,
+        disableFor: [APP_FEATURE_TYPES.BOARD_ITEM_MENU, APP_FEATURE_TYPES.AI_ASSISTANT_BOARD_HEADER]
       },
       {
         name: "Preview & upload files",

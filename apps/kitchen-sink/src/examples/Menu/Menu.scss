@@ -15,7 +15,6 @@
     color: white;
     border-radius: 8px;
     display: flex;
-    min-height: 258px;
     width: 100%;
     flex-direction: row;
     justify-content: space-between;
@@ -24,6 +23,8 @@
       height: 258px;
       width: auto;
       margin-right: 40px;
+      margin-top: auto;
+      margin-bottom: auto;
     }
 
     .textContainer {

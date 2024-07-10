@@ -5,19 +5,24 @@ height: 100%;
 
 .codeDisplayBlock {
   max-width: 800px;
-  max-height: 60vh;
+  max-height: 80vh;
   font-family:'Fira Code','Courier New', Courier, monospace;
   overflow: scroll;
 }
 
 .tabPanelContainer {
   padding: 10px;
-  border-style: solid;
+  // border-style: solid;
   // border-color:
   width: 550px;
-  height: 70vh;
+  max-height: 80vh;
 }
 
 .tabWrapper {
   padding-bottom: 8px;
+  padding-left: 0px;
+}
+
+.tabListWrapper > ul {
+  padding-inline-start: 0px;
 }

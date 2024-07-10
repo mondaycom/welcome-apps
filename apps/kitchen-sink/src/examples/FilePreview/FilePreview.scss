@@ -4,6 +4,10 @@
   grid-area: playground / snippet;
 }
 
+.instructions {
+  grid-area: instructions;
+}
+
 .upload-file-container {
   .loader-container {
     height: 50px;

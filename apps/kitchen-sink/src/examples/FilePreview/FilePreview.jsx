@@ -106,9 +106,15 @@ const FilePreview = () => {
       <TabLayout
         ExampleComponent={FilePreviewSample}
         codeExample={CodeSamples.FilePreview.codeSample}
-        documentationText={`This is a file preview.`}
       />
       </div>
+      <Instructions
+        className="instructions"
+        paragraphs={filePreviewConstants?.instructionsParagraphs}
+        instructionsListItems={filePreviewConstants?.instructionsListItems}
+        linkToDocumentation={filePreviewConstants?.githubUrl}
+      />
+      
     </div>
   );
 };

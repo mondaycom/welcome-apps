@@ -22,7 +22,6 @@ const Welcome = () => {
   useEffect(function redirectInActionFeatureType() {
     if (appFeatureType === 'AppFeatureItemMenuAction'|| appFeatureType === "AppFeatureAiBoardMainMenuHeader") {
       history('/menu')
-      setIsLoading(false);
     } else {
       setIsLoading(false);
     }
@@ -38,18 +37,21 @@ const Welcome = () => {
             <div className="title">
               monday app framework
               <br />
-              Kitchen Sink Examples
+              Kitchen Sink
             </div>
             <div className="subTitle">
-              In this project you will see examples
+              In this project you will see working examples
               <br />
-              of the main functionality of our SDK and API.
+              of the main features of our SDK and API.
             </div>
             <Button style={buttonStyle} size={Button.sizes.LARGE} onClick={() => history("/menu")}>
               Get Started
             </Button>
           </div>
-          <Lottie className="lottie" options={lottieOptions} height={500} width={500} />
+          <div className="imageContainer">
+
+          <Lottie className="lottie" options={lottieOptions} />
+          </div>
         </div>
       </div>
     </div>
