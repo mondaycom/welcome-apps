@@ -1,11 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MenuButton from "./components/MenuButton";
 import "./Menu.scss";
 import { menuOptions } from "./MenuConstants";
 import { useNavigate } from "react-router-dom";
+import {useAppContext} from "../../hooks/UseAppContext";
+import { Divider, ListItem, ListTitle, List } from "monday-ui-react-core";
 
 const Menu = () => {
   const history = useNavigate();
+  const appContext = useAppContext();
+  const [featureType, setFeatureType] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(function updateFeatureType() {
+    if (appContext.data) {
+      setFeatureType(appContext.data.appFeature.type);
+      setIsLoading(false);
+    }
+  }, [appContext])
 
   const renderSection = (name, subOptions) => {
     return (
@@ -39,7 +51,28 @@ const Menu = () => {
       </div>
     );
   };
+
+  const renderMenuForActionFeature = (menuOptions) => {
+    console.log({menuOptions});
+    return (
+      <div>
+        {menuOptions.map((section) => {
+          return (<List className="menuList">
+          <ListTitle>{section.name}</ListTitle>
+          <div>{section.subOptions.map((option) => {
+            return <ListItem onClick={() => history(option.location)}>{option.name}</ListItem>
+          })}</div><Divider /></List>
+        )
+        })}
+      </div>
+    );
+  };
+
   return (
+    (isLoading) ? <div></div> :
+    (featureType === "AppFeatureItemMenuAction" || featureType === "AppFeatureAiBoardMainMenuHeader") ?
+      <div>{renderMenuForActionFeature(menuOptions)}</div> 
+      :
     <div className="menuContainer">
       {renderHero()}
       {menuOptions.map((section) => renderSection(section.name, section.subOptions))}

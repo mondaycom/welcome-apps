@@ -5,41 +5,46 @@ import { getAllBoardItemsQuery } from "../utils/boardUtil"; // TODO: move somewh
 const monday = mondaySdk();
 
 export function useBoardContext() {
-    const [state, setState] = useState({ items: [], updateItems: () => {} });
-    const [isLoading, setIsLoading] = useState({ isLoading: true });
-  
-    useEffect(() => {
-      monday.listen("context", (res) => {
-        console.log({ context: res });
-        if (res.data.boardIds.length === 0) {
+  const [state, setState] = useState({ items: [], updateItems: () => {} });
+  const [isLoading, setIsLoading] = useState({ isLoading: true });
+  const [boardId, setBoardId] = useState();
+
+  useEffect(() => {
+    monday.listen("context", (res) => {
+      console.log({ context: res });
+      if (res.data) {
+        setIsLoading({ isLoading: false });
+        setBoardId(res.data.boardIds ?? res.data.boardId);
+      }
+    });
+  }, []);
+
+  useEffect(
+    function getItemsFromBoard() {
+      setIsLoading({ isLoading: true });
+      monday
+        .api(getAllBoardItemsQuery, {
+          variables: {
+            boardIds: boardId,
+            limit: 50,
+          },
+        })
+        .then((itemsResponse) => {
+          console.log({ itemsResponse });
+          // ----- GETS THE ITEMS OF THE BOARD -----
+          setState({
+            boardId,
+            boardName: itemsResponse?.data?.boards[0]?.name,
+            items: itemsResponse.data.boards[0].items_page.items.map((item) => {
+              return { id: item.id, name: item.name };
+            }),
+            updateItems: (state) => setState(state),
+          });
           setIsLoading({ isLoading: false });
-        } else {
-          setIsLoading({ isLoading: true });
-          monday
-            .api(getAllBoardItemsQuery, {
-              variables: {
-                boardIds: res?.data?.boardIds,
-                limit: 50,
-              },
-            })
-            .then((itemsResponse) => {
-              console.log({ itemsResponse });
-              // ----- GETS THE ITEMS OF THE BOARD -----
-              setState({
-                boardId: +res.data?.boardIds[0],
-                boardName: itemsResponse?.data?.boards[0]?.name,
-                items: itemsResponse.data.boards[0].items_page.items.map(
-                  (item) => {
-                    return { id: item.id, name: item.name };
-                  }
-                ),
-                updateItems: (state) => setState(state),
-              });
-              setIsLoading({ isLoading: false });
-            });
-        }
-      });
-    }, []);
-  
-    return { state, isLoading };
-  }
+        });
+    },
+    [boardId]
+  );
+
+  return { state, isLoading };
+}
