@@ -1,5 +1,9 @@
 @import "../../styles/animations.scss";
 
+.tab-layout-playground {
+  grid-area: playground / snippet;
+}
+
 .upload-file-container {
   .loader-container {
     height: 50px;

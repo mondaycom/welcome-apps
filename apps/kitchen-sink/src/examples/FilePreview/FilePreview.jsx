@@ -102,7 +102,7 @@ const FilePreview = () => {
         action="File Preview"
         actionDescription="Preview and upload files using SDK"
       />
-      <div className="playground working-with-the-board-items">
+      <div className="tab-layout-playground">
       <TabLayout
         ExampleComponent={FilePreviewSample}
         codeExample={CodeSamples.FilePreview.codeSample}
