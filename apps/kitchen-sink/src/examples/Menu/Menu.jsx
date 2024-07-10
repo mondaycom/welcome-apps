@@ -32,7 +32,7 @@ const Menu = () => {
           <div className="title">Get started with ready-made examples</div>
           <div className="subTitle">
             The monday.com examples Kitchen Sink offers a variety of examples
-            <br /> which being displayed easily on your board
+            <br /> that you can test on a board, item, or workspace. 
           </div>
         </div>
         <img alt="" src={require("./assets/hero_image.png")} className="heroImage" />

@@ -97,16 +97,18 @@ const FilePreviewSample = () => {
 
 const FilePreview = () => {
   return (
-    <div>
+    <div className="file-preview-container feature-container">
       <ActionHeader
         action="File Preview"
         actionDescription="Preview and upload files using SDK"
       />
+      <div className="playground working-with-the-board-items">
       <TabLayout
         ExampleComponent={FilePreviewSample}
         codeExample={CodeSamples.FilePreview.codeSample}
         documentationText={`This is a file preview.`}
       />
+      </div>
     </div>
   );
 };

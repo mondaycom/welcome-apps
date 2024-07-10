@@ -15,6 +15,19 @@ Kitchen sink app. Some stuff to know:
 3. Zip files in build folder (not folder itself)
 4. Upload ZIP to monday
 
+## How to add a sample
+
+1. Add component folder to src/examples/ folder
+2. Add a route:
+  1. Add route path to `src/Menu/MenuConstants` > Routes
+  2. Add route to router in `index.js`
+3. Add the component to menu
+  1. Add component to `src/Menu/MenuConstants.js` so it renders in the main menu
+4. Add a code sample
+  1. Add component name and path to 'filesToGenerateSamples' in `generateCodeSamples.js`
+  2. Add @mondaycom-code-sample-start and @mondaycom-code-sample-end comments to indicate start and finish of sample
+  3. Run `npm run build:generate-samples` to update sample code
+
 
 # old info: 
 

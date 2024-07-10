@@ -16,14 +16,14 @@ const Welcome = () => {
           <div className="textContainer">
             <img className="logo" src={require("../../assets/images/logo.png")} alt="" />
             <div className="title">
-              Welcome to monday's
+              monday app framework
               <br />
-              App Framework Kitchen Sink
+              Kitchen Sink Examples
             </div>
             <div className="subTitle">
-              In this project you will be able to see examples
+              In this project you will see examples
               <br />
-              for our main sdk awesome functionality
+              of the main functionality of our SDK and API.
             </div>
             <Button style={buttonStyle} size={Button.sizes.LARGE} onClick={() => history("/menu")}>
               Get Started
