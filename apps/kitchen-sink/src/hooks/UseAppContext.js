@@ -4,14 +4,14 @@ import mondaySdk from "monday-sdk-js";
 const monday = mondaySdk();
 
 export function useAppContext() {
-    const { context, setContext } = useState({});
+    const [appContext, setAppContext] = useState({});
 
     useEffect(() => {
         monday.listen('context', (contextEvent) => {
             console.log('Updating context');
-            setContext(contextEvent);
+            setAppContext(contextEvent);
         })
-    }, [setContext])
+    }, [setAppContext])
     
-    return context;
+    return appContext;
 }

@@ -58,6 +58,12 @@ export const menuOptions = [
         image: require("./assets/notice.png"),
         background: BACKGROUND_COLORS.RED,
       },
+      {
+        name: "Files Preview Dialog",
+        location: "filepreview",
+        image: require("./assets/file_preview.png"),
+        background: BACKGROUND_COLORS.RED,
+      },
     ]
   },
   {name: "Components in progress", 
@@ -67,13 +73,7 @@ export const menuOptions = [
         location: ROUTES.DELETE_ITEM,
         image: require("./assets/delete_icon.png"),
         background: BACKGROUND_COLORS.YELLOW,
-      },
-      {
-        name: "Files Preview Dialog",
-        location: "filepreview",
-        image: require("./assets/file_preview.png"),
-        background: BACKGROUND_COLORS.RED,
-      },
+      }, 
     ]
   },
   {
@@ -130,7 +130,7 @@ export const menuOptions = [
         id: "GETTING_SUBITEMS_OF_AN_ITEM",
         name: "Getting Subitem Of An Item",
         location: ROUTES.GET_SUB_ITEMS,
-        image: require("./assets/subitem_icon.svg"),
+        image: require("./assets/update-subitem.png"),
         background: BACKGROUND_COLORS.RED,
       },
       {

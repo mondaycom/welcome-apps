@@ -4,7 +4,7 @@ height: 100%;
 }
 
 .codeDisplayBlock {
-  width: 800px;
+  max-width: 800px;
   max-height: 60vh;
   font-family:'Fira Code','Courier New', Courier, monospace;
   overflow: scroll;

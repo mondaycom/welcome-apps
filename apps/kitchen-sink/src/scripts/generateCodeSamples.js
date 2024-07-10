@@ -17,6 +17,9 @@ const filesToGenerateSamples = [
   { componentName: "OpenSettingsPane", 
     sourceFile: "../examples/OpenSettingsPane/OpenSettingsPane.jsx" 
   },
+  { componentName: "FilePreview", 
+    sourceFile: "../examples/FilePreview/FilePreview.jsx" 
+  },
 ];
 
 readFilesAndGenerate();

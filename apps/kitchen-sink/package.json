@@ -20,12 +20,9 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
-    "@types/node": "^20.14.10",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
     "axios": "^0.21.4",
     "monday-sdk-js": "^0.5.5",
-    "monday-ui-react-core": "0.0.48",
+    "monday-ui-react-core": "^2.118.1",
     "prism-react-renderer": "^1.2.1",
     "react": "^16.13.0",
     "react-code-blocks": "^0.1.6",
@@ -36,8 +33,7 @@
     "react-router-dom": "^6.23.1",
     "react-scripts": "^5.0.1",
     "react-spring": "^9.2.4",
-    "sass": "^1.68.0",
-    "typescript": "^5.5.3"
+    "sass": "^1.68.0"
   },
   "eslintConfig": {
     "extends": "react-app"

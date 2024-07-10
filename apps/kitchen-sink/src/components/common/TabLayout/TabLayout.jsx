@@ -1,6 +1,7 @@
 import React from "react";
+import CodeBlock from "../CodeBlock/CodeBlock";
 import classes from "./TabLayout.module.scss";
-import { CodeBlock, nord } from "react-code-blocks";
+
 import {
   Tab,
   TabList,
@@ -10,7 +11,7 @@ import {
 } from "monday-ui-react-core";
 // import { codeExamples } from "../../constants/code-examples";
 
-const TabLayout = ({ExampleComponent, codeExample}) => {
+const TabLayout = ({ExampleComponent, codeExample, documentationText}) => {
 
   return (
     <div className={classes.tabsWrapper}>
@@ -28,16 +29,11 @@ const TabLayout = ({ExampleComponent, codeExample}) => {
           </TabPanel>
           <TabPanel>
             <div className={classes.codeDisplayBlock}>
-              <CodeBlock
-                text={codeExample}
-                theme={nord}
-                showLineNumbers={true}
-                language="jsx"
-              />
+            <CodeBlock contentText={codeExample} />
             </div>
           </TabPanel>
           <TabPanel>
-            This is some documentation blah blah blah
+            {documentationText}
           </TabPanel>
         </TabPanels>
       </TabsContext>

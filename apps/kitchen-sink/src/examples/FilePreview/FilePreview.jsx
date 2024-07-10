@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./FilePreview.scss";
 import mondaySdk from "monday-sdk-js";
+import "monday-ui-react-core/dist/main.css";
 import RenderItems from "../RenderItems/RenderItems.jsx";
 import DialogContentContainer from "monday-ui-react-core/dist/DialogContentContainer.js";
 import Dropdown from "monday-ui-react-core/dist/Dropdown.js";
@@ -14,23 +15,116 @@ import ActionHeader from "../../components/common/ActionHeader/ActionHeader";
 import Instructions from "../../components/common/Instructions/Instructions";
 // import { useBoardContext } from "../../hooks/UseBoardContext.js";
 import { useAppContext } from "../../hooks/UseAppContext.js";
-import { useGetBoardItems } from "../../hooks/UseGetBoardItems.js";
+import { useGetBoardData } from "../../hooks/UseGetBoardData.js";
+import TabLayout from "../../components/common/TabLayout/TabLayout.jsx";
+import CodeSamples from "../../constants/codeSamples";
 
 const monday = mondaySdk();
 
+function handleAddFileColumn() {
+  // TODO: Add logic to create file column
+  console.log(`You need to add a file column here.`);
+}
+
+// @mondaycom-codesample-start
+const FilePreviewSample = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const boardData = useGetBoardData();
+  const [fileColumns, setFileColumns] = useState([]);
+
+  useEffect(() => {
+    if (boardData.boards) {
+      setIsLoading(false);
+      setFileColumns(
+        boardData.boards[0].columns.filter((x) => x.type === "file")
+      );
+    }
+  }, [boardData]);
+
+  // @mondaycom-codesample-skip-block-start
+  useEffect(
+    function printState() {
+      console.log({ fileColumns });
+      console.log({ boardData });
+    },
+    [fileColumns, boardData]
+  );
+  // @mondaycom-codesample-skip-block-end
+
+  return (
+    <div>
+      {isLoading ? (
+        <Loader size={16} />
+      ) : fileColumns.length > 0 ? (
+        <RenderItems
+          itemsData={boardData.boards[0].items_page.items}
+          actionButtonContent="Add or preview File"
+          action={(item) => {
+            const fileColumnId = fileColumns[0].id;
+            const fileColumnValue = JSON.parse(
+              item.column_values.filter((x) => x.id === fileColumns[0].id)[0]
+                .value
+            );
+            const assetId = fileColumnValue?.files[0]?.assetId ?? null;
+            const boardId = boardData.boards[0].id;
+            console.log({ item, assetId, fileColumnId });
+            if (!assetId) {
+              monday.execute("notice", {
+                message: "No files uploaded. Uploading now...",
+              });
+              monday.execute("triggerFilesUpload", {
+                boardId,
+                itemId: item.id,
+                columnId: fileColumnId,
+              });
+            } else {
+              monday.execute("openFilesDialog", {
+                boardId,
+                itemId: item.id,
+                columnId: fileColumnId,
+                assetId,
+              });
+            }
+          }}
+        />
+      ) : (
+        <Button onClick={handleAddFileColumn}>Add file column</Button>
+      )}
+    </div>
+  );
+};
+// @mondaycom-codesample-end
+
 const FilePreview = () => {
+  return (
+    <div>
+      <ActionHeader
+        action="File Preview"
+        actionDescription="Preview and upload files using SDK"
+      />
+      <TabLayout
+        ExampleComponent={FilePreviewSample}
+        codeExample={CodeSamples.FilePreview.codeSample}
+        documentationText={`This is a file preview.`}
+      />
+    </div>
+  );
+};
+
+// TODO: Delete this component
+// eslint-disable-next-line no-unused-vars
+const FilePreviewOld = () => {
   // const boardContext = useBoardContext();
   const appContext = useAppContext();
 
-  const boardItems = useGetBoardItems('6980589817');
+  const boardItems = useGetBoardData();
   const items = boardItems?.items ?? [];
-  const boardId = '6980589817'
+  const boardId = "6980589817";
   // const { items, boardId } = boardContext;
   console.log(`context is - ${JSON.stringify(appContext)}`);
   // const { items, boardId } = 0;
 
   if (appContext) {
-
   }
 
   const [fileColumns, setFileColumns] = useState([]);
@@ -48,7 +142,9 @@ const FilePreview = () => {
         variables: { boardIds: boardId },
       })
       .then((res) => {
-        const fileColumns = res.data?.boards[0]?.columns.filter((column) => column.type === "file");
+        const fileColumns = res.data?.boards[0]?.columns.filter(
+          (column) => column.type === "file"
+        );
         setFileColumns(fileColumns);
       });
   }, [boardId]);
@@ -97,8 +193,12 @@ const FilePreview = () => {
       <CodeBlock contentUrl={filePreviewConstants.githubUrl} />
       <Instructions
         paragraphs={filePreviewConstants.filePreviewInstructionsParagraphs}
-        instructionsListItems={filePreviewConstants.filePreviewInstructionsListItems}
-        linkToDocumentation={filePreviewConstants.filePreviewInstructionslinkToDocumentation}
+        instructionsListItems={
+          filePreviewConstants.filePreviewInstructionsListItems
+        }
+        linkToDocumentation={
+          filePreviewConstants.filePreviewInstructionslinkToDocumentation
+        }
       />
       {selectedItem && (
         <div className="overlay">
@@ -114,7 +214,10 @@ const FilePreview = () => {
             <Dropdown
               searchable={true}
               options={fileColumns.map((fileColumn) => {
-                return { value: fileColumn.id, label: `${fileColumn.title} - ${fileColumn.id} (Column ID)` };
+                return {
+                  value: fileColumn.id,
+                  label: `${fileColumn.title} - ${fileColumn.id} (Column ID)`,
+                };
               })}
               placeholder={"Files Columns"}
               onChange={(column) => handleColumnIdPick(column.value)}
@@ -124,13 +227,19 @@ const FilePreview = () => {
               <Dropdown
                 searchable={true}
                 options={assets.map((asset) => {
-                  return { value: asset.id, label: `${asset.name} - ${asset.id}` };
+                  return {
+                    value: asset.id,
+                    label: `${asset.name} - ${asset.id}`,
+                  };
                 })}
                 placeholder={"File Name"}
                 onChange={(asset) => setSelectedAsset(asset.value)}
               />
             ) : (
-              columnId && assets.length === 0 && !isLoading && "No Assets To Show..."
+              columnId &&
+              assets.length === 0 &&
+              !isLoading &&
+              "No Assets To Show..."
             )}
             {isLoading && (
               <div className="loader-container">
