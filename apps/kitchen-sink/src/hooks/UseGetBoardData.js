@@ -13,10 +13,20 @@ export function useGetBoardData() {
     function getBoardIdFromContext() {
       if (appContext?.data?.boardIds) {
         setBoardId(appContext.data.boardIds[0]);
+      } else if (appContext?.data?.boardId) {
+        setBoardId(appContext.data.boardId);
       }
     },
     [appContext]
   );
+
+  useEffect(
+    function printContext() {
+      if (appContext) {
+        console.log({appContext});
+      }
+    }
+  , [appContext]);
 
   useEffect(
     function getBoardData() {
