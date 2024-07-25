@@ -1,3 +1,5 @@
+@import '../../../styles/variables.scss';
+
 .instructions {
   grid-area: instructions;
   box-sizing: border-box;
@@ -35,5 +37,12 @@
 
   strong {
     margin-top: 10px;
+  }
+}
+
+@media (max-width: $breakpoint-narrow) {
+  .instructions {
+    overflow-y: scroll;
+    height: max-content;
   }
 }

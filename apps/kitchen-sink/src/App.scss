@@ -4,6 +4,7 @@ body {
   margin: 0;
   font-family: "Roboto", sans-serif;
 }
+
 .root {
   display: flex;
   flex: 1;
@@ -24,6 +25,7 @@ a {
   display: flex;
   flex: 1;
 }
+
 .feature-container {
   max-height: 100%;
   width: 100vw;
@@ -33,6 +35,10 @@ a {
   padding: 20px;
   grid-gap: 25px;
   box-sizing: border-box;
+}
+
+@media (min-width: 600px) {
+  .feature-container {
   grid-template-areas:
     "header playground playground playground playground"
     "instructions playground playground playground playground"
@@ -42,6 +48,24 @@ a {
     "instructions snippet snippet snippet snippet";
   grid-template-columns: 1fr 1fr;
   grid-template-rows: repeat(4, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .feature-container {
+    display: grid;
+    grid-template-areas: 
+      "header"
+      "instructions"
+      "instructions"
+      "playground"
+      "playground"
+      "playground"
+      "snippet"
+      "snippet"
+      "snippet";
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(9, 1fr);
+  }
 }
 
 .feature-container .working-with-the-board-item {

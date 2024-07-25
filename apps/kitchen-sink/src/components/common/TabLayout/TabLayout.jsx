@@ -7,8 +7,7 @@ import {
   TabList,
   TabsContext,
   TabPanel,
-  TabPanels,
-  Box
+  TabPanels
 } from "monday-ui-react-core";
 // import { codeExamples } from "../../constants/code-examples";
 

@@ -7,3 +7,10 @@
   justify-content: end;
   position: relative;
 }
+
+@media (max-width: $breakpoint-narrow) {
+  .working-with-the-board-items {
+    overflow-y: scroll;
+    height: max-content;
+  }
+}

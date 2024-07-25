@@ -1,3 +1,5 @@
+@import './styles/variables.scss';
+
 body {
   margin: 0;
   font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
@@ -43,15 +45,49 @@ a {
   padding: 20px;
   grid-gap: 25px;
   box-sizing: border-box;
-  grid-template-areas:
-    "header playground playground playground playground"
-    "instructions playground playground playground playground"
-    "instructions snippet snippet snippet snippet"
-    "instructions snippet snippet snippet snippet"
-    "instructions snippet snippet snippet snippet"
-    "instructions snippet snippet snippet snippet";
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: repeat(4, 1fr);
+}
+
+.feature-container {
+  max-height: 100%;
+  width: 100vw;
+  display: grid;
+  box-sizing: border-box;
+  padding: 20px;
+  grid-gap: 25px;
+  box-sizing: border-box;
+}
+
+@media (min-width: $breakpoint-narrow) {
+  .feature-container {
+    overflow: auto;
+    grid-template-areas:
+      "header playground playground playground playground"
+      "instructions playground playground playground playground"
+      "instructions snippet snippet snippet snippet"
+      "instructions snippet snippet snippet snippet"
+      "instructions snippet snippet snippet snippet"
+      "instructions snippet snippet snippet snippet";
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(4, 1fr);
+  }
+}
+@media (max-width: $breakpoint-narrow) {
+  .feature-container {
+    display: grid;
+    overflow-y: scroll;
+    grid-template-areas: 
+      "header"
+      "instructions"
+      "instructions"
+      "playground"
+      "playground"
+      "playground"
+      "snippet"
+      "snippet"
+      "snippet";
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(9, 1fr);
+  }
 }
 
 .feature-container .working-with-the-board-item {

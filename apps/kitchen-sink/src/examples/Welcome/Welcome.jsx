@@ -20,7 +20,7 @@ const Welcome = () => {
   }, [appContext])
 
   useEffect(function redirectInActionFeatureType() {
-    if (appFeatureType === 'AppFeatureItemMenuAction'|| appFeatureType === "AppFeatureAiBoardMainMenuHeader") {
+    if (appFeatureType && (appFeatureType === 'AppFeatureItemMenuAction'|| appFeatureType === "AppFeatureAiBoardMainMenuHeader")) {
       history('/menu')
     } else {
       setIsLoading(false);

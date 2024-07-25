@@ -1,4 +1,5 @@
 @import "../../../styles/animations.scss";
+@import '../../../styles/variables.scss';
 
 .pre {
   position: relative;
@@ -63,4 +64,11 @@
 
 .code {
   background-color: red;
+}
+
+@media (max-width: $breakpoint-narrow) {
+  .pre {
+    overflow-y: scroll;
+    height: max-content;
+  }
 }
