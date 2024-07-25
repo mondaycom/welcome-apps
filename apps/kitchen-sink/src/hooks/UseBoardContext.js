@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import mondaySdk from "monday-sdk-js";
-import { getAllBoardItemsQuery } from "../utils/boardUtil"; // TODO: move somewhere else
+import { getAllBoardItemsQuery } from "../utils/boardUtil";
 
 const monday = mondaySdk();
 

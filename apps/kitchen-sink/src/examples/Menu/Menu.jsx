@@ -68,7 +68,7 @@ const Menu = () => {
           <div className="title">Get started with ready-made examples</div>
           <div className="subTitle">
             The monday.com Kitchen Sink app shows a variety of examples
-            <br /> that you can test on a board, item, or workspace. 
+            <br /> that you can test as a board view, item view, object view, AI assistant. 
           </div>
         </div>
         <img alt="" src={require("./assets/hero_image.png")} className="heroImage" />

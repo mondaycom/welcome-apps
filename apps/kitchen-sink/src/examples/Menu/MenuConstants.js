@@ -79,6 +79,7 @@ export const menuOptions = [
         location: ROUTES.STORAGE_API,
         image: require("./assets/storage_api.png"),
         background: BACKGROUND_COLORS.LIGHT_BLUE,
+        disableFor: [APP_FEATURE_TYPES.AI_ASSISTANT_BOARD_HEADER]
       },
     ]
   },
@@ -92,7 +93,9 @@ export const menuOptions = [
       }, 
     ]
   },
-  {name: "Components in progress", 
+  /**
+  { 
+    name: "Components in progress", //TODO: Delete this section
     subOptions: [
       {
         name: "Delete Item",
@@ -103,7 +106,7 @@ export const menuOptions = [
     ]
   },
   {
-    name: "Working With The Board - old",
+    name: "Working With The Board - old", //TODO: Delete this section
     subOptions: [
       {
         name: "Delete Item",
@@ -150,7 +153,7 @@ export const menuOptions = [
     ],
   },
   {
-    name: "Subitems - old",
+    name: "Subitems - old", //TODO: Delete this section
     subOptions: [
       {
         id: "GETTING_SUBITEMS_OF_AN_ITEM",
@@ -183,7 +186,7 @@ export const menuOptions = [
     ],
   },
   {
-    name: "UI - old",
+    name: "UI - old", //TODO: Delete this section
     subOptions: [
       {
         id: "CONFIRMATION",
@@ -202,7 +205,7 @@ export const menuOptions = [
     ],
   },
   {
-    name: "Working With Settings - old",
+    name: "Working With Settings - old", //TODO: Delete this section
     subOptions: [
       {
         id: "WORKING_WITH_SETTINGS",
@@ -213,4 +216,5 @@ export const menuOptions = [
       },
     ],
   },
+   */
 ];

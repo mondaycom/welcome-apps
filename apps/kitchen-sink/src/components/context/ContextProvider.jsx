@@ -40,7 +40,6 @@ const ContextProvider = ({ children }) => {
     });
   }, []);
 
-  // TODO: fix infinite loading when there is no board connected.
   return <Context.Provider value={{...state, isLoading}}>{children}</Context.Provider>;
 };
 

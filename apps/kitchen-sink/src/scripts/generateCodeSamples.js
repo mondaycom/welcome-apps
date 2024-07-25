@@ -57,7 +57,6 @@ async function readFilesAndGenerate() {
       // eslint-disable-next-line no-unused-vars
       currentIndex++;
     }
-    // TODO: create file from sample and add to constants
     finalCodeSamples[componentName] = { componentName, sourceFile, codeSample };
   }
   fs.writeFile(path.join(__dirname, '../constants/codeSamples.json'), JSON.stringify(finalCodeSamples), 'utf8', (err, data) => {
