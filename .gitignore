@@ -14,3 +14,4 @@ apps/*/.idea
 apps/github-node/database.sqlite3
 apps/slack-node/database.sqlite3
 .vscode/*
+*.zip

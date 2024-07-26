@@ -1,12 +1,11 @@
 # new info: 
 Kitchen sink app. Some stuff to know: 
 
-## How to start it
+## Start app in dev mode
 
-1. Run `nvm use` – this app uses node 14
+1. Run `nvm use` – this app uses node 18
 2. Run `npm install` then `npm run start`
-3. Open `localhost:4040` to see your ngrok url
-4. Paste ngrok URL into a board view
+3. Paste monday tunnel URL into the feature you want
 
 ## Build app
 
