@@ -7,7 +7,7 @@ export const lottieOptions = {
   animationData,
   rendererSettings: {
     preserveAspectRatio: 'xMidYMid slice'
-  }
+  },
 };
 
 export const buttonStyle={

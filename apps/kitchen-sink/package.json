@@ -17,21 +17,19 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/react-fontawesome": "^0.1.15",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
-    "axios": "^0.21.4",
+    
+    "axios": "^1.7.2",
     "monday-sdk-js": "^0.5.5",
     "monday-ui-react-core": "^2.118.1",
     "prism-react-renderer": "^1.2.1",
-    "react": "^16.13.0",
+    
     "react-code-blocks": "^0.1.6",
     "react-copy-to-clipboard": "^5.0.4",
     "react-dom": "^16.13.0",
-    "react-lottie": "^1.2.3",
+    "react-lottie-player": "^2.1.0",
     "react-motion": "^0.5.2",
     "react-router-dom": "^6.23.1",
-    "react-scripts": "^5.0.1",
+    
     "react-spring": "^9.2.4",
     "sass": "^1.68.0"
   },
@@ -54,6 +52,11 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "concurrently": "^5.2.0",
     "cross-port-killer": "^1.2.1",
-    "ngrok": "^5.0.0-beta.2"
+    "ngrok": "^5.0.0-beta.2",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "react": "^16.13.0",
+    "react-scripts": "^5.0.1"
   }
 }
