@@ -18,6 +18,7 @@ const PORT = 'PORT';
 const SERVICE_TAG_URL = 'SERVICE_TAG_URL';
 const TO_UPPER_CASE = 'TO_UPPER_CASE';
 const TO_LOWER_CASE = 'TO_LOWER_CASE';
+const TO_CURRENT_REGION = 'TO_LOWER_CASE';
 
 const logger = new Logger(logTag);
 const currentPort = getSecret(PORT); // Port must be 8080 to work with monday code
@@ -27,13 +28,6 @@ const app = express();
 app.use(express.json());
 
 app.get('/', (req, res) => {
-  logger.info(`hello from info`);
-  logger.error(`hello from error`);
-  logger.error(`hello from error WITH error string`, { error: 'error string' });
-  logger.error(`hello from error WITH error object`, { error: new Error('error class instance') });
-  logger.warn(`hello from warn`);
-  logger.debug(`hello from debug`);
-
   const secrets = new SecretsManager();
   let secretsObject = {};
   for (const key of secrets.getKeys()) {
@@ -49,8 +43,8 @@ app.get('/', (req, res) => {
   let processEnv = process.env;
   res.status(200).send({
     hard_coded_data: { // FIXME: change for each deployment
-      'region (from env)': process.env.MNDY_REGION || 'null',
-      'created_at (hard coded)': '2024-05-27T15:47:00.000Z'
+      'region (from env)': processEnv.MNDY_REGION || 'null',
+      'last code change (hard coded)': '2024-08-07T10:45:00.000Z'
     },
     secretsObject,
     envsObject,
@@ -59,13 +53,55 @@ app.get('/', (req, res) => {
   });
 });
 
-// TODO: MAOR: Dont forget to add the app signing secret as env var in production to make integration work
+app.get('/health', (req, res) => {
+  res.status(200).send({
+    status: 'OK',
+    timestamp: new Date().toISOString()
+  });
+});
+
+app.get('/super-health', async (req, res) => {
+  logger.info(`hello from info`);
+  logger.error(`hello from error`);
+  logger.error(`hello from error WITH error string`, { error: 'error string' });
+  logger.error(`hello from error WITH error object`, { error: new Error('error class instance') });
+  logger.warn(`hello from warn`);
+  logger.debug(`hello from debug`);
+
+  const now = Date.now() + '';
+
+  const message = JSON.stringify({ message: 'hello from super-health', now });
+  const messageId = await produceMessage(message);
+
+  const secrets = new SecretsManager();
+  let secretsObject = {};
+  for (const key of secrets.getKeys()) {
+    secretsObject[key] = secrets.get(key);
+  }
+
+  let envsObject = {};
+  for (const key of envs.getKeys()) {
+    envsObject[key] = envs.get(key);
+  }
+
+  // TODO: Add more SDK functionality
+
+  res.status(200).send({
+    healthy: 'OK',
+    timestamp: now,
+    secretsObject,
+    envsObject,
+    producedQueueMessageId: messageId
+  });
+});
+
+// TODO: MAOR: Dont forget to add the app signing secret as env var (MONDAY_SINGING_SECRET) in production to make integration work
 
 app.post('/monday/execute_action', authorizeRequest, async (req, res) => {
   logger.info(
     JSON.stringify({
       message: 'New request received',
-      path: '/action',
+      path: '/monday/execute_action',
       body: req.body,
       headers: req.headers
     })
@@ -75,12 +111,13 @@ app.post('/monday/execute_action', authorizeRequest, async (req, res) => {
 
   try {
     const { inputFields } = payload;
+    logger.info(`inputFields: ${JSON.stringify(inputFields)}`);
     const {
       boardId,
       itemId,
       sourceColumnId,
-      targetColumnId
-      // transformationType
+      targetColumnId,
+      transformationType
     } = inputFields;
 
     const text = await getColumnValue(shortLivedToken, itemId, sourceColumnId);
@@ -89,7 +126,7 @@ app.post('/monday/execute_action', authorizeRequest, async (req, res) => {
     }
     const transformedText = transformText(
       text,
-      TO_UPPER_CASE
+      transformationType ? transformationType.value : 'TO_UPPER_CASE'
     );
 
     await changeColumnValue(
@@ -100,7 +137,14 @@ app.post('/monday/execute_action', authorizeRequest, async (req, res) => {
       transformedText
     );
 
-    return res.status(200).send({});
+    logger.info(`changeColumnValue finished: ${JSON.stringify({
+      shortLivedToken,
+      boardId,
+      itemId,
+      targetColumnId,
+      transformedText
+    })}`);
+    return res.status(200).send({ itemId, targetColumnId, transformedText });
   } catch (err) {
     logger.error(err);
     return res.status(500).send({ message: 'internal server error' });
@@ -113,7 +157,8 @@ app.post(
   async (req, res) => {
     const TRANSFORMATION_TYPES = [
       { title: 'to upper case', value: TO_UPPER_CASE },
-      { title: 'to lower case', value: TO_LOWER_CASE }
+      { title: 'to lower case', value: TO_LOWER_CASE },
+      { title: 'to current region', value: TO_CURRENT_REGION }
     ];
     try {
       return res.status(200).send(TRANSFORMATION_TYPES);
