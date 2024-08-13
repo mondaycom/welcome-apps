@@ -62,7 +62,7 @@ In order for this integration recipe to work you will need to generate a new API
 
 ## Installing and Starting the Server
 
-1. Due to the syntax utilized in this example code, make sure you have Node version 14+ and npm installed from the [Node.js website](https://nodejs.org/en/download/).
+1. The monday CLI requires node 18+, make sure you have it installed from the [Node.js website](https://nodejs.org/en/download/).
 2. Use the correct node version:
 ```
 $ nvm use
@@ -78,10 +78,8 @@ $ npm install
 $ npm run start
 ```
 
-5. Paste the outputted URL in the "Feature Details" tab of your "Jira JQL App" in monday.com, under "Base URL."
-6. To prevent the tunnel URL from changing each time you stop and start the server, you can also add the URL base to the .env file in the code, after "TUNNEL_SUBDOMAIN=" here is an example:
-![tunnelsubdomain](https://dapulse-res.cloudinary.com/image/upload/v1624650670/remote_mondaycom_static/uploads/HelenLu/Jira%20Node%20Images/tunnelsubdomain.png)
-7. You're now ready to go and start using this app! Add the recipe to a board to start testing. 
+5. Paste the outputted URL in the "Feature Details" tab of your "Jira JQL App" in monday.com, under "Base URL" and in the .env file under "LOCAL_SERVER_URL".
+6. You're now ready to go and start using this app! Add the recipe to a board to start testing. 
 
 ## Adapting this Example App
 

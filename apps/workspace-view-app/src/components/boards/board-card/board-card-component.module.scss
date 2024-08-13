@@ -1,0 +1,24 @@
+.boardCardComponent {
+  border-radius: 5px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  border: 1px solid #ccc;
+  width: 300px;
+  height: 250px;
+  margin: 10px;
+  background-color: var(--secondary-background-color);
+
+  .footer {
+    width: 100%;
+    height: 40px;
+    margin-top: 10px;
+
+    .creatorPhoto {
+      width: 30px;
+      height: 30px;
+      background-size: cover;
+      background-position: center;
+    }
+  }
+}
+

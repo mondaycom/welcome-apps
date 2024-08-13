@@ -3,8 +3,9 @@
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
-    "start": "npm run stop && npm run db:migrate && npm run server",
+    "start": "npm run stop && npm run db:migrate && concurrently \"npm run server\" \"npm run expose\"",
     "server": "nodemon ./src/app.js",
+    "expose": "mapps tunnel:create -p 8302",
     "db:migrate": "sequelize db:migrate",
     "stop": "kill-port 8302"
   },
@@ -29,7 +30,7 @@
   },
   "devDependencies": {
     "@mondaydotcomorg/tunnel": "^0.4.1",
-    "concurrently": "^5.2.0",
+    "concurrently": "^8.2.2",
     "debug": "~2.6.9",
     "eslint": "^v6.8.0",
     "nodemon": "^2.0.2",

@@ -5,14 +5,15 @@
   "scripts": {
     "start": "npm run stop && concurrently \"npm run server\" \"npm run expose\"",
     "build": "react-scripts build",
-    "expose": "mtunnel -p 8301",
+    "expose": "mapps tunnel:create -p 8301",
     "server": "react-scripts start",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "stop": "kill-port 8301 && kill-port 4049 && kill-port 4040"
   },
   "dependencies": {
-    "monday-sdk-js": "^0.1.4",
+    "@mondaycom/apps-sdk": "^2.1.2",
+    "monday-sdk-js": "^0.5.0",
     "monday-ui-react-core": "^1.54.0"
   },
   "eslintConfig": {
@@ -31,7 +32,7 @@
     ]
   },
   "devDependencies": {
-    "@mondaydotcomorg/tunnel": "^0.4.1",
+    "@mondaycom/apps-cli": "^4.0.0",
     "concurrently": "^5.2.0",
     "cross-port-killer": "^1.2.1",
     "eslint-config-react-app": "^7.0.1",
