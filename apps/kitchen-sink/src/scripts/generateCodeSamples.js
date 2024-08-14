@@ -26,6 +26,9 @@ const filesToGenerateSamples = [
   { componentName: "StorageApi", 
     sourceFile: "../examples/StorageApi/StorageApi.jsx" 
   },
+  { componentName: "GetAppContext", 
+    sourceFile: "../examples/GetAppContext/GetAppContext.jsx" 
+  },
 ];
 
 readFilesAndGenerate();

@@ -27,6 +27,68 @@ Kitchen sink app. Some stuff to know:
   2. Add @mondaycom-code-sample-start and @mondaycom-code-sample-end comments to indicate start and finish of sample
   3. Run `npm run build:generate-samples` to update sample code
 
+### Working boilerplate:
+```js
+import React, { useState } from "react";
+import mondaySdk from "monday-sdk-js";
+import { useAppContext } from "../../hooks/UseAppContext";
+import ActionHeader from "../../components/common/ActionHeader/ActionHeader";
+import CodeBlock from "../../components/common/CodeBlock/CodeBlock";
+import Instructions from "../../components/common/Instructions/Instructions";
+import CodeSamples from "../../constants/codeSamples";
+import Button from "monday-ui-react-core/dist/Button";
+import AttentionBox from "monday-ui-react-core/dist/AttentionBox";
+
+const monday = mondaySdk();
+
+const GetAppContext = () => {
+
+    const appContext = useAppContext();
+    const [confirmed, setConfirmed] = useState(false);
+    const [showMessage, setShowMessage] = useState(0);
+    console.log({appContext});
+
+    // TODO: update documentation, code, header text
+    const getContextConstants = {
+        confirmationInstructionsParagraphs: [`Opens a confirmation dialog to the user type 'confirm'`],
+        confirmationInstructionslinkToDocumentation: `https://github.com/mondaycom/monday-sdk-js#mondayexecutetype-params`,
+        confirmationInstructionsListItems: [
+          `Call execute Monday's sdk method with "confirm" parameter sending the message content, buttons text.`,
+        ],
+        githubUrl: "Confirmation/Confirmation.jsx",
+      };
+
+    const handleConfirmation = () => {
+        console.log('done');
+    }
+
+    return (
+        <div className="confirmation-container feature-container">
+          {/* @mondaycom-codesample-skip-block-start */}
+          <CodeBlock contentText={'sdfsd'} /> 
+          <ActionHeader action="Confirmation Pop Up" actionDescription="Using the SDK, open a confirmation pop up" />
+          <div className="confirmation-content working-with-the-board-items">
+            <h3 className="playground-header">Playground</h3>
+            {/* @mondaycom-codesample-skip-block-end */}
+            {showMessage === 0 && <Button style={{ width: "30%", margin: "30px 0" }} onClick={handleConfirmation}>
+              Click Me
+            </Button>}
+            {showMessage !== 0 && confirmed && <AttentionBox type="success" text="Confirmed" title="Lets go!" />}
+            {showMessage !== 0 && !confirmed && <AttentionBox type="danger" text="Denied" title="No way" />}
+          </div>
+          {/* @mondaycom-codesample-skip-block-start */}
+          <Instructions
+            paragraphs={getContextConstants.confirmationInstructionsParagraphs}
+            instructionsListItems={getContextConstants.confirmationInstructionsListItems}
+            linkToDocumentation={getContextConstants.confirmationInstructionslinkToDocumentation}
+          />
+          {/* @mondaycom-codesample-skip-block-end */}
+        </div>
+      );
+}
+
+export default GetAppContext;
+```
 
 # old info: 
 

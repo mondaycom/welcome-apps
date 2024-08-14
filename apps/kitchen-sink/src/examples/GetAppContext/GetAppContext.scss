@@ -1,0 +1,14 @@
+.get-context-container {
+    width: 100%;
+  
+    aside {
+      padding: 10px;
+    }
+    .get-context-content {
+      display: flex;
+      height: 100%;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+  }
+  

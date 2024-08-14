@@ -27,6 +27,8 @@ import Pagination from "./examples/Pagination/Pagination";
 import UpdateSubitems from "./examples/UpdateSubitems/UpdateSubitems";
 import DeleteSubitem from "./examples/DeleteSubitem/DeleteSubitem";
 import OpenSettingsPane from "./examples/OpenSettingsPane/OpenSettingsPane";
+import CreateItem from "./examples/CreateItem/CreateItem";
+import GetAppContext from "./examples/GetAppContext/GetAppContext";
 
 const router = createBrowserRouter([
     {
@@ -104,6 +106,14 @@ const router = createBrowserRouter([
     {
       path: `/menu/${ROUTES.UPDATES}`,
       element: <GetUpdates />
+    },
+    {
+      path: `/menu/${ROUTES.CREATE_ITEM}`,
+      element: <CreateItem />
+    },
+    {
+      path: `/menu/${ROUTES.GET_APP_CONTEXT}`,
+      element: <GetAppContext />
     },
   ])
   

@@ -17,6 +17,8 @@ export const ROUTES = {
   UPDATES: "updates",
   TAB_LAYOUT_TEST: "tab_layout",
   OPEN_SETTINGS_PANE: "open_settings_pane",
+  CREATE_ITEM: "create_item",
+  GET_APP_CONTEXT: "get_app_context",
 };
 
 const BACKGROUND_COLORS = {
@@ -42,6 +44,12 @@ export const menuOptions = [
   {
     name: "Client SDK - perform actions in the monday client", 
     subOptions: [
+      {
+        name: "Get app context",
+        location: ROUTES.GET_APP_CONTEXT,
+        image: require("./assets/table.png"),
+        background: BACKGROUND_COLORS.GREEN,
+      },
       {
         name: "Open Item Card",
         location: ROUTES.OPEN_ITEM_CARD,
@@ -85,6 +93,12 @@ export const menuOptions = [
   },
   {name: "Platform API - Access & update board data", 
     subOptions: [
+      {
+        name: "Create an item",
+        location: ROUTES.CREATE_ITEM,
+        image: require("./assets/confirmation.png"),
+        background: BACKGROUND_COLORS.GREEN,
+      }, 
       {
         name: "Delete an item",
         location: ROUTES.DELETE_ITEM,

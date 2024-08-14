@@ -1,7 +1,9 @@
+//TODO: check dependencies of CodeBlock component
+
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import Highlight, { defaultProps } from "prism-react-renderer";
-import theme from "prism-react-renderer/themes/nightOwl";
+import nightOwl from "prism-react-renderer/themes/nightOwl";
 import "./CodeBlock.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-regular-svg-icons";
@@ -52,7 +54,7 @@ const CodeBlock = ({ contentUrl, contentText }) => {
     }
   };
   return (
-    <Highlight {...defaultProps} theme={theme} code={content.trim()} language="js">
+    <Highlight {...defaultProps} theme={nightOwl} code={content.trim()} language="js">
       {({ style, tokens, getLineProps, getTokenProps }) => (
         <Pre className={`pre ${isFullScreenMode ? "fullscreen" : ""}`} style={style}>
           <CopyToClipboard onCopy={popNotice} text={content}>
