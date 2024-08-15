@@ -43,7 +43,7 @@ const CodeBlock = ({ contentUrl, contentText }) => {
     if (contentUrl) getContentUrl();
     else if (contentText) setContent(contentText);
     else setContent("No code snippet provided.")
-  }, [contentUrl]);
+  }, [contentUrl, contentText]);
 
   const getContentUrl = async () => {
     try {

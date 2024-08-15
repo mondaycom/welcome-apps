@@ -19,6 +19,7 @@ export const ROUTES = {
   OPEN_SETTINGS_PANE: "open_settings_pane",
   CREATE_ITEM: "create_item",
   GET_APP_CONTEXT: "get_app_context",
+  LISTEN_TO_EVENTS: "listen_to_events",
 };
 
 const BACKGROUND_COLORS = {
@@ -85,6 +86,13 @@ export const menuOptions = [
       {
         name: "Store app data with Storage API",
         location: ROUTES.STORAGE_API,
+        image: require("./assets/storage_api.png"),
+        background: BACKGROUND_COLORS.LIGHT_BLUE,
+        disableFor: [APP_FEATURE_TYPES.AI_ASSISTANT_BOARD_HEADER]
+      },
+      {
+        name: "Listen to board events",
+        location: ROUTES.LISTEN_TO_EVENTS,
         image: require("./assets/storage_api.png"),
         background: BACKGROUND_COLORS.LIGHT_BLUE,
         disableFor: [APP_FEATURE_TYPES.AI_ASSISTANT_BOARD_HEADER]

@@ -29,6 +29,9 @@ const filesToGenerateSamples = [
   { componentName: "GetAppContext", 
     sourceFile: "../examples/GetAppContext/GetAppContext.jsx" 
   },
+  { componentName: "ListenToEvents", 
+    sourceFile: "../examples/ListenToEvents/ListenToEvents.jsx" 
+  },
 ];
 
 readFilesAndGenerate();

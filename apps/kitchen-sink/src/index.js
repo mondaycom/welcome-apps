@@ -29,6 +29,7 @@ import DeleteSubitem from "./examples/DeleteSubitem/DeleteSubitem";
 import OpenSettingsPane from "./examples/OpenSettingsPane/OpenSettingsPane";
 import CreateItem from "./examples/CreateItem/CreateItem";
 import GetAppContext from "./examples/GetAppContext/GetAppContext";
+import ListenToEvents from "./examples/ListenToEvents/ListenToEvents";
 
 const router = createBrowserRouter([
     {
@@ -114,6 +115,10 @@ const router = createBrowserRouter([
     {
       path: `/menu/${ROUTES.GET_APP_CONTEXT}`,
       element: <GetAppContext />
+    },
+    {
+      path: `/menu/${ROUTES.LISTEN_TO_EVENTS}`,
+      element: <ListenToEvents />
     },
   ])
   
