@@ -30,6 +30,8 @@ import OpenSettingsPane from "./examples/OpenSettingsPane/OpenSettingsPane";
 import CreateItem from "./examples/CreateItem/CreateItem";
 import GetAppContext from "./examples/GetAppContext/GetAppContext";
 import ListenToEvents from "./examples/ListenToEvents/ListenToEvents";
+import ListenToBoardFilter from "./examples/ListenToBoardFilter/ListenToBoardFilter";
+import GetBoardItems from "./examples/GetBoardItems/GetBoardItems";
 
 const router = createBrowserRouter([
     {
@@ -119,6 +121,14 @@ const router = createBrowserRouter([
     {
       path: `/menu/${ROUTES.LISTEN_TO_EVENTS}`,
       element: <ListenToEvents />
+    },
+    {
+      path: `/menu/${ROUTES.LISTEN_TO_BOARD_FILTER}`,
+      element: <ListenToBoardFilter />
+    },
+    {
+      path: `/menu/${ROUTES.GET_BOARD_ITEMS}`,
+      element: <GetBoardItems />
     },
   ])
   

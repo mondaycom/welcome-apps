@@ -1,0 +1,36 @@
+.get-context-container {
+    width: 100%;
+    
+    aside {
+      padding: 10px;
+    }
+    .get-context-content {
+      overflow: hidden;
+      display: flex;
+      height: 100%;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+  }
+  
+  .tabPanelContainer {
+    padding: 10px;
+    // border-style: solid;
+    // border-color:
+    width: 550px;
+    max-height: 80vh;
+  }
+  
+  .tabWrapper {
+    padding-bottom: 8px;
+    padding-left: 0px;
+  }
+
+  .tabsWrapper {
+    height: 100%;
+    overflow: scroll;
+  }
+  
+  .tabListWrapper > ul {
+    padding-inline-start: 0px;
+  }

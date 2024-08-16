@@ -32,6 +32,12 @@ const filesToGenerateSamples = [
   { componentName: "ListenToEvents", 
     sourceFile: "../examples/ListenToEvents/ListenToEvents.jsx" 
   },
+  { componentName: "ListenToBoardFilter", 
+    sourceFile: "../examples/ListenToBoardFilter/ListenToBoardFilter.jsx" 
+  },
+  { componentName: "GetBoardItems", 
+    sourceFile: "../examples/GetBoardItems/GetBoardItems.jsx" 
+  },
 ];
 
 readFilesAndGenerate();

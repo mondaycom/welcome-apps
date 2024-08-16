@@ -20,6 +20,8 @@ export const ROUTES = {
   CREATE_ITEM: "create_item",
   GET_APP_CONTEXT: "get_app_context",
   LISTEN_TO_EVENTS: "listen_to_events",
+  LISTEN_TO_BOARD_FILTER: "listen_to_board_filter",
+  GET_BOARD_ITEMS: "get_board_items",
 };
 
 const BACKGROUND_COLORS = {
@@ -97,13 +99,26 @@ export const menuOptions = [
         background: BACKGROUND_COLORS.LIGHT_BLUE,
         disableFor: [APP_FEATURE_TYPES.AI_ASSISTANT_BOARD_HEADER]
       },
+      {
+        name: "Listen to board filter",
+        location: ROUTES.LISTEN_TO_BOARD_FILTER,
+        image: require("./assets/storage_api.png"),
+        background: BACKGROUND_COLORS.LIGHT_BLUE,
+        disableFor: [APP_FEATURE_TYPES.AI_ASSISTANT_BOARD_HEADER]
+      },
     ]
   },
   {name: "Platform API - Access & update board data", 
     subOptions: [
+      // {
+      //   name: "Create an item",
+      //   location: ROUTES.CREATE_ITEM,
+      //   image: require("./assets/confirmation.png"),
+      //   background: BACKGROUND_COLORS.GREEN,
+      // }, 
       {
-        name: "Create an item",
-        location: ROUTES.CREATE_ITEM,
+        name: "Get board items",
+        location: ROUTES.GET_BOARD_ITEMS,
         image: require("./assets/confirmation.png"),
         background: BACKGROUND_COLORS.GREEN,
       }, 

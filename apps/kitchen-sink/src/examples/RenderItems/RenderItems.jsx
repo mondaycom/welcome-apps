@@ -11,11 +11,13 @@ const RenderItems = ({ itemsData, action, actionButtonContent, customComponent }
   const [activeCard, setActiveCard] = useState();
 
   useEffect(() => {
-    monday.execute("notice", {
-      message: "Please note that every action you take in the playground affects the real board",
-      type: "info",
-      timeout: 5000,
-    });
+    if(action) {
+      monday.execute("notice", {
+        message: "Please note that every action you take in the playground affects the real board",
+        type: "info",
+        timeout: 5000,
+      });
+    }
   }, []);
 
   return (
