@@ -1,136 +1,119 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import "./UploadFileViaAPI.scss";
 import mondaySdk from "monday-sdk-js";
-import uploadFileViaAPIConstants from "./uploadFileViaAPIConstants";
 import RenderItems from "../RenderItems/RenderItems.jsx";
-import DialogContentContainer from "monday-ui-react-core/dist/DialogContentContainer.js";
-import Dropdown from "monday-ui-react-core/dist/Dropdown.js";
-import Button from "monday-ui-react-core/dist/Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import {Button, Loader} from "monday-ui-react-core";
 import { Context } from "../../components/context/ContextProvider";
 import CodeBlock from "../../components/common/CodeBlock/CodeBlock";
 import ActionHeader from "../../components/common/ActionHeader/ActionHeader";
 import Instructions from "../../components/common/Instructions/Instructions";
 import { useBoardContext } from "../../hooks/UseBoardContext.js";
+import { useGetBoardData } from "../../hooks/UseGetBoardData.js";
+import TabLayout from "../../components/common/TabLayout/TabLayout.jsx";
+import CodeSamples from "../../constants/codeSamples";
 
+// @mondaycom-codesample-start
 const monday = mondaySdk();
 
-const UploadFileViaAPI = () => {
-  const { items, boardId } = useBoardContext().state;
-  const [fileColumns, setFileColumns] = useState([]);
-  const [selectedItem, setSelectedItem] = useState();
-  const [columnId, setColumnId] = useState("");
-  const [file, setFile] = useState();
-  const isFileColumnsExist = fileColumns.length > 0;
-  const fileInput = useRef(null);
+function handleAddFileColumn() {
+  // TODO: Add logic to create file column
+  monday.execute('notice', {
+    message: "No file column found on board, please add one",
+    type: "error",
+  })
+}
 
-  const handleFileUpload = () => {
-    if (selectedItem && columnId && file) {
-      const itemId = +selectedItem.id;
-      monday
-        .api(uploadFileViaAPIConstants.uploadFile, {
-          variables: {
-            column_id: columnId,
-            item_id: itemId,
-            file: file,
-          },
-        })
-        .then((res) => {
-          monday.execute("notice", {
-            message: "File uploaded successfully",
-            type: "success",
-            timeout: 10000,
-          });
-        })
-        .catch((err) => {
-          monday.execute("notice", {
-            message: "Failed to upload",
-            type: "error",
-            timeout: 10000,
-          });
-        })
-        .finally(() => {
-          setSelectedItem("");
-          setColumnId("");
-          setFile();
-        });
-    }
-  };
+const FileUploadSample = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const boardData = useGetBoardData();
+  const [fileColumns, setFileColumns] = useState([]);
 
   useEffect(() => {
-    // ----- GETS ALL BOARD COLUMNS -----
-    monday
-      .api(uploadFileViaAPIConstants.getAllColumnsQuery, {
-        variables: { boardIds: boardId },
-      })
-      .then((res) => {
-        const fileColumns = res.data?.boards[0]?.columns.filter((column) => column.type === "file");
-        setFileColumns(fileColumns);
-      });
-  }, [boardId]);
+    if (boardData.boards) {
+      setIsLoading(false);
+      setFileColumns(
+        boardData.boards[0].columns.filter((x) => x.type === "file")
+      );
+    }
+  }, [boardData]);
+
+  // @mondaycom-codesample-skip-block-start
+  useEffect(
+    function printState() {
+      console.log({ fileColumns });
+      console.log({ boardData });
+    },
+    [fileColumns, boardData]
+  );
+  // @mondaycom-codesample-skip-block-end
 
   return (
-    <div className="upload-file-container feature-container">
-      <ActionHeader
-        action="Upload File via API"
-        actionDescription="Using the API to upload file to specific column of an item"
-      />
-
-      <RenderItems
-        itemsData={items}
-        actionButtonContent="Upload File"
-        action={
-          isFileColumnsExist
-            ? (item) => {
-                setSelectedItem(item);
-                setColumnId("");
-                setFile();
-              }
-            : null
-        }
-      />
-      <CodeBlock contentUrl={uploadFileViaAPIConstants.githubUrl} />
-      <Instructions
-        paragraphs={uploadFileViaAPIConstants.uploadFileViaAPIInstructionsParagraphs}
-        instructionsListItems={uploadFileViaAPIConstants.uploadFileViaAPIInstructionsListItems}
-        linkToDocumentation={uploadFileViaAPIConstants.uploadFileViaAPIInstructionslinkToDocumentation}
-      />
-      {selectedItem && (
-        <div className="overlay">
-          <DialogContentContainer className="popup">
-            <FontAwesomeIcon
-              icon={faTimes}
-              onClick={() => {
-                setSelectedItem();
-              }}
-            />
-            <span>Please select a file column</span>
-            <Dropdown
-              clearable={true}
-              searchable={true}
-              options={fileColumns.map((fileColumn) => {
-                return { value: fileColumn.id, label: `${fileColumn.title} - ${fileColumn.id}` };
-              })}
-              placeholder={"Files Columns"}
-              onChange={(column) => setColumnId(column.value)}
-            />
-            <div className="buttons">
-              <Button onClick={() => fileInput.current.click()}>Pick A File</Button>
-              <input
-                style={{ display: "none" }}
-                ref={fileInput}
-                onChange={(e) => setFile(e.target.files[0])}
-                type="file"
-              ></input>
-              <p className="ellipsis">{file && file.name}</p>
-              <Button disabled={!file || !columnId} onClick={handleFileUpload}>
-                Upload
-              </Button>
-            </div>
-          </DialogContentContainer>
-        </div>
+    <div>
+      {isLoading ? (
+        <Loader size={16} />
+      ) : fileColumns.length > 0 ? (
+        <RenderItems
+          itemsData={boardData.boards[0].items_page.items}
+          actionButtonContent="Add or preview File"
+          action={(item) => {
+            const fileColumnId = fileColumns[0].id;
+            const itemId = item.id;
+            const boardId = boardData.boards[0].id;
+          }}
+        />
+      ) : (
+        <Button onClick={handleAddFileColumn}>Add file column</Button>
       )}
+    </div>
+  );
+};
+// @mondaycom-codesample-end
+
+const uploadFileViaAPIConstants = {
+  getAllColumnsQuery: `query ($boardIds: [Int]) {
+    boards(ids: $boardIds) {
+      columns {
+        id
+        title
+        type
+      }
+    }
+  }
+    `,
+  instructionsParagraphs: [
+    `Opens a modal to upload a file.`,
+    `After user selects the file, uploads the file using GraphQL API.`,
+  ],
+  instructionslinkToDocumentation: `https://github.com/mondaycom/monday-sdk-js#mondayexecutetype-params`,
+  instructionsListItems: [
+    `Fetch the board id from context.`,
+    `Fetch all the file's column of the board and choose one.`,
+    `Select an item.`,
+    `Call execute Monday's sdk method with "triggerFilesUpload" parameter sending the board id, item id and column id.`,
+  ],
+  githubUrl: "UploadFileViaAPI/UploadFileViaAPI.jsx",
+};
+
+const UploadFileViaAPI = () => {
+  return (
+    <div className="file-preview-container feature-container">
+      <ActionHeader
+        action="File Preview"
+        actionDescription="Preview and upload files using SDK"
+      />
+      <div className="tab-layout-playground">
+      <TabLayout
+        ExampleComponent={FileUploadSample}
+        codeExample={CodeSamples.UploadFileViaAPI.codeSample}
+      />
+      </div>
+      <Instructions
+        className="instructions"
+        paragraphs={uploadFileViaAPIConstants?.instructionsParagraphs}
+        instructionsListItems={uploadFileViaAPIConstants?.instructionsListItems}
+        linkToDocumentation={uploadFileViaAPIConstants.instructionslinkToDocumentation}
+      />
+      
     </div>
   );
 };

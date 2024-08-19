@@ -5,7 +5,7 @@
   "scripts": {
     "start": "npm run stop && concurrently \"npm run server\" \"npm run expose\"",
     "build": "npm run generate:samples && react-scripts build",
-    "generate:samples": "node src/scripts/generateCodeSamples.js",
+    "generate:samples": "node src/scripts/generateCodeSamples/generateCodeSamples.js",
     "expose": "mapps tunnel:create -p 8305",
     "server": "react-scripts start",
     "test": "react-scripts test",

@@ -110,12 +110,6 @@ export const menuOptions = [
   },
   {name: "Platform API - Access & update board data", 
     subOptions: [
-      // {
-      //   name: "Create an item",
-      //   location: ROUTES.CREATE_ITEM,
-      //   image: require("./assets/confirmation.png"),
-      //   background: BACKGROUND_COLORS.GREEN,
-      // }, 
       {
         name: "Get & filter board items",
         location: ROUTES.GET_BOARD_ITEMS,

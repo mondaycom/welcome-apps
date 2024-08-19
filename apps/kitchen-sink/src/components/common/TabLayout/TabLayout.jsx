@@ -19,7 +19,6 @@ const TabLayout = ({ExampleComponent, codeExample, documentationText}) => {
         <TabList className={classes.tabListWrapper}>
           <Tab className={classes.tabWrapper}>Playground</Tab>
           <Tab className={classes.tabWrapper}>Code</Tab>
-          <Tab className={classes.tabWrapper} disabled>Docs</Tab>
         </TabList>
         <TabPanels animationDirection={TabPanels.animationDirections.LTR} className={classes.tabPanelContainer}>
           <TabPanel className="monday-storybook-tabs_bg-color">
@@ -31,9 +30,6 @@ const TabLayout = ({ExampleComponent, codeExample, documentationText}) => {
             <div className={classes.codeDisplayBlock}>
             <CodeBlock contentText={codeExample} />
             </div>
-          </TabPanel>
-          <TabPanel>
-            {documentationText}
           </TabPanel>
         </TabPanels>
       </TabsContext>
