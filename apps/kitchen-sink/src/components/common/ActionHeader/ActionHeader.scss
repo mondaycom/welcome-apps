@@ -1,13 +1,29 @@
 @import "../../../styles/animations.scss";
+@import "~monday-ui-style/dist/index.min.css";
 
 .action-header-container {
   grid-area: header;
-  box-shadow: 0 4px 8px -1px rgba(0, 0, 0, 0.2);
-  color: white;
+  color: var(--primary-text-color);
   height: 100%;
   box-sizing: border-box;
   padding: 10px;
   display: flex;
+  flex-direction: row;
+  background-color: var(--ui-background-color);
+  border: 1px solid var(--layout-border-color);
+  border-radius: var(--border-radius-medium);
+  .back-arrow {
+    display: flex;
+  }
+  .headers {
+    display: flex;
+    flex-direction: column;
+  }
+  .main-title {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+  }
   svg {
     cursor: pointer;
   }
@@ -20,8 +36,7 @@
   & > div.headers {
     position: relative;
     box-sizing: border-box;
-    padding-left: 40px;
-    & > h2.board-name {
+    & > h2.main-title {
       margin-top: 14px;
       margin-bottom: 0;
       & > svg:nth-child(1) {

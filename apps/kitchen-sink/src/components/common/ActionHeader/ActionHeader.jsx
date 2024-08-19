@@ -1,8 +1,9 @@
 import React, { useRef } from "react";
 import "monday-ui-react-core/dist/main.css";
+import { IconButton } from "monday-ui-react-core";
+import { Heading } from "monday-ui-react-core/next";
 import "./ActionHeader.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
+import { NavigationChevronLeft } from "monday-ui-react-core/icons";
 import randomColorGenerator from "../../../utils/randomColorGenerator";
 
 const ActionHeader = ({ action, actionDescription, backgroundColor }) => {
@@ -11,19 +12,18 @@ const ActionHeader = ({ action, actionDescription, backgroundColor }) => {
   return (
     <div
       className="action-header-container"
-      style={{ backgroundColor: backgroundColor || `rgb${initialRandomColor.current}` }}
+      // style = {{"background-color": "var(--egg-yolk)"}}
     >
-      <div className="headers">
-        <h2 className="board-name ellipsis">
-          <FontAwesomeIcon
-            icon={faAngleLeft}
-            onClick={() => {
-              window.history.back();
-            }}
-          />
-          {action}
-        </h2>
-        <h5 className="ellipsis">{actionDescription}</h5>
+      <div className="back-arrow">
+        <IconButton className="back-arrow" icon={NavigationChevronLeft} onClick={() => {
+          window.history.back()
+        }}/>
+        </div>
+        <div className="headers">
+        <div className="main-title">
+        <Heading>{action}</Heading>
+        </div>
+        <Heading type="h3">{actionDescription}</Heading>
       </div>
     </div>
   );

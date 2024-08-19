@@ -117,7 +117,7 @@ export const menuOptions = [
       //   background: BACKGROUND_COLORS.GREEN,
       // }, 
       {
-        name: "Get board items",
+        name: "Get & filter board items",
         location: ROUTES.GET_BOARD_ITEMS,
         image: require("./assets/confirmation.png"),
         background: BACKGROUND_COLORS.GREEN,
