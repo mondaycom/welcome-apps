@@ -32,6 +32,7 @@ import GetAppContext from "./examples/GetAppContext/GetAppContext";
 import ListenToEvents from "./examples/ListenToEvents/ListenToEvents";
 import ListenToBoardFilter from "./examples/ListenToBoardFilter/ListenToBoardFilter";
 import GetBoardItems from "./examples/GetBoardItems/GetBoardItems";
+import GetWorkspaces from "./examples/GetWorkspaces/GetWorkspaces";
 
 const router = createBrowserRouter([
     {
@@ -129,6 +130,10 @@ const router = createBrowserRouter([
     {
       path: `/menu/${ROUTES.GET_BOARD_ITEMS}`,
       element: <GetBoardItems />
+    },
+    {
+      path: `/menu/${ROUTES.GET_WORKSPACES}`,
+      element: <GetWorkspaces />
     },
   ])
   

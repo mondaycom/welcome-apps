@@ -45,6 +45,10 @@ const filesToGenerateSamples = [
     componentName: "UploadFileViaAPI",
     sourceFile: "../../examples/UploadFileViaAPI/UploadFileViaAPI.jsx",
   },
+  {
+    componentName: "Pagination",
+    sourceFile: "../../examples/Pagination/Pagination.jsx",
+  },
 ];
 
 module.exports = {

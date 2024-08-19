@@ -22,6 +22,7 @@ export const ROUTES = {
   LISTEN_TO_EVENTS: "listen_to_events",
   LISTEN_TO_BOARD_FILTER: "listen_to_board_filter",
   GET_BOARD_ITEMS: "get_board_items",
+  GET_WORKSPACES: "get_workspaces",
 };
 
 const BACKGROUND_COLORS = {
@@ -86,7 +87,7 @@ export const menuOptions = [
         background: BACKGROUND_COLORS.RED,
       },
       {
-        name: "Store app data with Storage API",
+        name: "Store data with Storage API",
         location: ROUTES.STORAGE_API,
         image: require("./assets/storage_api.png"),
         background: BACKGROUND_COLORS.LIGHT_BLUE,
@@ -117,11 +118,23 @@ export const menuOptions = [
         background: BACKGROUND_COLORS.GREEN,
       }, 
       {
+        name: "Get account workspaces",
+        location: ROUTES.GET_WORKSPACES,
+        image: require("./assets/delete_icon.png"),
+        background: BACKGROUND_COLORS.BLUE,
+      }, 
+      {
         name: "Delete an item",
         location: ROUTES.DELETE_ITEM,
         image: require("./assets/delete_icon.png"),
         background: BACKGROUND_COLORS.YELLOW,
       }, 
+      {
+        name: "Cursor Pagination",
+        location: ROUTES.PAGINATED,
+        image: require("./assets/pagination.png"),
+        background: BACKGROUND_COLORS.GREEN,
+      },
     ]
   },
   /**
@@ -168,12 +181,6 @@ export const menuOptions = [
         location: ROUTES.STORAGE_API,
         image: require("./assets/storage_api.png"),
         background: BACKGROUND_COLORS.LIGHT_BLUE,
-      },
-      {
-        name: "Paginated Data",
-        location: ROUTES.PAGINATED,
-        image: require("./assets/pagination.png"),
-        background: BACKGROUND_COLORS.GREEN,
       },
       {
         name: "Get Item Updates",
