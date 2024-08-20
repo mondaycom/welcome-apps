@@ -24,7 +24,6 @@ const Menu = () => {
     if (featureType) {
       const options = menuOptions.map((section) => {
         // const filteredOptions = section.subOptions.filter(option => option?.disableFor.includes(featureType))
-        console.log({section});
         const filteredOptions = section.subOptions.filter((option) => {
           if (option.disableFor) {
             if (!option.disableFor.includes(featureType)) {
@@ -39,7 +38,6 @@ const Menu = () => {
         return {name: section.name, subOptions: filteredOptions};
       })
       setVisibleOptions(options)
-      console.log({options});
     }
   }, [featureType])
 
