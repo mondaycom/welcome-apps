@@ -21,7 +21,7 @@ And then to run an application with the monday tunnel, run:
 ### `npm start`
 
 Find the provided URL in your terminal. This is your public URL, and you can use it to test your application.
-Example: https://unsightly-chickaree-35.tunnel.monday.app
+Example: https://abcd12345.apps-tunnel.monday.com
 
 ## Configure Monday App 
 
@@ -29,7 +29,7 @@ Example: https://unsightly-chickaree-35.tunnel.monday.app
 2. Create a new "QuickStart View Example App"
 3. Open "OAuth & Permissions" section and add "boards:read" scope
 4. Open "Features" section and create a new "Boards View" feature
-5. Open "View setup" tab and fulfill in "Custom URL" field your monday tunnel public URL, which you got previously (example: https://unsightly-chickaree-35.tunnel.monday.app)
+5. Open "View setup" tab and fulfill in "Custom URL" field your monday tunnel public URL, which you got previously (example: https://abcd12345.apps-tunnel.monday.com)
 6. Click "Boards" button and choose one of the boards with some data in it.
 7. Click "Preview button"
 8. Enjoy the Quickstart View Example app!

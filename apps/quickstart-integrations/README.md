@@ -59,7 +59,7 @@ In short, integrations run off of triggers that invoke certain actions. These tr
 2. Run the server using the monday tunnel:
 
 ```
-$ npm start
+$ npm run dev
 ```
 
  ### Part Five: Using the custom integration recipe

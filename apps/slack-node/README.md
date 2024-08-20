@@ -38,3 +38,7 @@ $ npm install
 ```
 $ npm start
 ```
+
+## Add your tunnel URL to .env
+
+The monday CLI will print your app's URL in the format `https://abcd1234.apps-tunnel.monday.com`. Copy this URL and paste it in the .env file. 

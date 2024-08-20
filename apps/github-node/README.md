@@ -22,6 +22,8 @@ This app demonstrates how to use:
 
 The code is designed to be easy to understand and extend to any other API. We use JSDoc to document the main functions. There are `@todo` tags to explain some of the parts you need to adapt to your own API. 
 
+Learn more in this video: [Exploring the Github sample app](https://www.youtube.com/watch?v=oxG6HVSQh5M)
+
 ## Install
 
 1. Make sure you have Node (v10+), npm , and [Node version manager](https://github.com/nvm-sh/nvm) installed
@@ -49,3 +51,7 @@ $ npm install
 ```
 $ npm start
 ```
+
+## Add server URL to .env file
+
+Add your app's tunnel url as the `LOCAL_SERVER_URL` in .env. 

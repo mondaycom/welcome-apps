@@ -1,6 +1,6 @@
 {
   "name": "monday-example-app-docs-viewer",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "dependencies": {
     "classnames": "^2.2.6",
@@ -17,15 +17,15 @@
     "webpack": "^5.0.0"
   },
   "devDependencies": {
-    "@mondaydotcomorg/tunnel": "^0.4.1",
-    "concurrently": "^4.1.2",
+    "@mondaycom/apps-cli": "^2.1.1",
+    "concurrently": "^8.2.2",
     "cross-port-killer": "^1.2.1"
   },
   "scripts": {
     "start": "npm run stop && concurrently \"npm run server\" \"npm run expose\"",
     "server": "react-scripts start",
     "build": "react-scripts build",
-    "expose": "mtunnel -p 8304",
+    "expose": "mapps tunnel:create -p 8304",
     "stop": "kill-port 8304 && kill-port 4049 && kill-port 4040"
   },
   "eslintConfig": {
