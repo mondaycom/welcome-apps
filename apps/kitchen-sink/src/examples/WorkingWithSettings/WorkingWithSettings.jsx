@@ -18,9 +18,13 @@ const WorkingWithSettings = () => {
   const [settings, setSettings] = useState({});
 
   useEffect(() => {
-    monday.listen("settings", (res) => {
+    const unsubscribe = monday.listen("settings", (res) => {
       setSettings(res.data);
     });
+
+    return () => {
+      unsubscribe();
+    }
   }, []);
 
   return (

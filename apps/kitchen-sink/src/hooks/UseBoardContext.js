@@ -10,13 +10,15 @@ export function useBoardContext() {
   const [boardId, setBoardId] = useState();
 
   useEffect(() => {
-    monday.listen("context", (res) => {
-      console.log({ context: res });
+    const unsubscribe = monday.listen("context", (res) => {
       if (res.data) {
         setIsLoading({ isLoading: false });
         setBoardId(res.data.boardIds ?? res.data.boardId);
       }
     });
+    return () => {
+      unsubscribe();
+    }
   }, []);
 
   useEffect(
@@ -30,7 +32,6 @@ export function useBoardContext() {
           },
         })
         .then((itemsResponse) => {
-          console.log({ itemsResponse });
           // ----- GETS THE ITEMS OF THE BOARD -----
           setState({
             boardId,

@@ -87,6 +87,11 @@ const ListenToBoardFilter = () => {
   useEffect(() => {
     const eventsListener = monday.listen('itemIds', debouncedHandleFilterChange);
     const contextListener = monday.listen('filter', debouncedHandleSearchChange)
+
+    return () => {
+      eventsListener();
+      contextListener(); 
+    }
   }, [])
 
   return (

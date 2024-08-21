@@ -55,6 +55,9 @@ const GetBoardItems = () => {
 
     useEffect(() => {
         const filterListener = monday.listen('filter', debouncedHandleFilterChange)
+        return () => {
+            filterListener(); // unsubscribe from listener
+        }
     }, [])
 
     useEffect(() => {

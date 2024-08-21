@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import mondaySdk from "monday-sdk-js";
+import {isMatch} from "lodash"
 
 const monday = mondaySdk();
 
@@ -7,11 +8,15 @@ export function useAppContext() {
     const [appContext, setAppContext] = useState({});
 
     useEffect(() => {
-        monday.listen('context', (contextEvent) => {
-            console.log('Updating context');
-            setAppContext(contextEvent);
+        const unsubscribe = monday.listen('context', (contextEvent) => {
+            setAppContext((previousContext) =>
+                isMatch(previousContext, contextEvent) ? previousContext : contextEvent
+            );
         })
-    }, [setAppContext])
+        return () => {
+            unsubscribe();
+        }
+    }, [])
     
     return appContext;
 }

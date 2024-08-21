@@ -90,6 +90,11 @@ const ListenToEvents = () => {
   useEffect(() => {
     const eventsListener = monday.listen('events', handleNewEvent);
     const contextListener = monday.listen('context', handleContextUpdate)
+
+    return () => {
+      eventsListener();
+      contextListener();
+    }
   })
 
   return (
