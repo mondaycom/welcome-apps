@@ -22,7 +22,6 @@ const Instructions = ({ paragraphs, instructionsListItems, linkToDocumentation, 
           return <li key={i}>{listItem}</li>;
         })}
       </ol>
-      {!customInstruction && <strong>Click on an item to try!</strong>}
     </div>
   );
 };
