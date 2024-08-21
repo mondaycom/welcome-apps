@@ -33,12 +33,14 @@ const OpenSettingsPane = () => {
         {/* @mondaycom-codesample-skip-block-start */}
         <h3 className="playground-header">Playground</h3>
         {/* @mondaycom-codesample-skip-block-end */}
+        <div className="playground">
           {!isPaneOpen ? <Button onClick={handleOpenSettings}>
             Open settings pane
           </Button>
           : <Button onClick={handleCloseSettings}>
           Close settings pane
             </Button>}
+        </div>
       </div>
       {/* @mondaycom-codesample-skip-block-start */}
       <CodeBlock contentText={CodeSamples?.OpenSettingsPane?.codeSample} />

@@ -13,24 +13,32 @@ import CodeSamples from "../../constants/codeSamples";
 // @mondaycom-codesample-start
 const monday = mondaySdk();
 
+const AttentionBoxSwitcher = ({ confirmed }) => {
+  return (
+    confirmed ?
+      <AttentionBox type="success" title="Confirmed" text="User accepted the confirm dialog" /> 
+      : <AttentionBox type="danger" title="Denied" text="User declined the confirm dialog" />
+  )
+}
+
 const Confirmation = () => {
   const [confirmed, setConfirmed] = useState(false);
-  const [showMessage, setShowMessage] = useState(0);
+  const [showMessage, setShowMessage] = useState(false);
 
   const handleConfirmation = () => {
     monday
       .execute("confirm", {
-        message: "Random question?",
-        confirmButton: "Let's go!",
-        cancelButton: "No way",
+        message: "Do you confirm?",
+        confirmButton: "Yes",
+        cancelButton: "No",
         excludeCancelButton: false,
       })
       .then((res) => {
         console.log(res.data)
         setConfirmed(res.data.confirm);
-        setShowMessage(1);
+        setShowMessage(true);
         setTimeout(() => {
-          setShowMessage(0);
+          setShowMessage(false);
         }, 2000);
       });
   };
@@ -40,16 +48,18 @@ const Confirmation = () => {
       {/* @mondaycom-codesample-skip-block-start */}
       <CodeBlock contentText={CodeSamples.Confirmation.codeSample} />
       <ActionHeader action="Confirmation Pop Up" actionDescription="Using the SDK, open a confirmation pop up" />
-      <div className="confirmation-content working-with-the-board-items">
+      <div className="confirmation-content working-with-the-board-items playground">
         <h3 className="playground-header">Playground</h3>
-        {/* @mondaycom-codesample-skip-block-end */}
-        {showMessage === 0 && <Button style={{ width: "30%", margin: "30px 0" }} onClick={handleConfirmation}>
-          Click Me
-        </Button>}
-        {showMessage !== 0 && confirmed && <AttentionBox type="success" text="Confirmed" title="Lets go!" />}
-        {showMessage !== 0 && !confirmed && <AttentionBox type="danger" text="Denied" title="No way" />}
+        <div className="example">
+          {/* @mondaycom-codesample-skip-block-end */}
+          {!showMessage
+            ? <Button onClick={handleConfirmation}>
+              Click Me
+            </Button>
+            : <AttentionBoxSwitcher confirmed={confirmed} />}
+          {/* @mondaycom-codesample-skip-block-start */}
+        </div>
       </div>
-      {/* @mondaycom-codesample-skip-block-start */}
       <Instructions
         paragraphs={confirmationConstants.confirmationInstructionsParagraphs}
         instructionsListItems={confirmationConstants.confirmationInstructionsListItems}

@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import "monday-ui-react-core/dist/main.css";
 import "./WorkingWithSettings.scss";
 import mondaySdk from "monday-sdk-js";
 import workingWithSettingsConstants from "./WorkingWithSettingsConstants.js";
 import RenderItems from "../RenderItems/RenderItems.jsx";
-import { Context } from "../../components/context/ContextProvider";
 import CodeBlock from "../../components/common/CodeBlock/CodeBlock";
 import Instructions from "../../components/common/Instructions/Instructions";
 import ActionHeader from "../../components/common/ActionHeader/ActionHeader";
