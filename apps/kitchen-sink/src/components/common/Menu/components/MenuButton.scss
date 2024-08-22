@@ -9,16 +9,23 @@
   flex-direction: column;
   cursor: pointer;
   align-items: center;
+  padding: 8px;
   &:hover {
-    .background {
-      -webkit-animation: shadow-drop-2-center 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-      animation: shadow-drop-2-center 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-    }
-
-    .item-title {
-      font-weight: bold;
-    }
+    border-width: 1px;
+    border-radius: 8px;
+    background-color: var(--primary-background-hover-color);
   }
+  // &:hover {
+  //   .background {
+  //     -webkit-animation: shadow-drop-2-center 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  //     animation: shadow-drop-2-center 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  //   }
+
+  //   .item-title {
+  //     font-weight: bold;
+  //     width: 115px;
+  //   }
+  // }
 
   .background {
     width: 100%;
@@ -40,6 +47,6 @@
     font-weight: 300;
     margin-top: 16px;
     color: #333;
-    min-width: 115px;
+    width: 115px;
   }
 }

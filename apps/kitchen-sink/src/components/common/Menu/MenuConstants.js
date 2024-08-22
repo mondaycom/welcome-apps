@@ -22,6 +22,7 @@ export const ROUTES = {
   LISTEN_TO_EVENTS: "listen_to_events",
   LISTEN_TO_BOARD_FILTER: "listen_to_board_filter",
   GET_BOARD_ITEMS: "get_board_items",
+  FILTER_BOARD_ITEMS: "filter_board_items",
   GET_WORKSPACES: "get_workspaces",
 };
 
@@ -120,10 +121,16 @@ export const menuOptions = [
   {name: "Platform API - Access & update board data", 
     subOptions: [
       {
-        name: "Get & filter board items",
+        name: "Get board items",
         location: ROUTES.GET_BOARD_ITEMS,
         image: require("./assets/confirmation.png"),
         background: BACKGROUND_COLORS.GREEN,
+      }, 
+      {
+        name: "Filter items on board",
+        location: ROUTES.FILTER_BOARD_ITEMS,
+        image: require("./assets/confirmation.png"),
+        background: BACKGROUND_COLORS.PURPLE,
       }, 
       {
         name: "Get account workspaces",
