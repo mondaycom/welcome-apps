@@ -46,7 +46,7 @@ const APP_FEATURE_TYPES = {
 // when adding an option - make sure you have a route added to menuConstants.js & index.js
 export const menuOptions = [
   {
-    name: "Client SDK - perform actions in the monday client", 
+    name: "Client SDK – Read & manage your app context",
     subOptions: [
       {
         name: "Get app context",
@@ -55,43 +55,11 @@ export const menuOptions = [
         background: BACKGROUND_COLORS.GREEN,
       },
       {
-        name: "Open Item Card",
-        location: ROUTES.OPEN_ITEM_CARD,
-        image: require("./assets/table.png"),
-        background: BACKGROUND_COLORS.GREEN,
-      },
-      {
-        id: "CONFIRMATION",
-        name: "Confirmation modal",
-        location: "confirmation",
-        image: require("./assets/confirmation.png"),
-        background: BACKGROUND_COLORS.PURPLE,
-      },
-      {
-        name: "Notice Pop-up or Toast",
-        location: "notice",
-        image: require("./assets/notice.png"),
-        background: BACKGROUND_COLORS.BLUE,
-      },
-      {
         name: "Open app settings pane",
         location: ROUTES.OPEN_SETTINGS_PANE,
         image: require("./assets/notice.png"),
         background: BACKGROUND_COLORS.RED,
         disableFor: [APP_FEATURE_TYPES.BOARD_ITEM_MENU, APP_FEATURE_TYPES.AI_ASSISTANT_BOARD_HEADER]
-      },
-      {
-        name: "Preview & upload files",
-        location: "filepreview",
-        image: require("./assets/file_preview.png"),
-        background: BACKGROUND_COLORS.RED,
-      },
-      {
-        name: "Store data with Storage API",
-        location: ROUTES.STORAGE_API,
-        image: require("./assets/storage_api.png"),
-        background: BACKGROUND_COLORS.LIGHT_BLUE,
-        disableFor: [APP_FEATURE_TYPES.AI_ASSISTANT_BOARD_HEADER]
       },
       {
         name: "Listen to board events",
@@ -107,6 +75,46 @@ export const menuOptions = [
         background: BACKGROUND_COLORS.LIGHT_BLUE,
         disableFor: [APP_FEATURE_TYPES.AI_ASSISTANT_BOARD_HEADER]
       },
+    ]
+  },
+  {
+    name: "Client SDK - Perform actions in the monday client", 
+    subOptions: [
+      
+      {
+        name: "Open Item Card",
+        location: ROUTES.OPEN_ITEM_CARD,
+        image: require("./assets/table.png"),
+        background: BACKGROUND_COLORS.GREEN,
+      },
+      {
+        id: "CONFIRMATION",
+        name: "Open a confirmation modal",
+        location: "confirmation",
+        image: require("./assets/confirmation.png"),
+        background: BACKGROUND_COLORS.PURPLE,
+      },
+      {
+        name: "Open a toast (or notice)",
+        location: "notice",
+        image: require("./assets/notice.png"),
+        background: BACKGROUND_COLORS.BLUE,
+      },
+      
+      {
+        name: "Preview & upload files",
+        location: "filepreview",
+        image: require("./assets/file_preview.png"),
+        background: BACKGROUND_COLORS.RED,
+      },
+      {
+        name: "Store data with Storage API",
+        location: ROUTES.STORAGE_API,
+        image: require("./assets/storage_api.png"),
+        background: BACKGROUND_COLORS.LIGHT_BLUE,
+        disableFor: [APP_FEATURE_TYPES.AI_ASSISTANT_BOARD_HEADER]
+      },
+      
     ]
   },
   {name: "Platform API - Access & update board data", 
@@ -135,18 +143,6 @@ export const menuOptions = [
         image: require("./assets/pagination.png"),
         background: BACKGROUND_COLORS.GREEN,
       },
-    ]
-  },
-  /**
-  { 
-    name: "Components in progress", //TODO: Delete this section
-    subOptions: [
-      {
-        name: "Delete Item",
-        location: ROUTES.DELETE_ITEM,
-        image: require("./assets/delete_icon.png"),
-        background: BACKGROUND_COLORS.YELLOW,
-      }, 
     ]
   },
   {
@@ -254,5 +250,4 @@ export const menuOptions = [
       },
     ],
   },
-   */
 ];

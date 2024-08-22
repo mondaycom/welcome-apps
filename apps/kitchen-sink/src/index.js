@@ -8,9 +8,9 @@ import {
   } from "react-router-dom";
 import * as serviceWorker from "./serviceWorker";
 
-import { ROUTES } from "./examples/Menu/MenuConstants";
+import { ROUTES } from "./components/common/Menu/MenuConstants";
 import Welcome from "./examples/Welcome/Welcome";
-import Menu from "./examples/Menu/Menu";
+import Menu from "./components/common/Menu/Menu";
 import DeleteItem from "./examples/DeleteItem/DeleteItem";
 import OpenItemCard from "./examples/OpenItemCard/OpenItemCard";
 import GetSubItems from "./examples/GetSubItems/GetSubItems";

@@ -3,7 +3,7 @@ import MenuButton from "./components/MenuButton";
 import "./Menu.scss";
 import { menuOptions } from "./MenuConstants";
 import { useNavigate } from "react-router-dom";
-import {useAppContext} from "../../hooks/UseAppContext";
+import {useAppContext} from "../../../hooks/UseAppContext";
 import { Divider, ListItem, ListTitle, List } from "monday-ui-react-core";
 
 const Menu = () => {
@@ -98,7 +98,7 @@ const Menu = () => {
     <div className="menuContainer">
       {renderHero()}
       {visibleOptions.map((section) => renderSection(section.name, section.subOptions))}
-      <img className="logo" src={require("../../assets/images/logo.png")} alt="" />
+      <img className="logo" src={require("../../../assets/images/logo.png")} alt="" />
     </div>
   );
 };
