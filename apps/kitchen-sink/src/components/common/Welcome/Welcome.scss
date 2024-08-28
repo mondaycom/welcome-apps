@@ -1,0 +1,83 @@
+.container {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  overflow: hidden;
+
+  .content {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+
+    .logo {
+      width: 167px;
+      height: 42px;
+      // margin-bottom: 10px;
+    }
+
+    .row {
+      max-width: 1100px;
+      display: flex;
+      flex-direction: row;
+    }
+
+    .textContainer {
+      display: flex;
+      flex-direction: column;
+      margin-left: 32px;
+      margin-right: 16px;
+      margin-top: auto;
+      margin-bottom: auto;
+      width: 50%;
+
+      .title {
+        font-weight: 900;
+        font-size: 63px;
+      }
+
+      .subTitle {
+        margin-top: 24px;
+        margin-bottom: 8px;
+        font-weight: 300;
+        font-size: 18px;
+        line-height: 35px;
+        width: 80%;
+      }
+
+      .getStartedButton {
+        width: 128px;
+      }
+    }
+    .imageContainer > canvas {
+      height: 100%;
+      width: 100%;
+    }
+
+    .lottie {
+      height: 100%;
+    }
+
+    @media (height <= 500px) {
+      .title {
+        font-size: 48px;
+      }
+    }
+
+    @media (height <= 250px) {
+      .subTitle {
+        display: none;
+      }
+    }
+
+    @media (width <= 700px) {
+      .textContainer {
+        width: 100%;
+      }
+      
+      .imageContainer {
+        display: none;
+      }
+    }
+  }
+}

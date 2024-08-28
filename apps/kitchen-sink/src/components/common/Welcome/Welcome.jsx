@@ -3,10 +3,12 @@ import "monday-ui-react-core/dist/main.css";
 import "./Welcome.scss";
 import Lottie from "react-lottie-player";
 
-import { lottieOptions, buttonStyle } from "./WelcomeConstants";
-import Button from "monday-ui-react-core/dist/Button";
+import { lottieOptions } from "./WelcomeConstants";
+import { Button, Loader } from "monday-ui-react-core";
 import { useNavigate } from "react-router";
-import { useAppContext } from "../../hooks/UseAppContext";
+import { useAppContext } from "../../../hooks/UseAppContext";
+
+const mondayLogo = require("../../../assets/images/logo.png");
 
 const Welcome = () => {
   const history = useNavigate();
@@ -19,27 +21,30 @@ const Welcome = () => {
       if (appContext.data) {
         setAppFeatureType(appContext.data.appFeature.type);
       }
+      setIsLoading(false);
     },
     [appContext]
   );
 
-  useEffect(
-    function redirectInActionFeatureType() {
-      if (
-        appFeatureType &&
-        (appFeatureType === "AppFeatureItemMenuAction" ||
-          appFeatureType === "AppFeatureAiBoardMainMenuHeader")
-      ) {
-        history("/menu");
-      } else {
-        setIsLoading(false);
-      }
-    },
-    [appFeatureType, history]
-  );
+  // useEffect(
+  //   function redirectInActionFeatureType() {
+  //     if (
+  //       appFeatureType &&
+  //       (appFeatureType === "AppFeatureItemMenuAction" ||
+  //         appFeatureType === "AppFeatureAiBoardMainMenuHeader")
+  //     ) {
+  //       history("/menu");
+  //     } else {
+  //       setIsLoading(false);
+  //     }
+  //   },
+  //   [appFeatureType, history]
+  // );
 
   return isLoading ? (
-    <div></div>
+    <div>
+      <Loader size={40}/>
+    </div>
   ) : (
     <div className="container">
       <div className="content">
@@ -47,25 +52,21 @@ const Welcome = () => {
           <div className="textContainer">
             <img
               className="logo"
-              src={require("../../assets/images/logo.png")}
+              src={mondayLogo}
               alt=""
             />
             <div className="title">
-              monday app framework
-              <br />
-              Kitchen Sink
+              Kitchen Sink App
             </div>
             <div className="subTitle">
-              In this project you will see working examples
-              <br />
-              of the main features of our SDK and API.
+              See practical examples of the main features of the monday API and SDK
             </div>
             <Button
-              style={buttonStyle}
-              size={Button.sizes.LARGE}
+              className={"getStartedButton"}
+              size={Button.sizes.MEDIUM}
               onClick={() => history("/menu")}
             >
-              Get Started
+              Get started
             </Button>
           </div>
           <div className="imageContainer">
