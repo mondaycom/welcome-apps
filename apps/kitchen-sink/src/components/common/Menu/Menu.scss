@@ -1,3 +1,5 @@
+@import '../../../styles/variables.scss';
+
 .menuContainer {
   display: flex;
   margin: 0;
@@ -25,6 +27,15 @@
       margin-right: 40px;
       margin-top: auto;
       margin-bottom: auto;
+    }
+
+    @media (max-width: $breakpoint-narrow) {
+      .heroImage {
+        display:none
+      }
+      .textContainer {
+        padding-right: 50px;
+      }
     }
 
     .textContainer {
@@ -73,6 +84,6 @@
 }
 
 .menuList {
-  width: calc(100% - 8px);
+  width: 100%;
   padding: 4px;
 }

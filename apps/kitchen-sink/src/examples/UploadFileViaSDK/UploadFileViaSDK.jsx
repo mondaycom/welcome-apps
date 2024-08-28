@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import "./UploadFileViaSDK.scss";
 import "monday-ui-react-core/dist/main.css";
 import mondaySdk from "monday-sdk-js";
@@ -8,7 +8,6 @@ import DialogContentContainer from "monday-ui-react-core/dist/DialogContentConta
 import Dropdown from "monday-ui-react-core/dist/Dropdown.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { Context } from "../../components/context/ContextProvider";
 import CodeBlock from "../../components/common/CodeBlock/CodeBlock";
 import Instructions from "../../components/common/Instructions/Instructions";
 import ActionHeader from "../../components/common/ActionHeader/ActionHeader";

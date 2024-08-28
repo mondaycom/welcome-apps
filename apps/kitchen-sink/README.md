@@ -47,8 +47,7 @@ const GetAppContext = () => {
     const [confirmed, setConfirmed] = useState(false);
     const [showMessage, setShowMessage] = useState(0);
     console.log({appContext});
-
-    // TODO: update documentation, code, header text
+    
     const getContextConstants = {
         confirmationInstructionsParagraphs: [`Opens a confirmation dialog to the user type 'confirm'`],
         confirmationInstructionslinkToDocumentation: `https://github.com/mondaycom/monday-sdk-js#mondayexecutetype-params`,

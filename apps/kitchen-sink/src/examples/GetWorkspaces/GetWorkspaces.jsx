@@ -11,19 +11,22 @@ import { Table, TableHeader, TableHeaderCell, TableRow, TableCell, TableBody, La
 
 const getWorkspacesConstants = {
     instructionsParagraphs: [
-        `This query uses "items_page" to return the items from the current board.`,
-        `It filters dynamically based on the state of the board filter.`,
-        `This example uses the "rules" argument on the "items_page" query`
+        `This query returns the workspaces in the current account.`,
+        `A workspace is a collection of objects in an account, typically corresponding to a department, team, or project.`,
     ],
-    instructionslinkToDocumentation: `https://api.developer.monday.com/docs/items-queries`,
-    instructionsListItems: [`Add filter rules using the board filter`, `See the items in the playground change`],
+    instructionslinkToDocumentation: `https://developer.monday.com/api-reference/reference/workspaces`,
+    instructionsListItems: [
+        `The app retrieves workspaces using the API.`,
+        `When the workspaces are retrieved, it lists them in a Table component.`
+    ],
     githubUrl: "GetBoardItems/GetBoardItems.jsx",
-    codeSample: CodeSamples.GetBoardItems.codeSample,
+    codeSample: CodeSamples.GetWorkspaces.codeSample,
 };
 
 // @mondaycom-codesample-start
 const monday = mondaySdk();
 
+// @mondaycom-codesample-skip-block-start
 /**
  * Renders a table with workspace details in it
  * @param {workspaces} - list of workspaces, containing 
@@ -53,7 +56,7 @@ const RenderWorkspaceTable = ({ workspaces, isLoading, isError }) => {
         },
     ];
     return (
-        <Table dataState={dataState} columns={columns}>
+        <Table dataState={dataState} columns={columns} withoutBorder>
             <TableHeader>
                 {columns.map((headerCell, index) => <TableHeaderCell key={index} title={headerCell.title} />)}
             </TableHeader>
@@ -71,6 +74,7 @@ const RenderWorkspaceTable = ({ workspaces, isLoading, isError }) => {
     )
 }
 
+// @mondaycom-codesample-skip-block-end
 const GetWorkspaces = () => {
     const [workspaces, setWorkspaces] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -98,7 +102,7 @@ const GetWorkspaces = () => {
                 console.error(err);
                 setIsError(true);
             });
-    }, [workspaces])
+    }, [])
 
     return (
         <div className="get-workspaces-container feature-container">

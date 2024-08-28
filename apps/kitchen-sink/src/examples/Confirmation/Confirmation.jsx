@@ -34,7 +34,6 @@ const Confirmation = () => {
         excludeCancelButton: false,
       })
       .then((res) => {
-        console.log(res.data)
         setConfirmed(res.data.confirm);
         setShowMessage(true);
         setTimeout(() => {

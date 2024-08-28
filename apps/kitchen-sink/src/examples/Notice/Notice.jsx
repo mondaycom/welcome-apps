@@ -21,17 +21,35 @@ const Notice = () => {
     });
   };
 
+  const notices = [
+    {
+      text: "Success",
+      type: "success",
+      color: "positive",
+    },
+    {
+      text: "Info",
+      type: "info",
+      color: "primary",
+    },
+    {
+      text: "Error",
+      type: "error",
+      color: "negative",
+    },
+  ]
+
   return (
     <div className="notice-container feature-container">
       {/* @mondaycom-codesample-skip-block-start */}
       <ActionHeader action="Notice Pop Up" actionDescription="Using the SDK, open a notice pop up" />
       {/* @mondaycom-codesample-skip-block-end */}
-      <div className="notice-content working-with-the-board-items">
+      <div className="notice-content working-with-the-board-items playground">
         {/* @mondaycom-codesample-skip-block-start */}
         <h3 className="playground-header">Playground</h3>
         {/* @mondaycom-codesample-skip-block-end */}
-        {noticeConstants.notices.map(({ type, text, color }) => (
-          <Button color={color} onClick={() => handleNotice(type, text)}>
+        {notices.map(({ type, text, color }) => (
+          <Button className="confirm-button" color={color} onClick={() => handleNotice(type, text)}>
             {text} Notice
           </Button>
         ))}

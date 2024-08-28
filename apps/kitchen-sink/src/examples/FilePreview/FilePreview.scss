@@ -1,11 +1,11 @@
 @import "../../styles/animations.scss";
 
-.tab-layout-playground {
-  grid-area: playground / snippet;
-}
-
 .instructions {
   grid-area: instructions;
+}
+
+.no-border {
+  border: none;
 }
 
 .upload-file-container {

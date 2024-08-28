@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "monday-ui-react-core/dist/main.css";
+import "./OpenSettingsPane.scss"
 import mondaySdk from "monday-sdk-js";
 import Button from "monday-ui-react-core/dist/Button";
 import ActionHeader from "../../components/common/ActionHeader/ActionHeader";
@@ -33,8 +34,9 @@ const OpenSettingsPane = () => {
         {/* @mondaycom-codesample-skip-block-start */}
         <h3 className="playground-header">Playground</h3>
         {/* @mondaycom-codesample-skip-block-end */}
-        <div className="playground">
-          {!isPaneOpen ? <Button onClick={handleOpenSettings}>
+        <div className="playground no-border">
+          {!isPaneOpen 
+          ? <Button onClick={handleOpenSettings}>
             Open settings pane
           </Button>
           : <Button onClick={handleCloseSettings}>

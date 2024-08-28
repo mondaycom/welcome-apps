@@ -1,10 +1,16 @@
 const storageApiConstants = {
   storageApiInstructionsParagraphs: [
-    `The monday apps infrastructure includes a persistent, key-value database storage that developers can leverage to store data without having to create their own backend and maintain their own database.`,
-    `The database currently offers instance-level storage only, meaning that each application instance (i.e. a single board view or a dashboard widget) maintains its own storage. Apps cannot share storage across accounts or even across apps installed in the same location.`,
+    `Use the storage API for quick key-value storage. You can choose to use app-level storage or instance-level storage.`,
+    `This example uses instance-level storage, which is great for storing instance-level config or app state.`,
+    `If you use app-level storage, multiple features can access the same data.`,
+    `You can also access the same storage from the backend by using the apps-sdk package.`,
   ],
   storageApiInstructionslinkToDocumentation: `https://github.com/mondaycom/monday-sdk-js#mondaystorage`,
-  storageApiInstructionsListItems: [`Use the monday.storage instance to set and fetch key-value pairs.`],
+  storageApiInstructionsListItems: [
+    `When the app first renders, it retrieves the current list of favourites using monday.storage.instance.getItem("FAVOURITE_ITEMS")`,
+    `Click the heart icon to favourite an item.`,
+    `The app will call monday.storage.instance.setItem to set the current list of favourites`,
+  ],
   githubUrl: "StorageApi/StorageApi.jsx",
 };
 

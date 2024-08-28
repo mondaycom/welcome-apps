@@ -9,7 +9,7 @@ import {
 import * as serviceWorker from "./serviceWorker";
 
 import { ROUTES } from "./components/common/Menu/MenuConstants";
-import Welcome from "./examples/Welcome/Welcome";
+import Welcome from "./components/common/Welcome/Welcome";
 import Menu from "./components/common/Menu/Menu";
 import DeleteItem from "./examples/DeleteItem/DeleteItem";
 import OpenItemCard from "./examples/OpenItemCard/OpenItemCard";
@@ -27,10 +27,11 @@ import Pagination from "./examples/Pagination/Pagination";
 import UpdateSubitems from "./examples/UpdateSubitems/UpdateSubitems";
 import DeleteSubitem from "./examples/DeleteSubitem/DeleteSubitem";
 import OpenSettingsPane from "./examples/OpenSettingsPane/OpenSettingsPane";
-import CreateItem from "./examples/CreateItem/CreateItem";
+import CreateItemCard from "./examples/CreateItemCard/CreateItemCard";
 import GetAppContext from "./examples/GetAppContext/GetAppContext";
 import ListenToEvents from "./examples/ListenToEvents/ListenToEvents";
 import ListenToBoardFilter from "./examples/ListenToBoardFilter/ListenToBoardFilter";
+import FilterBoardItems from "./examples/FilterBoardItems/FilterBoardItems";
 import GetBoardItems from "./examples/GetBoardItems/GetBoardItems";
 import GetWorkspaces from "./examples/GetWorkspaces/GetWorkspaces";
 
@@ -113,7 +114,7 @@ const router = createBrowserRouter([
     },
     {
       path: `/menu/${ROUTES.CREATE_ITEM}`,
-      element: <CreateItem />
+      element: <CreateItemCard />
     },
     {
       path: `/menu/${ROUTES.GET_APP_CONTEXT}`,
@@ -130,6 +131,10 @@ const router = createBrowserRouter([
     {
       path: `/menu/${ROUTES.GET_BOARD_ITEMS}`,
       element: <GetBoardItems />
+    },
+    {
+      path: `/menu/${ROUTES.FILTER_BOARD_ITEMS}`,
+      element: <FilterBoardItems />
     },
     {
       path: `/menu/${ROUTES.GET_WORKSPACES}`,

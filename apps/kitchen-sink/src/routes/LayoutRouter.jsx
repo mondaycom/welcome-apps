@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Context } from "../components/context/ContextProvider";
 import { HashRouter, Route } from "react-router-dom";
 import Menu from "../examples/Menu/Menu";
-import Welcome from "../examples/Welcome/Welcome";
+import Welcome from "../components/common/Welcome/Welcome";
 import GetSubItems from "../examples/GetSubItems/GetSubItems";
 import DeleteItem from "../examples/DeleteItem/DeleteItem";
 import OpenItemCard from "../examples/OpenItemCard/OpenItemCard";
@@ -24,7 +24,6 @@ import NoBoardSelected from "../components/common/NoBoardSelected/NoBoardSelecte
 import GetUpdates from "../examples/GetUpdates/GetUpdates";
 
 const LayoutRouter = () => {
-  // TODO: move error state somewhere else
   const { items } = useContext(Context);
   console.log(items);
 

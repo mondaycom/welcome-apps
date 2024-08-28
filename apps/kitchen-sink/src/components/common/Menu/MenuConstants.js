@@ -27,21 +27,24 @@ export const ROUTES = {
 };
 
 const BACKGROUND_COLORS = {
-  RED: "#FB275D",
-  YELLOW: "#FFCC00",
-  GREEN: "#00CC6F",
-  BLUE: "#009AFF",
-  PURPLE: "#A358DF",
-  LIGHT_BLUE: "#00CFF4",
+  RED: "#df2f4a",
+  YELLOW: "#ffcb00",
+  GREEN: "#00c875",
+  BLUE: "#66ccff",
+  PURPLE: "#9d50dd",
+  LIGHT_BLUE: "#579bfc",
 };
 
 const APP_FEATURE_TYPES = {
   BOARD_VIEW: "AppFeatureBoardView",
   BOARD_ITEM_MENU: "AppFeatureItemMenuAction",
+  BOARD_ITEM_BATCH_ACTION: "AppFeatureItemBatchAction",
   CUSTOM_OBJECT: "AppFeatureObject",
   DASHBOARD_WIDGET: "AppFeatureDashboardWidget",
   ITEM_VIEW: "AppFeatureItemView",
-  AI_ASSISTANT_BOARD_HEADER: "AppFeatureAiBoardMainMenuHeader"
+  AI_ASSISTANT_BOARD_HEADER: "AppFeatureAiBoardMainMenuHeader",
+  ACCOUNT_SETTINGS_VIEW: "AppFeatureAccountSettingsView",
+  AI_ASSISTANT_ITEM_UPDATE: "AppFeatureAiItemUpdateActions",
 }
 
 // when adding an option - make sure you have a route added to menuConstants.js & index.js
@@ -60,21 +63,21 @@ export const menuOptions = [
         location: ROUTES.OPEN_SETTINGS_PANE,
         image: require("./assets/notice.png"),
         background: BACKGROUND_COLORS.RED,
-        disableFor: [APP_FEATURE_TYPES.BOARD_ITEM_MENU, APP_FEATURE_TYPES.AI_ASSISTANT_BOARD_HEADER]
+        disableFor: [APP_FEATURE_TYPES.BOARD_ITEM_MENU, APP_FEATURE_TYPES.AI_ASSISTANT_BOARD_HEADER, APP_FEATURE_TYPES.BOARD_ITEM_BATCH_ACTION, APP_FEATURE_TYPES.ACCOUNT_SETTINGS_VIEW, APP_FEATURE_TYPES.AI_ASSISTANT_ITEM_UPDATE]
       },
       {
         name: "Listen to board events",
         location: ROUTES.LISTEN_TO_EVENTS,
         image: require("./assets/storage_api.png"),
         background: BACKGROUND_COLORS.LIGHT_BLUE,
-        disableFor: [APP_FEATURE_TYPES.AI_ASSISTANT_BOARD_HEADER]
+        disableFor: [APP_FEATURE_TYPES.ACCOUNT_SETTINGS_VIEW],
       },
       {
         name: "Listen to board filter",
         location: ROUTES.LISTEN_TO_BOARD_FILTER,
         image: require("./assets/storage_api.png"),
         background: BACKGROUND_COLORS.LIGHT_BLUE,
-        disableFor: [APP_FEATURE_TYPES.AI_ASSISTANT_BOARD_HEADER]
+        disableFor: [APP_FEATURE_TYPES.ACCOUNT_SETTINGS_VIEW],
       },
     ]
   },
@@ -87,6 +90,14 @@ export const menuOptions = [
         location: ROUTES.OPEN_ITEM_CARD,
         image: require("./assets/table.png"),
         background: BACKGROUND_COLORS.GREEN,
+        disableFor: [APP_FEATURE_TYPES.ACCOUNT_SETTINGS_VIEW],
+      },
+      {
+        name: "Create Item Card",
+        location: ROUTES.CREATE_ITEM,
+        image: require("./assets/table.png"),
+        background: BACKGROUND_COLORS.YELLOW,
+        disableFor: [APP_FEATURE_TYPES.ACCOUNT_SETTINGS_VIEW],
       },
       {
         id: "CONFIRMATION",
@@ -107,6 +118,7 @@ export const menuOptions = [
         location: "filepreview",
         image: require("./assets/file_preview.png"),
         background: BACKGROUND_COLORS.RED,
+        disableFor: [APP_FEATURE_TYPES.ACCOUNT_SETTINGS_VIEW],
       },
       {
         name: "Store data with Storage API",
@@ -125,12 +137,14 @@ export const menuOptions = [
         location: ROUTES.GET_BOARD_ITEMS,
         image: require("./assets/confirmation.png"),
         background: BACKGROUND_COLORS.GREEN,
+        disableFor: [APP_FEATURE_TYPES.ACCOUNT_SETTINGS_VIEW],
       }, 
       {
         name: "Filter items on board",
         location: ROUTES.FILTER_BOARD_ITEMS,
         image: require("./assets/confirmation.png"),
         background: BACKGROUND_COLORS.PURPLE,
+        disableFor: [APP_FEATURE_TYPES.ACCOUNT_SETTINGS_VIEW],
       }, 
       {
         name: "Get account workspaces",
@@ -143,118 +157,22 @@ export const menuOptions = [
         location: ROUTES.DELETE_ITEM,
         image: require("./assets/delete_icon.png"),
         background: BACKGROUND_COLORS.YELLOW,
+        disableFor: [APP_FEATURE_TYPES.ACCOUNT_SETTINGS_VIEW],
       }, 
       {
         name: "Cursor Pagination",
         location: ROUTES.PAGINATED,
         image: require("./assets/pagination.png"),
         background: BACKGROUND_COLORS.GREEN,
-      },
-    ]
-  },
-  {
-    name: "Working With The Board - old", //TODO: Delete this section
-    subOptions: [
-      {
-        name: "Delete Item",
-        location: ROUTES.DELETE_ITEM,
-        image: require("./assets/delete_icon.png"),
-        background: BACKGROUND_COLORS.YELLOW,
-      },
-      {
-        name: "Open Item Card",
-        location: ROUTES.OPEN_ITEM_CARD,
-        image: require("./assets/table.png"),
-        background: BACKGROUND_COLORS.GREEN,
-      },
-      {
-        name: "Upload File via SDK",
-        location: ROUTES.UPLOAD_FILE_VIA_SDK,
-        image: require("./assets/sdk_icon.png"),
-        background: BACKGROUND_COLORS.BLUE,
-      },
-      {
-        name: "Upload File via API",
-        location: ROUTES.UPLOAD_FILE_VIA_API,
-        image: require("./assets/api_file.png"),
-        background: BACKGROUND_COLORS.PURPLE,
-      },
-      {
-        name: "Storage Api",
-        location: ROUTES.STORAGE_API,
-        image: require("./assets/storage_api.png"),
-        background: BACKGROUND_COLORS.LIGHT_BLUE,
+        disableFor: [APP_FEATURE_TYPES.ACCOUNT_SETTINGS_VIEW],
       },
       {
         name: "Get Item Updates",
         location: ROUTES.UPDATES,
         image: require("./assets/item-updates.png"),
         background: BACKGROUND_COLORS.RED,
+        disableFor: [APP_FEATURE_TYPES.ACCOUNT_SETTINGS_VIEW],
       },
-    ],
-  },
-  {
-    name: "Subitems - old", //TODO: Delete this section
-    subOptions: [
-      {
-        id: "GETTING_SUBITEMS_OF_AN_ITEM",
-        name: "Getting Subitem Of An Item",
-        location: ROUTES.GET_SUB_ITEMS,
-        image: require("./assets/update-subitem.png"),
-        background: BACKGROUND_COLORS.RED,
-      },
-      {
-        id: "UPDATE_SUBITEM",
-        name: "Update Subitem",
-        location: ROUTES.UPDATE_SUBITEM,
-        image: require("./assets/update-subitem.png"),
-        background: BACKGROUND_COLORS.YELLOW,
-      },
-      {
-        id: "ARCHIVE_SUBITEM",
-        name: "Archive Subitem",
-        location: ROUTES.ARCHIVE_SUBITEM,
-        image: require("./assets/archive.png"),
-        background: BACKGROUND_COLORS.GREEN,
-      },
-      {
-        id: "DELETE_SUBITEM",
-        name: "Delete Subitem",
-        location: ROUTES.DELETE_SUBITEM,
-        image: require("./assets/delete-subitem.png"),
-        background: BACKGROUND_COLORS.BLUE,
-      },
-    ],
-  },
-  {
-    name: "UI - old", //TODO: Delete this section
-    subOptions: [
-      {
-        id: "CONFIRMATION",
-        name: "Confirmation Pop Up",
-        location: "confirmation",
-        image: require("./assets/confirmation.png"),
-        background: BACKGROUND_COLORS.PURPLE,
-      },
-      {
-        name: "Notice Pop Up",
-        location: "notice",
-        image: require("./assets/notice.png"),
-        background: BACKGROUND_COLORS.BLUE,
-      },
-      
-    ],
-  },
-  {
-    name: "Working With Settings - old", //TODO: Delete this section
-    subOptions: [
-      {
-        id: "WORKING_WITH_SETTINGS",
-        name: "Working With Settings",
-        location: "workingWithSettings",
-        image: require("./assets/settings.png"),
-        background: BACKGROUND_COLORS.YELLOW,
-      },
-    ],
+    ]
   },
 ];

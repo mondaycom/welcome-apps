@@ -11,11 +11,13 @@ import Button from "monday-ui-react-core/dist/Button";
 const getContextConstants = {
   actionTitle: 'Get app context',
   actionSubtitle: `Use the SDK to get the app's context.`,
-  confirmationInstructionsParagraphs: [`Gets context that the app is running in`],
-  confirmationInstructionslinkToDocumentation: `https://developer.monday.com/apps/docs/mondayget#requesting-context-and-settings-data`,
-  confirmationInstructionsListItems: [
-      `Call monday.get('context') to retrieve current context data`,
-      `Print results, which includes connected board ID, logged in user, etc.`
+  instructionsParagraphs: [`Every app runs in a context - which feature it's connected to, which boards, etc. The monday.get('context') method gets the context that the app is running in.`],
+  instructionslinkToDocumentation: `https://developer.monday.com/apps/docs/mondayget#requesting-context-and-settings-data`,
+  instructionsListItems: [
+      `Click the "Get context" button to retrieve the app's current context`,
+      `The app calls monday.get('context') and prints it in the playground`,
+      `Examine the context data to see what information your app can expect`,
+      `Note: Try this example in other app features to see how the context changes!`,
   ],
   githubUrl: "Confirmation/Confirmation.jsx",
   codeSample: CodeSamples.GetAppContext.codeSample,
@@ -50,9 +52,9 @@ const GetAppContext = () => {
             </div>
             {/* @mondaycom-codesample-skip-block-start */}
             <Instructions
-                paragraphs={getContextConstants.confirmationInstructionsParagraphs}
-                instructionsListItems={getContextConstants.confirmationInstructionsListItems}
-                linkToDocumentation={getContextConstants.confirmationInstructionslinkToDocumentation}
+                paragraphs={getContextConstants.instructionsParagraphs}
+                instructionsListItems={getContextConstants.instructionsListItems}
+                linkToDocumentation={getContextConstants.instructionslinkToDocumentation}
             />
             {/* @mondaycom-codesample-skip-block-end */}
         </div>

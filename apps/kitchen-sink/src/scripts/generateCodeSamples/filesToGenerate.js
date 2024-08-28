@@ -4,6 +4,10 @@ const filesToGenerateSamples = [
     sourceFile: "../../examples/OpenItemCard/OpenItemCard.jsx",
   },
   {
+    componentName: "CreateItemCard",
+    sourceFile: "../../examples/CreateItemCard/CreateItemCard.jsx",
+  },
+  {
     componentName: "Confirmation",
     sourceFile: "../../examples/Confirmation/Confirmation.jsx",
   },
@@ -30,6 +34,10 @@ const filesToGenerateSamples = [
     sourceFile: "../../examples/GetAppContext/GetAppContext.jsx",
   },
   {
+    componentName: "GetWorkspaces",
+    sourceFile: "../../examples/GetWorkspaces/GetWorkspaces.jsx",
+  },
+  {
     componentName: "ListenToEvents",
     sourceFile: "../../examples/ListenToEvents/ListenToEvents.jsx",
   },
@@ -42,12 +50,20 @@ const filesToGenerateSamples = [
     sourceFile: "../../examples/GetBoardItems/GetBoardItems.jsx",
   },
   {
+    componentName: "FilterBoardItems",
+    sourceFile: "../../examples/FilterBoardItems/FilterBoardItems.jsx",
+  },
+  {
     componentName: "UploadFileViaAPI",
     sourceFile: "../../examples/UploadFileViaAPI/UploadFileViaAPI.jsx",
   },
   {
     componentName: "Pagination",
     sourceFile: "../../examples/Pagination/Pagination.jsx",
+  },
+  {
+    componentName: "GetUpdates",
+    sourceFile: "../../examples/GetUpdates/GetUpdates.jsx",
   },
 ];
 

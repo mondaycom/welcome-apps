@@ -16,17 +16,24 @@ import {
   Button,
   AttentionBox,
 } from "monday-ui-react-core";
+import {Bullets, Filter} from "monday-ui-react-core/icons"
 import { useAppContext } from "../../hooks/UseAppContext"
 import _ from "lodash";
 
 const listenToBoardFilterConstants = {
   actionTitle: 'Listen to board filter',
   actionSubtitle: `Use the SDK to see what items the user has filtered.`,
-  instructionsParagraphs: [`Executes callback function when filter or search changes.`],
+  instructionsParagraphs: [
+    `You can use 'monday.listen' to listen for changes to 'itemIds' and 'filter'.`,
+    `The 'itemIds' listener will return a list of which items are included in the list. You can use this to quickly filter items in your app without needing to parse filter rules.`,
+    `The 'filter' listener will return the current values of the search bar and board filter.`,
+    `Remember to debounce your actions on these listeners, as they can emit a lot of events quickly.`,
+  ],
   instructionslinkToDocumentation: `https://developer.monday.com/apps/docs/mondaylisten#retrieve-the-search-query-in-your-app`,
   instructionsListItems: [
-    `Type something in the board search, or use the board filter.`,
-    `Check the Playground to see how this data is passed to your app.`,
+    `Type something in the search bar above the board view, and/or use the board filter.`,
+    `Open the Item IDs tab to see data returned by the 'itemIds' listener.`,
+    `Open the Filter tab to see the data returned by the 'filter' listener.`,
   ],
   githubUrl: "Confirmation/Confirmation.jsx",
   codeSample: CodeSamples.ListenToBoardFilter.codeSample,
@@ -37,17 +44,15 @@ const TabComponent = ({ filterState, searchTerm }) => {
     <div className="tabsWrapper">
       <TabsContext>
         <TabList className="tabListWrapper">
-          <Tab className="tabWrapper">Item IDs</Tab>
-          <Tab className="tabWrapper">Search & Filter</Tab>
+          <Tab className="tabWrapper" icon={Bullets}>Item IDs</Tab>
+          <Tab className="tabWrapper" icon={Filter}>Filter</Tab>
         </TabList>
         <TabPanels animationDirection={TabPanels.animationDirections.LTR} className="tabPanelContainer">
           <TabPanel className="codeDisplayBlock">
-            The item IDs object tells you which items are currently filtered in:
             <CodeBlock contentText={JSON.stringify(filterState, null, 2)} />
           </TabPanel>
           <TabPanel>
             <div className="codeDisplayBlock">
-                The 'filter' object tells you the state of the board search & filter:
               <CodeBlock contentText={JSON.stringify(searchTerm, null, 2)} />
             </div>
           </TabPanel>

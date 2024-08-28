@@ -59,7 +59,7 @@ const StorageApi = () => {
       {/* @mondaycom-codesample-skip-block-start */}
       <ActionHeader
         action="Storage API"
-        actionDescription="Using the SDK to use the Storage API for upload key-value pairs"
+        actionDescription="Using the Storage API to store app state"
       />
       {/* @mondaycom-codesample-skip-block-end */}
       <div className="working-with-the-board-items playground">

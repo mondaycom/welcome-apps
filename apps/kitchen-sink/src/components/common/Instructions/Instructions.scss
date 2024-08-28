@@ -4,9 +4,10 @@
   grid-area: instructions;
   box-sizing: border-box;
   padding: 18px;
-  background-color: rgb(244, 245, 247);
-  box-shadow: 0 4px 8px -1px rgba(0, 0, 0, 0.2);
+  background-color: var(--secondary-background-color);
+  border: 1px solid var(--layout-border-color);
   overflow: auto;
+  border-radius: 4px;
 
   ol li {
     margin-top: 10px;
@@ -33,6 +34,9 @@
   }
   p {
     display: block;
+  }
+  a {
+    color: var(--link-color);
   }
 
   strong {

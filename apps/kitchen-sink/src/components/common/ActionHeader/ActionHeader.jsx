@@ -6,13 +6,11 @@ import "./ActionHeader.scss";
 import { NavigationChevronLeft } from "monday-ui-react-core/icons";
 import randomColorGenerator from "../../../utils/randomColorGenerator";
 
-const ActionHeader = ({ action, actionDescription, backgroundColor }) => {
-  const initialRandomColor = useRef(randomColorGenerator());
+const ActionHeader = ({ action, actionDescription }) => {
 
   return (
     <div
       className="action-header-container"
-      // style = {{"background-color": "var(--egg-yolk)"}}
     >
       <div className="back-arrow">
         <IconButton className="back-arrow" icon={NavigationChevronLeft} onClick={() => {
@@ -23,7 +21,7 @@ const ActionHeader = ({ action, actionDescription, backgroundColor }) => {
         <div className="main-title">
         <Heading>{action}</Heading>
         </div>
-        <Heading type="h3">{actionDescription}</Heading>
+        {/* <Heading type="h3" ellipsis="true">{actionDescription}</Heading> */}
       </div>
     </div>
   );

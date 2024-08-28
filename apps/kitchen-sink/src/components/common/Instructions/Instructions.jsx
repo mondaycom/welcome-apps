@@ -10,11 +10,9 @@ const Instructions = ({ paragraphs, instructionsListItems, linkToDocumentation, 
       })}
 
       <p>
-        You can learn more{" "}
         <a href={linkToDocumentation} target="_blank" rel="noopener noreferrer">
-          here
+          Learn more in our documentation here.
         </a>
-        .
       </p>
       <h3>Instructions</h3>
       <ol>

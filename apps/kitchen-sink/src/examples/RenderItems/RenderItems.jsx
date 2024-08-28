@@ -7,7 +7,7 @@ import mondaySdk from "monday-sdk-js";
 
 const monday = mondaySdk();
 
-const RenderItems = ({ itemsData, action, actionButtonContent, customComponent }) => {
+const RenderItems = ({ itemsData, action, actionButtonContent, customComponent, disableHeader }) => {
   const [activeCard, setActiveCard] = useState();
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const RenderItems = ({ itemsData, action, actionButtonContent, customComponent }
 
   return (
     <div className="working-with-the-board-items playground">
-      <h3 className="playground-header">Playground</h3>
+      {!disableHeader && <h3 className="playground-header">Playground</h3>}
       {customComponent}
       {itemsData.map((item, index) => {
         return (

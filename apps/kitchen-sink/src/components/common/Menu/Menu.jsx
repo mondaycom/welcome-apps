@@ -5,6 +5,14 @@ import { menuOptions } from "./MenuConstants";
 import { useNavigate } from "react-router-dom";
 import {useAppContext} from "../../../hooks/UseAppContext";
 import { Divider, ListItem, ListTitle, List } from "monday-ui-react-core";
+import _ from "lodash";
+
+const actionAppFeatures = [
+  'AppFeatureItemBatchAction',
+  "AppFeatureItemMenuAction",
+  "AppFeatureAiBoardMainMenuHeader",
+  "AppFeatureAiItemUpdateActions"
+]
 
 const Menu = () => {
   const history = useNavigate();
@@ -75,15 +83,14 @@ const Menu = () => {
   };
 
   const renderMenuForActionFeature = (menuOptions) => {
-    console.log({menuOptions});
     return (
       <div>
-        {menuOptions.map((section) => {
-          return (<List className="menuList">
+        {menuOptions.map((section, index) => {
+          return (<div><List>
           <ListTitle>{section.name}</ListTitle>
           <div>{section.subOptions.map((option) => {
-            return <ListItem onClick={() => history(option.location)}>{option.name}</ListItem>
-          })}</div><Divider /></List>
+            return <ListItem key={option.name} onClick={() => history(option.location)}>{option.name}</ListItem>
+          })}</div></List></div>
         )
         })}
       </div>
@@ -92,8 +99,8 @@ const Menu = () => {
 
   return (
     (isLoading) ? <div></div> :
-    (featureType === "AppFeatureItemMenuAction" || featureType === "AppFeatureAiBoardMainMenuHeader") ?
-      <div>{renderMenuForActionFeature(visibleOptions)}</div> 
+    (_.includes(actionAppFeatures, featureType)) ?
+      <div className="menuList">{renderMenuForActionFeature(visibleOptions)}</div> 
       :
     <div className="menuContainer">
       {renderHero()}

@@ -16,7 +16,6 @@ import CodeSamples from "../../constants/codeSamples";
 const monday = mondaySdk();
 
 function handleAddFileColumn() {
-  // TODO: Add logic to create file column
   monday.execute('notice', {
     message: "No file column found on board, please add one",
     type: "error",

@@ -15,17 +15,21 @@ import {
   Tooltip, 
   Button
 } from "monday-ui-react-core";
-import { useAppContext } from "../../hooks/UseAppContext"
 
 const listenToEventsConstants = {
   actionTitle: 'Listen to board events',
-  actionSubtitle: `Use the SDK to listen to updates to the connected board.`,
-  confirmationInstructionsParagraphs: [`Executes callback function when new event is emitted.`],
-  confirmationInstructionslinkToDocumentation: `https://developer.monday.com/apps/docs/mondaylisten#subscribe-to-interaction-based-events-on-the-board`,
-  confirmationInstructionsListItems: [
-    `Click the button to open this board in another tab.`,
-    `Make changes to the board – create items, update columns, etc.`,
-    `Check the Playground to see what data these events emit.`,
+  actionSubtitle: `Use the SDK to listen to changes on the connected board.`,
+  instructionsParagraphs: [
+    `The monday.listen('events', callback) function executes the callback function when a new event is emitted.`,
+    `Events are emitted when the connected board is updated; for example, when items are created or values are changed.`,
+    `Your app will get notified only while it is open and subscribed. The listener will stop when the app is closed.`,
+  ],
+  instructionslinkToDocumentation: `https://developer.monday.com/apps/docs/mondaylisten#subscribe-to-interaction-based-events-on-the-board`,
+  instructionsListItems: [
+    `Click "Open Board" to open this board in another tab.`,
+    `Make changes to the open board: create items, update columns, etc.`,
+    `Check the Playground to see the data contained in each of the events.`,
+    `You can browse the all events emitted, or only the latest one.`,
   ],
   githubUrl: "Confirmation/Confirmation.jsx",
   codeSample: CodeSamples.ListenToEvents.codeSample,
@@ -40,7 +44,7 @@ const TabComponent = ({ eventsList, mostRecentEvent, url, buttonIsLoading }) => 
 
   return (
     <div className="tabsWrapper">
-      <Button size={Button.sizes.XXS} kind={Button.kinds.SECONDARY} onClick={handleButtonClick} loading={buttonIsLoading}>Open board</Button>
+      <Button className="openBoardButton" size={Button.sizes.S} kind={Button.kinds.PRIMARY} onClick={handleButtonClick} loading={buttonIsLoading}>Open board</Button>
       <TabsContext>
         <TabList className="tabListWrapper">
           <Tab className="tabWrapper">All events</Tab>
@@ -78,7 +82,7 @@ const ListenToEvents = () => {
   }
 
   const handleContextUpdate = async (context) => {
-    const boardIds = context?.data?.boardIds;
+    const boardIds = context?.data?.boardIds ?? [context?.data?.boardId];
     const accountInfoQuery = await monday.api(`{ account { slug } }`);
     const slug = accountInfoQuery?.data?.account?.slug;
     if (!boardIds || !slug) {
@@ -109,9 +113,9 @@ const ListenToEvents = () => {
       {/* @mondaycom-codesample-skip-block-start */}
       </div>
       <Instructions
-        paragraphs={listenToEventsConstants.confirmationInstructionsParagraphs}
-        instructionsListItems={listenToEventsConstants.confirmationInstructionsListItems}
-        linkToDocumentation={listenToEventsConstants.confirmationInstructionslinkToDocumentation}
+        paragraphs={listenToEventsConstants.instructionsParagraphs}
+        instructionsListItems={listenToEventsConstants.instructionsListItems}
+        linkToDocumentation={listenToEventsConstants.instructionslinkToDocumentation}
       />
       {/* @mondaycom-codesample-skip-block-end */}
     </div>

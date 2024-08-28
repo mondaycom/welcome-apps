@@ -1,36 +1,42 @@
-.get-context-container {
-    width: 100%;
-    
-    aside {
-      padding: 10px;
-    }
-    .get-context-content {
-      overflow: hidden;
-      display: flex;
-      height: 100%;
-      flex-direction: column;
-      justify-content: flex-start;
-    }
+@import '../../styles/variables.scss';
+
+.events-listen-container {
+  width: 100%;
+
+  aside {
+    padding: 10px;
   }
-  
+  .events-listen-content {
+    overflow: hidden;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
   .tabPanelContainer {
     padding: 10px;
-    // border-style: solid;
-    // border-color:
-    width: 550px;
     max-height: 80vh;
+    width: calc(100% - 20px);
   }
   
   .tabWrapper {
     padding-bottom: 8px;
     padding-left: 0px;
   }
-
+  
   .tabsWrapper {
     height: 100%;
-    overflow: scroll;
+    overflow-x: scroll;
   }
   
-  .tabListWrapper > ul {
-    padding-inline-start: 0px;
+  .openBoardButton {
+    margin: 4px;
   }
+
+  @media (max-width: $breakpoint-narrow) {
+  .playground {
+    min-height: 200px;
+  }}
+}
