@@ -11,7 +11,7 @@ This is the "Quickstart Integration" example Monday app.
 - query monday API using short lived token (seamless authentication)
 - remote options for custom fields
 
-<br>You can find more info in our QuickStart guide [here](https://monday.com/developers/apps/quickstart-integration/)
+<br>You can find more info in our QuickStart guide [here](https://developer.monday.com/apps/docs/quickstart-integration)
 <br>![Screenshot](https://dapulse-res.cloudinary.com/image/upload/v1658942490/remote_mondaycom_static/developers/screenshots/QUICKSTART_GIPHY.gif)
 
 ## Install
