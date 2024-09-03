@@ -8,7 +8,7 @@ This is the "Docs Viewer" example Monday app.
 - [API](https://github.com/mondaycom/monday-sdk-js#mondayapiquery-options--)
 - [storage](https://github.com/mondaycom/monday-sdk-js#mondaystorage)
 
-<br>You can read more about this app [here](https://monday.com/developers/apps-docviewer/)
+<br>You can read more about this app [here](https://developer.monday.com/apps/docs/welcome-apps#online-docs-viewer)
 <br> ![Screenshot](https://dapulse-res.cloudinary.com/image/upload/f_auto,q_auto/remote_mondaycom_static/uploads/VladMystetskyi/d2634e30-daec-47d2-816e-c9be7d38d392_3VladTestBoardbugwithrecipe2020-06-0800-45-40.png2020-06-0800-48-02.png)
 
 ## Run the project
