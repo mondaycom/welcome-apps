@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "npm run stop && npm run db:migrate && concurrently \"npm run server\" \"npm run expose\"",
-    "server": "nodemon ./src/app.js",
+    "server": "NODE_TLS_REJECT_UNAUTHORIZED='0' nodemon ./src/app.js",
     "expose": "mapps tunnel:create -p 8302",
     "db:migrate": "sequelize db:migrate",
     "stop": "kill-port 8302"
@@ -30,7 +30,7 @@
     "sqlite3": "^5.1.6"
   },
   "devDependencies": {
-    "@mondaycom/apps-cli": "^2.1.1",
+    "@mondaycom/apps-cli": "^4.0.0",
     "concurrently": "^8.2.2",
     "debug": "~2.6.9",
     "eslint": "^v6.8.0",
