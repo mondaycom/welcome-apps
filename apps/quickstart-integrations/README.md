@@ -11,14 +11,14 @@ This is the "Quickstart Integration" example Monday app.
 - query monday API using short lived token (seamless authentication)
 - remote options for custom fields
 
-<br>You can find more info in our QuickStart guide [here](https://developer.monday.com/apps/docs/quickstart-integration)
+<br>You can follow along in our [Quickstart guide](https://developer.monday.com/apps/docs/quickstart-integration) or use the instructions below.
 <br>![Screenshot](https://dapulse-res.cloudinary.com/image/upload/v1658942490/remote_mondaycom_static/developers/screenshots/QUICKSTART_GIPHY.gif)
 
 ## Install
 
 1. Make sure you have Node (v16.16+) and npm installed
 
-2. Run node modules install:
+2. Install the dependencies:
 
 ```
 $ npm install
@@ -29,7 +29,7 @@ $ npm install
 ### Part One: Create a new app and integration feature
 
 1. Open monday.com, login to your account and go to a "Developers" section.
-2. Create new "Integration Example App"
+2. Create new app - name it "Integration Example App"
 3. Open "Features" section and create new "Integration" feature
 4. Choose the "Quickstart Integration - NodeJS" template to start. Add in the missing scopes, run the command scaffold in your command line, and paste the resulting URL into the URL box.
 
