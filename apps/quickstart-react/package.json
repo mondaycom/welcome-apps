@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "start": "npm run stop && concurrently \"npm run server\" \"npm run expose\"",
-    "build": "react-scripts build",
+    "build": "vite build",
     "expose": "mapps tunnel:create -p 8301",
-    "server": "react-scripts start",
+    "server": "vite",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "stop": "kill-port 8301 && kill-port 4049 && kill-port 4040"
@@ -33,12 +33,14 @@
   },
   "devDependencies": {
     "@mondaycom/apps-cli": "^4.0.0",
+    "@vitejs/plugin-react": "^4.3.2",
     "concurrently": "^5.2.0",
     "cross-port-killer": "^1.2.1",
     "eslint-config-react-app": "^7.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "^5.0.1",
-    "sass": "^1.54.8"
-  }
+    "sass": "^1.54.8",
+    "vite": "^5.4.9"
+  },
+  "type": "module"
 }
