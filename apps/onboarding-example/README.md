@@ -36,5 +36,6 @@ Take the URL from your CLI you can then paste in your app's board view feature's
 2. Create a new app
 3. Open "OAuth & Permissions" section and add "boards:read", "users:read" and "notifications:write" scopes
 4. Open "Features" section and create a new "Boards View" feature from scratch
-5. Open "View setup" tab and fulfill in "Custom URL" field your public URL, which you got previously
-6. Save the feature, go to any of your boards and add the board view to it
+5. Open "View setup" tab and fill in "Custom URL" field your public URL, which you got previously
+6. Click "Edit mode", "Add field" (at the bottom of settings pane), and add a "Users" setting field and a "Text" field
+7. Save the feature, go to any of your boards and add the board view to it
