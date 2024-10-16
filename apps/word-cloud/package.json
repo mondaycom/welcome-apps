@@ -4,26 +4,32 @@
   "private": true,
   "scripts": {
     "start": "npm run stop && concurrently \"npm run server\" \"npm run expose\"",
-    "server": "react-scripts start",
-    "build": "react-scripts build",
+    "server": "vite",
+    "build": "vite build",
     "expose": "mapps tunnel:create -p 8303",
     "stop": "kill-port 8303 && kill-port 4049 && kill-port 4040"
   },
   "dependencies": {
+    "@visx/scale": "^3.5.0",
+    "@visx/text": "^3.3.0",
+    "@visx/wordcloud": "^3.3.0",
+    "@vitejs/plugin-react": "^4.3.2",
     "dotenv": "^5.0.1",
     "lodash": "^4.17.21",
     "monday-sdk-js": "^0.5.2",
-    "monday-ui-react-core": "^1.102.1",
-    "react": "^16.10.2",
-    "react-d3-cloud": "^1.0.6",
-    "react-dom": "^16.10.2",
-    "react-scripts": "^5.0.1",
-    "react-wordcloud": "^1.2.7"
+    "monday-ui-react-core": "^2.139.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "vite": "^5.4.8"
   },
   "devDependencies": {
-    "@mondaycom/apps-cli": "^2.1.1",
+    "@eslint/js": "^9.12.0",
+    "@mondaycom/apps-cli": "^4.2.0",
     "concurrently": "^8.2.2",
-    "cross-port-killer": "^1.2.1"
+    "cross-port-killer": "^1.2.1",
+    "eslint": "^9.12.0",
+    "eslint-plugin-react": "^7.37.1",
+    "globals": "^15.11.0"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -39,5 +45,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "type": "module"
 }
