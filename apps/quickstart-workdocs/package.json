@@ -14,7 +14,7 @@
   "dependencies": {
     "@mondaycom/apps-sdk": "^2.1.2",
     "monday-sdk-js": "^0.5.2",
-    "monday-ui-react-core": "^1.54.0"
+    "monday-ui-react-core": "^2.139.3"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -32,7 +32,7 @@
     ]
   },
   "devDependencies": {
-    "@mondaycom/apps-cli": "^2.1.1",
+    "@mondaycom/apps-cli": "^4.0.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "concurrently": "^5.2.0",
