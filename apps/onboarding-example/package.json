@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "monday-sdk-js": "^0.5.2",
-    "monday-ui-react-core": "^1.71.1",
+    "monday-ui-react-core": "^2.139.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -33,7 +33,7 @@
     ]
   },
   "devDependencies": {
-    "@mondaycom/apps-cli": "^2.0.0",
+    "@mondaycom/apps-cli": "^4.2.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "concurrently": "^5.2.0",

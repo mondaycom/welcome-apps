@@ -118,36 +118,36 @@ class App extends React.Component {
             This is a basic sample app to give you some tips and tools to improve the onboarding experience for your users. In it you will find examples on:
           </p>
           <ul className="InstructionsParagraph">
-            <li> How to <a target="_blank" href="https://developer.monday.com/apps/docs/mondayexecute#open-setting-window">open and close the view settings</a> using the SDK </li>
-            <li> How to <a target="_blank" href="https://developer.monday.com/apps/docs/mondayset#setting-application-settings-data">change the view settings</a> from the view itself, using the SDK </li>
-            <li> How to implement a <a target="_blank" href="https://developer.monday.com/apps/docs/value-created-event-best-practices">webhook</a> to let monday know when your app has given the account real value for the first time (for future reports) </li>
-            <li> How to <a target="_blank" href="https://developer.monday.com/apps/docs/mondaylisten">listen</a> to changes in the view settings using the SDK </li>
-            <li> How to <a target="_blank" href="https://developer.monday.com/apps/docs/mondayget#requesting-context-and-settings-data">retrieve the selected settings</a> to use them in your view</li>
-            <li> How to use <a target="_blank" href="https://style.monday.com/">Vibe</a>, our design system </li>
-            <li> How to use <a target="_blank" href="https://style.monday.com/?path=/docs/popover-tooltip--overview">tooltips</a> to explain how parts of your app work </li>
-            <li> How to use <a target="_blank" href="https://developer.monday.com/apps/docs/introduction-to-the-sdk#seamless-authentication">seamless authentication</a> using the SDK </li>
-            <li> How to show <a target="_blank" href="https://developer.monday.com/apps/docs/mondayexecute#example-2">notice messages</a> using the SDK </li>
+            <li> How to <a target="_blank" rel="noreferrer" href="https://developer.monday.com/apps/docs/mondayexecute#open-setting-window">open and close the view settings</a> using the SDK </li>
+            <li> How to <a target="_blank" rel="noreferrer" href="https://developer.monday.com/apps/docs/mondayset#setting-application-settings-data">change the view settings</a> from the view itself, using the SDK </li>
+            <li> How to implement a <a target="_blank" rel="noreferrer" href="https://developer.monday.com/apps/docs/value-created-event-best-practices">webhook</a> to let monday know when your app has given the account real value for the first time (for future reports) </li>
+            <li> How to <a target="_blank" rel="noreferrer" href="https://developer.monday.com/apps/docs/mondaylisten">listen</a> to changes in the view settings using the SDK </li>
+            <li> How to <a target="_blank" rel="noreferrer" href="https://developer.monday.com/apps/docs/mondayget#requesting-context-and-settings-data">retrieve the selected settings</a> to use them in your view</li>
+            <li> How to use <a target="_blank" rel="noreferrer" href="https://style.monday.com/">Vibe</a>, our design system </li>
+            <li> How to use <a target="_blank" rel="noreferrer" href="https://style.monday.com/?path=/docs/popover-tooltip--overview">tooltips</a> to explain how parts of your app work </li>
+            <li> How to use <a target="_blank" rel="noreferrer" href="https://developer.monday.com/apps/docs/introduction-to-the-sdk#seamless-authentication">seamless authentication</a> using the SDK </li>
+            <li> How to show <a target="_blank" rel="noreferrer" href="https://developer.monday.com/apps/docs/mondayexecute#example-2">notice messages</a> using the SDK </li>
           </ul>
           <p className="InstructionsParagraph">
             You can start using this app by clicking on one of the two available features at the top of the screen.
           </p>
           <div className="InstructionsFooter">
             <div className="CtaText">
-              <a href="https://forms.monday.com/forms/cf0a3d75c1be9f92ef089cb7b6038b21?r=use1" target="_blank">
+              <a href="https://forms.monday.com/forms/cf0a3d75c1be9f92ef089cb7b6038b21?r=use1" target="_blank" rel="noreferrer">
                 <p>
                   Send us your feedback
                 </p>
               </a>
             </div>
             <div className="CtaText">
-              <a href="https://developer.monday.com/apps/docs/intro" target="_blank">
+              <a href="https://developer.monday.com/apps/docs/intro" rel="noreferrer" target="_blank">
                 <p>
                   Documentation
                 </p>
               </a>
             </div>
             <div className="CtaText">
-              <a href = "mailto: example@example.com" target="_blank">Email support</a>
+              <a href = "https://support.monday.com/hc/en-us/requests/new?ticket_form_id=13855862562962" target="_blank" rel="noreferrer">Email support</a>
             </div>
           </div>
         </div>
@@ -221,7 +221,9 @@ class App extends React.Component {
       </div>
 
       <div className="ButtonContainer">
-        <Button kind={Button.kinds.SECONDARY} onClick={() => this.sendFirstValueWebhook(), () => this.sendNotification()} >
+        <Button kind={Button.kinds.SECONDARY} onClick={() => {
+          this.sendFirstValueWebhook();
+          this.sendNotification()}} >
           Send Notification
         </Button>
       </div>
