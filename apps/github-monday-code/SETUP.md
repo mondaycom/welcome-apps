@@ -60,7 +60,7 @@ To integrate with Github, you need to create an OAuth app using your Github acco
 1. Click the "New OAuth App" button, choose a name for your app, and fill in the details using the tunnel URL obtained from step 1:
    - Name your app something descriptive, such as "Github monday example app"
    - **Homepage URL:** Add your app's Tunnel URL
-   - **Authorization Callback URL:** Add the following Authorization Callback URL: "https://<your_tunnel_URL>/auth/github/callback"
+   - **Authorization Callback URL:** Add the following Authorization Callback URL: `https://<your_tunnel_URL>/auth/github/callback`
    - Leave "Enable device flow" unchecked
 ![Screenshot](./assets/oauth-github-setup.png)
 2. Click **"Register application"** when done.
