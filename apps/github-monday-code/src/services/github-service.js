@@ -1,8 +1,7 @@
-import pkg from '@octokit/rest';
+import { Octokit } from '@octokit/rest';
 import { ISSUE_FIELD_DEFS } from '../constants/github.js';
 import { getBaseUrl } from '../helpers/environment.js';
 
-const { Octokit } = pkg;
 /**
  * Creates a webhook in Github.
  */
@@ -10,7 +9,7 @@ export const createWebhook = async (token, owner, repo, subscriptionId, events) 
   const octokit = new Octokit({ auth: token });
 
   const targetUrl = `${getBaseUrl()}/integration/integration-events/${subscriptionId}`;
-  const response = await octokit.repos.createHook({
+  const response = await octokit.repos.createWebhook({
     owner,
     repo,
     name: 'web',
@@ -35,7 +34,7 @@ export const createWebhook = async (token, owner, repo, subscriptionId, events) 
  */
 export const deleteWebhook = async (token, owner, repo, webhookId) => {
   const octokit = new Octokit({ auth: token });
-  await octokit.repos.deleteHook({ owner, repo, hook_id: webhookId });
+  await octokit.repos.deleteWebhook({ owner, repo, hook_id: webhookId });
 };
 
 /**
@@ -44,7 +43,7 @@ export const deleteWebhook = async (token, owner, repo, webhookId) => {
 export const getRepositories = async (token) => {
   const octokit = new Octokit({ auth: token });
 
-  const reposResponse = await octokit.repos.list({ visibility: 'private', sort: 'created' });
+  const reposResponse = await octokit.repos.listForAuthenticatedUser({ visibility: 'private', sort: 'created' });
   const repos = reposResponse ? reposResponse.data : [];
 
   const options = repos.map((repo) => {
