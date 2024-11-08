@@ -1,0 +1,18 @@
+body {
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+}
+
+.App {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  display: grid;
+}
+
+textarea {
+  width: 460px;
+  height: 335px;
+}
