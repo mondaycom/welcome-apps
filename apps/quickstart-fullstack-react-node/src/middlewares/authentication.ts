@@ -20,6 +20,7 @@ export default async function authenticationMiddleware(
   res: express.Response,
   next: express.NextFunction
 ) {
+  console.log("here");
   try {
     const authorization = req.headers.authorization ?? req.query?.token;
 

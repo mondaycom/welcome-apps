@@ -10,7 +10,8 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
-    "monday-sdk-js": "^0.5.0",
+    "@vibe/core": "^3.0.0",
+    "monday-sdk-js": "^0.5.5",
     "monday-ui-react-core": "^1.54.0"
   },
   "eslintConfig": {
@@ -29,12 +30,14 @@
     ]
   },
   "devDependencies": {
+    "@types/monday-sdk-js": "^0.2.1",
     "concurrently": "^5.2.0",
     "cross-port-killer": "^1.2.1",
     "eslint-config-react-app": "^7.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "^5.0.1",
-    "sass": "^1.54.8"
+    "sass": "^1.54.8",
+    "typescript": "^5.7.2"
   }
 }
