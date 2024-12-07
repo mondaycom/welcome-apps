@@ -1,6 +1,6 @@
-import {ApiClient, Board} from '@mondaydotcomorg/api';
-import {gql} from "graphql-request";
-import {Item} from "../generated/graphql";
+import {ApiClient} from '@mondaydotcomorg/api';
+import {GetColumnValueQuery, GetColumnValueQueryVariables} from "../generated/graphql";
+import {getColumnValueQuery} from "../queries.graphql";
 
 class MondayService {
 
@@ -17,10 +17,10 @@ class MondayService {
     static async getColumnValue(token, itemId, columnId) {
         try {
             const mondayClient = new ApiClient({token: token});
-            const getColumnValue = gql`query ($itemId: [ID!], $columnId: [String!]) {items (ids: $itemId) {column_values(ids:$columnId) {value}}}`;
-            const params = { itemId: [itemId], columnId: [columnId] };
-            const items: Item = await mondayClient.request(getColumnValue, params );
-            return items['items'][0].column_values[0].value
+
+            const params: GetColumnValueQueryVariables = { itemId: [itemId], columnId: [columnId] };
+            const response: GetColumnValueQuery = await mondayClient.request<GetColumnValueQuery>(getColumnValueQuery, params);
+            return response?.items?.[0]?.column_values?.[0]?.value;
         } catch (err) {
             console.log(err);
         }

@@ -9,7 +9,6 @@ export async function executeAction(req: Request, res: Response) {
 
     try {
         // TODO: Implement this function
-        console.log('executeAction', {payload});
         return res.status(200).send({});
     } catch (err) {
         console.error(err);
@@ -31,11 +30,11 @@ export async function  reverseString(req: Request, res: Response) {
         } = inputFields;
 
         const sourceWord: String = await MondayService.getColumnValue(shortLivedToken, itemId, sourceColumnId);
+
         if (!sourceWord) {
             await MondayService.changeColumnValue(shortLivedToken, boardId, itemId, targetColumnId, 'No word found');
             return res.status(200).send({});
         }
-
         const reversedWord: String = sourceWord.split('').reverse().join('');
         await MondayService.changeColumnValue(shortLivedToken, boardId, itemId, targetColumnId, reversedWord);
 
