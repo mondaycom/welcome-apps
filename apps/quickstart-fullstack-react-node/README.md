@@ -46,3 +46,7 @@ npm run deploy
 
     1. Choose your app that will be associated with the deployment.
     2. Choose the draft version to deploy.
+
+After your application has been uploaded make sure to make the necessary adjustments in the Monday UI.
+E.g. in our example, make sure to set up env variable for MONDAY_SIGNING_SECRET in order for the application 
+to authenticate.

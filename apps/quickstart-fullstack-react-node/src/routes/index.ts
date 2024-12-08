@@ -7,10 +7,6 @@ router.use(mondayRoutes);
 // serve client app
 router.use(express.static('client/build'));
 
-router.get('/', function(req, res) {
-    res.json(getHealth());
-});
-
 router.get('/health', function(req, res) {
   res.json(getHealth());
   res.end();
