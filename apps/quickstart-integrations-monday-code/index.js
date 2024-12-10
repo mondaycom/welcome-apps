@@ -1,6 +1,7 @@
 import { EnvironmentVariablesManager, Logger, SecretsManager } from '@mondaycom/apps-sdk';
 import dotenv from 'dotenv';
 import express from 'express';
+import axios from 'axios';
 
 import { transformText } from './src/transformation-service.js';
 import { authorizeRequest } from './src/middleware.js';
@@ -44,7 +45,8 @@ app.get('/', (req, res) => {
   res.status(200).send({
     hard_coded_data: { // FIXME: change for each deployment
       'region (from env)': processEnv.MNDY_REGION || 'null',
-      'last code change (hard coded)': '2024-08-07T10:45:00.000Z'
+      'last code change (hard coded)': '2024-12-10T23:54:00.000Z',
+      'revision tag (from env)': processEnv.MNDY_TOPIC_NAME || 'null',
     },
     secretsObject,
     envsObject,
@@ -93,6 +95,34 @@ app.get('/super-health', async (req, res) => {
     envsObject,
     producedQueueMessageId: messageId
   });
+});
+
+app.get('/networking', async (req, res) => {
+  const urls = [
+    'http://example.com',
+    'http://api.ipify.org',
+    'http://142.250.74.14', // An IP address of a Google server that responds to HTTP requests.
+    'http://1.1.1.1', // Cloudflare public DNS IP address.
+  ];
+
+  const results = {};
+
+  await Promise.allSettled(
+    urls.map(async (url) => {
+      try {
+        const response = await axios.get(url, { timeout: 5000 });
+        results[url] = `Success: ${response.status}`;
+      } catch (error) {
+        if (error.response) {
+          results[url] = `Failed: ${error.response.status}`;
+        } else {
+          results[url] = `Failed: ${error.message}`;
+        }
+      }
+    })
+  );
+
+  res.json(results);
 });
 
 // TODO: MAOR: Dont forget to add the app signing secret as env var (MONDAY_SINGING_SECRET) in production to make integration work
