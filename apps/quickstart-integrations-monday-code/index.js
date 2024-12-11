@@ -1,4 +1,4 @@
-import { EnvironmentVariablesManager, Logger, SecretsManager } from '@mondaycom/apps-sdk';
+import { EnvironmentVariablesManager, Logger, SecretsManager, SecureStorage, Storage } from '@mondaycom/apps-sdk';
 import dotenv from 'dotenv';
 import express from 'express';
 import axios from 'axios';
@@ -12,7 +12,6 @@ import { produceMessage, readQueueMessage } from './src/queue-service.js';
 const envs = new EnvironmentVariablesManager({ updateProcessEnv: true });
 
 dotenv.config();
-
 
 const logTag = 'ExpressServer';
 const PORT = 'PORT';
@@ -84,8 +83,7 @@ app.get('/super-health', async (req, res) => {
 
   const now = Date.now() + '';
 
-  const message = JSON.stringify({ message: 'hello from super-health', now });
-  const messageId = await produceMessage(message);
+  const messageId = await produceMessageWithPayload({ message: 'hello from super-health', now });
 
   const secrets = new SecretsManager();
   let secretsObject = {};
@@ -109,14 +107,32 @@ app.get('/super-health', async (req, res) => {
   });
 });
 
+const testStorage = async () => {
+  const token = envs.get('MY_TOKEN') + '';
+  const storage = new Storage(token);
+  await storage.set('maors_test_app', JSON.stringify({ my_key: 'my_value', now: new Date().toISOString() }));
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  return await storage.get('maors_test_app');
+};
+
+const testSecureStorage = async () => {
+  const token = envs.get('MY_TOKEN') + '';
+  const secureStorage = new SecureStorage(token);
+  await secureStorage.set('maors_test_app', JSON.stringify({ my_key: 'my_value', now: new Date().toISOString() }));
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  return await secureStorage.get('maors_test_app');
+};
+
 app.get('/networking', async (req, res) => {
   const asyncApiCalls = {
     'http://example.com': axios.get('http://example.com', { timeout: 5000 }),
     'http://api.ipify.org': axios.get('http://api.ipify.org', { timeout: 5000 }),
     'http://142.250.74.14 (Google HTTP server)': axios.get('http://142.250.74.14', { timeout: 5000 }), // An IP address of a Google server that responds to HTTP requests.
     'http://1.1.1.1 (Cloudflare public DNS)': axios.get('http://1.1.1.1', { timeout: 5000 }), // An IP address of a Google server that responds to HTTP requests.
-    'Platform-API (GraphQL with SDK client)': platformApiHealthCheck(null),
-    'Queue - produce message:': produceMessageWithPayload()
+    'Platform-API (GraphQL with SDK client)': platformApiHealthCheck(envs.get('MY_TOKEN') + ''),
+    'AppsSDK - Queue - produce message:': produceMessageWithPayload(),
+    'AppsSDK - Storage:': testStorage(),
+    'AppsSDK - SecureStorage:': testSecureStorage()
   };
 
 
