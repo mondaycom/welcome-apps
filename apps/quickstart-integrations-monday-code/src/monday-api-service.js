@@ -1,8 +1,28 @@
-import initMondayClient from "monday-sdk-js";
-import { Logger } from "@mondaycom/apps-sdk";
+import initMondayClient from 'monday-sdk-js';
+import { Logger } from '@mondaycom/apps-sdk';
 
-const logTag = "Middleware";
+const logTag = 'Middleware';
 const logger = new Logger(logTag);
+
+export const platformApiHealthCheck = async (token) => {
+  try {
+    const mondayClient = initMondayClient();
+    mondayClient.setToken(token);
+
+    const query = `query{
+       me {
+        account {
+          id
+        }
+      }
+    }`;
+
+    const response = await mondayClient.api(query, {});
+    return response.data;
+  } catch (err) {
+    logger.error(err);
+  }
+};
 
 export const getColumnValue = async (token, itemId, columnId) => {
   try {
