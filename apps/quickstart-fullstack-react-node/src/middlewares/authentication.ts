@@ -34,7 +34,6 @@ export default async function authenticationMiddleware(
       res.status(500).json({ error: "Missing MONDAY_SIGNING_SECRET (should be in .env file)" });
       return;
     }
-
     const { accountId, userId, backToUrl, shortLivedToken } = jwt.verify(
       authorization,
       process.env.MONDAY_SIGNING_SECRET
