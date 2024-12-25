@@ -17,8 +17,7 @@ export const platformApiHealthCheck = async (token) => {
       }
     }`;
 
-    const response = await mondayClient.api(query, {});
-    return response.data;
+    return await mondayClient.api(query, {});
   } catch (err) {
     logger.error(err);
   }

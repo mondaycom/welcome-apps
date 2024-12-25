@@ -19,6 +19,7 @@ const SERVICE_TAG_URL = 'SERVICE_TAG_URL';
 const TO_UPPER_CASE = 'TO_UPPER_CASE';
 const TO_LOWER_CASE = 'TO_LOWER_CASE';
 const TO_CURRENT_REGION = 'TO_LOWER_CASE';
+const DEV_ACCESS_TOKEN_ENV_NAME = 'DEV_ACCESS_TOKEN';
 
 const logger = new Logger(logTag);
 const currentPort = getSecret(PORT); // Port must be 8080 to work with monday code
@@ -108,7 +109,7 @@ app.get('/super-health', async (req, res) => {
 });
 
 const testStorage = async () => {
-  const token = envs.get('MY_TOKEN') + '';
+  const token = envs.get(DEV_ACCESS_TOKEN_ENV_NAME) + '';
   const storage = new Storage(token);
   await storage.set('maors_test_app', JSON.stringify({ my_key: 'my_value', now: new Date().toISOString() }));
   await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -116,34 +117,48 @@ const testStorage = async () => {
 };
 
 const testSecureStorage = async () => {
-  const token = envs.get('MY_TOKEN') + '';
+  const token = envs.get(DEV_ACCESS_TOKEN_ENV_NAME) + '';
   const secureStorage = new SecureStorage(token);
   await secureStorage.set('maors_test_app', JSON.stringify({ my_key: 'my_value', now: new Date().toISOString() }));
   await new Promise((resolve) => setTimeout(resolve, 1000));
   return await secureStorage.get('maors_test_app');
 };
 
+// TODO: MAOR: Dont forget to add
+//  1. The app signing secret as env var (MONDAY_SINGING_SECRET) to make integration work
+//  2. The dev access token to make API work (DEV_ACCESS_TOKEN)
 app.get('/networking', async (req, res) => {
   const asyncApiCalls = {
     'http://example.com': axios.get('http://example.com', { timeout: 5000 }),
     'http://api.ipify.org': axios.get('http://api.ipify.org', { timeout: 5000 }),
     'http://142.250.74.14 (Google HTTP server)': axios.get('http://142.250.74.14', { timeout: 5000 }), // An IP address of a Google server that responds to HTTP requests.
     'http://1.1.1.1 (Cloudflare public DNS)': axios.get('http://1.1.1.1', { timeout: 5000 }), // An IP address of a Google server that responds to HTTP requests.
-    'Platform-API (GraphQL with SDK client)': platformApiHealthCheck(envs.get('MY_TOKEN') + ''),
+    '-------------------------------------': '-------------------------------------',
+    'Platform-API (GraphQL with SDK client)': platformApiHealthCheck(envs.get(DEV_ACCESS_TOKEN_ENV_NAME) + ''),
     'AppsSDK - Queue - produce message:': produceMessageWithPayload(),
     'AppsSDK - Storage:': testStorage(),
     'AppsSDK - SecureStorage:': testSecureStorage()
   };
 
-
-// TODO: add more external API calls
-
   const results = {};
+
   for (const [name, asyncApiCall] of Object.entries(asyncApiCalls)) {
+    if (typeof asyncApiCall === 'string') {
+      results[name] = asyncApiCall;
+      continue;
+    }
+
     try {
       const response = await asyncApiCall;
-      results[name] = `Success: ${response.status}`;
+
+      let statusCode = null;
+      if (response) {
+        statusCode = response.status || response.statusCode || response.code || response.responseCode || response.res?.status || response.res?.statusCode || response.res?.code || response.res?.responseCode || JSON.stringify(response).substring(0, 100);
+      }
+
+      results[name] = `Success` + (statusCode ? `: ${statusCode}` : '');
     } catch (error) {
+      console.log(error);
       if (error.response) {
         results[name] = `Failed: ${error.response.status}`;
       } else {
