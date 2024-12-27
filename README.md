@@ -7,7 +7,6 @@ Make sure to visit our [Developer Docs](https://developers.monday.com) for more 
 
 To get started, pick the example app most suitable for your development preferences and start building!
 
-
 ## Developing locally
 Some of the examples in this repository require you to run a local server and expose it to the internet.
 To do so, you can either:
@@ -18,4 +17,5 @@ To do that, you will need to install node on your machine and then run the follo
  - `mapps init -t <your-personal-token>` (see here: https://developer.monday.com/apps/docs/quickstart-guide-for-monday-code#command-line-interface)
  - `mapps tunnel:create` inside the example directory you want to run
 
-
+## Reporting a vulnerability
+To report a security vulnerability in this code or in monday.com in general, please use the form at: [https://monday.com/security/form/](https://monday.com/security/form/)
