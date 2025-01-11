@@ -128,48 +128,57 @@ const testSecureStorage = async () => {
 //  1. The app signing secret as env var (MONDAY_SINGING_SECRET) to make integration work
 //  2. The dev access token to make API work (DEV_ACCESS_TOKEN)
 app.get('/networking', async (req, res) => {
-  const asyncApiCalls = {
-    'http://example.com': axios.get('http://example.com', { timeout: 5000 }),
-    'http://api.ipify.org': axios.get('http://api.ipify.org', { timeout: 5000 }),
-    'http://192.0.43.10 (Example.com public ip)': axios.get('http://192.0.43.10', { timeout: 5000 }),
-    // 'http://8.8.8.8 (Google DNS)': axios.get('http://8.8.8.8', { timeout: 5000 }),
-    'http://1.1.1.1 (Cloudflare public DNS)': axios.get('http://1.1.1.1', { timeout: 5000 }),
-    '-------------------------------------': '-------------------------------------',
-    'Platform-API (GraphQL with SDK client)': platformApiHealthCheck(envs.get(DEV_ACCESS_TOKEN_ENV_NAME) + ''),
-    'AppsSDK - Queue - produce message:': produceMessageWithPayload(),
-    'AppsSDK - Storage:': testStorage(),
-    'AppsSDK - SecureStorage:': testSecureStorage()
-  };
+  try {
+    const asyncApiCalls = {
+      'http://example.com': axios.get('http://example.com', { timeout: 5000 }),
+      'http://api.ipify.org': axios.get('http://api.ipify.org', { timeout: 5000 }),
+      // 'http://192.0.43.10 (Example.com public ip)': axios.get('http://192.0.43.10', { timeout: 5000 }),
+      // 'http://8.8.8.8 (Google DNS)': axios.get('http://8.8.8.8', { timeout: 5000 }),
+      'http://1.1.1.1 (Cloudflare public DNS)': axios.get('http://1.1.1.1', { timeout: 5000 }),
+      '-------------------------------------': '-------------------------------------',
+      'Platform-API (GraphQL with SDK client)': platformApiHealthCheck(envs.get(DEV_ACCESS_TOKEN_ENV_NAME) + ''),
+      'AppsSDK - Queue - produce message:': produceMessageWithPayload(),
+      'AppsSDK - Storage:': testStorage(),
+      'AppsSDK - SecureStorage:': testSecureStorage()
+    };
 
-  const results = {};
+    const results = {};
 
-  for (const [name, asyncApiCall] of Object.entries(asyncApiCalls)) {
-    if (typeof asyncApiCall === 'string') {
-      results[name] = asyncApiCall;
-      continue;
-    }
-
-    try {
-      const response = await asyncApiCall;
-
-      let statusCode = null;
-      if (response) {
-        statusCode = response.status || response.statusCode || response.code || response.responseCode || response.res?.status || response.res?.statusCode || response.res?.code || response.res?.responseCode || JSON.stringify(response).substring(0, 100);
+    for (const [name, asyncApiCall] of Object.entries(asyncApiCalls)) {
+      if (typeof asyncApiCall === 'string') {
+        results[name] = asyncApiCall;
+        continue;
       }
 
-      results[name] = `Success` + (statusCode ? `: ${statusCode}` : '');
-    } catch (error) {
-      console.log(error);
-      if (error.response) {
-        results[name] = `Failed: ${error.response.status}`;
-      } else {
-        results[name] = `Failed: ${error.message}`;
+      try {
+        const response = await asyncApiCall;
+
+        let statusCode = null;
+        if (response) {
+          statusCode = response.status || response.statusCode || response.code || response.responseCode || response.res?.status || response.res?.statusCode || response.res?.code || response.res?.responseCode || JSON.stringify(response).substring(0, 100);
+        }
+
+        results[name] = `Success` + (statusCode ? `: ${statusCode}` : '');
+      } catch (error) {
+        if (error.response) {
+          results[name] = `Failed: ${error.response.status}`;
+        } else {
+          results[name] = `Failed: ${error.message}`;
+        }
       }
     }
+
+
+    res.status(200).send(results);
+  } catch (e) {
+    console.error(e);
+    res.status(200).send({
+      message: 'Wild exception thrown',
+      error: e.message,
+      stack: e.stack,
+      JSON: JSON.stringify(e)
+    });
   }
-
-
-  res.json(results);
 });
 
 // TODO: MAOR: Dont forget to add the app signing secret as env var (MONDAY_SINGING_SECRET) in production to make integration work
