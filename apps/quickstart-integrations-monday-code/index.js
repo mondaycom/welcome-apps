@@ -135,6 +135,7 @@ app.get('/networking', async (req, res) => {
       // 'http://192.0.43.10 (Example.com public ip)': axios.get('http://192.0.43.10', { timeout: 5000 }),
       // 'http://8.8.8.8 (Google DNS)': axios.get('http://8.8.8.8', { timeout: 5000 }),
       'http://1.1.1.1 (Cloudflare public DNS)': axios.get('http://1.1.1.1', { timeout: 5000 }),
+      'http://34.102.212.0 (walla.co.il)': axios.get('http://34.102.212.0', { timeout: 5000 }),
       '-------------------------------------': '-------------------------------------',
       'Platform-API (GraphQL with SDK client)': platformApiHealthCheck(envs.get(DEV_ACCESS_TOKEN_ENV_NAME) + ''),
       'AppsSDK - Queue - produce message:': produceMessageWithPayload(),
