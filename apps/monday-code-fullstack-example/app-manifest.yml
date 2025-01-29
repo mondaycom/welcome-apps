@@ -1,0 +1,14 @@
+version: '1.0.0'
+app:
+  name: Fullstack Node App Template
+  features:
+    - type: AppFeatureBoardView
+      name: Hello Board
+      build:
+        source: customUrl
+        suffix: "/view"
+    - type: AppFeatureIntegration
+      name: Hello Integration
+      build:
+        source: customUrl
+        suffix: "/api/monday"

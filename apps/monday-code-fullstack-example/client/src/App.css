@@ -1,0 +1,44 @@
+body {
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+}
+
+.App {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.groupSortForm {
+  background-color: #F5F5F5;
+  padding: 16px;
+  border-radius: 8px;
+  height: fit-content;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.errorDisplayForm {
+  width: 400px;
+  max-height: 250px;
+  overflow-y: scroll;
+}
+
+.errorDisplayToast {
+  width: 250px;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.flexHorizontal {
+  display: flex;
+  gap: 10px;
+}

@@ -1,0 +1,32 @@
+# Build files
+build/
+code.tar.gz
+# ignore builds in the format of build.zip and build <number>.zip
+build*.zip
+
+# Git ignore
+
+# Node modules
+node_modules
+node_modules/*
+node_modules/
+
+# Build files
+dist
+
+# IDE files
+.vscode
+.idea
+
+# Logs
+logs
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+
+#  package-lock.json
+package-lock.json
