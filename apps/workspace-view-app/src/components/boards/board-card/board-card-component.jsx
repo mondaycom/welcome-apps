@@ -1,4 +1,4 @@
-import { Flex, Heading } from "monday-ui-react-core";
+import { Flex, Heading, Text } from "@vibe/core";
 import React from "react";
 import classes from "./board-card-component.module.scss";
 import { getAccountDetails } from "../../../services/hooks";
@@ -11,26 +11,22 @@ const BoardCardComponent = ({ board }) => {
   return (
     <Flex
       className={classes.boardCardComponent}
-      direction={Flex.directions.COLUMN}
-      align={Flex.align.CENTER}
-      justify={Flex.justify.CENTER}
+      direction="column"
+      align="center"
+      justify="center"
       onClick={onClick}
     >
-      <Heading
-        value={board.name}
-        type={Heading.types.h2}
-        ellipsisMaxLines={2}
-      />
-      <Heading
-        value={board.description}
-        type={Heading.types.h5}
-        ellipsisMaxLines={2}
-      />
+      <Heading type="h2" maxLines={2}>
+        {board.name}
+      </Heading>
+      <Text type="text1" maxLines={2}>
+        {board.description}
+      </Text>
       <Flex
         className={classes.footer}
-        direction={Flex.directions.ROW}
-        align={Flex.align.CENTER}
-        justify={Flex.justify.START}
+        direction="row"
+        align="center"
+        justify="start"
         gap={12}
       >
         <img
@@ -38,10 +34,9 @@ const BoardCardComponent = ({ board }) => {
           src={board.creator?.photo_thumb}
           alt="owner"
         />
-        <Heading
-          value={"Created by " + board.creator?.name}
-          type={Heading.types.h6}
-        />
+        <Text>
+          {"Created by " + board.creator?.name}
+        </Text>
       </Flex>
     </Flex>
   );

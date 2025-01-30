@@ -1,16 +1,9 @@
 import React from "react"
 import "./App.css"
 import mondaySdk from "monday-sdk-js"
-import "monday-ui-react-core/dist/main.css"
-import Heading from "monday-ui-react-core/dist/Heading.js"
-import Chips from "monday-ui-react-core/dist/Chips.js"
-import TextField from "monday-ui-react-core/dist/TextField.js"
-import Button from "monday-ui-react-core/dist/Button.js"
-import Tooltip from "monday-ui-react-core/dist/Tooltip.js"
-import Icon from "monday-ui-react-core/dist/Icon.js"
-import LearnMore from "monday-ui-react-core/dist/icons/LearnMore"
-import Help from "monday-ui-react-core/dist/icons/Help"
-import IconButton from "monday-ui-react-core/dist/IconButton.js"
+import "@vibe/core/tokens";
+import { Chips, TextField, Button, Tooltip, Icon, Tooltip, IconButton, Heading } from "@vibe/core";
+import { LearnMore, Help } from "@vibe/icons";
 
 const monday = mondaySdk();
 
@@ -113,7 +106,7 @@ class App extends React.Component {
     return(
       this.state.showTextFieldChanger===false && this.state.showNotificationSender===false ? 
         <div>
-          <Heading value="Instructions:" className= "InstructionsTitle"/>
+          <Heading className="InstructionsTitle">Instructions:</Heading>
           <p className="InstructionsParagraph">
             This is a basic sample app to give you some tips and tools to improve the onboarding experience for your users. In it you will find examples on:
           </p>
@@ -160,13 +153,13 @@ class App extends React.Component {
     return(
       <div className="OpenCloseSettingsContainer">
         <div className="CtaButton">
-          <Button kind={Button.kinds.SECONDARY} className="SendButton" onClick={() => this.openSettings()} >
+          <Button kind="secondary" className="SendButton" onClick={() => this.openSettings()} >
             Open settings
           </Button>
         </div>
 
         <div className="CtaButton">
-          <Button kind={Button.kinds.SECONDARY} className="SendButton" onClick={() => this.closeSettings()} >
+          <Button kind="secondary" className="SendButton" onClick={() => this.closeSettings()} >
             Close settings
           </Button>
         </div>
@@ -180,7 +173,7 @@ class App extends React.Component {
       this.state.showNotificationSender ? 
       <div>
         <div className="AppTitle">
-          <Heading value="Notifications sender" />
+          <Heading>Notifications sender</Heading>
         </div>
 
         <div>
@@ -188,7 +181,7 @@ class App extends React.Component {
         </div>  
 
           <div className="SelectedUsersContainer">
-            <Heading type={Heading.types.h2} value="Selected users:" size="small" />
+            <Heading type="h2">Selected users:</Heading>
           <div className="monday-storybook-tooltip_box">
             <Tooltip content="Please use the view's settings to select the users you want to send the notification to">
               <div className="monday-storybook-tooltip_icon-wrapper">
@@ -202,7 +195,7 @@ class App extends React.Component {
         {this.renderUserNames()}
       </div>
 
-      <Heading type={Heading.types.h2} value="Notification's body:" size="small" className="BodyTitle"/>
+      <Heading type="h2" className="BodyTitle">Notification's body:</Heading>
 
       <div className="TextFieldContainer">
         <TextField
@@ -221,7 +214,7 @@ class App extends React.Component {
       </div>
 
       <div className="ButtonContainer">
-        <Button kind={Button.kinds.SECONDARY} onClick={() => {
+        <Button kind="secondary" onClick={() => {
           this.sendFirstValueWebhook();
           this.sendNotification()}} >
           Send Notification
@@ -238,10 +231,10 @@ class App extends React.Component {
       this.state.showTextFieldChanger ? 
       <div>
         <div className="AppTitle">
-          <Heading value="Change the value of a text field in the settings" />
+          <Heading>Change the value of a text field in the settings</Heading>
         </div>
 
-       <Heading type={Heading.types.h3} value="Please write the new value the text field will have" size="small" className="SecondaryHeader TextFieldTextArea"/>
+       <Heading type="h3" className="SecondaryHeader TextFieldTextArea">Please write the new value the text field will have</Heading>
 
         <div>
           {this.renderOpenCloseSettings()}
@@ -264,7 +257,7 @@ class App extends React.Component {
         </div>
 
         <div className="ButtonContainer">
-          <Button kind={Button.kinds.SECONDARY} onClick={() => this.setSettings()} >
+          <Button kind="secondary" onClick={() => this.setSettings()} >
             Change the text field's value in the settings
           </Button>
         </div>
@@ -305,7 +298,7 @@ class App extends React.Component {
     return <div className="App">
       <div className="MenuBar">
         <div className="CtaButton">
-          <IconButton icon={Help} kind={IconButton.kinds.SECONDARY} onClick={() => this.showInstructions()} />
+          <IconButton icon={Help} kind="secondary" onClick={() => this.showInstructions()} />
         </div>
         <div className="CtaButton">
           <Button className="SendButton" onClick={() => this.toggleNotificationSender()} >

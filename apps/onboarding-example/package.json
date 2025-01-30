@@ -12,8 +12,9 @@
     "stop": "kill-port 8301"
   },
   "dependencies": {
+    "@vibe/core": "^3.19.0",
+    "@vibe/icons": "^1.4.0",
     "monday-sdk-js": "^0.5.2",
-    "monday-ui-react-core": "^2.139.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

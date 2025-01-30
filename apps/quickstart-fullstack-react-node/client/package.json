@@ -11,8 +11,7 @@
   },
   "dependencies": {
     "@vibe/core": "^3.0.0",
-    "monday-sdk-js": "^0.5.5",
-    "monday-ui-react-core": "^1.54.0"
+    "monday-sdk-js": "^0.5.5"
   },
   "eslintConfig": {
     "extends": "react-app"
