@@ -1,8 +1,8 @@
 import React from "react";
 import mondaySdk from "monday-sdk-js";
 import ReactWordcloud from "react-wordcloud";
-import { AttentionBox } from "monday-ui-react-core";
-import "monday-ui-react-core/dist/main.css";
+import { AttentionBox } from "@vibe/core";
+import "@vibe/core/tokens";
 import { stopWords } from "./stop-words";
 import _ from "lodash";
 
@@ -165,7 +165,7 @@ class App extends React.Component {
           <AttentionBox 
             title="GraphQL API error" 
             text="Please check the browser console for more details." 
-            type={AttentionBox.types.DANGER}
+            type="danger"
           />
       )
     }

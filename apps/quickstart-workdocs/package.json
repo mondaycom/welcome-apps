@@ -13,8 +13,8 @@
   },
   "dependencies": {
     "@mondaycom/apps-sdk": "^2.1.2",
-    "monday-sdk-js": "^0.5.2",
-    "monday-ui-react-core": "^2.139.3"
+    "@vibe/core": "^3.19.0",
+    "monday-sdk-js": "^0.5.2"
   },
   "eslintConfig": {
     "extends": "react-app"

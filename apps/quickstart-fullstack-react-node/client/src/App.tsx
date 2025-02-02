@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from "react";
 import "./App.css";
 import mondaySdk, {MondayClientSdk} from "monday-sdk-js";
-import "monday-ui-react-core/dist/main.css";
+import "@vibe/core/tokens";
 //Explore more Monday React Components here: https://vibe.monday.com/
-import AttentionBox from "monday-ui-react-core/dist/AttentionBox.js";
-import {TextField} from "@vibe/core";
+import {TextField, AttentionBox} from "@vibe/core";
 
 // Usage of mondaySDK example, for more information visit here: https://developer.monday.com/apps/docs/introduction-to-the-sdk/
 const monday: MondayClientSdk = mondaySdk();

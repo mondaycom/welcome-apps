@@ -1,4 +1,4 @@
-import { Flex, Heading, Skeleton } from "monday-ui-react-core";
+import { Flex, Heading, Skeleton } from "@vibe/core";
 import classes from "./header-component.module.scss";
 import { useGetWorkspaceData } from "../../services/hooks";
 
@@ -7,9 +7,9 @@ const HeaderComponent = () => {
   return (
     <Flex className={classes.headerComponent}>
       {isLoading ? (
-        <Skeleton type={Skeleton.types.RECTANGLE} size={Skeleton.sizes.TEXT} />
+        <Skeleton type="rectangle" />
       ) : (
-        <Heading value={workspaceData?.name} />
+        <Heading>{workspaceData?.name}</Heading>
       )}
     </Flex>
   );
