@@ -2,7 +2,8 @@ import { Request, Response } from 'express';
 import { getColumnValue, changeColumnValue } from '../services/monday-service';
 
 const handleGetColumnValue = async (req: Request, res: Response) => {
-  const { token, itemId, columnId } = req.body;
+  const { token } = req.session;
+  const { itemId, columnId } = req.body;
   try {
     const columnValue = await getColumnValue(token, itemId, columnId);
     res.json({ columnValue });
@@ -12,7 +13,8 @@ const handleGetColumnValue = async (req: Request, res: Response) => {
 };
 
 const handleChangeColumnValue = async (req: Request, res: Response) => {
-  const { token, boardId, itemId, columnId, value } = req.body;
+  const { token } = req.session;
+  const { boardId, itemId, columnId, value } = req.body;
   try {
     const response = await changeColumnValue(
       token,
