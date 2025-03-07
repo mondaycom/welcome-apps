@@ -103,11 +103,16 @@ There are now several ways you can test with this app, you can add the board vie
 If you are using the version method you can use a single app for this, if you are using the live installed method you will likely end up needed a QA and Prod app split.
 
 Version Method:
-
-Install method:
-Go to install under manage -- click install app.
+<img width="1122" alt="Screenshot 2025-03-07 at 12 51 21 PM" src="https://github.com/user-attachments/assets/f087524b-08e7-4388-8dea-256aff554378" />
 
 Then add your board view into a board to test and you now have a base app!
+
+<img width="637" alt="Screenshot 2025-03-07 at 12 53 57 PM" src="https://github.com/user-attachments/assets/0918ff47-c100-424c-a8ef-5d648ed75291" />
+
+
+## What did doing this get us?
+
+We now have an app that is fully deployable to Monday Code with built in Oauth, examples of every authentication method, and a utils folder in the backend with monday logger, secure storage, secrets maanger, a graphql query manager, and env manger, and etc.
 
 ## Tips
 
