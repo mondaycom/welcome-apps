@@ -115,7 +115,7 @@ Then add your board view into a board to test and you now have a base app!
 
 ## What did doing this get us?
 
-We now have an app that is fully deployable to Monday Code with built in Oauth, examples of every authentication method, and a utils folder in the backend with monday logger, secure storage, secrets maanger, a graphql query manager, and env manger, and etc.
+We now have an app that is fully deployable to Monday Code with built in Oauth, examples of every authentication method, and a utils folder in the backend with monday logger, secure storage, secrets manager, a graphql query manager, and env manger, and etc.
 
 ## Tips
 
