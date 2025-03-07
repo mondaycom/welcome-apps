@@ -41,6 +41,11 @@ To install the app, follow these steps:
    ```
 
 ## Usage
+
+Create a new app in monday dev:
+
+<img width="1487" alt="Screenshot 2025-03-07 at 12 58 19 PM" src="https://github.com/user-attachments/assets/21664dc6-62a2-4fc6-ad26-f6773e106331" />
+
 To deploy the code from the <b>root</b> run:
 
 ```bash
