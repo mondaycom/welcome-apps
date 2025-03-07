@@ -101,8 +101,6 @@ Redirect URL to put in OAuth tab under redirect url
 
 <img width="1483" alt="Screenshot 2025-03-07 at 12 38 56 PM" src="https://github.com/user-attachments/assets/2573bc5e-fab0-44ec-9089-256b21af2206" />
 
-Promote to live.
-
 There are now several ways you can test with this app, you can add the board view as a version or install the app and always use the live version.
 
 If you are using the version method you can use a single app for this, if you are using the live installed method you will likely end up needed a QA and Prod app split.
