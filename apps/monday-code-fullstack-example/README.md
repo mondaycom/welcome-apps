@@ -82,7 +82,7 @@ Environment variable keys:
 
 
 1. `CLIENT_ID`
-2. `LIVE_URL` The Live URL will need the app to be promoted to live 1x and then it takes a minute to show up.
+2. `LIVE_URL` The Live URL will need the app to be promoted to live 1x and then it takes a minute to show up, then add it as an env variable.
 <img width="1484" alt="Screenshot 2025-03-07 at 12 29 23 PM" src="https://github.com/user-attachments/assets/027bea34-d217-4ab0-9d73-976e81ef23ea" />
 
 
