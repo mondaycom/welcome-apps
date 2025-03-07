@@ -16,6 +16,9 @@ After installing the CLI, use the mapps init command to add your API token taken
 mapps init -t <SECRET_TOKEN>
 ```
 
+<img width="1499" alt="Screenshot 2025-03-07 at 12 12 47 PM" src="https://github.com/user-attachments/assets/807aa53f-6b0a-4ea4-9f87-e01684a7272c" />
+
+
 ## Installation
 
 To install the app, follow these steps:
