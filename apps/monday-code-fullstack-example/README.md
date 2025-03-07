@@ -41,55 +41,6 @@ To install the app, follow these steps:
    ```
 
 ## Usage
-
-To start the application, run from the root:
-
-```bash
-npm run dev-server
-```
-
-Because the app has authentication built in, in order to develop locally in the client app.js you should do something like this:
-
-LOCALLY ONLY, NEVER THE PUSHED VERSION
-A future enchancment is in the works to better handle local developement, right now the app is largely intended for pushing to monday code to test changes because auth is built in. You would also need to bypass auth middleware for local.
-
-```bash
- useEffect(() => {
-    // const checkAuth = async () => {
-    //   try {
-    //     const sessionToken = await monday.get('sessionToken');
-    //     const context = await monday.get('context');
-    //     const response = await axios.post(
-    //       '/api/monday/oauth-flow',
-    //       {
-    //         context: context,
-    //       },
-    //       {
-    //         headers: {
-    //           authorization: sessionToken.data,
-    //         },
-    //       }
-    //     );
-
-    //     const authCheck = response.data.authenticated;
-    //     if (authCheck) {
-    //       setAuth(true);
-    //     } else {
-    //       setAuth(false);
-    //     }
-    //     setLoaded(true);
-    //   } catch (error) {
-    //     console.error(error);
-    //     setAuth(false);
-    //     setAuthError(error.stack);
-    //   }
-    // };
-    // checkAuth();
-    setAuth(true);
-    setLoaded(true);
-  }, []);
-```
-
 To deploy the code from the <b>root</b> run:
 
 ```bash
@@ -138,8 +89,59 @@ Example logs:
 logger.info(something)
 logger.error(error)
 
-## Notes
+## Local use notes
 
+
+To start the application, run from the root:
+
+
+```bash
+npm run dev-server
+```
+
+Because the app has authentication built in, in order to develop locally in the client app.js you should do something like this:
+
+LOCALLY ONLY, NEVER THE PUSHED VERSION
+A future enchancment is in the works to better handle local developement, right now the app is largely intended for pushing to monday code to test changes because auth is built in. You would also need to bypass auth middleware for local.
+
+```bash
+ useEffect(() => {
+    // const checkAuth = async () => {
+    //   try {
+    //     const sessionToken = await monday.get('sessionToken');
+    //     const context = await monday.get('context');
+    //     const response = await axios.post(
+    //       '/api/monday/oauth-flow',
+    //       {
+    //         context: context,
+    //       },
+    //       {
+    //         headers: {
+    //           authorization: sessionToken.data,
+    //         },
+    //       }
+    //     );
+
+    //     const authCheck = response.data.authenticated;
+    //     if (authCheck) {
+    //       setAuth(true);
+    //     } else {
+    //       setAuth(false);
+    //     }
+    //     setLoaded(true);
+    //   } catch (error) {
+    //     console.error(error);
+    //     setAuth(false);
+    //     setAuthError(error.stack);
+    //   }
+    // };
+    // checkAuth();
+    setAuth(true);
+    setLoaded(true);
+  }, []);
+```
+
+## Notes
 Deploy to Monday code first to get your live URL.
 The live URL is returned from the BE, where it looks it up in the env manager.
 
