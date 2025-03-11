@@ -31,6 +31,12 @@ async function authenticationMiddleware(
   next: NextFunction
 ) {
   try {
+    // if .env LOCAL=TRUe we enable local development by going next with a session setup
+    if (applyLocalSessionIfEnabled(req)) {
+      logger.info('Using local session for authenticationMiddleware');
+      return next();
+    }
+
     logger.info('Authenticating user');
     let { authorization } = req.headers;
     if (!authorization && req.query) {
@@ -64,6 +70,12 @@ async function authenticationMiddleware(
 }
 
 async function clientAuth(req: Request, res: Response, next: NextFunction) {
+  // if .env LOCAL=TRUe we enable local development by going next with a session setup
+  if (applyLocalSessionIfEnabled(req)) {
+    logger.info('Using local session for client auth');
+    return next();
+  }
+
   let { authorization } = req.headers;
   if (!authorization && req.query) {
     authorization = req.query.token as string;
@@ -112,6 +124,14 @@ async function clientAuth(req: Request, res: Response, next: NextFunction) {
 }
 
 async function checkOAuthToken(req: Request, res: Response) {
+  // if .env LOCAL=TRUe we enable local development by going next with a session setup
+  if (envManager.get('LOCAL') === 'true') {
+    logger.info('Using local for oauth token');
+    return res
+      .status(200)
+      .send({ authenticated: true, oAuthToken: envManager.get('API_KEY') });
+  }
+
   // This is currently done by account so that we can delete the token if the user disconnects the app from the whole account
   // future state secure storage will be able to segregate by account which will allow us to store the token by user
   const { accountId } = req.session;
@@ -172,6 +192,27 @@ async function exchangeAuthorizationCodeForToken(
 async function getEnvironmentType() {
   const ENVIRONMENT = envManager.get('ENVIRONMENT');
   return ENVIRONMENT;
+}
+
+function applyLocalSessionIfEnabled(req: Request): boolean {
+  // Check if local development mode is enabled
+  if (envManager.get('LOCAL') === 'true') {
+    const accountId = envManager.get('ACCOUNT_ID');
+    const userId = envManager.get('USER_ID');
+    const slug = envManager.get('SLUG');
+    const api_key = envManager.get('API_KEY');
+
+    req.session = {
+      accountId: (accountId as string) || '',
+      userId: (userId as string) || '',
+      backToUrl: (slug as string) || '',
+      token: (api_key as string) || '',
+    };
+
+    return true; // Local session was applie
+  }
+
+  return false; // No local session was applied
 }
 
 export {

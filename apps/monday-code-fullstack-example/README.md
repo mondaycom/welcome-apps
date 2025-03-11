@@ -18,7 +18,6 @@ mapps init -t <SECRET_TOKEN>
 
 <img width="1499" alt="Screenshot 2025-03-07 at 12 12 47 PM" src="https://github.com/user-attachments/assets/807aa53f-6b0a-4ea4-9f87-e01684a7272c" />
 
-
 ## Installation
 
 To install the app, follow these steps:
@@ -55,7 +54,6 @@ npm run deploy
 This will build both the client and backend, then deloy. To deploy your app needs a draft version.
 <img width="1507" alt="Screenshot 2025-03-07 at 12 22 47 PM" src="https://github.com/user-attachments/assets/3696aa13-c895-4cdf-997f-d9e78f61c8b3" />
 
-
 First deploy will take 10-20 minutes.
 
 Then to add your FE go to features, add a board view using the nothing template. Change the name. Click add build in the top right corner change the route to /view. Save it.
@@ -64,7 +62,6 @@ Then to add your FE go to features, add a board view using the nothing template.
 <img width="1302" alt="Screenshot 2025-03-07 at 12 25 10 PM" src="https://github.com/user-attachments/assets/9995360a-3492-42ef-819b-b403708389b6" />
 <img width="1227" alt="Screenshot 2025-03-07 at 12 26 12 PM" src="https://github.com/user-attachments/assets/b399e8d7-3619-4f69-a0a0-208fa0cdc519" />
 <img width="1301" alt="Screenshot 2025-03-07 at 12 27 11 PM" src="https://github.com/user-attachments/assets/b7187e4e-8c7a-40bc-96da-b3ea07a8051f" />
-
 
 Then go to the Monday code general tab -- and enter the mentioned env varaibles and secrets.
 
@@ -80,11 +77,9 @@ Secret Keys:
 Environment variable keys:
 <img width="1480" alt="Screenshot 2025-03-07 at 12 31 54 PM" src="https://github.com/user-attachments/assets/8fc4c2ff-2516-47e5-898e-bfd706ed47c5" />
 
-
 1. `CLIENT_ID`
 2. `LIVE_URL` The Live URL will need the app to be promoted to live 1x and then it takes a minute to show up, then add it as an env variable.
-<img width="1484" alt="Screenshot 2025-03-07 at 12 29 23 PM" src="https://github.com/user-attachments/assets/027bea34-d217-4ab0-9d73-976e81ef23ea" />
-
+   <img width="1484" alt="Screenshot 2025-03-07 at 12 29 23 PM" src="https://github.com/user-attachments/assets/027bea34-d217-4ab0-9d73-976e81ef23ea" />
 
 Make a new draft version.
 
@@ -112,7 +107,6 @@ Then add your board view into a board to test and you now have a base app!
 
 <img width="637" alt="Screenshot 2025-03-07 at 12 53 57 PM" src="https://github.com/user-attachments/assets/0918ff47-c100-424c-a8ef-5d648ed75291" />
 
-
 ## What did doing this get us?
 
 We now have an app that is fully deployable to Monday Code with built in Oauth, examples of every authentication method, and a utils folder in the backend with monday logger, secure storage, secrets manager, a graphql query manager, and env manger, and etc.
@@ -128,9 +122,10 @@ logger.error(error)
 
 ## Local use notes
 
+Look at the .example-env to see what to do to run locally.
 
+Just having your API_KEY and LOCAL=true should be enough to do everything locally
 To start the application, run from the root:
-
 
 ```bash
 npm run dev-server
@@ -138,47 +133,8 @@ npm run dev-server
 
 Because the app has authentication built in, in order to develop locally in the client app.js you should do something like this:
 
-LOCALLY ONLY, NEVER THE PUSHED VERSION
-A future enchancment is in the works to better handle local developement, right now the app is largely intended for pushing to monday code to test changes because auth is built in. You would also need to bypass auth middleware for local.
-
-```bash
- useEffect(() => {
-    // const checkAuth = async () => {
-    //   try {
-    //     const sessionToken = await monday.get('sessionToken');
-    //     const context = await monday.get('context');
-    //     const response = await axios.post(
-    //       '/api/monday/oauth-flow',
-    //       {
-    //         context: context,
-    //       },
-    //       {
-    //         headers: {
-    //           authorization: sessionToken.data,
-    //         },
-    //       }
-    //     );
-
-    //     const authCheck = response.data.authenticated;
-    //     if (authCheck) {
-    //       setAuth(true);
-    //     } else {
-    //       setAuth(false);
-    //     }
-    //     setLoaded(true);
-    //   } catch (error) {
-    //     console.error(error);
-    //     setAuth(false);
-    //     setAuthError(error.stack);
-    //   }
-    // };
-    // checkAuth();
-    setAuth(true);
-    setLoaded(true);
-  }, []);
-```
-
 ## Notes
+
 Deploy to Monday code first to get your live URL.
 The live URL is returned from the BE, where it looks it up in the env manager.
 
