@@ -122,7 +122,7 @@ logger.error(error)
 
 ## Local use notes
 
-Look at the .example-env to see what to do to run locally.
+Create a .env in the roor and look at the .example-env to see what to do to run locally.
 
 Just having your API_KEY and LOCAL=true should be enough to do everything locally
 To start the application, run from the root:
