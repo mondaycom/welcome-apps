@@ -1,6 +1,6 @@
 # MondayBaseAppTS
 
-MondayBaseAppTS is a TypeScript-based back end application designed to jumpstart a fullstack applicartion with OAuth. The front end is fully unopinionated.
+MondayBaseAppTS is a TypeScript-based back end application designed to jumpstart a fullstack application with OAuth. The front end is fully unopinionated.
 
 ## Monday CLI
 
