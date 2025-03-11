@@ -131,8 +131,6 @@ To start the application, run from the root:
 npm run dev-server
 ```
 
-Because the app has authentication built in, in order to develop locally in the client app.js you should do something like this:
-
 ## Notes
 
 Deploy to Monday code first to get your live URL.
