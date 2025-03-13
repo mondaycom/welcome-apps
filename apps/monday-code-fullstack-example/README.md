@@ -69,7 +69,7 @@ The values for the assocaited keys are found in the general tab.
 <img width="1493" alt="Screenshot 2025-03-07 at 12 30 53 PM" src="https://github.com/user-attachments/assets/9dbf199f-4929-4e90-9698-f99430c0381e" />
 
 Secret Keys:
-<img width="1492" alt="Screenshot 2025-03-07 at 12 32 51 PM" src="https://github.com/user-attachments/assets/8dc0d5e2-50d6-48a9-a6b5-83840ae20876" />
+![Screenshot 2025-03-13 at 9 00 11 AM](https://github.com/user-attachments/assets/403767e0-3026-4018-a01b-3a9a842177d7)
 
 1. `CLIENT_SECRET`
 2. `MONDAY_SIGNING_SECRET`
