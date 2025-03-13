@@ -56,7 +56,7 @@ This will build both the client and backend, then deloy. To deploy your app need
 
 First deploy will take 10-20 minutes.
 
-Then to add your FE go to features, add a board view using the nothing template. Change the name. Click add build in the top right corner change the route to /view. Save it.
+Then to add your FE go to features, add a board view using the nothing template. Change the name. Click add build in the top right corner change the route to /view. Save it. (At least 1 full deploy has to be completed to be able to see the Monday Code route option.)
 
 <img width="1512" alt="Screenshot 2025-03-07 at 12 24 15 PM" src="https://github.com/user-attachments/assets/07cb4bbe-f20b-4db5-9864-41bc28595381" />
 <img width="1302" alt="Screenshot 2025-03-07 at 12 25 10 PM" src="https://github.com/user-attachments/assets/9995360a-3492-42ef-819b-b403708389b6" />
@@ -69,7 +69,7 @@ The values for the assocaited keys are found in the general tab.
 <img width="1493" alt="Screenshot 2025-03-07 at 12 30 53 PM" src="https://github.com/user-attachments/assets/9dbf199f-4929-4e90-9698-f99430c0381e" />
 
 Secret Keys:
-<img width="1492" alt="Screenshot 2025-03-07 at 12 32 51 PM" src="https://github.com/user-attachments/assets/8dc0d5e2-50d6-48a9-a6b5-83840ae20876" />
+![Screenshot 2025-03-13 at 9 00 11 AM](https://github.com/user-attachments/assets/403767e0-3026-4018-a01b-3a9a842177d7)
 
 1. `CLIENT_SECRET`
 2. `MONDAY_SIGNING_SECRET`
@@ -100,7 +100,7 @@ There are now several ways you can test with this app, you can add the board vie
 
 If you are using the version method you can use a single app for this, if you are using the live installed method you will likely end up needed a QA and Prod app split.
 
-Version Method:
+Version Method (sometimes this will require some refreshes or going to more apps and clicking developed apps, if you dont see developed apps, in the app go to install, install the app and try, more apps installed apps):
 <img width="1122" alt="Screenshot 2025-03-07 at 12 51 21 PM" src="https://github.com/user-attachments/assets/f087524b-08e7-4388-8dea-256aff554378" />
 
 Then add your board view into a board to test and you now have a base app!
