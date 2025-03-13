@@ -56,7 +56,7 @@ This will build both the client and backend, then deloy. To deploy your app need
 
 First deploy will take 10-20 minutes.
 
-Then to add your FE go to features, add a board view using the nothing template. Change the name. Click add build in the top right corner change the route to /view. Save it.
+Then to add your FE go to features, add a board view using the nothing template. Change the name. Click add build in the top right corner change the route to /view. Save it. (At least 1 full deploy has to be completed to be able to see the Monday Code route option.)
 
 <img width="1512" alt="Screenshot 2025-03-07 at 12 24 15 PM" src="https://github.com/user-attachments/assets/07cb4bbe-f20b-4db5-9864-41bc28595381" />
 <img width="1302" alt="Screenshot 2025-03-07 at 12 25 10 PM" src="https://github.com/user-attachments/assets/9995360a-3492-42ef-819b-b403708389b6" />
