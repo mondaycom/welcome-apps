@@ -9,7 +9,8 @@ const graphQLQueryManager = async (
   variables: any = {}
 ) => {
   const mondayClient = initMondayClient();
-  mondayClient.setApiVersion('2024-01');
+  // You can set a schema version here if you need to it will lock it to that version, the versions get deprecated after a while so it's best to leave it empty
+  mondayClient.setApiVersion('');
   mondayClient.setToken(token);
   try {
     const response: any = await mondayClient.api(query, { variables });

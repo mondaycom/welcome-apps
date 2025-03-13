@@ -137,9 +137,9 @@ cd to the client and
 npm run start
 ```
 
-With these two things running all changes should update in real time and allow local dev.
+With these two things running all changes should update in real time and allow local dev. On localhost:3000
 
-Because the app has authentication built in, in order to develop locally in the client app.js you should do something like this:
+Local dev runs in strict mode for react, you will see things render 2x. You can remove this in the clients App.js file if desired.
 
 ## Notes
 

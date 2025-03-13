@@ -71,11 +71,9 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // Example routes
-router.post(
-  '/get-column-value',
-  authenticationMiddleware,
-  handleGetColumnValue
-);
+// These are just examples and can be removed clientAuth is used to check if the request is coming from the client
+// authenticationMiddleware is used to check if the request is coming from a monday board
+router.post('/get-column-value', clientAuth, handleGetColumnValue);
 
 router.post(
   '/change-column-value',
