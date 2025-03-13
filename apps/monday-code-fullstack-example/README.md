@@ -111,6 +111,8 @@ Then add your board view into a board to test and you now have a base app!
 
 We now have an app that is fully deployable to Monday Code with built in Oauth, examples of every authentication method, and a utils folder in the backend with monday logger, secure storage, secrets manager, a graphql query manager, and env manger, and etc.
 
+Generally you will want to your the monday route, controller, and service to do a lot of your code. The route also includes some basic example endpoints.
+
 ## Tips
 
 Use mapps:code logs to connect to the live logs of an instance
@@ -137,7 +139,7 @@ cd to the client and
 npm run start
 ```
 
-With these two things running all changes should update in real time and allow local dev. On localhost:3000
+With these two things running all changes should update in real time and allow local dev on localhost:3000
 
 Local dev runs in strict mode for react, you will see things render 2x. You can remove this in the clients App.js file if desired.
 
