@@ -100,7 +100,7 @@ There are now several ways you can test with this app, you can add the board vie
 
 If you are using the version method you can use a single app for this, if you are using the live installed method you will likely end up needed a QA and Prod app split.
 
-Version Method:
+Version Method (sometimes this will require some refreshes or going to more apps and clicking developed apps, if you dont see developed apps, in the app go to install, install the app and try, more apps installed apps):
 <img width="1122" alt="Screenshot 2025-03-07 at 12 51 21 PM" src="https://github.com/user-attachments/assets/f087524b-08e7-4388-8dea-256aff554378" />
 
 Then add your board view into a board to test and you now have a base app!
