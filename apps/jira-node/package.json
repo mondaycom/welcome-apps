@@ -29,11 +29,11 @@
     "sqlite3": "^5.1.6"
   },
   "devDependencies": {
-    "@mondaydotcomorg/tunnel": "^0.4.1",
+    "@mondaycom/apps-cli": "^4.5.0",
     "concurrently": "^8.2.2",
     "debug": "~2.6.9",
     "eslint": "^v6.8.0",
-    "nodemon": "^2.0.2",
+    "nodemon": "^3.1.9",
     "sequelize-cli": "^6.2.0"
   }
 }
