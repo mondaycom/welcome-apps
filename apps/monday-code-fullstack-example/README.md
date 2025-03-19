@@ -136,10 +136,10 @@ npm run dev-server
 cd to the client and
 
 ```bash
-npm run start
+npm run dev
 ```
 
-With these two things running all changes should update in real time and allow local dev on localhost:3000
+With these two things running all changes should update in real time and allow local dev on localhost:5173
 
 Local dev runs in strict mode for react, you will see things render 2x. You can remove this in the clients App.js file if desired.
 

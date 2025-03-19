@@ -22,7 +22,7 @@ router.get('/health', function (req, res) {
 });
 
 router.get('/view', function (req, res) {
-  res.sendFile('index.html', { root: 'client/build/' });
+  res.sendFile('index.html', { root: 'client/dist/' });
 });
 
 function getHealth() {

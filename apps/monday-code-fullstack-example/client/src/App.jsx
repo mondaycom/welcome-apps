@@ -1,13 +1,12 @@
-import { useState, useEffect } from 'react';
-import React from 'react';
-import './App.css';
+import { useState, useEffect } from "react";
+import React from "react";
+import "./App.css";
 
-import mondaySdk from 'monday-sdk-js';
-import 'monday-ui-react-core/dist/main.css';
-import axios from 'axios';
+import mondaySdk from "monday-sdk-js";
+import axios from "axios";
 
-import OAuthRedirect from './utility/oauthRedirect';
-import { ErrorBox } from './utility/ErrorDisplay';
+import OAuthRedirect from "./utility/oauthRedirect";
+import { ErrorBox } from "./utility/ErrorDisplay";
 
 const monday = mondaySdk();
 const App = () => {
@@ -25,10 +24,10 @@ const App = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const sessionToken = await monday.get('sessionToken');
-        const context = await monday.get('context');
+        const sessionToken = await monday.get("sessionToken");
+        const context = await monday.get("context");
         const response = await axios.post(
-          '/api/monday/oauth-flow',
+          "/api/monday/oauth-flow",
           {
             context: context,
           },

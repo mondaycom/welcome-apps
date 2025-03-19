@@ -15,22 +15,22 @@ const port = process.env.PORT ?? 8080;
 const app = express();
 app.set('trust proxy', 1 /* number of proxies between user and server */);
 
-// TODO replace with an actual backoff system and learn how long monday code instance actually lasts
+// TODO replace with an actual backoff system
 // Set up Rate Limiting
 const limiter = RateLimit({
   windowMs: 5 * 60 * 1000, // 15 minutes
-  max: 100, // max 100 requests per windowMs
+  max: 1000, // max 100 requests per windowMs
 });
 
 // apply rate limiter to all requests
 app.use(limiter);
 
 // Set paths and serve static file. Needed when manually zipping front end for build
-let staticPath = path.join(__dirname, '../client/build');
+let staticPath = path.join(__dirname, '../client/dist');
 let indexPath = path.join(staticPath, 'index.html');
 
 if (!fs.existsSync(indexPath)) {
-  staticPath = path.join(__dirname, 'client/build');
+  staticPath = path.join(__dirname, 'client/dist');
   indexPath = path.join(staticPath, 'index.html');
 }
 
