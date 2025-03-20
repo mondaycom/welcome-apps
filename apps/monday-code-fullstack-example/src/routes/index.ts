@@ -10,7 +10,7 @@ router.use(appEventsRoutes);
 router.use(outhRoutes);
 
 // serve client app
-router.use(express.static('client/build'));
+router.use(express.static('client/dist'));
 
 router.get('/', function (req, res) {
   res.json(getHealth());
