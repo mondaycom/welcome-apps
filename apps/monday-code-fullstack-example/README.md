@@ -141,6 +141,10 @@ npm run dev
 
 With these two things running all changes should update in real time and allow local dev on localhost:5173
 
+You will often need to manually do a npm run build in the client to see changes reflected locally.
+
+Also to note local uses an API key and deployed used an oauth token. So certain things might not work the same.
+
 Local dev runs in strict mode for react, you will see things render 2x. You can remove this in the clients App.js file if desired.
 
 ## Notes
