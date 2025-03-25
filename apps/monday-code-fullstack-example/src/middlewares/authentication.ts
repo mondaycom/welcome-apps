@@ -156,7 +156,7 @@ async function exchangeAuthorizationCodeForToken(
 ) {
   try {
     // Work around Node.js default behavior of preventing self signed certs when running
-    if (process.env.ENVIRONMENT === 'DEV') {
+    if (process.env.ENVIRONMENT === 'development') {
       process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
     }
 
