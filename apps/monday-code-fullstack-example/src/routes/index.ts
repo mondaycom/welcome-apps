@@ -5,9 +5,10 @@ import outhRoutes from './oauth-route';
 const router = express.Router();
 
 // Add routes here, App.ts imports this file as the main router
-router.use(mondayRoutes);
-router.use(appEventsRoutes);
-router.use(outhRoutes);
+// Prepend the routes with /api so that the client can use the routes via the proxy for local development
+router.use('/api', mondayRoutes);
+router.use('/api', appEventsRoutes);
+router.use('/api', outhRoutes);
 
 // serve client app
 router.use(express.static('client/dist'));

@@ -12,7 +12,7 @@ import logger from '../utils/logger';
 
 const router = Router();
 
-router.post('/api/monday/oauth-flow', clientAuth, checkOAuthToken);
+router.post('/monday/oauth-flow', clientAuth, checkOAuthToken);
 
 router.get('/oauth/callback', async (req, res) => {
   const { code, state: token } = req.query;
