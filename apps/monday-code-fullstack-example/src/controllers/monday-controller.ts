@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { getColumnValue, changeColumnValue, createWebhookOnBoardAuthed } from '../services/monday-service';
 import { WEBHOOK_URLS} from '../constants/constants';
+import logger from '../utils/logger';
 
 const handleGetColumnValue = async (req: Request, res: Response) => {
   const { token } = req.session;
@@ -66,6 +67,8 @@ const handleCreateUpdate = async (req: Request, res: Response) => {
    // Dummy code for example
    //  Do stuff in your service
    //  Return the service response
+    logger.info(req.body)
+   // TODO replace with your own code
     return res.status(200).send(req.body);
   } catch (err) {
     res.status(500).json({ error: (err as Error).message });

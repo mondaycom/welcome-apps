@@ -18,7 +18,7 @@ const router = Router();
 // This is using the client auth middleware, this checks if something is coming from the frontend of your app
 router.post('/get-column-value', clientAuth, handleGetColumnValue);
 
-// authenticationMiddleware is used to check if the request is coming from a monday board / integration
+// authenticationMiddleware is used to check if the request is coming from a monday board / integration / webhook from the Monday server
 router.post(
   '/change-column-value',
   authenticationMiddleware,

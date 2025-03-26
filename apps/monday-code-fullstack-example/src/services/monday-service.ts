@@ -77,9 +77,9 @@ const createWebhookOnBoardAuthed = async (
   config?: any
 ) => {
   try {
-    var query = '';
+    let query = '';
 
-    if (config) {
+    if (config && Object.keys(config).length > 0) {
       query = `mutation ($boardId: ID!, $event: WebhookEventType!, $url: String!, $config: JSON!) {
             create_webhook (board_id: $boardId, url: $url, event: $event config: $config) {
               id

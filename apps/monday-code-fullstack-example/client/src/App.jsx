@@ -40,6 +40,24 @@ const App = () => {
     authenticate();
   }, []);
 
+
+  // Example webhook creation for create_update
+  const handleCreateWebhook = async () => {
+    const [sessionToken, context] = await Promise.all([
+      monday.get("sessionToken"),
+      monday.get("context")
+    ]);
+
+    console.log(context);
+   
+    const response = await axios.post("/api/create-webhook", {
+      boardId: context.data.boardId,
+      eventType: "create_update"
+    }, { headers: { authorization: sessionToken.data } });
+
+    console.log(response);
+  }
+
   if (isLoading) {
     return (
       <div className="App">
@@ -56,7 +74,15 @@ const App = () => {
 
   return (
     <div className="App">
-      {isAuthenticated ? <p>Base Component Goes Here</p> : <OAuthRedirect />}
+      {isAuthenticated ? <>
+
+      <button onClick={() => {
+        handleCreateWebhook();
+      }}>Create Webhook</button>
+
+      <p>Base Component Goes Here</p>
+      
+      </> : <OAuthRedirect />}
     </div>
   );
 };

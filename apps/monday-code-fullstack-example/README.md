@@ -115,7 +115,7 @@ Generally you will want to your the monday route, controller, and service to do 
 
 ## Tips
 
-Use mapps:code logs to connect to the live logs of an instance
+Use mapps code:logs to connect to the live logs of an instance
 
 Example logs:
 
