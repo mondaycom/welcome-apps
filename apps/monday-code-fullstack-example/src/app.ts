@@ -19,7 +19,7 @@ app.set('trust proxy', 1 /* number of proxies between user and server */);
 // Set up Rate Limiting
 const limiter = RateLimit({
   windowMs: 5 * 60 * 1000, // 15 minutes
-  max: 1000, // max 100 requests per windowMs
+  max: 1000, // max 1000 requests per windowMs
 });
 
 // apply rate limiter to all requests

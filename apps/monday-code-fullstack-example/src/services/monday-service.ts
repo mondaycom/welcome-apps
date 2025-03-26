@@ -69,4 +69,40 @@ const changeColumnValue = async (
   }
 };
 
-export { getColumnValue, changeColumnValue };
+const createWebhookOnBoardAuthed = async (
+  boardId: string,
+  event: string,
+  url: string,
+  token: string,
+  config?: any
+) => {
+  try {
+    var query = '';
+
+    if (config) {
+      query = `mutation ($boardId: ID!, $event: WebhookEventType!, $url: String!, $config: JSON!) {
+            create_webhook (board_id: $boardId, url: $url, event: $event config: $config) {
+              id
+              board_id
+            }
+          }`;
+    } else {
+      query = `mutation ($boardId: ID!, $event: WebhookEventType!, $url: String!) {
+            create_webhook (board_id: $boardId, event: $event, url: $url) {
+              id
+              board_id
+            }
+          }`;
+    }
+
+    const variables = config
+      ? { boardId, event, url, config: JSON.stringify(config) }
+      : { boardId, event, url };
+    const response = await graphQLQueryManager(token, query, variables);
+    return response;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
+export { getColumnValue, changeColumnValue, createWebhookOnBoardAuthed };

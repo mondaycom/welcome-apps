@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import logger from '../utils/logger';
 import {
-  authenticationMiddleware,
   clientAuth,
 } from '../middlewares/authentication';
 import { handleUninstall } from '../controllers/app-webhook-events-controller';
@@ -11,6 +10,7 @@ const router = Router();
 
 // Handler for /app-events
 // At the time of writing Lifecycle events are verified by the CLIENT_SECRET and self made authed webhooks are verified by the SIGNING_SECRET
+// The route needs to be set in monday code in the Manage > Webhooks > All Events URL field
 router.post('/app-events', clientAuth, (req, res) => {
   const event = req.body;
 

@@ -189,11 +189,6 @@ async function exchangeAuthorizationCodeForToken(
   }
 }
 
-async function getEnvironmentType() {
-  const ENVIRONMENT = envManager.get('ENVIRONMENT');
-  return ENVIRONMENT;
-}
-
 function applyLocalSessionIfEnabled(req: Request): boolean {
   // Check if local development mode is enabled
   if (envManager.get('LOCAL') === 'true') {
@@ -215,10 +210,17 @@ function applyLocalSessionIfEnabled(req: Request): boolean {
   return false; // No local session was applied
 }
 
+const webhookChallenge = (req: Request, res: Response, next: NextFunction) => {
+  if (req.body.challenge) {
+    return res.status(200).send(req.body);
+  }
+  next();
+};
+
 export {
   authenticationMiddleware,
   clientAuth,
   checkOAuthToken,
   exchangeAuthorizationCodeForToken,
-  getEnvironmentType,
+  webhookChallenge,
 };

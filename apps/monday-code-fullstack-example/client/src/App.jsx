@@ -10,14 +10,6 @@ import { ErrorBox } from "./utility/ErrorDisplay";
 
 const monday = mondaySdk();
 
-// There is an Axios interceptor in the axios.js file that will handle the reauthentication
-// Use this axiosInstance to make all API calls to the backend like find all boards, create a new item, etc.
-// the reason is if the token is updated for more pemissions, or the token is expired, the interceptor will handle it
-// forcing a reauthentication that will give them the updated access this will only pop the error from the FE
-// from monday boards or items, the backend will still need to handle the reauthentication and there is nothing written to handle that case for oauth
-// but if you use the backend auth where it decodes for a monday board it will automatically reauthenticate/work
-// note monday will automatically notify the user that that the permissions have updated in a FE, this is just more aggressive
-
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -26,6 +18,7 @@ const App = () => {
   useEffect(() => {
     const authenticate = async () => {
       try {
+        // Always send the session token to the backend to check if the user is authenticated via the client auth middleware
         const [sessionToken, context] = await Promise.all([
           monday.get("sessionToken"),
           monday.get("context")
