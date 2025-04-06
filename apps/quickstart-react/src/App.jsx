@@ -64,8 +64,10 @@ const App = () => {
   const setItemV2 = async () => {
     const valueToStore = value.trim() || new Date().toString();
     try {
+      // TODO: Maor: use this next "debugger" line to stop execution when running client code
+      // debugger;
       // TODO: work with TTL
-      await monday.storage.setItem(key, valueToStore, { ttl: 60 });
+      await monday.storage.setItem(key, valueToStore, { ttl: 42 });
       getItemV2(); // Refresh the displayed value
     } catch (error) {
       console.error("Error setting V2 item:", error);
