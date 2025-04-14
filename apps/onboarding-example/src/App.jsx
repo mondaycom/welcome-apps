@@ -2,7 +2,7 @@ import React from "react"
 import "./App.css"
 import mondaySdk from "monday-sdk-js"
 import "@vibe/core/tokens";
-import { Chips, TextField, Button, Tooltip, Icon, Tooltip, IconButton, Heading } from "@vibe/core";
+import { Chips, TextField, Button, Tooltip, Icon, IconButton, Heading } from "@vibe/core";
 import { LearnMore, Help } from "@vibe/icons";
 
 const monday = mondaySdk();

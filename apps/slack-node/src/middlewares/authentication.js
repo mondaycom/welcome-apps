@@ -14,7 +14,7 @@ async function authenticationMiddleware(req, res, next) {
     next();
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'not authenticated' });
+    res.status(500).json({ error: 'Not authenticated. Did you add your monday signing secret to .env?' });
   }
 }
 

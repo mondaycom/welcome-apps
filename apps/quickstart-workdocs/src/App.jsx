@@ -71,6 +71,6 @@ const App = () => {
       <Button onClick={() => capitalizeText()}>Capitalize</Button>
     </div>
   );
-};
+}; 
 
 export default App;
