@@ -60,6 +60,41 @@ const App = () => {
     }
   };
 
+  const generateRandomString = (length) => {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+  };
+
+  const createManyItemsV1 = async () => {
+    const TOTAL_ITEMS = 10000;
+    const BATCH_SIZE = 25;
+    const totalBatches = Math.ceil(TOTAL_ITEMS / BATCH_SIZE);
+
+    try {
+      for (let batchIndex = 0; batchIndex < totalBatches; batchIndex++) {
+        const batchPromises = [];
+        const itemsInThisBatch = Math.min(BATCH_SIZE, TOTAL_ITEMS - (batchIndex * BATCH_SIZE));
+
+        for (let i = 0; i < itemsInThisBatch; i++) {
+          const randomKey = generateRandomString(5);
+          const randomValue = `Value-${generateRandomString(8)}`;
+          batchPromises.push(monday.storage.instance.setItem(randomKey, randomValue));
+        }
+
+        await Promise.all(batchPromises);
+        console.log(`Completed batch ${batchIndex + 1}/${totalBatches}`);
+      }
+
+      console.log('Successfully created 10,000 items');
+    } catch (error) {
+      console.error('Error creating items:', error);
+    }
+  };
+
   // V2 (Instance-less) Storage Operations
   const setItemV2 = async () => {
     const valueToStore = value.trim() || new Date().toString();
@@ -185,6 +220,14 @@ const App = () => {
                 kind={Button.kinds.TERTIARY}
               >
                 Delete
+              </Button>
+              <Button
+                size={Button.sizes.MEDIUM}
+                onClick={createManyItemsV1}
+                kind={Button.kinds.PRIMARY}
+                color="negative"
+              >
+                SUPER-SPAM! (10K Items)
               </Button>
             </div>
             <div style={{ marginTop: "8px" }}>
