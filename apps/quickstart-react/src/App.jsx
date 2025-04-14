@@ -4,10 +4,10 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 //Explore more Monday React Components here: https://style.monday.com/
 import AttentionBox from "monday-ui-react-core/dist/AttentionBox.js";
-import Button from "monday-ui-react-core/dist/Button.js";
-import TextField from "monday-ui-react-core/dist/TextField.js";
-import Heading from "monday-ui-react-core/dist/Heading.js";
 import Box from "monday-ui-react-core/dist/Box.js";
+import Button from "monday-ui-react-core/dist/Button.js";
+import Heading from "monday-ui-react-core/dist/Heading.js";
+import TextField from "monday-ui-react-core/dist/TextField.js";
 
 // Usage of mondaySDK example, for more information visit here: https://developer.monday.com/apps/docs/introduction-to-the-sdk/
 const monday = mondaySdk();
@@ -68,6 +68,22 @@ const App = () => {
       // debugger;
       // TODO: work with TTL
       await monday.storage.setItem(key, valueToStore, { ttl: 42 });
+      getItemV2(); // Refresh the displayed value
+    } catch (error) {
+      console.error("Error setting V2 item:", error);
+    }
+  };
+
+  const setItemV2HighRate = async () => {
+    const valueToStore = value.trim() || new Date().toString();
+    try {
+      const promises = [];
+      for (let i = 0; i < 10; i++) {
+        promises.push(
+          monday.storage.setItem(key, valueToStore, { ttl: i + 10 })
+        );
+      }
+      await Promise.all(promises);
       getItemV2(); // Refresh the displayed value
     } catch (error) {
       console.error("Error setting V2 item:", error);
@@ -140,6 +156,7 @@ const App = () => {
             padding={Box.paddings.MEDIUM}
             border={Box.borders.DEFAULT}
             rounded={Box.roundeds.MEDIUM}
+            style={{ backgroundColor: "#ffffff" }}
           >
             <Heading
               type={Heading.types.h3}
@@ -180,6 +197,7 @@ const App = () => {
             padding={Box.paddings.MEDIUM}
             border={Box.borders.DEFAULT}
             rounded={Box.roundeds.MEDIUM}
+            style={{ backgroundColor: "#ffffff" }}
           >
             <Heading
               type={Heading.types.h3}
@@ -192,6 +210,13 @@ const App = () => {
                 disabled={!key.trim()}
               >
                 Set
+              </Button>
+              <Button
+                size={Button.sizes.MEDIUM}
+                onClick={setItemV2HighRate}
+                disabled={!key.trim()}
+              >
+                Set: high rate
               </Button>
               <Button
                 size={Button.sizes.MEDIUM}
