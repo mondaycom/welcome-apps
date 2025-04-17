@@ -123,6 +123,20 @@ app.get("/super-health", async (req, res) => {
   });
 });
 
+app.post("/mndy-cronjob/test", async (req, res) => {
+  const now = Date.now() + "";
+
+  const messageId = await produceMessageWithPayload({
+    message: "hello from cronjob test endpoint produced message",
+    now,
+  });
+
+  res.status(200).send({
+    healthy: "OK",
+    producedQueueMessageId: messageId,
+  });
+});
+
 const testStorage = async () => {
   const token = envs.get(DEV_ACCESS_TOKEN_ENV_NAME) + "";
   const storage = new Storage(token);
