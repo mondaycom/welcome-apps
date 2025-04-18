@@ -1,5 +1,6 @@
 const connectionModelService = require('../services/model-services/connection-model-service');
 const slackService = require('../services/slack-service');
+const LoggerService = require('../services/monday-code/logger-service');
 
 async function executeAction(req, res) {
   const { userId } = req.session;
@@ -12,7 +13,7 @@ async function executeAction(req, res) {
 
     return res.status(200).send();
   } catch (err) {
-    console.error(err);
+    LoggerService.getInstance().error('Error executing action', err);
     return res.status(500).send({ message: 'internal server error' });
   }
 }
@@ -24,7 +25,7 @@ async function getRemoteListOptions(req, res) {
     const options = await slackService.getChannels(token);
     return res.status(200).send(options);
   } catch (err) {
-    console.error(err);
+    LoggerService.getInstance().error('Error getting remote list options', err);
     return res.status(500).send({ message: 'internal server error' });
   }
 }

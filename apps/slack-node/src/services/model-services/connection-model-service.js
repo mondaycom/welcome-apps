@@ -1,52 +1,53 @@
-const { Connection } = require('../../db/models');
+const SecureStorageService = require('../monday-code/secure-storage-service');
+const LoggerService = require('../monday-code/logger-service');
+const { Logger } = require('@mondaycom/apps-sdk');
+
+const generateTokenKey = (userId) => {
+  return `token:${userId}`;
+};
 
 const getConnectionByUserId = async (userId) => {
   try {
-    const connection = await Connection.findOne({ where: { userId } });
-    return connection;
+    const key = generateTokenKey(userId);
+    const storageService = SecureStorageService.getInstance();
+    const connection = await storageService.get(key);
+    return {token: connection};
   } catch (err) {
-    console.error(err);
+    LoggerService.getInstance().error('Error getting connection by user ID', err);
   }
 };
 
 const createConnection = async (attributes) => {
   const { userId, token } = attributes;
   try {
-    const connection = await Connection.create({
-      token,
-      userId,
-    });
-    return connection;
+    const key = generateTokenKey(userId);
+    const storageService = SecureStorageService.getInstance();
+    await storageService.set(key, token);
   } catch (err) {
-    console.error(err);
+    LoggerService.getInstance().error('Error creating connection', err);
   }
 };
 
-const updateConnection = async (connectionId, updates) => {
+const updateConnection = async (updates) => {
   const { userId, token } = updates;
   try {
-    const connection = await Connection.update(
-      { userId, token },
-      {
-        where: {
-          id: connectionId,
-        },
-      }
-    );
+    const key = generateTokenKey(userId);
+    const storageService = SecureStorageService.getInstance();
+    const connection = await storageService.set(key, token);
     return connection;
   } catch (err) {
-    console.error(err);
+    LoggerService.getInstance().error('Error updating connection', err);
   }
 };
 
-const deleteConnection = async (connectionId) => {
+const deleteConnection = async (userId) => {
   try {
-    const tokenToDelete = await Connection.findByPk(connectionId);
-    const id = tokenToDelete.id;
-    await tokenToDelete.destroy();
-    return id;
+    const tokenToDelete = generateTokenKey(userId);
+    const storageService = SecureStorageService.getInstance();
+    await storageService.delete(tokenToDelete);
+    return userId;
   } catch (err) {
-    console.error(err);
+    LoggerService.getInstance().error('Error deleting connection', err);
   }
 };
 

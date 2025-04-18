@@ -3,11 +3,15 @@
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
-    "start": "npm run stop && npm run db:migrate && concurrently \"npm run server\" \"npm run expose\"",
-    "server": "NODE_TLS_REJECT_UNAUTHORIZED='0' nodemon ./src/app.js",
-    "expose": "mapps tunnel:create -p 8302",
+    "start": "npm run server",
+    "dev": "npm run stop && concurrently \"npm run dev:server\" \"npm run dev:expose\"",
+    "dev:server": "NODE_TLS_REJECT_UNAUTHORIZED='0' nodemon ./src/app.js",
+    "dev:expose": "mapps tunnel:create -p 8080",
+    "server": "NODE_ENV=production node ./src/app.js",
+    "deploy:init": "mapps init -l",
+    "deploy": "mapps code:push",
     "db:migrate": "sequelize db:migrate",
-    "stop": "kill-port 8302"
+    "stop": "kill-port 8080"
   },
   "nodemonConfig": {
     "watch": [
@@ -16,6 +20,7 @@
     ]
   },
   "dependencies": {
+    "@mondaycom/apps-sdk": "^3.2.1",
     "@slack/web-api": "^7.8.0",
     "body-parser": "^1.19.0",
     "cross-port-killer": "^1.2.1",
@@ -25,7 +30,6 @@
     "monday-sdk-js": "^0.5.2",
     "node-cache": "^5.1.2",
     "node-fetch": "^2.6.1",
-    "sequelize": "^6.30.0",
     "simple-oauth2": "^4.2.0",
     "sqlite3": "^5.1.6"
   },
@@ -34,7 +38,6 @@
     "concurrently": "^8.2.2",
     "debug": "~2.6.9",
     "eslint": "^v6.8.0",
-    "nodemon": "^3.0.2",
-    "sequelize-cli": "^6.2.0"
+    "nodemon": "^3.0.2"
   }
 }

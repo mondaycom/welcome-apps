@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken');
+const LoggerService = require('../services/monday-code/logger-service');
+const SecretsService = require('../services/monday-code/secrets-service');
 
 async function authenticationMiddleware(req, res, next) {
   try {
@@ -6,15 +8,18 @@ async function authenticationMiddleware(req, res, next) {
     if (!authorization && req.query) {
       authorization = req.query.token;
     }
+    const secretsManager = SecretsService.getInstance();
+    const signingSecret = secretsManager.get('MONDAY_SIGNING_SECRET');
+    
     const { accountId, userId, backToUrl, shortLivedToken } = jwt.verify(
       authorization,
-      process.env.MONDAY_SIGNING_SECRET
+      signingSecret
     );
     req.session = { accountId, userId, backToUrl, shortLivedToken };
     next();
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Not authenticated. Did you add your monday signing secret to .env?' });
+    LoggerService.getInstance().error('Authentication error', err);
+    return res.status(500).json({ error: 'Not authenticated. Did you add your monday signing secret to .env?' });
   }
 }
 

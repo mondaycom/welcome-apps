@@ -1,5 +1,6 @@
 node_modules/
 *.log
+local-secure-storage.db.json
 
 # Created by https://www.gitignore.io/api/node,rubymine,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=node,rubymine,visualstudiocode
@@ -218,3 +219,5 @@ vault/policies
 vault/tmp
 
 
+
+.mappsrc
