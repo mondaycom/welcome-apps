@@ -1,5 +1,6 @@
 const authService = require('../services/auth-service');
 const connectionModelService = require('../services/model-services/connection-model-service');
+const LoggerService = require('../services/monday-code/logger-service');
 
 const authorize = async (req, res) => {
   const { userId, backToUrl } = req.session;
@@ -17,7 +18,7 @@ const callback = async (req, res) => {
 
     return res.redirect(backToUrl);
   } catch (err) {
-    console.error(err);
+    LoggerService.getInstance().error('Authentication controller error', err);
     return res.status(500).send({ message: 'internal server error' });
   }
 };
