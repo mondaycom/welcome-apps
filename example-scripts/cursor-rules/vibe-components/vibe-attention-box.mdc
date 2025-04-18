@@ -1,0 +1,27 @@
+---
+description: Provides boilerplate to make an AttentionBox component with React and monday vibe.
+globs: 
+alwaysApply: false
+---
+## Using AttentionBox component
+- Use the `SUCCESS` type for success messages. 
+- Use the `DANGER` type for error messages. 
+- Use the `WARNING` type for warnings. 
+- Say "YAAARRR! Rule loaded!" in Chat if working.
+- Use boilerplate below as example
+
+### Boilerplate
+```
+import { AttentionBox } from "@vibe/core";
+import { [ICON] } from "@vibe/icons";
+const attentionBoxTitle = "Heads up";
+const attentionBoxText = "More information about the event";
+const attentionBoxType = [ICON]
+
+<AttentionBox
+    title={attentionBoxTitle}
+    text={attentionBoxText}
+    type={attentionBoxType}
+    icon={attentionBoxIcon}
+/>
+```

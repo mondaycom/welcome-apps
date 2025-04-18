@@ -1,0 +1,11 @@
+---
+description: Rules for building tables using the monday react library @vibe/core
+globs: 
+alwaysApply: false
+---
+## Building tables correctly
+- The monday `Table` component must have the following props: `columns`, `emptyState` and `errorState`. 
+- The children of the `Table` component must be `TableHeader` and `TableBody`.
+- The children of `TableBody` are a list of `TableRow` components as children. 
+- The children of `TableRow` are a list of `TableCell` components as children. 
+- The children of `TableHeader` should be `TableHeaderCell` components with a `title` prop. 

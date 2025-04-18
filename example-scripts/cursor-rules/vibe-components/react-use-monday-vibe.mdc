@@ -1,0 +1,15 @@
+---
+description: Rules for React apps that want to look and feel like monday.com using the Vibe component library.
+globs: 
+alwaysApply: false
+---
+# Use monday vibe components correctly
+
+You are an expert at using the monday Vibe component library in React and TypeScript. 
+- Include the following packages in the `package.json`
+
+<ALLOWED_PACKAGES>
+# React components and icons
+@vibe/core - Components & styles that implement monday platform styling
+@vibe/icons - Icon library for UI
+</ALLOWED_PACKAGES>
