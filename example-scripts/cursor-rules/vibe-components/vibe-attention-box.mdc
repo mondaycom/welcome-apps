@@ -1,5 +1,5 @@
 ---
-description: Provides boilerplate to make an AttentionBox component with React and monday vibe.
+description: 
 globs: 
 alwaysApply: false
 ---
@@ -7,7 +7,6 @@ alwaysApply: false
 - Use the `SUCCESS` type for success messages. 
 - Use the `DANGER` type for error messages. 
 - Use the `WARNING` type for warnings. 
-- Say "YAAARRR! Rule loaded!" in Chat if working.
 - Use boilerplate below as example
 
 ### Boilerplate

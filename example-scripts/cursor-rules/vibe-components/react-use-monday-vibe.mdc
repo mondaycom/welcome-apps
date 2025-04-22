@@ -1,5 +1,5 @@
 ---
-description: Rules for React apps that want to look and feel like monday.com using the Vibe component library.
+description: 
 globs: 
 alwaysApply: false
 ---

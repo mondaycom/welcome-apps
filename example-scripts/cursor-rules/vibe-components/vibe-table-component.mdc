@@ -1,5 +1,5 @@
 ---
-description: Rules for building tables using the monday react library @vibe/core
+description: 
 globs: 
 alwaysApply: false
 ---
@@ -9,3 +9,114 @@ alwaysApply: false
 - The children of `TableBody` are a list of `TableRow` components as children. 
 - The children of `TableRow` are a list of `TableCell` components as children. 
 - The children of `TableHeader` should be `TableHeaderCell` components with a `title` prop. 
+
+### Boilerplate
+
+<Table
+  columns={[
+    {
+      id: 'sentOn',
+      loadingStateType: 'medium-text',
+      title: 'Sent on',
+      width: 150
+    },
+    {
+      id: 'subject',
+      loadingStateType: 'long-text',
+      title: 'Subject'
+    },
+    {
+      id: 'sentBy',
+      infoContent: 'This is the sender',
+      loadingStateType: 'circle',
+      title: 'Sent by',
+      width: {
+        max: 200,
+        min: 120
+      }
+    },
+    {
+      id: 'status',
+      infoContent: 'Info content for the status column',
+      loadingStateType: 'medium-text',
+      title: 'Status',
+      width: 150
+    },
+    {
+      id: 'emailsSent',
+      loadingStateType: 'medium-text',
+      title: 'Emails sent',
+      width: 150
+    }
+  ]}
+>
+  <TableHeader>
+    <TableHeaderCell title="Sent on" />
+    <TableHeaderCell title="Subject" />
+    <TableHeaderCell title="Sent by" />
+    <TableHeaderCell title="Status" />
+    <TableHeaderCell title="Emails sent" />
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>
+        2020-01-01
+      </TableCell>
+      <TableCell>
+        Lorem ipsum dolor
+      </TableCell>
+      <TableCell>
+        <TableAvatar text="John Doe" />
+      </TableCell>
+      <TableCell>
+        <Label
+          color="positive"
+          text="Sent"
+        />
+      </TableCell>
+      <TableCell>
+        100
+      </TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>
+        2023-03-03
+      </TableCell>
+      <TableCell>
+        This is the subject This is the subject This is the subject This is the subject This is the subject This is the subject
+      </TableCell>
+      <TableCell>
+        <TableAvatar text="Some Person" />
+      </TableCell>
+      <TableCell>
+        <Label
+          color="positive"
+          text="Sent"
+        />
+      </TableCell>
+      <TableCell>
+        999
+      </TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>
+        2022-02-02
+      </TableCell>
+      <TableCell>
+        This is the subject
+      </TableCell>
+      <TableCell>
+        <TableAvatar text="Other Name" />
+      </TableCell>
+      <TableCell>
+        <Label
+          color="positive"
+          text="Sent"
+        />
+      </TableCell>
+      <TableCell>
+        99
+      </TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
