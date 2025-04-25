@@ -1,0 +1,20 @@
+---
+description: Correct usage of the monday API libraries
+globs: 
+alwaysApply: false
+---
+## Using monday client libraries to make GraphQL API calls
+
+- Use the `@mondaydotcomorg/api` package to call the monday API
+- Read the client documentation at @https://www.npmjs.com/package/@mondaydotcomorg/api
+- Prefer the `@mondaydotcomorg/api` package over the "monday-sdk-js" package for making API calls
+
+### Installing the API client
+- If `@mondaydotcomorg/api` is not in the project dependencies, install it:
+```bash
+npm install @mondaydotcomorg/api
+```
+
+### Using the API client
+- Use the `ApiClient` class to make API calls from the server-side, such as Node.js environments. 
+- Use the `SeamlessApiClient` class to make API calls from the client-side, such as in React environments. 

@@ -1,0 +1,195 @@
+---
+description: Code examples for using official monday.com API client libraries to make API calls
+globs: 
+alwaysApply: false
+---
+
+
+# Using monday.com API Client Libraries
+
+## Overview
+This guide explains how to use the official monday.com API client libraries to make GraphQL API calls. The client libraries provide type-safe, reliable methods for interacting with the monday.com API.
+
+## Installation and Setup
+
+### Installing the API Client
+```bash
+npm install @mondaydotcomorg/api
+```
+
+### Required Imports
+```typescript
+import { ApiClient, SeamlessApiClient } from "@mondaydotcomorg/api";
+```
+
+## Type Definitions
+
+```typescript
+// Base response type for all API calls
+type APIResponse<T> = {
+    loading: boolean;                 // Top-level loading state
+    error: APIError | null;          // Top-level errors
+    data: {
+        loading: boolean;            // Query-specific loading state
+        error: APIError | null;      // Query-specific errors
+        data: T;                     // Your query results
+    };
+}
+
+// Structured error type
+type APIError = {
+    message: string;
+    status: number;
+    errors?: Array<{
+        message: string;
+        path?: string[];
+    }>;
+}
+```
+
+## Frontend Usage (Browser Environment)
+
+### Basic Query Example
+```typescript
+import { SeamlessApiClient } from "@mondaydotcomorg/api";
+
+// Define your query types
+type UserData = {
+    me: {
+        name: string;
+        email: string;
+    };
+}
+
+// Define your GraphQL query
+const GET_USER_INFO = `
+    query {
+        me {
+            name
+            email
+        }
+    }
+`;
+
+// Make the API call
+async function getUserInfo() {
+    const client = new SeamlessApiClient();
+    try {
+        const response = await client.request<APIResponse<UserData>>(GET_USER_INFO);
+        
+        if (response.error || response.data.error) {
+            throw new Error(response.error?.message || response.data.error?.message);
+        }
+        
+        return response.data.data;
+    } catch (error) {
+        console.error('API call failed:', error);
+        throw error;
+    }
+}
+```
+
+## Backend Usage (Node.js Environment)
+
+### Basic Mutation Example
+```typescript
+import { ApiClient } from "@mondaydotcomorg/api";
+
+// Define your mutation types
+type CreateItemResponse = {
+    create_item: {
+        id: string;
+        name: string;
+    };
+}
+
+// Define your GraphQL mutation
+const CREATE_ITEM = `
+    mutation($boardId: ID!, $itemName: String!) {
+        create_item(
+            board_id: $boardId,
+            item_name: $itemName
+        ) {
+            id
+            name
+        }
+    }
+`;
+
+// Make the API call
+async function createNewItem(boardId: string, itemName: string) {
+    // Get your API token from environment variables
+    const API_TOKEN = process.env.MONDAY_API_TOKEN;
+    if (!API_TOKEN) {
+        throw new Error('API token not found in environment variables');
+    }
+
+    const client = new ApiClient({ token: API_TOKEN });
+    
+    try {
+        const response = await client.request<APIResponse<CreateItemResponse>>(
+            CREATE_ITEM,
+            {
+                variables: {
+                    boardId,
+                    itemName
+                }
+            }
+        );
+
+        if (response.error || response.data.error) {
+            throw new Error(response.error?.message || response.data.error?.message);
+        }
+
+        return response.data.data;
+    } catch (error) {
+        console.error('Failed to create item:', error);
+        throw error;
+    }
+}
+```
+
+## Error Handling Best Practices
+
+1. **Always check both levels of errors**
+```typescript
+if (response.error || response.data.error) {
+    // Handle errors appropriately
+    const errorMessage = response.error?.message || response.data.error?.message;
+    // Log error, show user friendly message, etc.
+}
+```
+
+2. **Use try-catch blocks**
+```typescript
+try {
+    const response = await client.request(query);
+    // Handle success
+} catch (error) {
+    // Handle network errors, parsing errors, etc.
+}
+```
+
+## Important Notes
+
+1. **API Token Security**
+   - Never hardcode API tokens in your code
+   - Use environment variables for API tokens
+   - Backend: Use `process.env.MONDAY_API_TOKEN`
+   - Frontend: The SeamlessApiClient handles authentication automatically
+
+2. **Version Compatibility**
+   - Minimum required @mondaydotcomorg/api version: 2.0.0
+   - Compatible with monday.com API v2
+   - Check [monday.com API release notes](mdc:https:/developer.monday.com/api-reference/docs/release-notes) for updates
+
+3. **Rate Limiting**
+   - Implement appropriate error handling for rate limit responses
+   - Consider implementing retry logic with exponential backoff
+   - Monitor your API usage through the monday.com dashboard
+
+4. **Performance Tips**
+   - Request only the fields you need
+   - Use pagination for large datasets
+   - Cache responses when appropriate
+   - Batch related queries where possible 

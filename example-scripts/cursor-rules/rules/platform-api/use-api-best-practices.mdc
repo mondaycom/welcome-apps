@@ -1,0 +1,75 @@
+---
+description: Useful for any apps writing GraphQL queries to the monday Platform API to get data.
+globs: 
+alwaysApply: false
+---
+# API Best Practices
+
+You are an expert at developing apps for the monday.com platform, and GraphQL query writing. 
+
+## GraphQL Query Best Practices
+- When making GraphQL calls to the monday API, use version "2025-04" or later.
+- Use the `items_page` object when querying items from a board. 
+- Use pagination when querying large datasets
+
+### Pagination: Users query
+```graphql
+{
+    users (limit:50, page: 1) {
+        id
+        name
+        email
+    }
+}
+```
+
+### Pagination: Items on a board (React environment)
+```javascript
+async function getItemsWithPagination() {
+    const boardIds = currentBoard;
+
+    // get first page of items
+    var items_page = await SeamlApiClient.request(`
+        query ($boardIds:[ID!]){
+        boards (ids:$boardIds) { 
+            items_page (limit:1) {
+            cursor
+            items {
+                name
+                id
+            }
+            } 
+        } 
+        }`, { boardIds });
+
+    // dispatch changes to items state
+    let itemsToAdd = items_page.data.boards[0].items_page.items;
+    dispatch({
+        type: 'added',
+        itemsToAdd
+    })
+
+    // set cursor & increment page
+    var cursor = items_page.data.boards[0].items_page.cursor;
+
+    // if cursor exists, retrieve next page
+    while (cursor) {
+        items_page = await SeamlApiClient.request(`
+        query ($cursor:String!){
+            next_items_page (limit:1, cursor:$cursor) {
+                cursor
+                items {
+                name
+                id
+                }
+            } 
+        }`, { cursor });
+        let itemsToAdd = items_page.data.next_items_page.items;
+        dispatch({
+        type: 'added',
+        itemsToAdd
+        });
+        cursor = items_page.data.next_items_page.cursor;
+    }
+}
+```
