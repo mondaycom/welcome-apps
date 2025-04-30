@@ -95,7 +95,7 @@ alwaysApply: false
     );
 
     return (
-      <div className="combobox-stories-styles_row">
+      <div className="row">
         <DialogContentContainer>
           <Combobox options={options} size="small" placeholder="Placeholder text here" />
         </DialogContentContainer>
@@ -170,12 +170,6 @@ alwaysApply: false
         justify="start"
         align="start"
       >
-        <StoryDescription
-          description="Regular"
-          vertical
-          // @ts-ignore
-          align={Flex.align.START}
-        >
           <DialogContentContainer
             style={{
               height: "200px"
@@ -183,13 +177,6 @@ alwaysApply: false
           >
             <Combobox options={options} categories={categories} placeholder="Placeholder text here" />
           </DialogContentContainer>
-        </StoryDescription>
-        <StoryDescription
-          description="Sticky mode"
-          vertical
-          // @ts-ignore
-          align={Flex.align.START}
-        >
           <DialogContentContainer
             style={{
               height: "200px"
@@ -197,12 +184,6 @@ alwaysApply: false
           >
             <Combobox stickyCategories options={options} categories={categories} placeholder="Placeholder text here" />
           </DialogContentContainer>
-        </StoryDescription>
-        <StoryDescription
-          description="With divider"
-          vertical // @ts-ignore
-          align={Flex.align.START}
-        >
           <DialogContentContainer
             style={{
               height: "200px"
@@ -216,7 +197,6 @@ alwaysApply: false
               placeholder="Placeholder text here"
             />
           </DialogContentContainer>
-        </StoryDescription>
       </Flex>
 ```
 
@@ -327,7 +307,7 @@ alwaysApply: false
     return (
       <DialogContentContainer>
         <Combobox options={options} placeholder="Placeholder text here" />
-        <Button kind="tertiary" className="combobox-stories-styles_btn" leftIcon={Edit}>
+        <Button kind="tertiary" className="btn" leftIcon={Edit}>
           Edit
         </Button>
       </DialogContentContainer>
@@ -489,17 +469,6 @@ alwaysApply: false
         justify="center"
         align="start"
       >
-        <StoryDescription
-          className="combobox-stories-styles_virtualized-description"
-          // @ts-ignore
-          align="start"
-          description="Virtualization optimization without categories"
-          vertical
-          headerStyle={{
-            width: "70%",
-            textAlign: "start"
-          }}
-        >
           <div
             style={{
               width: "280px"
@@ -514,18 +483,6 @@ alwaysApply: false
               />
             </DialogContentContainer>
           </div>
-        </StoryDescription>
-        <StoryDescription
-          className="combobox-stories-styles_virtualized-description"
-          // @ts-ignore
-          align="start"
-          description="Virtualization optimization with categories"
-          vertical
-          headerStyle={{
-            width: "70%",
-            textAlign: "start"
-          }}
-        >
           <div
             style={{
               width: "280px"
@@ -541,18 +498,6 @@ alwaysApply: false
               />
             </DialogContentContainer>
           </div>
-        </StoryDescription>
-        <StoryDescription
-          className="combobox-stories-styles_virtualized-description"
-          // @ts-ignore
-          align="start"
-          description="Virtualization optimization with sticky categories"
-          vertical
-          headerStyle={{
-            width: "70%",
-            textAlign: "start"
-          }}
-        >
           <div
             style={{
               width: "280px"
@@ -569,7 +514,6 @@ alwaysApply: false
               />
             </DialogContentContainer>
           </div>
-        </StoryDescription>
       </Flex>
 ```
 
@@ -637,7 +581,7 @@ alwaysApply: false
       >
         <Dialog
           content={() => (
-            <DialogContentContainer className="combobox-stories-styles_wrapper">
+            <DialogContentContainer className="wrapper">
               <Combobox
                 options={options}
                 categories={categories}

@@ -10,16 +10,16 @@ alwaysApply: false
 ### ComplexExample
 
 ```jsx
-<div className="monday-storybook-skeleton_rules-column">
-        <div className="monday-storybook-skeleton_rules-row">
+<div className="rules-column">
+        <div className="rules-row">
           <Skeleton type="circle" />
           <Skeleton type="text" width={110} size="small" />
         </div>
-        <div className="monday-storybook-skeleton_article">
+        <div className="article">
           <div>
             <Skeleton />
           </div>
-          <div className="monday-storybook-skeleton_aside">
+          <div className="aside">
             <Skeleton type="text" size="h1" />
             <Skeleton type="text" size="h4" />
             <Skeleton type="text" size="h4" />
@@ -33,16 +33,16 @@ alwaysApply: false
 ### Shapes
 
 ```jsx
-<div className="monday-storybook-skeleton_row-box">
-      <div className="monday-storybook-skeleton_column-box">
+<div className="row-box">
+      <div className="column-box">
         <Skeleton type="circle" />
         <>Circle</>
       </div>
-      <div className="monday-storybook-skeleton_column-box">
+      <div className="column-box">
         <Skeleton />
         <>Square</>
       </div>
-      <div className="monday-storybook-skeleton_column-box">
+      <div className="column-box">
         <Skeleton width={112} height={46} />
         <>Rectangle</>
       </div>
@@ -52,16 +52,16 @@ alwaysApply: false
 ### Text
 
 ```jsx
-<div className="monday-storybook-skeleton_row-box">
-      <div className="monday-storybook-skeleton_column-box">
+<div className="row-box">
+      <div className="column-box">
         <Skeleton type="text" size="h1" />
         <>H1</>
       </div>
-      <div className="monday-storybook-skeleton_column-box">
+      <div className="column-box">
         <Skeleton type="text" size="h2" />
         <>H2</>
       </div>
-      <div className="monday-storybook-skeleton_column-box">
+      <div className="column-box">
         <Skeleton type="text" size="small" />
         <>Paragraph</>
       </div>
@@ -90,15 +90,15 @@ false);
     }, [setShowSkeleton, setSHowBlock]);
 
     return (
-      <div className="monday-storybook-skeleton_row">
+      <div className="row">
         {showBlock && (
-          <div className="monday-storybook-skeleton_box">
-            <div className="monday-storybook-skeleton_main">
-              <div className="monday-storybook-skeleton_header">
+          <div className="box">
+            <div className="main">
+              <div className="header">
                 <Avatar src={person} type="img" />
                 <h5>Hadas Farhi</h5>
               </div>
-              <p className="monday-storybook-skeleton_text">
+              <p className="text">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
                 dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
                 ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
@@ -106,24 +106,24 @@ false);
                 deserunt mollit anim id est laborum.
               </p>
             </div>
-            <div className="monday-storybook-skeleton_btn-group">
-              <Button className="monday-storybook-skeleton_btn" leftIcon={ThumbsUp} kind="secondary">
+            <div className="btn-group">
+              <Button className="btn" leftIcon={ThumbsUp} kind="secondary">
                 Like
               </Button>
-              <Button className="monday-storybook-skeleton_btn" leftIcon={Reply} kind="secondary">
+              <Button className="btn" leftIcon={Reply} kind="secondary">
                 Reply
               </Button>
             </div>
           </div>
         )}
         {showSkeleton && (
-          <div className="monday-storybook-skeleton_box">
-            <div className="monday-storybook-skeleton_main">
-              <div className="monday-storybook-skeleton_header">
+          <div className="box">
+            <div className="main">
+              <div className="header">
                 <Skeleton type="circle" width={50} height={50} />
                 <Skeleton type="text" size="h5" width={110} />
               </div>
-              <p className="monday-storybook-skeleton_text-wrapper">
+              <p className="text-wrapper">
                 <Skeleton type="text" size="small" width={655} />
                 <Skeleton type="text" size="small" width={680} />
                 <Skeleton type="text" size="small" width={670} />
@@ -131,7 +131,7 @@ false);
                 <Skeleton type="text" size="small" width={400} />
               </p>
             </div>
-            <div className="monday-storybook-skeleton_btn-group-skeleton">
+            <div className="btn-group-skeleton">
               <Skeleton type="text" size="h2" width={60} />
               <Skeleton type="text" size="h2" width={60} />
             </div>

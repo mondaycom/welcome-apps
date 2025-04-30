@@ -25,7 +25,6 @@ alwaysApply: false
 
 ```jsx
 <Flex direction="column" gap="small" align="start">
-      <StoryDescription description="Primary">
         <div style={{ width: "340px" }}>
           <AttentionBox
             title="Enabling SSO Login"
@@ -33,8 +32,6 @@ alwaysApply: false
             icon={Info}
           />
         </div>
-      </StoryDescription>
-      <StoryDescription description="Success">
         <div style={{ width: "340px" }}>
           <AttentionBox
             title="You're doing great"
@@ -43,8 +40,6 @@ alwaysApply: false
             icon={ThumbsUp}
           />
         </div>
-      </StoryDescription>
-      <StoryDescription description="Danger">
         <div style={{ width: "340px" }}>
           <AttentionBox
             title="Account low on free space"
@@ -52,8 +47,6 @@ alwaysApply: false
             type="danger"
           />
         </div>
-      </StoryDescription>
-      <StoryDescription description="Warning">
         <div style={{ width: "340px" }}>
           <AttentionBox
             title="Account low on free space"
@@ -62,8 +55,6 @@ alwaysApply: false
             icon={Info}
           />
         </div>
-      </StoryDescription>
-      <StoryDescription description="Dark">
         <div style={{ width: "340px" }}>
           <AttentionBox
             title="What a great idea!"
@@ -72,7 +63,6 @@ alwaysApply: false
             icon={Favorite}
           />
         </div>
-      </StoryDescription>
     </Flex>
 ```
 

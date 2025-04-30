@@ -20,7 +20,7 @@ alwaysApply: false
     );
 
     return (
-      <Toast open autoHideDuration={5000} actions={actions} className="monday-storybook-toast_wrapper">
+      <Toast open autoHideDuration={5000} actions={actions} className="wrapper">
         General message toast
       </Toast>
 ```
@@ -39,7 +39,7 @@ alwaysApply: false
     );
 
     return (
-      <Toast open actions={actions} autoHideDuration={5000} className="monday-storybook-toast_wrapper">
+      <Toast open actions={actions} autoHideDuration={5000} className="wrapper">
         General message toast
       </Toast>
 ```
@@ -47,7 +47,7 @@ alwaysApply: false
 ### ToastWithLoading
 
 ```jsx
-<Toast open loading className="monday-storybook-toast_wrapper">
+<Toast open loading className="wrapper">
         General message toast
       </Toast>
 ```
@@ -65,7 +65,7 @@ alwaysApply: false
     );
 
     return (
-      <Toast open type="positive" actions={actions} autoHideDuration={5000} className="monday-storybook-toast_wrapper">
+      <Toast open type="positive" actions={actions} autoHideDuration={5000} className="wrapper">
         Positive message toast
       </Toast>
 ```
@@ -83,7 +83,7 @@ alwaysApply: false
     );
 
     return (
-      <Toast open actions={actions} type="negative" autoHideDuration={5000} className="monday-storybook-toast_wrapper">
+      <Toast open actions={actions} type="negative" autoHideDuration={5000} className="wrapper">
         Negative message toast
       </Toast>
 ```
@@ -101,7 +101,7 @@ alwaysApply: false
     );
 
     return (
-      <Toast open actions={actions} type="warning" autoHideDuration={5000} className="monday-storybook-toast_wrapper">
+      <Toast open actions={actions} type="warning" autoHideDuration={5000} className="wrapper">
         Warning message toast
       </Toast>
 ```
@@ -119,7 +119,7 @@ alwaysApply: false
     );
 
     return (
-      <Toast open actions={actions} type="dark" autoHideDuration={5000} className="monday-storybook-toast_wrapper">
+      <Toast open actions={actions} type="dark" autoHideDuration={5000} className="wrapper">
         Dark message toast
       </Toast>
 ```
@@ -137,7 +137,7 @@ alwaysApply: false
     );
 
     return (
-      <Toast open type={Toast.types.POSITIVE} actions={actions} className="monday-storybook-toast_wrapper">
+      <Toast open type={Toast.types.POSITIVE} actions={actions} className="wrapper">
         We successfully deleted 1 item
       </Toast>
 ```

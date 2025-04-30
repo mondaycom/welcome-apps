@@ -2,7 +2,7 @@
 
 This directory contains Cursor IDE rules specifically designed for monday.com development. These rules provide enhanced development features for working with the monday API, monday Apps SDK, and monday Vibe Components.
 
-## Installation
+## Usage
 
 To use these rules in your Cursor IDE environment:
 
@@ -11,12 +11,31 @@ To use these rules in your Cursor IDE environment:
    mkdir -p .cursor/rules
    ```
 
-2. Copy the rule files from this directory to your project's `.cursor/rules` directory:
+2. Copy the rule files from the 'rules' directory to your project's `.cursor/rules` directory:
    ```bash
-   cp example-scripts/cursor-rules/* .cursor/rules/
+   cp -r example-scripts/cursor-rules/rules/* .cursor/rules/
    ```
 
 3. Restart Cursor IDE to apply the changes
+
+## Usage by developer tool
+You can either install all the rules at once or selectively install only the rules that match your needs.
+
+### Use all rules
+```bash
+cp -r example-scripts/cursor-rules/rules/* .cursor/rules
+```
+
+### Use only API client rules
+```bash
+cp -r example-scripts/cursor-rules/rules/platform-api/* .cursor/rules
+```
+
+### Use only Attention Box and Chips components rules
+```bash
+cp example-scripts/cursor-rules/rules/vibe-components/vibe-attention-box.mdc .cursor/rules
+cp example-scripts/cursor-rules/rules/vibe-components/vibe-chips-component.mdc .cursor/rules
+```
 
 ## Rule Types
 
@@ -30,21 +49,12 @@ The rules in this directory are organized as Project Rules, which means they are
 The rules provide guidance for:
 
 ### monday API Development
-- API endpoint suggestions and completions
+- API client suggestions
 - Request/response type definitions
 - Authentication patterns
-- Common API usage patterns
-
-### monday Apps SDK
-- SDK method completions
-- Type definitions and validation
-- Development best practices
-- Workflow automation
 
 ### monday Vibe Components
 - Component suggestions
-- Props validation
-- Styling patterns
 - Component composition guidelines
 
 ## Rule Structure
@@ -61,15 +71,9 @@ Rules are automatically applied when:
 - The rule is explicitly referenced using `@ruleName`
 - The AI determines the rule is relevant to the current context
 
-## Best Practices
-
-- Keep rules focused and specific to monday.com development
-- Update rules as the monday.com platform evolves
-- Share useful rules with your team
-- Test rules in your development environment before committing
-
 ## Support
 
 For issues or questions about these rules:
 - Check the monday.com developer documentation
 - Open an issue in this repository
+- Open a support ticket

@@ -121,7 +121,7 @@ alwaysApply: false
 
 ```jsx
 <>
-      <div className="monday-storybook-button-group_column">
+      <div className="group_column">
         <Text type={Text.types.TEXT1}>Medium</Text>
         <ButtonGroup
           groupAriaLabel="button group aria label"
@@ -135,7 +135,7 @@ alwaysApply: false
           ]}
         />
       </div>
-      <div className="monday-storybook-button-group_column">
+      <div className="group_column">
         <Text type={Text.types.TEXT1}>Small</Text>
         <ButtonGroup
           groupAriaLabel="button group aria label"
@@ -155,7 +155,7 @@ alwaysApply: false
 ### ButtonGroupInSettings: Boilerplate
 
 ```jsx
-<div className="monday-storybook-button-group_column">
+<div className="group_column">
       <Text type={Text.types.TEXT1}>Function</Text>
       <ButtonGroup
         groupAriaLabel="button group aria label"
@@ -205,7 +205,7 @@ alwaysApply: false
 ### FullWidthButtonGroup: Boilerplate
 
 ```jsx
-<div className="monday-storybook-button-group-full-width">
+<div className="group-full-width">
       <ButtonGroup
         groupAriaLabel="Full Width Button Group"
         fullWidth

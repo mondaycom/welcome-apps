@@ -3,7 +3,7 @@ import { loadCursorRule, validateRule } from '../utils/cursor-rule-utils';
 import * as path from 'path';
 
 describe('vibe-table-component rule', () => {
-  const rulePath = path.join(process.cwd(), '.cursor/rules/vibe-table-component.mdc');
+  const rulePath = path.join(process.cwd(), 'rules/vibe-components/vibe-table-component.mdc');
   let rule: ReturnType<typeof loadCursorRule>;
 
   beforeAll(() => {
