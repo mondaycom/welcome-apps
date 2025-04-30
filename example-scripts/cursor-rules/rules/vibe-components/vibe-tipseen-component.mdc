@@ -1,8 +1,10 @@
 ---
-description: 
+description: Tipseen examples to create an onboarding experience for new users
 globs: 
 alwaysApply: false
 ---
+- Tipseen component creates an onboarding experience for new users
+
 ### Tipseen with wizard
 
 ```jsx

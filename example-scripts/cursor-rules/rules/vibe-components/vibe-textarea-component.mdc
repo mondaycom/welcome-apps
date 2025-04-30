@@ -1,5 +1,5 @@
 ---
-description: 
+description: Usage of TextArea component to input multiline text
 globs: 
 alwaysApply: false
 ---

@@ -1,5 +1,5 @@
 ---
-description: 
+description: Tooltip boilerplate and examples to add context to a component when a user hovers on it
 globs: 
 alwaysApply: false
 ---

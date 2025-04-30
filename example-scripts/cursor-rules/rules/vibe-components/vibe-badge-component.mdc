@@ -1,5 +1,5 @@
 ---
-description: 
+description: Badge component usage examples, to add indicator to a child component
 globs: 
 alwaysApply: false
 ---

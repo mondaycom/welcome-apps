@@ -1,5 +1,5 @@
 ---
-description: Code examples for using official monday.com API client libraries to make API calls
+description: Code examples for the official monday.com API client library @mondaydotcom/api
 globs: 
 alwaysApply: false
 ---

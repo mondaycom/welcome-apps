@@ -1,5 +1,5 @@
 ---
-description: Dropdown component usage.
+description: Dropdown component usage, to select from a list of options
 globs: 
 alwaysApply: false
 ---

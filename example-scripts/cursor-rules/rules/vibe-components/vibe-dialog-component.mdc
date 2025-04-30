@@ -1,8 +1,11 @@
 ---
-description: 
+description: Usage of Dialog component that opens when its children are clicked
 globs: 
 alwaysApply: false
 ---
+- Dialog components open when their children are clicked
+- Use Dialog for menus and openable UI
+
 ### Basic usage
 
 Dialog next to an icon button

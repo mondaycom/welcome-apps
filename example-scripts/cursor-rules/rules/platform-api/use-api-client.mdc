@@ -1,5 +1,5 @@
 ---
-description: Correct usage of the monday API libraries
+description: Correct usage of the @mondaydotcomorg/api library
 globs: 
 alwaysApply: false
 ---

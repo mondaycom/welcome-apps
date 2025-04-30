@@ -1,5 +1,5 @@
 ---
-description: Usage of ComboBox component for monday
+description: Usage of ComboBox component to show a searchable dialog with content list
 globs: 
 alwaysApply: false
 ---

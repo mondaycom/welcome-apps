@@ -1,8 +1,9 @@
 ---
-description: Avatar is a graphical representation of a person through a profile picture, image, icon, or set of initials.
+description: Avatar component usage - to represent a person or profile
 globs: 
 alwaysApply: false
 ---
+- Avatar is a graphical representation of a person through a profile picture, image, icon, or set of initials.
 - Use an avatar to help a user in the platform efficiently identify another person or a team.
 - When there is no personal photo to show, use initials.
 - If an image fails to load, fall back to the default user avatar.

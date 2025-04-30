@@ -1,5 +1,5 @@
 ---
-description: Useful for any apps writing GraphQL queries to the monday Platform API to get data.
+description: GraphQL Best Practices for any apps that write GraphQL queries
 globs: 
 alwaysApply: false
 ---
