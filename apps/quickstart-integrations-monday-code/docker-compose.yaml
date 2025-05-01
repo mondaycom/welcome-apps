@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: monday-app
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+
+  ngrok:
+    image: ngrok/ngrok:latest
+    container_name: monday-ngrok
+    environment:
+      NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
+    command: "http monday-app:8080"
+    ports:
+      - "4040:4040"

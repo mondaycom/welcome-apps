@@ -35,7 +35,7 @@ http://localhost:4040/
 ```
 
 ### 3. Use tunnel url
-Use the url to redeploy the app in Monday.com and view changes in the integration section of the boards.
+Use the url to redeploy the app in Monday.com and view changes in the integration section of the boards. Follow the[link](https://github.com/mondaycom/welcome-apps/tree/master/apps/quickstart-integrations) to add the url to Monday.com and use the integration. 
 ```
 https://<random>.ngrok-free.app
 ```
