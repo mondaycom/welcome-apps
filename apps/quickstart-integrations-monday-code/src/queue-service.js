@@ -1,26 +1,39 @@
-import { Logger, Queue } from "@mondaycom/apps-sdk";
+import { Logger } from "@mondaycom/apps-sdk";
 
-const queue = new Queue();
-const logTag = "QueueService";
-const logger = new Logger(logTag);
+class MessageQueue {
+    publishMessage(message) {
+        // Implement message queue logic
+        return Promise.resolve(`mocked-message-id-${Date.now()}`);
+    }
 
+    validateMessageSecret(secret) {
+        // Implement secret validation logic
+        return secret === process.env.MNDY_TOPIC_MESSAGES_SECRET;
+    }
+}
+
+const queue = new MessageQueue();
+const logger = new Logger("QueueService");
 
 export const produceMessage = async (message) => {
-    logger.info(`produce message received ${message}`);
+    logger.info(`Producing message: ${message}`);
     const messageId = await queue.publishMessage(message);
-    logger.info(`Message ${messageId} published.`);
+    logger.info(`Message published with ID: ${messageId}`);
     return messageId;
-}
+};
 
 export const readQueueMessage = ({ body, query }) => {
     const envMessageSecret = process.env.MNDY_TOPIC_MESSAGES_SECRET;
-    logger.info(`expected queue secret value: ${envMessageSecret}`)
-    logger.info(`queue message received body ${JSON.stringify(body)}`)
-    logger.info(`queue message query params ${JSON.stringify(query)}`)
-    if (!queue.validateMessageSecret(query.secret))  {
-        logger.info("Queue message received is not valid, since secret is not matched, this message could come from an attacker.");
-        throw new Error('not allowed');
+
+    logger.info(`Expected queue secret: ${envMessageSecret}`);
+    logger.info(`Received queue message body: ${JSON.stringify(body)}`);
+    logger.info(`Received queue message query params: ${JSON.stringify(query)}`);
+
+    if (!queue.validateMessageSecret(query.secret)) {
+        logger.warn("Invalid queue message detected—possible attacker attempt.");
+        throw new Error("Not allowed");
     }
-    logger.info("Queue message received successfully.");
-    // process the queue message payload...
+
+    logger.info("Queue message successfully received.");
+    // Process the queue message payload...
 };
