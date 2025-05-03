@@ -217,3 +217,4 @@ vault/data
 vault/logs
 vault/policies
 vault/tmp
+.mappsrc
