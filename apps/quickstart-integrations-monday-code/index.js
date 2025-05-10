@@ -25,6 +25,7 @@ app.get("/", (req, res) => {
   res.status(200).send({ message: "healthy" });
 });
 
+
 app.post("/monday/execute_action", authorizeRequest, async (req, res) => {
   logger.info(
     JSON.stringify({
