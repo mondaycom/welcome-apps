@@ -1,13 +1,15 @@
 const { cache, cacheKeys } = require('./cache-service');
 const { ISSUE_FIELD_DEFS } = require('../constants/jira')
 const fetch = require('node-fetch');
-const user = process.env.USERNAME + ':' + process.env.API_KEY.toString();
-const baseUrl = process.env.URL;
+const {getSecret} = require('../helpers/secret-store');
+const { USERNAME, API_KEY, URL} = require('../constants/secret-keys')
+const user = getSecret(USERNAME) + ':' + getSecret(API_KEY);
+const baseUrl = getSecret(URL);
 
 const createWebhook = async (jql, subscriptionId) => {
   try {
     var fetchUrl = `${baseUrl}/rest/webhooks/1.0/webhook/`;
-    var targetUrl = `${cache.get(cacheKeys.SERVER_URL)}/integration/integration-events/${subscriptionId}/`;
+    var targetUrl = `${baseUrl}/integration/integration-events/${subscriptionId}/`;
     const bodyData = `{
       "name": "monday App Webhook",
       "url": ${JSON.stringify(targetUrl)},

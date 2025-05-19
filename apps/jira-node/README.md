@@ -1,5 +1,8 @@
 ## Overview
 
+TODO: readme - Add OAuth info - callback URL https://<YOUR_URL>/auth/monday/callback
+TODO: readme - Add secrets info
+
 This is the Jira JQL custom monday app integration recipe: 
 - When an issue with this <b>JQL</b> is updated, create an <b>item</b> and keep in sync.
 ![recipe](https://dapulse-res.cloudinary.com/image/upload/v1624649879/remote_mondaycom_static/uploads/HelenLu/Jira%20Node%20Images/recipe.png)

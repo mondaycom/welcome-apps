@@ -10,6 +10,11 @@ apps/*/.idea
 */**/yarn-debug.log*
 */**/yarn-error.log*
 
+# Cursor config
+/.cursor
+*/.cursor
+*/**/.cursor
+
 # monday code tarballs
 */**/code.tar.gz
 
@@ -18,3 +23,8 @@ apps/github-node/database.sqlite3
 apps/slack-node/database.sqlite3
 apps/github-monday-code/.env
 apps/slack-node/.env
+*/**/.env
+*/.mappsrc
+*/**/.mappsrc
+*/local-secure-storage.db.json
+*/**/local-secure-storage.db.json
