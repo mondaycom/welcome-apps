@@ -4,11 +4,13 @@ const mondayTriggersService = require('../services/monday-service');
 
 async function integrationEventsHandler(req, res) {
   const { subscriptionId } = req.params;
+  // no shortlived token when getting an event from JIRA...Need to use an OAuth token
+  const token = getConnectionByUserId(userId);
   const body = req.body;
   try {
     const issue = body.issue;
     const fields = issue.fields;
-    const { mondayWebhookUrl } = await subscriptionModelService.getSubscription(subscriptionId);
+    const { mondayWebhookUrl } = await subscriptionModelService.getSubscription(subscriptionId, token);
     const convertedIssue = jiraService.convertIssueToPrimitives(issue, fields);
     const issueId = convertedIssue.id;
     await mondayTriggersService.triggerMondayIntegration(mondayWebhookUrl, { issueFields: convertedIssue, issueId: issueId });

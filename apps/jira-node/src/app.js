@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const routes = require('./routes');
 const { cache, cacheKeys } = require('./services/cache-service');
 
+// TODO: figure out what to do with this
 const { PORT: port, LOCAL_SERVER_URL } = process.env;
 const app = express();
 
