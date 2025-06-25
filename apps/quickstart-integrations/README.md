@@ -1,69 +1,53 @@
-## Overview
+# Integration quickstart
 
-This is the "Quickstart Integration" example Monday app.
-<br>It can be used as a board recipe, which transforms data from one text column to another
+A minimal example to build your first integration app feature. [Learn more in our docs.](https://developer.monday.com/apps/docs/quickstart-deploy-your-first-app)
 
-<br>This app demonstrates how to use the:
+## Running the example
 
-- integration recipe
-- custom action
-- call authentication with JWT
-- query monday API using short lived token (seamless authentication)
-- remote options for custom fields
+For the example to work, you need to do the following steps: 
+1. Create and configure your app in monday:
+    a. Create an app
+    b. Add an integration app feature to your app
+2. Download the integration example code
+3. Deploy the example code to the app you created
+4. Test the app on a board
 
-<br>You can follow along in our [Quickstart guide](https://developer.monday.com/apps/docs/quickstart-integration) or use the instructions below.
-<br>![Screenshot](https://dapulse-res.cloudinary.com/image/upload/v1658942490/remote_mondaycom_static/developers/screenshots/QUICKSTART_GIPHY.gif)
+> Prefer a video demo? [Watch here.](https://www.loom.com/share/b982f6b88fc0491f9e70fa424eb91638)
 
-## Install
+## Create and configure the app in monday
+1. Create a new app. Name it something descriptive and press save. 
+2. Add a new app feature.
+   a. In the dialog that appears, select Integrations for sentence builder and click Next.
+   b. Choose the Quickstart Integration - NodeJS template. Click next. 
+   c. Check the box to automatically add any missing OAuth scopes.
+   d. Ignore the scaffold command prompt. Instead, add a dummy URL: https://myserver.com.
+   e. Click Create.
 
-1. Make sure you have Node (v16.16+) and npm installed
+## Download the example code
+- Download the files from Github 
+```npx degit github:mondaycom/welcome-apps/apps/quickstart-integrations-monday-code```
 
-2. Install the dependencies:
+## Deploy your app
+- Run the deployment command: `npm run deploy`
+- Follow the prompts in the CLI to select the app you just created and version
+- When deployment is complete, you will get a URL
+- Paste the URL as the `Base URL` of your workflows feature
 
-```
-$ npm install
-```
+### Setting environment variables
+- Copy your app’s Signing Secret from the “General info” section
+- Set the signing secret by running the following command – `mapps code:env -m set -k MONDAY_SIGNING_SECRET -v <your_signing_secret> -i <your app id>`
 
-## Configure your Monday App
+### Using the app
+- Open a board
+- Click "Integrations" on the top and select your app feature
+- Add your workflow to the board
+- Configure it by selecting an input column, output column, and transformation type. Press 'Add to board'
+- Write some text in the input column. It will be transformed and added to the output column
 
-### Part One: Create a new app and integration feature
+### Local development (optional)
+- Run `npm run dev` to start the app server on port 8080
+- Run `ngrok http 8080` to create a tunnel
+- Paste your ngrok tunnel URL as the `Base URL` of your feature
 
-1. Open monday.com, login to your account and go to a "Developers" section.
-2. Create new app - name it "Integration Example App"
-3. Open "Features" section and create new "Integration" feature
-4. Choose the "Quickstart Integration - NodeJS" template to start. Add in the missing scopes, run the command scaffold in your command line, and paste the resulting URL into the URL box.
-
-<br>![Screenshot](https://dapulse-res.cloudinary.com/image/upload/v1659026516/integration_template.gif)
-
-### Part Two: Update your integration's basic information
-
-In the feature editor, open the "Feature Details" tab. This tab allows you to add a title and description to your custom integration recipe. The user will see the title and description when they see your recipe in the Integrations Center.
-
-<br>![Screenshot](https://dapulse-res.cloudinary.com/image/upload/v1659026704/ee5c6e5-Quickstart_1.png)
-
-### Part Three: Recipe configuration
-
-Our new feature templates provide the integration recipe for you, so it is ready to go.
-
-<br>![Screenshot](https://dapulse-res.cloudinary.com/image/upload/v1659026804/ecd8711-Recipe.png)
-
-This integration utilizes a custom action that calls our API to update a second text column. If you want to see the code behind this recipe, navigate into the "quickstart-integrations" folder downloaded onto your computer after you ran the command line prompt in Part 1.
-
-In short, integrations run off of triggers that invoke certain actions. These triggers are the conditions that must be met before an action can take place.
-
-## Part Four: Run the project
-
-1. Add your MONDAY_SIGNING_SECRET to .env file
-   <br> \*\* To get your MONDAY_SIGNING_SECRET go to monday.com, open Developers section, open your app and find the Signing Secret in "Basic Information" section
-   <br> ![Screenshot](https://dapulse-res.cloudinary.com/image/upload/f_auto,q_auto/remote_mondaycom_static/uploads/VladMystetskyi/4db4f03e-67a5-482d-893e-033db67ee09b_monday-Apps2020-05-1901-31-26.png)
-2. Run the server using the monday tunnel:
-
-```
-$ npm run dev
-```
-
- ### Part Five: Using the custom integration recipe
-
-You're done! Head to any of your boards to add the integration recipe by searching for its name (in this example the integration name is "New Feature").
-
-Follow the integration recipe prompts as normal (selecting which Text columns you want) and watch the magic unfold!
+## Need help?
+Post in the [monday developers' community!](https://community.monday.com/c/developers/8) 

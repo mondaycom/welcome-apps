@@ -1,6 +1,7 @@
 {
+  "extends": "eslint:recommended",
   "env": {
-    "es6": true,
+    "es2018": true,
     "node": true,
     "mocha": true
   },
@@ -12,7 +13,8 @@
     "flowtype": {
       "onlyFilesWithFlowAnnotation": false
     }
-  }, "parserOptions": {
-    "ecmaVersion": 8
+  },
+  "parserOptions": {
+    "sourceType": "module"
   }
 }
