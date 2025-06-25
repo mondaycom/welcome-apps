@@ -4,6 +4,8 @@ This is the Jira JQL custom monday app integration recipe:
 - When an issue with this <b>JQL</b> is updated, create an <b>item</b> and keep in sync.
 ![recipe](https://dapulse-res.cloudinary.com/image/upload/v1624649879/remote_mondaycom_static/uploads/HelenLu/Jira%20Node%20Images/recipe.png)
 
+> **Warning:** This example does not support monday code yet. For examples that use monday code, try our Github or Slack integrations instead. 
+
 This integration recipe allows you to specify a JQL query. When an issue is updated or created within the scopes of the JQL query, an item will be created on your monday.com board and will be kept in sync. All future updates made in Jira will be pushed over to the relevant item on your board.
 
 <br>This app demonstrates how to use:
