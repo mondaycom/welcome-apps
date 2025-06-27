@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "npm run stop && concurrently \"npm run server\" \"npm run expose\"",
-    "build": "vite build",
+    "deploy:build": "vite build",
+    "deploy:push": "mapps code:push --client-side -d \"build\"",
+    "deploy": "npm run deploy:build && npm run deploy:push",
     "expose": "mapps tunnel:create -p 8301",
     "server": "vite",
     "test": "react-scripts test",
@@ -32,7 +34,7 @@
     ]
   },
   "devDependencies": {
-    "@mondaycom/apps-cli": "^4.0.0",
+    "@mondaycom/apps-cli": "^4.7.4",
     "@vitejs/plugin-react": "^4.3.2",
     "concurrently": "^5.2.0",
     "cross-port-killer": "^1.2.1",
