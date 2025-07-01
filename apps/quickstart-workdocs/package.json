@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "start": "npm run stop && concurrently \"npm run server\" \"npm run expose\"",
-    "build": "vite build",
     "expose": "mapps tunnel:create -p 8306",
     "server": "vite",
+    "deploy:build": "vite build",
+    "deploy:push": "mapps code:push --client-side -d \"build\"",
+    "deploy": "npm run deploy:build && npm run deploy:push",
     "stop": "kill-port 8306 && kill-port 4049 && kill-port 4040"
   },
   "dependencies": {
