@@ -123,6 +123,13 @@ app.get("/super-health", async (req, res) => {
   });
 });
 
+app.get("/error", (req, res) => {
+  res.status(500).send({
+    status: "ERROR",
+    timestamp: new Date().toISOString(),
+  });
+});
+
 app.post("/mndy-cronjob/test", async (req, res) => {
   const now = Date.now() + "";
 

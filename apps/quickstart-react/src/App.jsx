@@ -2,12 +2,16 @@ import mondaySdk from "monday-sdk-js";
 import "monday-ui-react-core/dist/main.css";
 import React, { useEffect, useState } from "react";
 import "./App.css";
-//Explore more Monday React Components here: https://style.monday.com/
+
+// Modern Monday UI components
 import AttentionBox from "monday-ui-react-core/dist/AttentionBox.js";
 import Box from "monday-ui-react-core/dist/Box.js";
 import Button from "monday-ui-react-core/dist/Button.js";
 import Heading from "monday-ui-react-core/dist/Heading.js";
 import TextField from "monday-ui-react-core/dist/TextField.js";
+import Divider from "monday-ui-react-core/dist/Divider.js";
+import Loader from "monday-ui-react-core/dist/Loader.js";
+import Tooltip from "monday-ui-react-core/dist/Tooltip.js";
 
 // Usage of mondaySDK example, for more information visit here: https://developer.monday.com/apps/docs/introduction-to-the-sdk/
 const monday = mondaySdk();
@@ -18,6 +22,7 @@ const App = () => {
   const [value, setValue] = useState("");
   const [storedValueV1, setStoredValueV1] = useState(null);
   const [storedValueV2, setStoredValueV2] = useState(null);
+  const [loading, setLoading] = useState({ v1: false, v2: false });
 
   useEffect(() => {
     // Notice this method notifies the monday platform that user gains a first value in an app.
@@ -33,30 +38,39 @@ const App = () => {
   // V1 (Instance-based) Storage Operations
   const setItemV1 = async () => {
     const valueToStore = value.trim() || new Date().toString();
+    setLoading(prev => ({ ...prev, v1: true }));
     try {
       await monday.storage.instance.setItem(key, valueToStore);
-      getItemV1(); // Refresh the displayed value
+      await getItemV1(); // Refresh the displayed value
     } catch (error) {
       console.error("Error setting V1 item:", error);
+    } finally {
+      setLoading(prev => ({ ...prev, v1: false }));
     }
   };
 
   const getItemV1 = async () => {
+    setLoading(prev => ({ ...prev, v1: true }));
     try {
       const response = await monday.storage.instance.getItem(key);
       setStoredValueV1(response.data.value);
     } catch (error) {
       console.error("Error getting V1 item:", error);
       setStoredValueV1(null);
+    } finally {
+      setLoading(prev => ({ ...prev, v1: false }));
     }
   };
 
   const deleteItemV1 = async () => {
+    setLoading(prev => ({ ...prev, v1: true }));
     try {
       await monday.storage.instance.deleteItem(key);
       setStoredValueV1(null);
     } catch (error) {
       console.error("Error deleting V1 item:", error);
+    } finally {
+      setLoading(prev => ({ ...prev, v1: false }));
     }
   };
 
@@ -74,6 +88,7 @@ const App = () => {
     const BATCH_SIZE = 25;
     const totalBatches = Math.ceil(TOTAL_ITEMS / BATCH_SIZE);
 
+    setLoading(prev => ({ ...prev, v1: true }));
     try {
       for (let batchIndex = 0; batchIndex < totalBatches; batchIndex++) {
         const batchPromises = [];
@@ -92,25 +107,28 @@ const App = () => {
       console.log('Successfully created 10,000 items');
     } catch (error) {
       console.error('Error creating items:', error);
+    } finally {
+      setLoading(prev => ({ ...prev, v1: false }));
     }
   };
 
   // V2 (Instance-less) Storage Operations
   const setItemV2 = async () => {
     const valueToStore = value.trim() || new Date().toString();
+    setLoading(prev => ({ ...prev, v2: true }));
     try {
-      // TODO: Maor: use this next "debugger" line to stop execution when running client code
-      // debugger;
-      // TODO: work with TTL
       await monday.storage.setItem(key, valueToStore, { ttl: 42 });
-      getItemV2(); // Refresh the displayed value
+      await getItemV2(); // Refresh the displayed value
     } catch (error) {
       console.error("Error setting V2 item:", error);
+    } finally {
+      setLoading(prev => ({ ...prev, v2: false }));
     }
   };
 
   const setItemV2HighRate = async () => {
     const valueToStore = value.trim() || new Date().toString();
+    setLoading(prev => ({ ...prev, v2: true }));
     try {
       const promises = [];
       for (let i = 0; i < 10; i++) {
@@ -119,172 +137,262 @@ const App = () => {
         );
       }
       await Promise.all(promises);
-      getItemV2(); // Refresh the displayed value
+      await getItemV2(); // Refresh the displayed value
     } catch (error) {
       console.error("Error setting V2 item:", error);
+    } finally {
+      setLoading(prev => ({ ...prev, v2: false }));
     }
   };
 
   const getItemV2 = async () => {
+    setLoading(prev => ({ ...prev, v2: true }));
     try {
       const response = await monday.storage.getItem(key);
       setStoredValueV2(response.data.value);
     } catch (error) {
       console.error("Error getting V2 item:", error);
       setStoredValueV2(null);
+    } finally {
+      setLoading(prev => ({ ...prev, v2: false }));
     }
   };
 
   const deleteItemV2 = async () => {
+    setLoading(prev => ({ ...prev, v2: true }));
     try {
       await monday.storage.deleteItem(key);
       setStoredValueV2(null);
     } catch (error) {
       console.error("Error deleting V2 item:", error);
+    } finally {
+      setLoading(prev => ({ ...prev, v2: false }));
     }
   };
 
   //Some example what you can do with context, read more here: https://developer.monday.com/apps/docs/mondayget#requesting-context-and-settings-data
   const attentionBoxText = `Hello, your user_id is: ${
     context ? context.user.id : "still loading"
-  }.
-  Let's start building your amazing app, which will change the world!`;
+  }. Let's start building your amazing app, which will change the world!`;
 
   return (
-    <div
-      className="container"
-      style={{ maxWidth: "800px", margin: "20px auto", padding: "20px" }}
-    >
-      <AttentionBox
-        title="Hello Monday Apps!"
-        text={attentionBoxText}
-        type="success"
-        className="monday-style-attention-box"
-      />
+    <div className="app-container">
+      <div className="app-header">
+        <AttentionBox
+          title="🚀 Welcome to Monday Apps!"
+          text={attentionBoxText}
+          type="success"
+          className="welcome-attention-box"
+        />
+      </div>
 
-      <Box padding={Box.paddings.MEDIUM} margin={Box.marginBottoms.MEDIUM}>
-        <div style={{ display: "flex", gap: "16px", marginBottom: "24px" }}>
-          <TextField
-            placeholder="Enter storage key"
-            value={key}
-            onChange={(value) => setKey(value)}
-            size={TextField.sizes.MEDIUM}
-            validation={key.trim() ? "success" : "error"}
-            required
-          />
-          <TextField
-            placeholder="Enter value (or leave empty for current date)"
-            value={value}
-            onChange={(value) => setValue(value)}
-            size={TextField.sizes.MEDIUM}
-          />
-        </div>
-
-        <div
-          style={{
-            display: "grid",
-            gap: "24px",
-            gridTemplateColumns: "1fr 1fr",
-          }}
-        >
-          <Box
-            padding={Box.paddings.MEDIUM}
-            border={Box.borders.DEFAULT}
-            rounded={Box.roundeds.MEDIUM}
-            style={{ backgroundColor: "#ffffff" }}
-          >
-            <Heading
-              type={Heading.types.h3}
-              value="V1 Storage (Instance-based)"
+      {/* Configuration Section */}
+      <Box 
+        padding={Box.paddings.LARGE} 
+        margin={Box.marginBottoms.LARGE}
+        className="config-section"
+      >
+        <Heading 
+          type={Heading.types.h3} 
+          value="Storage Configuration"
+          style={{ marginBottom: "24px", color: "var(--primary-text-color)" }}
+        />
+        
+        <div className="input-grid">
+          <div className="input-group">
+            <label className="input-label">Storage Key</label>
+            <TextField
+              placeholder="Enter storage key"
+              value={key}
+              onChange={(value) => setKey(value)}
+              size={TextField.sizes.MEDIUM}
+              validation={key.trim() ? "success" : "error"}
+              required
+              className="config-input"
             />
-            <div style={{ display: "flex", gap: "8px", margin: "16px 0" }}>
+          </div>
+          <div className="input-group">
+            <label className="input-label">Value</label>
+            <TextField
+              placeholder="Enter value (or leave empty for current date)"
+              value={value}
+              onChange={(value) => setValue(value)}
+              size={TextField.sizes.MEDIUM}
+              className="config-input"
+            />
+          </div>
+        </div>
+      </Box>
+
+      <Divider />
+
+      {/* Storage Operations Sections */}
+      <div className="storage-sections">
+        {/* V1 Storage Section */}
+        <Box
+          padding={Box.paddings.LARGE}
+          className="storage-section v1-section"
+        >
+          <div className="section-header">
+            <div className="section-title-group">
+              <Heading
+                type={Heading.types.h4}
+                value="V1 Storage (Instance-based)"
+                style={{ margin: 0 }}
+              />
+              <span className="badge legacy-badge">Legacy</span>
+            </div>
+            {loading.v1 && (
+              <Loader 
+                size={Loader.sizes.SMALL} 
+                className="section-loader"
+              />
+            )}
+          </div>
+
+          <div className="button-group">
+            <Tooltip content="Store a new item in V1 storage">
               <Button
                 size={Button.sizes.MEDIUM}
                 onClick={setItemV1}
-                disabled={!key.trim()}
+                disabled={!key.trim() || loading.v1}
+                className="action-button primary-action"
               >
-                Set
+                📝 Set
               </Button>
+            </Tooltip>
+            
+            <Tooltip content="Retrieve item from V1 storage">
               <Button
                 size={Button.sizes.MEDIUM}
                 onClick={getItemV1}
-                disabled={!key.trim()}
+                disabled={!key.trim() || loading.v1}
                 kind={Button.kinds.SECONDARY}
+                className="action-button"
               >
-                Get
+                🔍 Get
               </Button>
+            </Tooltip>
+            
+            <Tooltip content="Delete item from V1 storage">
               <Button
                 size={Button.sizes.MEDIUM}
                 onClick={deleteItemV1}
-                disabled={!key.trim()}
+                disabled={!key.trim() || loading.v1}
                 kind={Button.kinds.TERTIARY}
+                className="action-button"
               >
-                Delete
+                🗑️ Delete
               </Button>
+            </Tooltip>
+            
+            <Tooltip content="Create 10,000 items for stress testing">
               <Button
                 size={Button.sizes.MEDIUM}
                 onClick={createManyItemsV1}
                 kind={Button.kinds.PRIMARY}
-                color="negative"
+                color={Button.colors.NEGATIVE}
+                disabled={loading.v1}
+                className="action-button danger-action"
               >
-                SUPER-SPAM! (10K Items)
+                ⚡ SUPER-SPAM! (10K Items)
               </Button>
-            </div>
-            <div style={{ marginTop: "8px" }}>
-              <strong>Stored Value:</strong>{" "}
-              {storedValueV1 || "No value stored"}
-            </div>
-          </Box>
+            </Tooltip>
+          </div>
 
           <Box
             padding={Box.paddings.MEDIUM}
-            border={Box.borders.DEFAULT}
-            rounded={Box.roundeds.MEDIUM}
-            style={{ backgroundColor: "#ffffff" }}
+            className="value-display"
           >
-            <Heading
-              type={Heading.types.h3}
-              value="V2 Storage (Instance-less)"
-            />
-            <div style={{ display: "flex", gap: "8px", margin: "16px 0" }}>
+            <div className="value-label">Stored Value:</div>
+            <div className="value-content">
+              {storedValueV1 || "No value stored"}
+            </div>
+          </Box>
+        </Box>
+
+        {/* V2 Storage Section */}
+        <Box
+          padding={Box.paddings.LARGE}
+          className="storage-section v2-section"
+        >
+          <div className="section-header">
+            <div className="section-title-group">
+              <Heading
+                type={Heading.types.h4}
+                value="V2 Storage (Instance-less)"
+                style={{ margin: 0 }}
+              />
+              <span className="badge modern-badge">Modern</span>
+            </div>
+            {loading.v2 && (
+              <Loader 
+                size={Loader.sizes.SMALL} 
+                className="section-loader"
+              />
+            )}
+          </div>
+
+          <div className="button-group">
+            <Tooltip content="Store a new item in V2 storage with TTL">
               <Button
                 size={Button.sizes.MEDIUM}
                 onClick={setItemV2}
-                disabled={!key.trim()}
+                disabled={!key.trim() || loading.v2}
+                className="action-button primary-action"
               >
-                Set
+                📝 Set
               </Button>
+            </Tooltip>
+            
+            <Tooltip content="Store multiple items rapidly for stress testing">
               <Button
                 size={Button.sizes.MEDIUM}
                 onClick={setItemV2HighRate}
-                disabled={!key.trim()}
+                disabled={!key.trim() || loading.v2}
+                kind={Button.kinds.SECONDARY}
+                className="action-button"
               >
-                Set: high rate
+                🚀 Set: High Rate
               </Button>
+            </Tooltip>
+            
+            <Tooltip content="Retrieve item from V2 storage">
               <Button
                 size={Button.sizes.MEDIUM}
                 onClick={getItemV2}
-                disabled={!key.trim()}
+                disabled={!key.trim() || loading.v2}
                 kind={Button.kinds.SECONDARY}
+                className="action-button"
               >
-                Get
+                🔍 Get
               </Button>
+            </Tooltip>
+            
+            <Tooltip content="Delete item from V2 storage">
               <Button
                 size={Button.sizes.MEDIUM}
                 onClick={deleteItemV2}
-                disabled={!key.trim()}
+                disabled={!key.trim() || loading.v2}
                 kind={Button.kinds.TERTIARY}
+                className="action-button"
               >
-                Delete
+                🗑️ Delete
               </Button>
-            </div>
-            <div style={{ marginTop: "8px" }}>
-              <strong>Stored Value:</strong>{" "}
+            </Tooltip>
+          </div>
+
+          <Box
+            padding={Box.paddings.MEDIUM}
+            className="value-display"
+          >
+            <div className="value-label">Stored Value:</div>
+            <div className="value-content">
               {storedValueV2 || "No value stored"}
             </div>
           </Box>
-        </div>
-      </Box>
+        </Box>
+      </div>
     </div>
   );
 };
