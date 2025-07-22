@@ -1,5 +1,4 @@
 const { AuthorizationCode } = require('simple-oauth2');
-// TODO: Move to monday storage
 const { cache, cacheKeys } = require('../services/cache-service');
 const EnvironmentVariablesService = require('./monday-code/environment-variables-service');
 const SecretsService = require('./monday-code/secrets-service');
