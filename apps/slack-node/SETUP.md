@@ -1,8 +1,10 @@
-# overview
+# Overview
+Follow these steps to create your Slack integration.
+
+# App setup & local development
+
 In order for this integration to work you will need to create an oAuth app using your slack account.
 To do so, please follow these steps:
-
-## new instructions
 
 ## Create app in monday
 To set up the app in Monday, follow these steps:
@@ -45,16 +47,49 @@ To set up the app in Monday, follow these steps:
 
 > Don't know how to add an update to an item? [Follow these steps](https://support.monday.com/hc/en-us/articles/115005900249-The-Updates-Section)
 
+# Deploy to monday code
 
-## old instructions
+Once you have the app working in your development environment, you can deploy it to monday code. 
 
-1. Copy the tunnel url the app printed after running the cli command. Example: https://monday-integration-1.loca.lt
-2. Navigate to [slack apps](https://api.slack.com/apps/ 'slack apps') and login to your slack account.
-3. Click the "Create New App" button, fill the name, select the workspace and click "Create App".
-4. On the left pane under "Features" click "OAuth & Permissions".
-5. Add your tunnel url as a "Redirect URL" with the /auth route: <br/>![Screenshot](https://dapulse-res.cloudinary.com/image/upload/v1610370577/monday-apps-templates/slack-node/Screen_Shot_2021-01-11_at_15.09.25.png) 
-6. Scroll down and add the following User Token Scopes: <br/>![Screenshot](https://dapulse-res.cloudinary.com/image/upload/v1610369859/monday-apps-templates/slack-node/Screen_Shot_2021-01-11_at_14.57.09.png)
-7. On the left pane under "Settings" click "Basic Information".
-8. Copy the Client ID and Client Secret from the App Credentials: <br/>![Screenshot](https://dapulse-res.cloudinary.com/image/upload/v1610369924/monday-apps-templates/slack-node/Screen_Shot_2021-01-11_at_14.58.31.png)
-9.  Paste the ClientID & Secret into the .env file inside of your code directory: <br/>![Screenshot](https://dapulse-res.cloudinary.com/image/upload/v1610370048/monday-apps-templates/slack-node/Screen_Shot_2021-01-11_at_15.00.36.png)
-10. Save the .env file and your app should be good to go! You can add one of the recipes to your board and try it out :)
+## Initialize the monday CLI
+
+`npm run deploy:init`
+
+## Deploy to monday code
+
+1. Run `npm run deploy`
+2. Select the app to deploy your code to
+3. Select the app version to deploy to
+
+## Add your monday code URL to Slack app config
+
+1. Open your Slack app at api.slack.com
+2. Go to "OAuth and permissions"
+3. Add the following Redirect URL - `https://<your_monday_code_deployment_url>/auth`
+
+## Add environment variables
+
+1. Open your app in the developer center
+2. Navigate to "Host on monday" > General > Environment variables tab
+3. Add the following environment variables: 
+```
+TOKEN_HOST=https://slack.com
+TOKEN_PATH=/api/oauth.v2.access
+AUTHORIZE_PATH=/oauth/v2/authorize
+LOCAL_SERVER_URL=your_monday_code_url
+```
+## Add secrets
+
+1. Open your app in the developer center
+2. Navigate to "Host on monday" > General > Secrets tab
+3. Add the following secrets:
+```
+MONDAY_SIGNING_SECRET=your_monday_signing_secret
+CLIENT_ID=your_slack_client_id
+CLIENT_SECRET=your_slack_client_secret
+```
+
+## Try it out!
+
+1. Open a board and add your integration (same steps as when developing locally)
+2. If you run into any issues, errors will be logged in the "Host on monday" > "Logs" section of the Developer Center. 

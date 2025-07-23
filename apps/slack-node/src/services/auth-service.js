@@ -1,5 +1,7 @@
 const { AuthorizationCode } = require('simple-oauth2');
 const { cache, cacheKeys } = require('../services/cache-service');
+const EnvironmentVariablesService = require('./monday-code/environment-variables-service');
+const SecretsService = require('./monday-code/secrets-service');
 
 const SCOPES = ['chat:write', 'channels:read'];
 
@@ -24,15 +26,24 @@ const getToken = async (code, userId) => {
 };
 
 const getClient = () => {
+  const environmentManager = EnvironmentVariablesService.getInstance();
+  const secretsManager = SecretsService.getInstance();
+  
+  const TOKEN_HOST = environmentManager.get('TOKEN_HOST');
+  const TOKEN_PATH = environmentManager.get('TOKEN_PATH');
+  const AUTHORIZE_PATH = environmentManager.get('AUTHORIZE_PATH');
+  const CLIENT_ID = secretsManager.get('CLIENT_ID');
+  const CLIENT_SECRET = secretsManager.get('CLIENT_SECRET');
+
   return new AuthorizationCode({
     client: {
-      id: process.env.CLIENT_ID,
-      secret: process.env.CLIENT_SECRET,
+      id: CLIENT_ID,
+      secret: CLIENT_SECRET,
     },
     auth: {
-      tokenHost: process.env.TOKEN_HOST,
-      tokenPath: process.env.TOKEN_PATH,
-      authorizePath: process.env.AUTHORIZE_PATH,
+      tokenHost: TOKEN_HOST,
+      tokenPath: TOKEN_PATH,
+      authorizePath: AUTHORIZE_PATH,
     },
   });
 };
