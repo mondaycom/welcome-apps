@@ -8,18 +8,30 @@ async function authenticationMiddleware(req, res, next) {
     if (!authorization && req.query) {
       authorization = req.query.token;
     }
+
     const secretsManager = SecretsService.getInstance();
     const signingSecret = secretsManager.get('MONDAY_SIGNING_SECRET');
-    
-    const { accountId, userId, backToUrl, shortLivedToken } = jwt.verify(
-      authorization,
-      signingSecret
-    );
-    req.session = { accountId, userId, backToUrl, shortLivedToken };
+    if (!signingSecret) {
+      throw new Error('MONDAY_SIGNING_SECRET is not configured');
+    }
+
+    const payload = jwt.verify(authorization, signingSecret);
+
+    // Type guard to ensure payload is an object with the expected properties
+    if (typeof payload === 'string' || !payload.accountId || !payload.userId) {
+      throw new Error('Invalid JWT payload structure');
+    }
+
+    const { accountId, userId, backToUrl, shortLivedToken } = payload;
+
+    // Store Monday.com authentication data on req.monday instead of overriding req.session
+    // This avoids conflicts with express-session middleware
+    req.monday = { accountId, userId, backToUrl, shortLivedToken };
+
     next();
   } catch (err) {
     LoggerService.getInstance().error('Authentication error', err);
-    return res.status(500).json({ error: 'Not authenticated. Did you add your monday signing secret to .env?' });
+    res.status(500).json({ error: 'Not authenticated. Did you add your monday signing secret to .env?' });
   }
 }
 

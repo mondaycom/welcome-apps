@@ -1,8 +1,6 @@
 const router = require('express').Router();
-const authRoutes = require('./auth');
 const mondayRoutes = require('./monday');
 
-router.use(authRoutes);
 router.use(mondayRoutes);
 
 router.get('/', function (req, res) {

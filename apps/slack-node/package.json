@@ -26,6 +26,7 @@
     "cross-port-killer": "^1.2.1",
     "dotenv": "^5.0.1",
     "express": "^4.17.1",
+    "express-session": "^1.18.1",
     "jsonwebtoken": "^9.0.0",
     "monday-sdk-js": "^0.5.2",
     "node-cache": "^5.1.2",
