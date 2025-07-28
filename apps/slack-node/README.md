@@ -42,3 +42,6 @@ $ npm run dev
 ## Add your tunnel URL to .env
 
 The monday CLI will print your app's URL in the format `https://abcd1234.apps-tunnel.monday.com`. Copy this URL and paste it in the .env file.
+
+> **Note:** For workflow blocks integrations, the `auth service` and `auth controller` are not needed. These were required in the old integration approach, but are unnecessary with the current workflow blocks method.
+
