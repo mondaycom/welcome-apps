@@ -3,26 +3,24 @@ const slackService = require('../services/slack-service');
 const MondayService = require('../services/monday-service');
 
 async function executeAction(req, res) {
-  const { userId, shortLivedToken } = req.monday;
+  const { shortLivedToken } = req.monday;
   const { inputFields } = req.body.payload;
 
   try {
-    const connection = await connectionModelService.getConnectionByUserId(userId);
+    const token = req.body?.payload?.credentialsValues?.slack_credentials?.accessToken;
 
-    if (!connection) {
-      return res.status(400).send({ message: 'No Slack connection found for this user' });
+    if (!token) {
+      return res.status(400).send({ message: 'No Slack token found' });
     }
-
-    const { token } = connection;
 
     const { boardId, channel, itemId, columnId } = inputFields;
 
-    // Get the item title from Monday.com
+    // Get the item title from monday.com
     const itemTitle = await MondayService.getItemTitle(shortLivedToken, itemId);
     const { type, value } = (await MondayService.getStatusColumn(shortLivedToken, boardId, itemId, columnId)) || {};
 
     // Create dynamic message
-    const message = `The item "${itemTitle}" was changed ${type} to ${value}`;
+    const message = `The item "${itemTitle}" has had its ${type} updated to "${value}".`;
 
     await slackService.postMessage(token, channel, message);
 
@@ -39,16 +37,12 @@ async function executeAction(req, res) {
 }
 
 async function getRemoteListOptions(req, res) {
-  const { userId } = req.monday;
-
   try {
-    const connection = await connectionModelService.getConnectionByUserId(userId);
+    const token = req.body?.payload?.credentialsValues?.credentianals?.accessToken;
 
-    if (!connection) {
-      return res.status(400).send({ message: 'No Slack connection found for this user' });
+    if (!token) {
+      return res.status(400).send({ message: 'No Slack token found' });
     }
-
-    const { token } = connection;
 
     const options = await slackService.getChannels(token);
     return res.status(200).send(options);

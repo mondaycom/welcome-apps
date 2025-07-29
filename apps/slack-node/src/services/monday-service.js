@@ -1,12 +1,10 @@
-const initMondayClient = require('monday-sdk-js');
+const { ApiClient } = require('@mondaydotcomorg/api');
 const LoggerService = require('./monday-code/logger-service');
 
 class MondayService {
   static async getItemTitle(token, itemId) {
     try {
-      const mondayClient = initMondayClient();
-      mondayClient.setToken(token);
-      mondayClient.setApiVersion('2024-01');
+      const apiClient = new ApiClient({ token });
 
       const query = `query($itemId: [ID!]) {
         items (ids: $itemId) {
@@ -15,8 +13,8 @@ class MondayService {
       }`;
       const variables = { itemId };
 
-      const response = await mondayClient.api(query, { variables });
-      return response.data.items[0].name;
+      const response = await apiClient.request(query, variables);
+      return response.items[0].name;
     } catch (err) {
       LoggerService.getInstance().error('Error getting item title', err);
       return null;
@@ -25,9 +23,7 @@ class MondayService {
 
   static async getStatusColumn(token, boardId, itemId, columnId) {
     try {
-      const mondayClient = initMondayClient();
-      mondayClient.setToken(token);
-      mondayClient.setApiVersion('2024-01');
+      const apiClient = new ApiClient({ token });
 
       const query = `query($itemId: [ID!], $columnId: [String!]) {
         items (ids: $itemId) {
@@ -39,8 +35,8 @@ class MondayService {
       }`;
       const variables = { columnId, itemId };
 
-      const response = await mondayClient.api(query, { variables });
-      const columnData = response.data.items[0].column_values[0];
+      const response = await apiClient.request(query, variables);
+      const columnData = response.items[0].column_values[0];
 
       const statusColumnSettings = await this.getStatusColumnSettings(token, boardId, columnId);
 
@@ -58,9 +54,7 @@ class MondayService {
 
   static async getStatusColumnSettings(token, boardId, columnId) {
     try {
-      const mondayClient = initMondayClient();
-      mondayClient.setToken(token);
-      mondayClient.setApiVersion('2024-01');
+      const apiClient = new ApiClient({ token });
 
       const query = `query($boardId: [ID!], $columnId: String!) {
         boards (ids: $boardId) {
@@ -73,9 +67,9 @@ class MondayService {
       }`;
 
       const variables = { boardId, columnId };
-      const response = await mondayClient.api(query, { variables });
+      const response = await apiClient.request(query, variables);
 
-      const column = response.data.boards[0].columns[0];
+      const column = response.boards[0].columns[0];
 
       const settings = JSON.parse(column.settings_str);
       return settings;

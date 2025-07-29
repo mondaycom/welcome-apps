@@ -22,11 +22,9 @@ async function authenticationMiddleware(req, res, next) {
       throw new Error('Invalid JWT payload structure');
     }
 
-    const { accountId, userId, backToUrl, shortLivedToken } = payload;
+    const { shortLivedToken } = payload;
 
-    // Store Monday.com authentication data on req.monday instead of overriding req.session
-    // This avoids conflicts with express-session middleware
-    req.monday = { accountId, userId, backToUrl, shortLivedToken };
+    req.monday = { shortLivedToken };
 
     next();
   } catch (err) {

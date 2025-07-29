@@ -1,3 +1,4 @@
+// Helper functions if you want to implement OAuth in Slack from scratch, instead of using the Credentials App Feature which handles it for you. const { AuthorizationCode } = require('simple-oauth2');
 const SecureStorageService = require('../monday-code/secure-storage-service');
 const LoggerService = require('../monday-code/logger-service');
 const { Logger } = require('@mondaycom/apps-sdk');
@@ -18,12 +19,8 @@ const getConnectionByUserId = async (userId) => {
 
 const createConnection = async (attributes) => {
   try {
-    // Extract the required fields for the database
-    // For Slack integrations, we typically use the botToken for API calls
     const { userId, botToken, userToken, teamId, teamName } = attributes;
 
-    // Use botToken as the primary token (better for API calls)
-    // Fall back to userToken if botToken is not available
     const token = botToken || userToken;
 
     if (!token) {

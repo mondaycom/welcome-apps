@@ -41,7 +41,7 @@ To set up the app in Monday, follow these steps:
 2. Open the "Developers" section: Click your avatar menu > Developers
 3. Create a new app - "Create app"
 
-### Step 1: Create credentials field
+### Step 1: Create credentials app feature
 
 1. Click on Build -> Features -> Create Feature > Integration > Credentials
 2. Follow all the steps as described
@@ -56,7 +56,7 @@ To set up the app in Monday, follow these steps:
    - Access token request: `https://slack.com/api/oauth.v2.access`
    - Refresh token request: `https://slack.com/api/oauth.v2.access`
 7. In the "Extra details" section:
-   - Provide the route for our unique identifier request: `{your-tunnel-url}/remote-options/slack-provider-identifier`
+   - Provide the route for our unique identifier request: `{your-tunnel-url}/credentials/provider-identifier`
    - (Hint: your tunnel URL will be shown when you run `npm run dev` in the format: `https://abcd1234.apps-tunnel.monday.com`)
    - Token expiration time (in seconds): `3600`
    - Retrieve params: Keep the fields empty for now

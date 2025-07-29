@@ -1,6 +1,6 @@
 ## Overview
 
-This is an example of how to create an "Integration for monday workflows" that connects Monday.com with Slack.
+This is an example of how to create an "Integration for monday workflows" that connects monday.com with Slack.
 <br>It demonstrates building a recipe sentence integration that can be used on any board:
 
 - When an update is created, post it in <b>this channel</b>
@@ -44,4 +44,3 @@ $ npm run dev
 The monday CLI will print your app's URL in the format `https://abcd1234.apps-tunnel.monday.com`. Copy this URL and paste it in the .env file.
 
 > **Note:** For workflow blocks integrations, the `auth service` and `auth controller` are not needed. These were required in the old integration approach, but are unnecessary with the current workflow blocks method.
-

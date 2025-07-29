@@ -1,4 +1,4 @@
-// Old auth
+// Helper functions if you want to implement OAuth in Slack from scratch, instead of using the Credentials App Feature which handles it for you. const { AuthorizationCode } = require('simple-oauth2');
 const authService = require('../services/auth-service');
 const connectionModelService = require('../services/model-services/connection-model-service');
 const LoggerService = require('../services/monday-code/logger-service');

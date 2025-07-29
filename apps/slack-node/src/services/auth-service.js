@@ -1,5 +1,4 @@
-// Old auth
-const { AuthorizationCode } = require('simple-oauth2');
+// Helper functions if you want to implement OAuth in Slack from scratch, instead of using the Credentials App Feature which handles it for you. const { AuthorizationCode } = require('simple-oauth2');
 const { cache, cacheKeys } = require('../services/cache-service');
 const EnvironmentVariablesService = require('./monday-code/environment-variables-service');
 const SecretsService = require('./monday-code/secrets-service');
