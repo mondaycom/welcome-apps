@@ -1,3 +1,4 @@
+// Helper functions if you want to implement OAuth in Slack from scratch, instead of using the Credentials App Feature which handles it for you. 
 const { AuthorizationCode } = require('simple-oauth2');
 const { cache, cacheKeys } = require('../services/cache-service');
 const EnvironmentVariablesService = require('./monday-code/environment-variables-service');
@@ -28,7 +29,7 @@ const getToken = async (code, userId) => {
 const getClient = () => {
   const environmentManager = EnvironmentVariablesService.getInstance();
   const secretsManager = SecretsService.getInstance();
-  
+
   const TOKEN_HOST = environmentManager.get('TOKEN_HOST');
   const TOKEN_PATH = environmentManager.get('TOKEN_PATH');
   const AUTHORIZE_PATH = environmentManager.get('AUTHORIZE_PATH');

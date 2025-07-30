@@ -1,0 +1,252 @@
+{
+  "version": "1.0.0",
+  "app": {
+    "name": "Slack Workflow Integration",
+    "color": "#3F0A5B",
+    "oauth": {
+      "scopes": ["me:read", "boards:read", "boards:write"]
+    },
+    "features": [
+      {
+        "key": "Slack_Channel_Field",
+        "type": "AppFeatureFieldType",
+        "name": "GetSlackChannels",
+        "data": {
+          "name": "GetSlackChannels",
+          "referenceId": {
+            "slug": "Slack_Channel_Field"
+          },
+          "appId": 10456504,
+          "viewMetadata": {
+            "noOptionsPlaceholder": "No Channels Found"
+          },
+          "description": "Get the slack channels",
+          "defaultFieldKey": "channel",
+          "primitiveType": "string",
+          "configurationMetadata": {
+            "remote": {
+              "app": "apps",
+              "type": "appFeatureOptions",
+              "listUrl": "{your-tunnel-url}/monday/get_remote_list_options"
+            }
+          },
+          "mfValidated": true,
+          "credentialsDependencyConfig": {
+            "credentials": [
+              {
+                "credentialsReferenceId": {
+                  "slug": "Slack_Credentials"
+                },
+                "credentialsKey": "credentianals"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "key": "Slack_Workflow_Integration",
+        "type": "AppFeatureBlock",
+        "name": "Slack Notify Channel workflow",
+        "data": {
+          "name": "Slack Notify Channel workflow",
+          "referenceId": {
+            "slug": "Slack_Workflow_Integration"
+          },
+          "appId": 10456504,
+          "inboundFieldsConfig": {
+            "fields": [
+              {
+                "id": 2,
+                "fieldHeader": "Board ID",
+                "fieldTitle": "Board ID title",
+                "isArray": false,
+                "isNullable": false,
+                "type": "custom",
+                "fieldTypeReferenceId": 10380086,
+                "allowPrimitiveForm": false,
+                "fieldKey": "boardId",
+                "placeholder": "Board ID ph",
+                "description": {
+                  "text": "Board ID desc"
+                }
+              },
+              {
+                "id": 0,
+                "fieldHeader": "Slack Channel",
+                "fieldTitle": "Slack Channel title",
+                "isArray": false,
+                "isNullable": false,
+                "type": "custom",
+                "fieldTypeReferenceId": {
+                  "slug": "Slack_Channel_Field"
+                },
+                "allowPrimitiveForm": false,
+                "constraints": {
+                  "credentials": {
+                    "credentianals": {
+                      "targetCredentialsKey": "slack_credentials"
+                    }
+                  }
+                },
+                "fieldKey": "channel",
+                "placeholder": "Slack Channel ph",
+                "description": {
+                  "text": "Slack Channel desc"
+                }
+              },
+              {
+                "id": 3,
+                "fieldHeader": "Item header",
+                "fieldTitle": "Item title",
+                "isArray": false,
+                "isNullable": false,
+                "type": "custom",
+                "fieldTypeReferenceId": 10380092,
+                "allowPrimitiveForm": false,
+                "constraints": {
+                  "dependencies": {
+                    "boardId": {
+                      "inboundFieldKey": "boardId"
+                    }
+                  }
+                },
+                "fieldKey": "itemId"
+              },
+              {
+                "id": 4,
+                "fieldHeader": "column header",
+                "fieldTitle": "column title",
+                "isArray": false,
+                "isNullable": false,
+                "isOptional": false,
+                "type": "custom",
+                "fieldTypeReferenceId": 10566016,
+                "allowPrimitiveForm": false,
+                "constraints": {
+                  "dependencies": {
+                    "boardId": {
+                      "inboundFieldKey": "boardId"
+                    }
+                  }
+                },
+                "fieldKey": "columnId"
+              }
+            ]
+          },
+          "outboundFieldsConfig": {
+            "fields": []
+          },
+          "kind": "action",
+          "executionConfig": {
+            "runConfig": {
+              "url": "{your-tunnel-url}/monday/execute_action"
+            }
+          },
+          "description": "Slack Notify Channel",
+          "credentialsConfig": {
+            "credentials": [
+              {
+                "id": 1,
+                "credentialsHeader": "Connect your Slack account",
+                "credentialsTitle": "Slack account",
+                "credentialsReferenceId": {
+                  "slug": "Slack_Credentials"
+                },
+                "credentialsKey": "slack_credentials",
+                "credentialsPlaceholder": "Choose Slack account"
+              }
+            ]
+          },
+          "viewMetadata": {
+            "previewInboundFieldKeys": ["boardId"]
+          },
+          "contextsData": {
+            "lite_builder": {
+              "sentence": [
+                "Notify in channel ",
+                {
+                  "sentencePartKey": "channel",
+                  "placeholder": "Slack Channel title"
+                },
+                " the following text\n\n\n"
+              ],
+              "sourceConfig": {
+                "boardId": {
+                  "sourceKind": "variable_in_context",
+                  "variable": "board_id"
+                },
+                "channel": {
+                  "sourceKind": "sentence",
+                  "sentencePartKey": "channel"
+                },
+                "itemId": {
+                  "sourceKind": "trigger_output"
+                },
+                "columnId": {
+                  "sourceKind": "trigger_output"
+                }
+              }
+            }
+          },
+          "mfValidated": true
+        }
+      },
+      {
+        "key": "Slack_Credentials",
+        "type": "AppFeatureCredentials",
+        "name": "Slack Credentials feature",
+        "data": {
+          "name": "Slack Credentials feature",
+          "referenceId": {
+            "slug": "Slack_Credentials"
+          },
+          "appId": 10456504,
+          "configured_secret_names": ["clientSecret"],
+          "authConfig": {
+            "clientId": "{{REPLACE_ME_WITH_ENV_VAR_FOR_CLIENT_ID}}",
+            "authorizeRequest": {
+              "url": "https://slack.com/oauth/v2/authorize",
+              "params": []
+            },
+            "tokenRequest": {
+              "url": "https://slack.com/api/oauth.v2.access",
+              "body": []
+            },
+            "refreshTokenRequest": {
+              "url": "https://slack.com/api/oauth.v2.access",
+              "body": []
+            },
+            "onPremise": false,
+            "scopeConfig": {
+              "scopes": "channels:join,channels:read,chat:write",
+              "separator": "Comma"
+            },
+            "providerUniqueIdentifierRequest": {
+              "url": "{your-tunnel-url}/credentials/provider-identifier"
+            },
+            "fallbackTokenExpiration": {
+              "tokenTtlSeconds": 3600
+            },
+            "callbackResponse": {
+              "extractParams": []
+            },
+            "tokenResponse": {
+              "extractParams": []
+            }
+          },
+          "authMethod": "oAuth2",
+          "description": "Slack Credentials feature desc",
+          "documentationLink": "https://docs.google.com/document/u/0/?tgif=d",
+          "defaultFieldKey": "requestCredentials",
+          "parameters": {
+            "fieldTypes": []
+          },
+          "mfValidated": true
+        },
+        "secrets": {
+          "clientSecret": "{{REPLACE_ME_WITH_ENV_VAR_FOR_CLIENT_SECRET}}"
+        }
+      }
+    ]
+  }
+}

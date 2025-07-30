@@ -1,5 +1,4 @@
 const { WebClient } = require('@slack/web-api');
-const LoggerService = require('./monday-code/logger-service');
 
 const getChannels = async (token) => {
   const web = new WebClient(token);

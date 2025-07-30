@@ -1,18 +1,18 @@
 ## Overview
 
-This is the "Slack Integration" example Monday app.
-<br>It can be used as a recipe sentence on a board:
+This is an example of how to create an "Integration for monday workflows" that connects monday.com with Slack.
+<br>It demonstrates building a recipe sentence integration that can be used on any board:
 
 - When an update is created, post it in <b>this channel</b>
 
-<br>This app demonstrates how to use:
+<br>This app shows you how to build integrations using:
 
-- integration recipe
-- custom action
-- call authentication with JWT
-- query monday API using short lived token (seamless authentication)
-- remote options for custom fields
-- oAuth proccess to 3rd party
+- integration recipe for monday workflows
+- custom action handling
+- JWT authentication with monday
+- monday API queries using short lived tokens (seamless authentication)
+- remote options for dynamic custom fields
+- oAuth flow integration with third-party services (Slack)
 
 ## Install
 
@@ -36,9 +36,11 @@ $ npm install
 1. Run the server with the command:
 
 ```
-$ npm start
+$ npm run dev
 ```
 
 ## Add your tunnel URL to .env
 
-The monday CLI will print your app's URL in the format `https://abcd1234.apps-tunnel.monday.com`. Copy this URL and paste it in the .env file. 
+The monday CLI will print your app's URL in the format `https://abcd1234.apps-tunnel.monday.com`. Copy this URL and paste it in the .env file.
+
+> **Note:** For workflow blocks integrations, the `auth service` and `auth controller` are not needed. These were required in the old integration approach, but are unnecessary with the current workflow blocks method.
