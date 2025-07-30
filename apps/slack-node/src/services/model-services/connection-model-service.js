@@ -1,4 +1,4 @@
-// Helper functions if you want to implement OAuth in Slack from scratch, instead of using the Credentials App Feature which handles it for you. const { AuthorizationCode } = require('simple-oauth2');
+// Helper functions if you want to implement OAuth in Slack from scratch, instead of using the Credentials App Feature which handles it for you.
 const SecureStorageService = require('../monday-code/secure-storage-service');
 const LoggerService = require('../monday-code/logger-service');
 const { Logger } = require('@mondaycom/apps-sdk');
