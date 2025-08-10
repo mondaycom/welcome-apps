@@ -130,6 +130,16 @@ app.get("/error", (req, res) => {
   });
 });
 
+app.get("/long", (req, res) => {
+  const time = req.query.time ? Number(req.query.time) : 15000;
+  setTimeout(() => {
+    res.status(200).send({
+      status: "OK",
+      timestamp: new Date().toISOString(),
+    });
+  }, time);
+});
+
 app.post("/mndy-cronjob/test", async (req, res) => {
   const now = Date.now() + "";
 
