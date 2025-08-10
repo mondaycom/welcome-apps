@@ -67,7 +67,7 @@ app.get("/", (req, res) => {
     hard_coded_data: {
       // FIXME: change for each deployment
       "region (from env)": processEnv.MNDY_REGION || "null",
-      "last code change (hard coded)": "2024-12-10T23:54:00.000Z",
+      "last code change (hard coded)": "2025-08-10T23:54:00.000Z",
       "revision tag (from env)": processEnv.MNDY_TOPIC_NAME || "null",
     },
     secretsObject,
