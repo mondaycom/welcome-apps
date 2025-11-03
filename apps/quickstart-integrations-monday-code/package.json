@@ -7,7 +7,7 @@
     "start": "NODE_ENV=production node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npm run dev:stop && concurrently \"npm run dev:server\" \"npm run dev:expose\"",
-    "dev:server": "nodemon index.js",
+    "dev:server": "NODE_TLS_REJECT_UNAUTHORIZED='0' nodemon --inspect=8080 ./index.js",
     "dev:expose": "mapps tunnel:create -p 8080",
     "dev:stop": "kill-port 8080"
   },

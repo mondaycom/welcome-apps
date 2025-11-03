@@ -14,9 +14,12 @@ import { authorizeRequest } from "./src/middleware.js";
 import {
   changeColumnValue,
   getColumnValue,
+  getBoardColumns,
   platformApiHealthCheck,
 } from "./src/monday-api-service.js";
+import { fetchMovieData, extractMovieInfo } from "./src/omdb-api.js";
 import { produceMessage, readQueueMessage } from "./src/queue-service.js";
+import { cacheMovieData, getCachedMovieData } from "./src/storage-service.js";
 import { transformText } from "./src/transformation-service.js";
 
 const envs = new EnvironmentVariablesManager({ updateProcessEnv: true });
@@ -354,6 +357,142 @@ app.post("/mndy-queue", async (req, res) => {
     return res.status(200).send({}); // return 200 to ACK the queue message
   } catch (err) {
     logger.error(err.error);
+    return res.status(500).send({ message: "internal server error" });
+  }
+});
+
+app.post("/incoming-webhook", async (req, res) => {
+  try {
+    const { body } = req;
+    logger.info({ payload: body }, "Incoming webhook received");
+    
+    // Handle challenge for webhook verification - first time setup
+    if (body.challenge) {
+      return res.status(200).send({challenge: body.challenge});
+    }
+
+    // Extract event data
+    const event = body.event;
+    if (!event) {
+      logger.warn("No event data in webhook payload");
+      return res.status(200).send({});
+    }
+
+    // Extract board ID, pulse ID, and pulse name
+    const boardId = event.boardId;
+    const pulseId = event.pulseId;
+    const movieTitle = event.pulseName;
+
+    if (!boardId || !pulseId || !movieTitle) {
+      logger.warn({ boardId, pulseId, movieTitle }, "Missing required data in event");
+      return res.status(200).send({});
+    }
+
+    logger.info({ movieTitle, boardId, pulseId }, "Processing movie lookup");
+
+    // Get access token early since we'll need it for both API and caching
+    const token = envs.get(DEV_ACCESS_TOKEN_ENV_NAME);
+    if (!token) {
+      logger.error("DEV_ACCESS_TOKEN not found in environment");
+      return res.status(200).send({ 
+        message: "Could not process request (missing token)"
+      });
+    }
+
+    // Step 1: Check if we have cached movie data
+    let movieData = null;
+    let fromCache = false;
+
+    try {
+      movieData = await getCachedMovieData(token, movieTitle);
+      if (movieData) {
+        fromCache = true;
+        logger.info({ movieTitle }, "Using cached data");
+        console.log(`📦 Retrieved movie data from cache for: "${movieTitle}"`);
+      }
+    } catch (cacheErr) {
+      logger.warn({ movieTitle, error: cacheErr.message }, "Cache retrieval failed, will fetch fresh data");
+    }
+
+    // Step 2: If not cached, fetch movie data from OMDb API
+    if (!movieData) {
+      movieData = await fetchMovieData(movieTitle);
+      
+      if (!movieData) {
+        logger.warn({ movieTitle }, "No movie data found");
+        return res.status(200).send({ 
+          message: "Movie not found",
+          searchedTitle: movieTitle 
+        });
+      }
+
+      // Cache the movie data for future requests
+      try {
+        const cached = await cacheMovieData(token, movieTitle, movieData);
+        if (cached) {
+          console.log(`💾 Cached movie data for: "${movieTitle}"`);
+          // Wait for storage to propagate (monday.com Storage API requirement)
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+        }
+      } catch (cacheErr) {
+        logger.warn({ movieTitle, error: cacheErr.message }, "Failed to cache movie data");
+        // Continue processing even if caching fails
+      }
+    }
+
+    // Extract and format movie information
+    const movieInfo = extractMovieInfo(movieData);
+    logger.info({ movieInfo, fromCache }, "Movie data retrieved");
+
+    // Print the result to console
+    console.log("\n=== Movie Information ===");
+    console.log(`Source: ${fromCache ? "Cache" : "OMDb API"}`);
+    console.log(`Title: ${movieInfo.title}`);
+    console.log(`Year: ${movieInfo.year}`);
+    console.log(`IMDb Rating: ${movieInfo.imdbRating}/10`);
+    console.log(`Genre: ${movieInfo.genre}`);
+    console.log(`Director: ${movieInfo.director}`);
+    console.log(`Actors: ${movieInfo.actors}`);
+    console.log(`Plot: ${movieInfo.plot}`);
+    console.log("========================\n");
+
+    // Step 3: Get board structure and find a text or long_text column
+
+    const columns = await getBoardColumns(token, boardId);
+    logger.info({ boardId, columnCount: columns.length }, "Found columns on board");
+
+    // Find the first text or long_text column
+    const textColumn = columns.find(col => col.type === "text" || col.type === "long_text");
+    
+    if (!textColumn) {
+      logger.warn({ boardId }, "No text or long_text column found on the board");
+      return res.status(200).send({ 
+        message: "Movie data retrieved but no text column found on board",
+        movieInfo 
+      });
+    }
+
+    logger.info({ columnType: textColumn.type, columnTitle: textColumn.title, columnId: textColumn.id }, "Found text column");
+
+    // Step 3: Update the column with the movie plot
+    const columnValue = JSON.stringify(movieInfo.plot);
+    await changeColumnValue(token, boardId, pulseId, textColumn.id, columnValue);
+    
+    logger.info({ columnId: textColumn.id, boardId, pulseId }, "Successfully updated column with movie plot");
+    console.log(`✅ Updated "${textColumn.title}" column with movie plot`);
+
+    return res.status(200).send({ 
+      message: "Movie data retrieved and board updated successfully",
+      fromCache,
+      movieInfo,
+      updatedColumn: {
+        id: textColumn.id,
+        title: textColumn.title,
+        type: textColumn.type
+      }
+    });
+  } catch (err) {
+    logger.error({ error: err.message, stack: err.stack }, "Internal server error in webhook");
     return res.status(500).send({ message: "internal server error" });
   }
 });
