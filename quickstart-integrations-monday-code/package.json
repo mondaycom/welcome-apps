@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npm run dev:stop && concurrently \"npm run dev:server\" \"npm run dev:expose\"",
     "dev:server": "NODE_TLS_REJECT_UNAUTHORIZED='0' nodemon --inspect=8080 ./index.js",
-    "dev:expose": "mapps tunnel:create -p 8080",
+    "dev:expose": "kill-port 8080 && mapps tunnel:create -p 8080",
     "dev:stop": "kill-port 8080"
   },
   "author": "Dipro Bhowmik",
