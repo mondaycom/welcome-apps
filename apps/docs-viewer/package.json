@@ -17,7 +17,7 @@
     "webpack": "^5.0.0"
   },
   "devDependencies": {
-    "@mondaycom/apps-cli": "^2.1.1",
+    "@mondaycom/apps-cli": "^4.8.1",
     "concurrently": "^8.2.2",
     "cross-port-killer": "^1.2.1"
   },
@@ -25,7 +25,8 @@
     "start": "npm run stop && concurrently \"npm run server\" \"npm run expose\"",
     "server": "react-scripts start",
     "build": "react-scripts build",
-    "expose": "mapps tunnel:create -p 8304",
+    "init": "./node_modules/@mondaycom/apps-cli/bin/run.js init -l",
+    "expose": "npm run init && ./node_modules/@mondaycom/apps-cli/bin/run.js tunnel:create --verbose -p 8304",
     "stop": "kill-port 8304 && kill-port 4049 && kill-port 4040"
   },
   "eslintConfig": {
