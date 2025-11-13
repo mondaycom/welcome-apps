@@ -1,0 +1,58 @@
+@import "../../styles/animations.scss";
+
+.upload-file-container {
+  .loader-container {
+    height: 50px;
+    width: 50px;
+    margin: 0 auto;
+  }
+  .buttons {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    .ellipsis {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 115px;
+    }
+  }
+  .overlay {
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    animation: fadein 750ms;
+    z-index: 3;
+
+    & > .popup {
+      background: #fff;
+      border-radius: 5px;
+      min-width: 60%;
+      min-height: 12%;
+      max-width: 80%;
+      max-height: 80%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      & > span {
+        margin-bottom: 10px;
+      }
+
+      & > svg {
+        position: absolute;
+        right: 16px;
+        cursor: pointer;
+      }
+    }
+  }
+}
