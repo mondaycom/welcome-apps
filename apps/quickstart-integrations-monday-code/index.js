@@ -20,6 +20,7 @@ import {
 import { fetchMovieData, extractMovieInfo } from "./src/omdb-api.js";
 import { produceMessage, readQueueMessage } from "./src/queue-service.js";
 import { cacheMovieData, getCachedMovieData } from "./src/storage-service.js";
+import { testAllStorageCapabilities } from "./src/storage-tester-service.js";
 import { transformText } from "./src/transformation-service.js";
 
 const envs = new EnvironmentVariablesManager({ updateProcessEnv: true });
@@ -261,6 +262,41 @@ app.get("/storage", async (req, res) => {
   res.status(200).send({
     item,
   });
+});
+
+app.get("/storage-test", async (req, res) => {
+  try {
+    const token = envs.get(DEV_ACCESS_TOKEN_ENV_NAME);
+    if (!token) {
+      return res.status(400).send({
+        summary: {
+          overallStatus: "FAILED",
+          message: "Missing DEV_ACCESS_TOKEN environment variable",
+          timestamp: new Date().toISOString(),
+        },
+        errors: ["DEV_ACCESS_TOKEN not found in environment"],
+      });
+    }
+
+    logger.info("Starting comprehensive storage API testing");
+    const testResults = await testAllStorageCapabilities(token);
+    
+    // Return appropriate status code based on test results
+    const statusCode = testResults.summary.overallStatus === "SUCCESS" ? 200 : 500;
+    
+    return res.status(statusCode).send(testResults);
+  } catch (err) {
+    logger.error({ error: err.message, stack: err.stack }, "Error in storage-test endpoint");
+    return res.status(500).send({
+      summary: {
+        overallStatus: "FAILED",
+        message: "Internal server error during storage testing",
+        timestamp: new Date().toISOString(),
+      },
+      errors: [err.message],
+      testCases: [],
+    });
+  }
 });
 
 // TODO: MAOR: Dont forget to add the app signing secret as env var (MONDAY_SINGING_SECRET) in production to make integration work
