@@ -167,6 +167,79 @@ export const testAllStorageCapabilities = async (token) => {
         passedTests++;
       }
 
+      // Test deleting an already-deleted item (should return 404)
+      try {
+        const deleteAgainResult = await storage.delete(testKey1);
+        
+        if (deleteAgainResult && deleteAgainResult.success === false) {
+          const errorMessage = deleteAgainResult.error || '';
+          const is404 = errorMessage.includes('404') || 
+                       deleteAgainResult.status === 404 ||
+                       deleteAgainResult.code === 404 ||
+                       errorMessage.toLowerCase().includes('not found');
+          
+          // Check for the expected error message format: "Key \"...\" not found."
+          const hasExpectedErrorFormat = errorMessage.includes('not found') || 
+                                        errorMessage.includes('Key') ||
+                                        errorMessage.includes('key');
+          
+          if (is404 || hasExpectedErrorFormat) {
+            testResults.testCases.push({ 
+              name: "Delete already-deleted item", 
+              status: "PASS",
+              details: `Correctly returned 404 error for deleting already-deleted item: ${errorMessage || 'unknown error'}`
+            });
+            passedTests++;
+          } else {
+            testResults.testCases.push({ 
+              name: "Delete already-deleted item", 
+              status: "FAIL",
+              details: `Expected 404 or "not found" error, got: ${errorMessage || JSON.stringify(deleteAgainResult)}`
+            });
+            failedTests++;
+          }
+        } else if (deleteAgainResult && deleteAgainResult.success === true) {
+          // Delete should NOT be idempotent - returning success for non-existent key is incorrect
+          testResults.testCases.push({ 
+            name: "Delete already-deleted item", 
+            status: "FAIL",
+            details: "Delete incorrectly returned success for already-deleted key (delete should not be idempotent)"
+          });
+          failedTests++;
+        } else {
+          testResults.testCases.push({ 
+            name: "Delete already-deleted item", 
+            status: "FAIL",
+            details: `Unexpected response format: ${JSON.stringify(deleteAgainResult)}`
+          });
+          failedTests++;
+        }
+      } catch (error) {
+        // Expected - deleting already-deleted item should throw error (preferably 404)
+        const errorMessage = error.message || error.toString();
+        const is404 = errorMessage.includes('404') || 
+                     error.status === 404 || 
+                     error.code === 404 ||
+                     error.statusCode === 404 ||
+                     errorMessage.toLowerCase().includes('not found');
+        
+        if (is404) {
+          testResults.testCases.push({ 
+            name: "Delete already-deleted item", 
+            status: "PASS",
+            details: `Correctly threw 404 error for deleting already-deleted item: ${errorMessage}`
+          });
+          passedTests++;
+        } else {
+          testResults.testCases.push({ 
+            name: "Delete already-deleted item", 
+            status: "FAIL",
+            details: `Expected 404 error, got: ${errorMessage}`
+          });
+          failedTests++;
+        }
+      }
+
     } catch (error) {
       testResults.testCases.push({ 
         name: "Basic CRUD Operations", 
@@ -255,9 +328,17 @@ export const testAllStorageCapabilities = async (token) => {
           
           // Test get
           const edgeResult = await storage.get(edgeKey);
-          const edgeRetrievedValue = edgeResult && typeof edgeResult === 'object' && edgeResult !== null && edgeResult.value !== undefined
-            ? edgeResult.value 
-            : edgeResult;
+          // Extract value from GetResponse: {success: boolean, value: T, version?: string}
+          let edgeRetrievedValue;
+          if (edgeResult && typeof edgeResult === 'object' && edgeResult !== null) {
+            if ('value' in edgeResult) {
+              edgeRetrievedValue = edgeResult.value;
+            } else {
+              edgeRetrievedValue = edgeResult;
+            }
+          } else {
+            edgeRetrievedValue = edgeResult;
+          }
           
           if (edgeRetrievedValue === testData.value) {
             testResults.testCases.push({ 
@@ -477,10 +558,10 @@ export const testAllStorageCapabilities = async (token) => {
         passedTests++;
       }
 
-      // Test deleting non-existent key (should return 404 with error message)
+      // Test deleting a random non-existent key (should return 404 with error message)
       try {
-        const nonExistentKey = "example_123" + Date.now();
-        const deleteNonExistentResult = await storage.delete(nonExistentKey);
+        const randomNonExistentKey = `random_nonexistent_key_${Date.now()}_${Math.random().toString(36).substring(7)}`;
+        const deleteNonExistentResult = await storage.delete(randomNonExistentKey);
         
         if (deleteNonExistentResult && deleteNonExistentResult.success === false) {
           const errorMessage = deleteNonExistentResult.error || '';
@@ -509,11 +590,19 @@ export const testAllStorageCapabilities = async (token) => {
             });
             failedTests++;
           }
+        } else if (deleteNonExistentResult && deleteNonExistentResult.success === true) {
+          // Delete should NOT be idempotent - returning success for non-existent key is incorrect
+          testResults.testCases.push({ 
+            name: "Delete non-existent key", 
+            status: "FAIL",
+            details: "Delete incorrectly returned success for non-existent key (delete should not be idempotent)"
+          });
+          failedTests++;
         } else {
           testResults.testCases.push({ 
             name: "Delete non-existent key", 
             status: "FAIL",
-            details: `Expected error response for deleting non-existent key, got: ${JSON.stringify(deleteNonExistentResult)}`
+            details: `Unexpected response format: ${JSON.stringify(deleteNonExistentResult)}`
           });
           failedTests++;
         }
@@ -536,10 +625,10 @@ export const testAllStorageCapabilities = async (token) => {
         } else {
           testResults.testCases.push({ 
             name: "Delete non-existent key", 
-            status: "PASS",
-            details: `Threw error for deleting non-existent key (expected 404): ${errorMessage}`
+            status: "FAIL",
+            details: `Expected 404 error for deleting non-existent key, got: ${errorMessage}`
           });
-          passedTests++;
+          failedTests++;
         }
       }
 
