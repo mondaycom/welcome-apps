@@ -226,7 +226,7 @@ export const testAllStorageCapabilities = async (token) => {
             testResults.testCases.push({ 
               name: `${testData.desc}`, 
               status: "FAIL",
-              details: `Value corruption. Expected: "${testData.value.substring(0, 50)}...", Got: "${edgeRetrievedValue ? edgeRetrievedValue.substring(0, 50) : 'null'}..."`
+              details: `Value corruption. Expected: "${testData.value.substring(0, 50)}...", Got: "${edgeRetrievedValue && typeof edgeRetrievedValue === 'string' ? edgeRetrievedValue.substring(0, 50) : 'Got non-string value: ' + typeof edgeRetrievedValue}..."`
             });
             failedTests++;
           }
