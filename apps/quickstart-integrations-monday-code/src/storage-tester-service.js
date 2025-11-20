@@ -4,6 +4,34 @@ const logTag = "StorageTesterService";
 const logger = new Logger(logTag);
 
 /**
+ * Helper function to safely stringify objects for verbose details
+ */
+const safeStringify = (obj) => {
+  try {
+    return JSON.stringify(obj, null, 2);
+  } catch (error) {
+    return String(obj);
+  }
+};
+
+/**
+ * Helper function to create verbose details object
+ */
+const createVerboseDetails = (data) => {
+  const verbose = {};
+  if (data.request) verbose.request = data.request;
+  if (data.response) verbose.response = safeStringify(data.response);
+  if (data.error) verbose.error = safeStringify(data.error);
+  if (data.rawValue !== undefined) verbose.rawValue = safeStringify(data.rawValue);
+  if (data.extractedValue !== undefined) verbose.extractedValue = safeStringify(data.extractedValue);
+  if (data.expectedValue !== undefined) verbose.expectedValue = safeStringify(data.expectedValue);
+  if (data.statusCode) verbose.statusCode = data.statusCode;
+  if (data.key) verbose.key = data.key;
+  if (data.value) verbose.value = safeStringify(data.value);
+  return Object.keys(verbose).length > 0 ? verbose : undefined;
+};
+
+/**
  * Comprehensive Storage API Testing Service
  * Tests all available Monday Storage API functionality using the Apps SDK
  * 
@@ -49,14 +77,23 @@ export const testAllStorageCapabilities = async (token) => {
         testResults.testCases.push({ 
           name: "Basic set operation", 
           status: "PASS",
-          details: `Successfully set key: ${testKey1}`
+          details: `Successfully set key: ${testKey1}`,
+          verboseDetails: createVerboseDetails({
+            request: { key: testKey1, value: testValue1 },
+            response: setResult
+          })
         });
         passedTests++;
       } else {
         testResults.testCases.push({ 
           name: "Basic set operation", 
           status: "FAIL",
-          details: `Set operation failed: ${setResult?.error || 'unknown error'}`
+          details: `Set operation failed: ${setResult?.error || 'unknown error'}`,
+          verboseDetails: createVerboseDetails({
+            request: { key: testKey1, value: testValue1 },
+            response: setResult,
+            error: setResult?.error
+          })
         });
         failedTests++;
       }
@@ -71,14 +108,27 @@ export const testAllStorageCapabilities = async (token) => {
         testResults.testCases.push({ 
           name: "Basic get operation", 
           status: "PASS",
-          details: `Successfully retrieved matching value`
+          details: `Successfully retrieved matching value`,
+          verboseDetails: createVerboseDetails({
+            request: { key: testKey1 },
+            response: getResult1,
+            extractedValue: retrievedValue,
+            expectedValue: testValue1
+          })
         });
         passedTests++;
       } else {
         testResults.testCases.push({ 
           name: "Basic get operation", 
           status: "FAIL",
-          details: `Value mismatch. Expected: "${testValue1}", Got: "${retrievedValue}"`
+          details: `Value mismatch. Expected: "${testValue1}", Got: "${retrievedValue}"`,
+          verboseDetails: createVerboseDetails({
+            request: { key: testKey1 },
+            response: getResult1,
+            rawValue: getResult1,
+            extractedValue: retrievedValue,
+            expectedValue: testValue1
+          })
         });
         failedTests++;
       }
@@ -89,14 +139,23 @@ export const testAllStorageCapabilities = async (token) => {
         testResults.testCases.push({ 
           name: "Basic delete operation", 
           status: "PASS",
-          details: `Successfully deleted key: ${testKey1}`
+          details: `Successfully deleted key: ${testKey1}`,
+          verboseDetails: createVerboseDetails({
+            request: { key: testKey1, operation: "delete" },
+            response: deleteResult
+          })
         });
         passedTests++;
       } else {
         testResults.testCases.push({ 
           name: "Basic delete operation", 
           status: "FAIL",
-          details: `Delete operation failed: ${deleteResult?.error || 'unknown error'}`
+          details: `Delete operation failed: ${deleteResult?.error || 'unknown error'}`,
+          verboseDetails: createVerboseDetails({
+            request: { key: testKey1, operation: "delete" },
+            response: deleteResult,
+            error: deleteResult?.error
+          })
         });
         failedTests++;
       }
@@ -111,7 +170,11 @@ export const testAllStorageCapabilities = async (token) => {
           testResults.testCases.push({ 
             name: "Delete verification (get deleted item)", 
             status: "PASS",
-            details: "Item successfully deleted - get returned success: false"
+            details: "Item successfully deleted - get returned success: false",
+            verboseDetails: createVerboseDetails({
+              request: { key: testKey1, operation: "get" },
+              response: deletedResult
+            })
           });
           passedTests++;
         } else if (deletedResult && deletedResult.value === null) {
@@ -119,7 +182,11 @@ export const testAllStorageCapabilities = async (token) => {
           testResults.testCases.push({ 
             name: "Delete verification (get deleted item)", 
             status: "PASS",
-            details: "Item successfully deleted - get returned null value"
+            details: "Item successfully deleted - get returned null value",
+            verboseDetails: createVerboseDetails({
+              request: { key: testKey1, operation: "get" },
+              response: deletedResult
+            })
           });
           passedTests++;
         } else if (deletedResult && deletedResult.value === undefined) {
@@ -127,7 +194,11 @@ export const testAllStorageCapabilities = async (token) => {
           testResults.testCases.push({ 
             name: "Delete verification (get deleted item)", 
             status: "PASS",
-            details: "Item successfully deleted - get returned undefined value"
+            details: "Item successfully deleted - get returned undefined value",
+            verboseDetails: createVerboseDetails({
+              request: { key: testKey1, operation: "get" },
+              response: deletedResult
+            })
           });
           passedTests++;
         } else {
@@ -140,14 +211,25 @@ export const testAllStorageCapabilities = async (token) => {
             testResults.testCases.push({ 
               name: "Delete verification (get deleted item)", 
               status: "PASS",
-              details: "Item successfully deleted - empty value returned"
+              details: "Item successfully deleted - empty value returned",
+              verboseDetails: createVerboseDetails({
+                request: { key: testKey1, operation: "get" },
+                response: deletedResult,
+                extractedValue: deletedValue
+              })
             });
             passedTests++;
           } else {
             testResults.testCases.push({ 
               name: "Delete verification (get deleted item)", 
               status: "FAIL",
-              details: `Item still exists after deletion. Response: ${JSON.stringify(deletedResult)}`
+              details: `Item still exists after deletion. Response: ${JSON.stringify(deletedResult)}`,
+              verboseDetails: createVerboseDetails({
+                request: { key: testKey1, operation: "get" },
+                response: deletedResult,
+                rawValue: deletedResult,
+                extractedValue: deletedValue
+              })
             });
             failedTests++;
           }
@@ -162,7 +244,11 @@ export const testAllStorageCapabilities = async (token) => {
         testResults.testCases.push({ 
           name: "Delete verification (get deleted item)", 
           status: "PASS",
-          details: `Delete verified - get threw expected error${is404 ? ' (404)' : ''}: ${error.message || error.toString()}`
+          details: `Delete verified - get threw expected error${is404 ? ' (404)' : ''}: ${error.message || error.toString()}`,
+          verboseDetails: createVerboseDetails({
+            request: { key: testKey1, operation: "get" },
+            error: error
+          })
         });
         passedTests++;
       }
@@ -187,14 +273,25 @@ export const testAllStorageCapabilities = async (token) => {
             testResults.testCases.push({ 
               name: "Delete already-deleted item", 
               status: "PASS",
-              details: `Correctly returned 404 error for deleting already-deleted item: ${errorMessage || 'unknown error'}`
+              details: `Correctly returned 404 error for deleting already-deleted item: ${errorMessage || 'unknown error'}`,
+              verboseDetails: createVerboseDetails({
+                request: { key: testKey1, operation: "delete" },
+                response: deleteAgainResult,
+                key: testKey1
+              })
             });
             passedTests++;
           } else {
             testResults.testCases.push({ 
               name: "Delete already-deleted item", 
               status: "FAIL",
-              details: `Expected 404 or "not found" error, got: ${errorMessage || JSON.stringify(deleteAgainResult)}`
+              details: `Expected 404 or "not found" error, got: ${errorMessage || JSON.stringify(deleteAgainResult)}`,
+              verboseDetails: createVerboseDetails({
+                request: { key: testKey1, operation: "delete" },
+                response: deleteAgainResult,
+                key: testKey1,
+                errorMessage: errorMessage
+              })
             });
             failedTests++;
           }
@@ -203,14 +300,25 @@ export const testAllStorageCapabilities = async (token) => {
           testResults.testCases.push({ 
             name: "Delete already-deleted item", 
             status: "FAIL",
-            details: "Delete incorrectly returned success for already-deleted key (delete should not be idempotent)"
+            details: "Delete incorrectly returned success for already-deleted key (delete should not be idempotent)",
+            verboseDetails: createVerboseDetails({
+              request: { key: testKey1, operation: "delete" },
+              response: deleteAgainResult,
+              key: testKey1,
+              note: "Key was deleted in previous test, this is second delete attempt"
+            })
           });
           failedTests++;
         } else {
           testResults.testCases.push({ 
             name: "Delete already-deleted item", 
             status: "FAIL",
-            details: `Unexpected response format: ${JSON.stringify(deleteAgainResult)}`
+            details: `Unexpected response format: ${JSON.stringify(deleteAgainResult)}`,
+            verboseDetails: createVerboseDetails({
+              request: { key: testKey1, operation: "delete" },
+              response: deleteAgainResult,
+              key: testKey1
+            })
           });
           failedTests++;
         }
@@ -227,14 +335,25 @@ export const testAllStorageCapabilities = async (token) => {
           testResults.testCases.push({ 
             name: "Delete already-deleted item", 
             status: "PASS",
-            details: `Correctly threw 404 error for deleting already-deleted item: ${errorMessage}`
+            details: `Correctly threw 404 error for deleting already-deleted item: ${errorMessage}`,
+            verboseDetails: createVerboseDetails({
+              request: { key: testKey1, operation: "delete" },
+              error: error,
+              key: testKey1
+            })
           });
           passedTests++;
         } else {
           testResults.testCases.push({ 
             name: "Delete already-deleted item", 
             status: "FAIL",
-            details: `Expected 404 error, got: ${errorMessage}`
+            details: `Expected 404 error, got: ${errorMessage}`,
+            verboseDetails: createVerboseDetails({
+              request: { key: testKey1, operation: "delete" },
+              error: error,
+              key: testKey1,
+              errorMessage: errorMessage
+            })
           });
           failedTests++;
         }
@@ -244,7 +363,12 @@ export const testAllStorageCapabilities = async (token) => {
       testResults.testCases.push({ 
         name: "Basic CRUD Operations", 
         status: "FAIL",
-        details: `Error: ${error.message}`
+        details: `Error: ${error.message}`,
+        verboseDetails: createVerboseDetails({
+          error: error,
+          key: testKey1,
+          value: testValue1
+        })
       });
       failedTests++;
       testResults.errors.push(`Basic CRUD test error: ${error.message}`);
@@ -258,11 +382,15 @@ export const testAllStorageCapabilities = async (token) => {
     const ttlSeconds = 300; // 5 minutes
 
     try {
-      await storage.set(testKey2, testValue2, { ttl: ttlSeconds });
+      const setTtlResult = await storage.set(testKey2, testValue2, { ttl: ttlSeconds });
       testResults.testCases.push({ 
         name: "Set with TTL", 
         status: "PASS",
-        details: `Successfully set key with TTL of ${ttlSeconds} seconds`
+        details: `Successfully set key with TTL of ${ttlSeconds} seconds`,
+        verboseDetails: createVerboseDetails({
+          request: { key: testKey2, value: testValue2, ttl: ttlSeconds },
+          response: setTtlResult
+        })
       });
       passedTests++;
 
@@ -275,14 +403,27 @@ export const testAllStorageCapabilities = async (token) => {
         testResults.testCases.push({ 
           name: "Get with TTL", 
           status: "PASS",
-          details: "Successfully retrieved value set with TTL"
+          details: "Successfully retrieved value set with TTL",
+          verboseDetails: createVerboseDetails({
+            request: { key: testKey2 },
+            response: ttlResult,
+            extractedValue: ttlRetrievedValue,
+            expectedValue: testValue2
+          })
         });
         passedTests++;
       } else {
         testResults.testCases.push({ 
           name: "Get with TTL", 
           status: "FAIL",
-          details: `Value mismatch. Expected: "${testValue2}", Got: "${ttlRetrievedValue}"`
+          details: `Value mismatch. Expected: "${testValue2}", Got: "${ttlRetrievedValue}"`,
+          verboseDetails: createVerboseDetails({
+            request: { key: testKey2 },
+            response: ttlResult,
+            rawValue: ttlResult,
+            extractedValue: ttlRetrievedValue,
+            expectedValue: testValue2
+          })
         });
         failedTests++;
       }
@@ -294,7 +435,13 @@ export const testAllStorageCapabilities = async (token) => {
       testResults.testCases.push({ 
         name: "TTL Functionality", 
         status: "FAIL",
-        details: `Error: ${error.message}`
+        details: `Error: ${error.message}`,
+        verboseDetails: createVerboseDetails({
+          error: error,
+          key: testKey2,
+          value: testValue2,
+          ttl: ttlSeconds
+        })
       });
       failedTests++;
       testResults.errors.push(`TTL test error: ${error.message}`);
@@ -344,7 +491,12 @@ export const testAllStorageCapabilities = async (token) => {
             testResults.testCases.push({ 
               name: `${testData.desc}`, 
               status: "PASS",
-              details: `Successfully stored and retrieved: ${testData.desc}`
+              details: `Successfully stored and retrieved: ${testData.desc}`,
+              verboseDetails: createVerboseDetails({
+                request: { key: edgeKey, value: testData.value },
+                response: edgeResult,
+                extractedValue: edgeRetrievedValue
+              })
             });
             passedTests++;
           } else if (isValidationCase && (!edgeRetrievedValue || (typeof edgeRetrievedValue === 'string' && edgeRetrievedValue.trim() === ""))) {
@@ -353,7 +505,13 @@ export const testAllStorageCapabilities = async (token) => {
             testResults.testCases.push({ 
               name: `${testData.desc}`, 
               status: "PASS",
-              details: `${reason} (expected API behavior)`
+              details: `${reason} (expected API behavior)`,
+              verboseDetails: createVerboseDetails({
+                request: { key: edgeKey, value: testData.value },
+                response: edgeResult,
+                extractedValue: edgeRetrievedValue,
+                expectedValue: testData.value
+              })
             });
             passedTests++;
           } else {
@@ -366,7 +524,17 @@ export const testAllStorageCapabilities = async (token) => {
             testResults.testCases.push({ 
               name: `${testData.desc}`, 
               status: "FAIL",
-              details: `Value corruption. Expected: "${expectedPreview}...", Got: "${gotPreview}..."`
+              details: `Value corruption. Expected: "${expectedPreview}...", Got: "${gotPreview}..."`,
+              verboseDetails: createVerboseDetails({
+                request: { key: edgeKey, value: testData.value },
+                response: edgeResult,
+                rawValue: edgeResult,
+                extractedValue: edgeRetrievedValue,
+                expectedValue: testData.value,
+                key: edgeKey,
+                valueType: typeof edgeRetrievedValue,
+                valueLength: edgeRetrievedValue ? (typeof edgeRetrievedValue === 'string' ? edgeRetrievedValue.length : 'N/A') : 'null/undefined'
+              })
             });
             failedTests++;
           }
@@ -381,14 +549,22 @@ export const testAllStorageCapabilities = async (token) => {
             testResults.testCases.push({ 
               name: `${testData.desc}`, 
               status: "PASS",
-              details: `${reason} (expected API validation)`
+              details: `${reason} (expected API validation)`,
+              verboseDetails: createVerboseDetails({
+                request: { key: edgeKey, value: testData.value },
+                error: error
+              })
             });
             passedTests++;
           } else {
             testResults.testCases.push({ 
               name: `${testData.desc}`, 
               status: "FAIL",
-              details: `Error: ${error.message}`
+              details: `Error: ${error.message}`,
+              verboseDetails: createVerboseDetails({
+                request: { key: edgeKey, value: testData.value },
+                error: error
+              })
             });
             failedTests++;
           }
@@ -397,7 +573,11 @@ export const testAllStorageCapabilities = async (token) => {
         testResults.testCases.push({ 
           name: `Edge case ${testData.desc}`, 
           status: "FAIL",
-          details: `Unexpected error: ${error.message}`
+          details: `Unexpected error: ${error.message}`,
+          verboseDetails: createVerboseDetails({
+            request: { key: edgeKey, value: testData.value },
+            error: error
+          })
         });
         failedTests++;
       }
@@ -449,7 +629,11 @@ export const testAllStorageCapabilities = async (token) => {
       testResults.testCases.push({ 
         name: "Concurrent writes (10 items)", 
         status: concurrentSuccesses > 0 ? "PASS" : "FAIL",
-        details: `${concurrentSuccesses} success, ${concurrentRateLimits} rate-limited, ${concurrentErrors} errors`
+        details: `${concurrentSuccesses} success, ${concurrentRateLimits} rate-limited, ${concurrentErrors} errors`,
+        verboseDetails: createVerboseDetails({
+          request: { operation: "concurrent_set", count: 10, baseKey: baseKey },
+          response: { results: concurrencyResults, successes: concurrentSuccesses, rateLimited: concurrentRateLimits, errors: concurrentErrors }
+        })
       });
       if (concurrentSuccesses > 0) {
         passedTests++;
@@ -491,7 +675,11 @@ export const testAllStorageCapabilities = async (token) => {
         testResults.testCases.push({ 
           name: "Concurrent data integrity check", 
           status: correctValues > 0 ? "PASS" : "FAIL",
-          details: `${correctValues} correct values, ${notFound} not found, ${verificationErrors} errors`
+          details: `${correctValues} correct values, ${notFound} not found, ${verificationErrors} errors`,
+          verboseDetails: createVerboseDetails({
+            request: { operation: "verify_concurrent_writes", baseKey: baseKey },
+            response: { verificationResults, correctValues, notFound, verificationErrors }
+          })
         });
         if (correctValues > 0) {
           passedTests++;
@@ -509,7 +697,11 @@ export const testAllStorageCapabilities = async (token) => {
       testResults.testCases.push({ 
         name: "Concurrency test", 
         status: "FAIL",
-        details: `Error: ${error.message}`
+        details: `Error: ${error.message}`,
+        verboseDetails: createVerboseDetails({
+          error: error,
+          baseKey: baseKey
+        })
       });
       failedTests++;
       testResults.errors.push(`Concurrency test error: ${error.message}`);
@@ -520,8 +712,9 @@ export const testAllStorageCapabilities = async (token) => {
     
     try {
       // Test getting non-existent key
+      const nonExistentKey = "Idontexist_key" + Date.now();
       try {
-        const nonExistentResult = await storage.get("non_existent_key_12345_" + Date.now());
+        const nonExistentResult = await storage.get(nonExistentKey);
         const nonExistentValue = nonExistentResult && typeof nonExistentResult === 'object' && nonExistentResult !== null && nonExistentResult.value !== undefined
           ? nonExistentResult.value 
           : nonExistentResult;
@@ -530,21 +723,35 @@ export const testAllStorageCapabilities = async (token) => {
           testResults.testCases.push({ 
             name: "Non-existent key handling", 
             status: "PASS",
-            details: "Correctly returned success: false for non-existent key"
+            details: "Correctly returned success: false for non-existent key",
+            verboseDetails: createVerboseDetails({
+              request: { key: nonExistentKey, operation: "get" },
+              response: nonExistentResult
+            })
           });
           passedTests++;
         } else if (!nonExistentValue || nonExistentValue === null || nonExistentValue === undefined) {
           testResults.testCases.push({ 
             name: "Non-existent key handling", 
             status: "PASS",
-            details: "Correctly returned null/undefined for non-existent key"
+            details: "Correctly returned null/undefined for non-existent key",
+            verboseDetails: createVerboseDetails({
+              request: { key: nonExistentKey, operation: "get" },
+              response: nonExistentResult,
+              extractedValue: nonExistentValue
+            })
           });
           passedTests++;
         } else {
           testResults.testCases.push({ 
             name: "Non-existent key handling", 
             status: "FAIL",
-            details: `Unexpected value returned for non-existent key: ${JSON.stringify(nonExistentValue)}`
+            details: `Unexpected value returned for non-existent key: ${JSON.stringify(nonExistentValue)}`,
+            verboseDetails: createVerboseDetails({
+              request: { key: nonExistentKey, operation: "get" },
+              response: nonExistentResult,
+              extractedValue: nonExistentValue
+            })
           });
           failedTests++;
         }
@@ -553,7 +760,11 @@ export const testAllStorageCapabilities = async (token) => {
         testResults.testCases.push({ 
           name: "Non-existent key handling", 
           status: "PASS",
-          details: `Expected error for non-existent key: ${error.message}`
+          details: `Expected error for non-existent key: ${error.message}`,
+          verboseDetails: createVerboseDetails({
+            request: { key: nonExistentKey, operation: "get" },
+            error: error
+          })
         });
         passedTests++;
       }
@@ -579,14 +790,25 @@ export const testAllStorageCapabilities = async (token) => {
             testResults.testCases.push({ 
               name: "Delete non-existent key", 
               status: "PASS",
-              details: `Correctly returned 404 error for deleting non-existent key: ${errorMessage || 'unknown error'}`
+              details: `Correctly returned 404 error for deleting non-existent key: ${errorMessage || 'unknown error'}`,
+              verboseDetails: createVerboseDetails({
+                request: { key: randomNonExistentKey, operation: "delete" },
+                response: deleteNonExistentResult,
+                key: randomNonExistentKey
+              })
             });
             passedTests++;
           } else {
             testResults.testCases.push({ 
               name: "Delete non-existent key", 
               status: "FAIL",
-              details: `Expected 404 or "not found" error, got: ${errorMessage || JSON.stringify(deleteNonExistentResult)}`
+              details: `Expected 404 or "not found" error, got: ${errorMessage || JSON.stringify(deleteNonExistentResult)}`,
+              verboseDetails: createVerboseDetails({
+                request: { key: randomNonExistentKey, operation: "delete" },
+                response: deleteNonExistentResult,
+                key: randomNonExistentKey,
+                errorMessage: errorMessage
+              })
             });
             failedTests++;
           }
@@ -595,14 +817,25 @@ export const testAllStorageCapabilities = async (token) => {
           testResults.testCases.push({ 
             name: "Delete non-existent key", 
             status: "FAIL",
-            details: "Delete incorrectly returned success for non-existent key (delete should not be idempotent)"
+            details: "Delete incorrectly returned success for non-existent key (delete should not be idempotent)",
+            verboseDetails: createVerboseDetails({
+              request: { key: randomNonExistentKey, operation: "delete" },
+              response: deleteNonExistentResult,
+              key: randomNonExistentKey,
+              note: "This key was never created, delete should return 404"
+            })
           });
           failedTests++;
         } else {
           testResults.testCases.push({ 
             name: "Delete non-existent key", 
             status: "FAIL",
-            details: `Unexpected response format: ${JSON.stringify(deleteNonExistentResult)}`
+            details: `Unexpected response format: ${JSON.stringify(deleteNonExistentResult)}`,
+            verboseDetails: createVerboseDetails({
+              request: { key: randomNonExistentKey, operation: "delete" },
+              response: deleteNonExistentResult,
+              key: randomNonExistentKey
+            })
           });
           failedTests++;
         }
@@ -619,14 +852,25 @@ export const testAllStorageCapabilities = async (token) => {
           testResults.testCases.push({ 
             name: "Delete non-existent key", 
             status: "PASS",
-            details: `Correctly threw 404 error for deleting non-existent key: ${errorMessage}`
+            details: `Correctly threw 404 error for deleting non-existent key: ${errorMessage}`,
+            verboseDetails: createVerboseDetails({
+              request: { key: randomNonExistentKey, operation: "delete" },
+              error: error,
+              key: randomNonExistentKey
+            })
           });
           passedTests++;
         } else {
           testResults.testCases.push({ 
             name: "Delete non-existent key", 
             status: "FAIL",
-            details: `Expected 404 error for deleting non-existent key, got: ${errorMessage}`
+            details: `Expected 404 error for deleting non-existent key, got: ${errorMessage}`,
+            verboseDetails: createVerboseDetails({
+              request: { key: randomNonExistentKey, operation: "delete" },
+              error: error,
+              key: randomNonExistentKey,
+              errorMessage: errorMessage
+            })
           });
           failedTests++;
         }
@@ -636,7 +880,10 @@ export const testAllStorageCapabilities = async (token) => {
       testResults.testCases.push({ 
         name: "Error handling test", 
         status: "FAIL",
-        details: `Unexpected error: ${error.message}`
+        details: `Unexpected error: ${error.message}`,
+        verboseDetails: createVerboseDetails({
+          error: error
+        })
       });
       failedTests++;
       testResults.errors.push(`Error handling test error: ${error.message}`);
@@ -695,7 +942,11 @@ export const testAllStorageCapabilities = async (token) => {
       testResults.testCases.push({ 
         name: "Rate limiting detection", 
         status: "PASS",
-        details: `${rapidSuccess} success, ${rapidRateLimit} rate-limited (expected), ${rapidOtherErrors} other errors`
+        details: `${rapidSuccess} success, ${rapidRateLimit} rate-limited (expected), ${rapidOtherErrors} other errors`,
+        verboseDetails: createVerboseDetails({
+          request: { operation: "rapid_requests", count: 20 },
+          response: { rapidResponses, rapidSuccess, rapidRateLimit, rapidOtherErrors }
+        })
       });
       passedTests++;
 
@@ -703,14 +954,20 @@ export const testAllStorageCapabilities = async (token) => {
         testResults.testCases.push({ 
           name: "Rate limiter functioning", 
           status: "PASS",
-          details: "Rate limiter is properly protecting the service"
+          details: "Rate limiter is properly protecting the service",
+          verboseDetails: createVerboseDetails({
+            response: { rapidRateLimit, rapidSuccess, rapidOtherErrors }
+          })
         });
         passedTests++;
       } else {
         testResults.testCases.push({ 
           name: "Rate limiter functioning", 
           status: "PASS",
-          details: "No rate limiting detected (might be expected in test environment)"
+          details: "No rate limiting detected (might be expected in test environment)",
+          verboseDetails: createVerboseDetails({
+            response: { rapidRateLimit, rapidSuccess, rapidOtherErrors }
+          })
         });
         passedTests++;
       }
@@ -741,7 +998,11 @@ export const testAllStorageCapabilities = async (token) => {
       testResults.testCases.push({ 
         name: `Controlled performance test (${batchSize} items with retries)`, 
         status: controlledSuccess > 0 ? "PASS" : "FAIL",
-        details: `${controlledSuccess}/${batchSize} success, ${controlledRateLimit} rate-limited, ${totalDuration}ms total`
+        details: `${controlledSuccess}/${batchSize} success, ${controlledRateLimit} rate-limited, ${totalDuration}ms total`,
+        verboseDetails: createVerboseDetails({
+          request: { operation: "controlled_requests", batchSize, testTimestamp },
+          response: { controlledResponses, controlledSuccess, controlledRateLimit, controlledOtherErrors, totalDuration }
+        })
       });
       if (controlledSuccess > 0) {
         passedTests++;
@@ -756,7 +1017,10 @@ export const testAllStorageCapabilities = async (token) => {
         testResults.testCases.push({ 
           name: "Retry logic effectiveness", 
           status: successfulRetries > 0 ? "PASS" : "FAIL",
-          details: `${successfulRetries}/${retriedRequests.length} retries succeeded`
+          details: `${successfulRetries}/${retriedRequests.length} retries succeeded`,
+          verboseDetails: createVerboseDetails({
+            response: { retriedRequests, successfulRetries, totalRetries: retriedRequests.length }
+          })
         });
         if (successfulRetries > 0) {
           passedTests++;
@@ -771,7 +1035,10 @@ export const testAllStorageCapabilities = async (token) => {
         testResults.testCases.push({ 
           name: "Performance metrics", 
           status: "PASS",
-          details: `${avgTimePerSuccess.toFixed(1)}ms avg per successful operation`
+          details: `${avgTimePerSuccess.toFixed(1)}ms avg per successful operation`,
+          verboseDetails: createVerboseDetails({
+            response: { totalDuration, controlledSuccess, avgTimePerSuccess }
+          })
         });
         passedTests++;
       }
@@ -788,7 +1055,12 @@ export const testAllStorageCapabilities = async (token) => {
       testResults.testCases.push({ 
         name: "Rate limiting and performance test", 
         status: "FAIL",
-        details: `Error: ${error.message}`
+        details: `Error: ${error.message}`,
+        verboseDetails: createVerboseDetails({
+          error: error,
+          testTimestamp,
+          batchSize
+        })
       });
       failedTests++;
       testResults.errors.push(`Rate limiting test error: ${error.message}`);
@@ -809,21 +1081,33 @@ export const testAllStorageCapabilities = async (token) => {
             testResults.testCases.push({ 
               name: `Increment counter (${period})`, 
               status: "PASS",
-              details: `Counter returned error (may be expected for unsupported period): ${counterResult.error}`
+              details: `Counter returned error (may be expected for unsupported period): ${counterResult.error}`,
+              verboseDetails: createVerboseDetails({
+                request: { period, operation: "incrementCounter" },
+                response: counterResult
+              })
             });
             passedTests++;
           } else if (counterResult && typeof counterResult.newCounterValue === 'number') {
             testResults.testCases.push({ 
               name: `Increment counter (${period})`, 
               status: "PASS",
-              details: `Successfully incremented. New value: ${counterResult.newCounterValue}, Message: ${counterResult.message || 'N/A'}`
+              details: `Successfully incremented. New value: ${counterResult.newCounterValue}, Message: ${counterResult.message || 'N/A'}`,
+              verboseDetails: createVerboseDetails({
+                request: { period, operation: "incrementCounter" },
+                response: counterResult
+              })
             });
             passedTests++;
           } else {
             testResults.testCases.push({ 
               name: `Increment counter (${period})`, 
               status: "FAIL",
-              details: `Unexpected response format: ${JSON.stringify(counterResult)}`
+              details: `Unexpected response format: ${JSON.stringify(counterResult)}`,
+              verboseDetails: createVerboseDetails({
+                request: { period, operation: "incrementCounter" },
+                response: counterResult
+              })
             });
             failedTests++;
           }
@@ -834,7 +1118,11 @@ export const testAllStorageCapabilities = async (token) => {
           testResults.testCases.push({ 
             name: `Increment counter (${period})`, 
             status: isExpectedError ? "PASS" : "FAIL",
-            details: `Counter increment error: ${error.message}`
+            details: `Counter increment error: ${error.message}`,
+            verboseDetails: createVerboseDetails({
+              request: { period, operation: "incrementCounter" },
+              error: error
+            })
           });
           if (isExpectedError) {
             passedTests++;
@@ -852,21 +1140,33 @@ export const testAllStorageCapabilities = async (token) => {
           testResults.testCases.push({ 
             name: "Increment counter with options", 
             status: "PASS",
-            details: `Successfully incremented by 2. New value: ${counterWithOptions.newCounterValue}`
+            details: `Successfully incremented by 2. New value: ${counterWithOptions.newCounterValue}`,
+            verboseDetails: createVerboseDetails({
+              request: { period: 'DAILY', options: { incrementBy: 2 }, operation: "incrementCounter" },
+              response: counterWithOptions
+            })
           });
           passedTests++;
         } else if (counterWithOptions && counterWithOptions.error) {
           testResults.testCases.push({ 
             name: "Increment counter with options", 
             status: "PASS",
-            details: `Counter with options returned error: ${counterWithOptions.error}`
+            details: `Counter with options returned error: ${counterWithOptions.error}`,
+            verboseDetails: createVerboseDetails({
+              request: { period: 'DAILY', options: { incrementBy: 2 }, operation: "incrementCounter" },
+              response: counterWithOptions
+            })
           });
           passedTests++;
         } else {
           testResults.testCases.push({ 
             name: "Increment counter with options", 
             status: "FAIL",
-            details: `Unexpected response format: ${JSON.stringify(counterWithOptions)}`
+            details: `Unexpected response format: ${JSON.stringify(counterWithOptions)}`,
+            verboseDetails: createVerboseDetails({
+              request: { period: 'DAILY', options: { incrementBy: 2 }, operation: "incrementCounter" },
+              response: counterWithOptions
+            })
           });
           failedTests++;
         }
@@ -874,7 +1174,11 @@ export const testAllStorageCapabilities = async (token) => {
         testResults.testCases.push({ 
           name: "Increment counter with options", 
           status: "FAIL",
-          details: `Counter with options threw unexpected error: ${error.message}`
+          details: `Counter with options threw unexpected error: ${error.message}`,
+          verboseDetails: createVerboseDetails({
+            request: { period: 'DAILY', options: { incrementBy: 2 }, operation: "incrementCounter" },
+            error: error
+          })
         });
         failedTests++;
       }
@@ -883,7 +1187,10 @@ export const testAllStorageCapabilities = async (token) => {
       testResults.testCases.push({ 
         name: "Increment counter functionality", 
         status: "FAIL",
-        details: `Error: ${error.message}`
+        details: `Error: ${error.message}`,
+        verboseDetails: createVerboseDetails({
+          error: error
+        })
       });
       failedTests++;
       testResults.errors.push(`Increment counter test error: ${error.message}`);
@@ -932,7 +1239,14 @@ export const testAllStorageCapabilities = async (token) => {
           testResults.testCases.push({ 
             name: "Basic search operation", 
             status: validStructure ? "PASS" : "FAIL",
-            details: `Found ${recordCount} records. Records have valid key/value/backendOnly structure: ${validStructure ? 'yes' : 'no'}`
+            details: `Found ${recordCount} records. Records have valid key/value/backendOnly structure: ${validStructure ? 'yes' : 'no'}`,
+            verboseDetails: createVerboseDetails({
+              request: { prefix: searchPrefix, operation: "search" },
+              response: searchResult,
+              records: records,
+              recordCount: recordCount,
+              validStructure: validStructure
+            })
           });
           if (validStructure) {
             passedTests++;
@@ -943,14 +1257,23 @@ export const testAllStorageCapabilities = async (token) => {
           testResults.testCases.push({ 
             name: "Basic search operation", 
             status: "FAIL",
-            details: `Search failed: ${searchResult.error || 'unknown error'}`
+            details: `Search failed: ${searchResult.error || 'unknown error'}`,
+            verboseDetails: createVerboseDetails({
+              request: { prefix: searchPrefix, operation: "search" },
+              response: searchResult,
+              error: searchResult.error
+            })
           });
           failedTests++;
         } else {
           testResults.testCases.push({ 
             name: "Basic search operation", 
             status: "FAIL",
-            details: `Unexpected response format: ${JSON.stringify(searchResult)}`
+            details: `Unexpected response format: ${JSON.stringify(searchResult)}`,
+            verboseDetails: createVerboseDetails({
+              request: { prefix: searchPrefix, operation: "search" },
+              response: searchResult
+            })
           });
           failedTests++;
         }
@@ -958,7 +1281,11 @@ export const testAllStorageCapabilities = async (token) => {
         testResults.testCases.push({ 
           name: "Basic search operation", 
           status: "FAIL",
-          details: `Search error: ${error.message}`
+          details: `Search error: ${error.message}`,
+          verboseDetails: createVerboseDetails({
+            request: { prefix: searchPrefix, operation: "search" },
+            error: error
+          })
         });
         failedTests++;
       }
@@ -974,14 +1301,22 @@ export const testAllStorageCapabilities = async (token) => {
             testResults.testCases.push({ 
               name: "Search pagination with cursor", 
               status: "PASS",
-              details: `Pagination works. First page: ${firstPage.records?.length || 0} records, Second page: ${secondPage.records?.length || 0} records`
+              details: `Pagination works. First page: ${firstPage.records?.length || 0} records, Second page: ${secondPage.records?.length || 0} records`,
+              verboseDetails: createVerboseDetails({
+                request: { prefix: searchPrefix, operation: "search", cursor: firstPage.cursor },
+                response: { firstPage, secondPage }
+              })
             });
             passedTests++;
           } else {
             testResults.testCases.push({ 
               name: "Search pagination with cursor", 
               status: "PASS",
-              details: "Cursor returned but second page failed (may be expected)"
+              details: "Cursor returned but second page failed (may be expected)",
+              verboseDetails: createVerboseDetails({
+                request: { prefix: searchPrefix, operation: "search", cursor: firstPage.cursor },
+                response: { firstPage, secondPage }
+              })
             });
             passedTests++;
           }
@@ -989,7 +1324,11 @@ export const testAllStorageCapabilities = async (token) => {
           testResults.testCases.push({ 
             name: "Search pagination with cursor", 
             status: "PASS",
-            details: "No cursor returned (pagination may not be needed for small result sets)"
+            details: "No cursor returned (pagination may not be needed for small result sets)",
+            verboseDetails: createVerboseDetails({
+              request: { prefix: searchPrefix, operation: "search" },
+              response: firstPage
+            })
           });
           passedTests++;
         }
@@ -997,7 +1336,11 @@ export const testAllStorageCapabilities = async (token) => {
         testResults.testCases.push({ 
           name: "Search pagination with cursor", 
           status: "PASS",
-          details: `Cursor pagination error: ${error.message}`
+          details: `Cursor pagination error: ${error.message}`,
+          verboseDetails: createVerboseDetails({
+            request: { prefix: searchPrefix, operation: "search" },
+            error: error
+          })
         });
         passedTests++;
       }
@@ -1011,7 +1354,11 @@ export const testAllStorageCapabilities = async (token) => {
       testResults.testCases.push({ 
         name: "Search functionality", 
         status: "FAIL",
-        details: `Error: ${error.message}`
+        details: `Error: ${error.message}`,
+        verboseDetails: createVerboseDetails({
+          error: error,
+          searchPrefix: searchPrefix
+        })
       });
       failedTests++;
       testResults.errors.push(`Search test error: ${error.message}`);
