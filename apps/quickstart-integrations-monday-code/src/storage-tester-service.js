@@ -44,17 +44,26 @@ export const testAllStorageCapabilities = async (token) => {
 
     try {
       // Test set
-      await storage.set(testKey1, testValue1);
-      testResults.testCases.push({ 
-        name: "Basic set operation", 
-        status: "PASS",
-        details: `Successfully set key: ${testKey1}`
-      });
-      passedTests++;
+      const setResult = await storage.set(testKey1, testValue1);
+      if (setResult && setResult.success === true) {
+        testResults.testCases.push({ 
+          name: "Basic set operation", 
+          status: "PASS",
+          details: `Successfully set key: ${testKey1}`
+        });
+        passedTests++;
+      } else {
+        testResults.testCases.push({ 
+          name: "Basic set operation", 
+          status: "FAIL",
+          details: `Set operation failed: ${setResult?.error || 'unknown error'}`
+        });
+        failedTests++;
+      }
 
       // Test get
       const getResult1 = await storage.get(testKey1);
-      const retrievedValue = typeof getResult1 === 'object' && getResult1.value 
+      const retrievedValue = getResult1 && typeof getResult1 === 'object' && getResult1 !== null && getResult1.value !== undefined
         ? getResult1.value 
         : getResult1;
       
@@ -86,10 +95,10 @@ export const testAllStorageCapabilities = async (token) => {
       } else {
         testResults.testCases.push({ 
           name: "Basic delete operation", 
-          status: "PASS",
-          details: `Delete operation completed: ${deleteResult?.error || 'no error'}`
+          status: "FAIL",
+          details: `Delete operation failed: ${deleteResult?.error || 'unknown error'}`
         });
-        passedTests++;
+        failedTests++;
       }
 
       // Verify deletion by attempting to get the deleted item
@@ -123,7 +132,7 @@ export const testAllStorageCapabilities = async (token) => {
           passedTests++;
         } else {
           // Extract value properly to avoid [object Object] issue
-          const deletedValue = deletedResult && typeof deletedResult === 'object' && deletedResult.value !== undefined
+          const deletedValue = deletedResult && typeof deletedResult === 'object' && deletedResult !== null && deletedResult.value !== undefined
             ? deletedResult.value 
             : deletedResult;
           
@@ -185,7 +194,7 @@ export const testAllStorageCapabilities = async (token) => {
       passedTests++;
 
       const ttlResult = await storage.get(testKey2);
-      const ttlRetrievedValue = typeof ttlResult === 'object' && ttlResult.value 
+      const ttlRetrievedValue = ttlResult && typeof ttlResult === 'object' && ttlResult !== null && ttlResult.value !== undefined
         ? ttlResult.value 
         : ttlResult;
       
@@ -246,7 +255,7 @@ export const testAllStorageCapabilities = async (token) => {
           
           // Test get
           const edgeResult = await storage.get(edgeKey);
-          const edgeRetrievedValue = typeof edgeResult === 'object' && edgeResult.value 
+          const edgeRetrievedValue = edgeResult && typeof edgeResult === 'object' && edgeResult !== null && edgeResult.value !== undefined
             ? edgeResult.value 
             : edgeResult;
           
@@ -257,7 +266,7 @@ export const testAllStorageCapabilities = async (token) => {
               details: `Successfully stored and retrieved: ${testData.desc}`
             });
             passedTests++;
-          } else if (isValidationCase && (!edgeRetrievedValue || edgeRetrievedValue.trim() === "")) {
+          } else if (isValidationCase && (!edgeRetrievedValue || (typeof edgeRetrievedValue === 'string' && edgeRetrievedValue.trim() === ""))) {
             // Expected behavior: API may normalize or reject empty/whitespace values
             const reason = isEmptyString ? "Empty string normalized" : "Whitespace normalized";
             testResults.testCases.push({ 
@@ -267,10 +276,16 @@ export const testAllStorageCapabilities = async (token) => {
             });
             passedTests++;
           } else {
+            const expectedPreview = typeof testData.value === 'string' && testData.value.length > 0 
+              ? testData.value.substring(0, 50) 
+              : String(testData.value).substring(0, 50);
+            const gotPreview = edgeRetrievedValue && typeof edgeRetrievedValue === 'string' && edgeRetrievedValue.length > 0
+              ? edgeRetrievedValue.substring(0, 50)
+              : `Got non-string value: ${typeof edgeRetrievedValue}`;
             testResults.testCases.push({ 
               name: `${testData.desc}`, 
               status: "FAIL",
-              details: `Value corruption. Expected: "${testData.value.substring(0, 50)}...", Got: "${edgeRetrievedValue && typeof edgeRetrievedValue === 'string' ? edgeRetrievedValue.substring(0, 50) : 'Got non-string value: ' + typeof edgeRetrievedValue}..."`
+              details: `Value corruption. Expected: "${expectedPreview}...", Got: "${gotPreview}..."`
             });
             failedTests++;
           }
@@ -368,7 +383,7 @@ export const testAllStorageCapabilities = async (token) => {
           verificationPromises.push(
             storage.get(`${baseKey}_${i}`)
               .then((result) => {
-                const value = typeof result === 'object' && result.value 
+                const value = result && typeof result === 'object' && result !== null && result.value !== undefined
                   ? result.value 
                   : result;
                 return { success: true, value, index: i };
@@ -426,11 +441,18 @@ export const testAllStorageCapabilities = async (token) => {
       // Test getting non-existent key
       try {
         const nonExistentResult = await storage.get("non_existent_key_12345_" + Date.now());
-        const nonExistentValue = typeof nonExistentResult === 'object' && nonExistentResult.value 
+        const nonExistentValue = nonExistentResult && typeof nonExistentResult === 'object' && nonExistentResult !== null && nonExistentResult.value !== undefined
           ? nonExistentResult.value 
           : nonExistentResult;
         
-        if (!nonExistentValue || nonExistentValue === null || nonExistentValue === undefined) {
+        if (nonExistentResult && nonExistentResult.success === false) {
+          testResults.testCases.push({ 
+            name: "Non-existent key handling", 
+            status: "PASS",
+            details: "Correctly returned success: false for non-existent key"
+          });
+          passedTests++;
+        } else if (!nonExistentValue || nonExistentValue === null || nonExistentValue === undefined) {
           testResults.testCases.push({ 
             name: "Non-existent key handling", 
             status: "PASS",
@@ -440,10 +462,10 @@ export const testAllStorageCapabilities = async (token) => {
         } else {
           testResults.testCases.push({ 
             name: "Non-existent key handling", 
-            status: "PASS",
-            details: "No error thrown (API may return empty value)"
+            status: "FAIL",
+            details: `Unexpected value returned for non-existent key: ${JSON.stringify(nonExistentValue)}`
           });
-          passedTests++;
+          failedTests++;
         }
       } catch (error) {
         // Some APIs throw errors for non-existent keys, which is also acceptable
@@ -537,9 +559,9 @@ export const testAllStorageCapabilities = async (token) => {
     try {
       const startTime = Date.now();
       const batchSize = 15;
-      let successCount = 0;
-      let rateLimitCount = 0;
-      let otherErrorCount = 0;
+      const testTimestamp = Date.now();
+      const rateLimitTestKeys = [];
+      const controlledTestKeys = [];
 
       // Helper function to make a request with retry logic
       const makeRequestWithRetry = async (key, value, maxRetries = 2) => {
@@ -569,7 +591,8 @@ export const testAllStorageCapabilities = async (token) => {
       // Test rate limiting behavior with rapid requests
       const rapidResults = [];
       for (let i = 0; i < 20; i++) {
-        const perfKey = `rate_limit_test_${Date.now()}_${i}`;
+        const perfKey = `rate_limit_test_${testTimestamp}_${i}`;
+        rateLimitTestKeys.push(perfKey);
         rapidResults.push(
           makeRequestWithRetry(perfKey, `Rate limit test value ${i}`, 0) // No retries for rate limit test
         );
@@ -606,7 +629,8 @@ export const testAllStorageCapabilities = async (token) => {
       // Test retry logic with slower, controlled requests
       const controlledResults = [];
       for (let i = 0; i < batchSize; i++) {
-        const perfKey = `controlled_perf_test_${Date.now()}_${i}`;
+        const perfKey = `controlled_perf_test_${testTimestamp}_${i}`;
+        controlledTestKeys.push(perfKey);
         controlledResults.push(
           makeRequestWithRetry(perfKey, `Controlled test value ${i}`, 2)
         );
@@ -664,11 +688,11 @@ export const testAllStorageCapabilities = async (token) => {
       }
 
       // Cleanup
-      for (let i = 0; i < 20; i++) {
-        await storage.delete(`rate_limit_test_${Date.now()}_${i}`).catch(() => {});
+      for (const key of rateLimitTestKeys) {
+        await storage.delete(key).catch(() => {});
       }
-      for (let i = 0; i < batchSize; i++) {
-        await storage.delete(`controlled_perf_test_${Date.now()}_${i}`).catch(() => {});
+      for (const key of controlledTestKeys) {
+        await storage.delete(key).catch(() => {});
       }
 
     } catch (error) {
@@ -692,10 +716,11 @@ export const testAllStorageCapabilities = async (token) => {
           const counterResult = await storage.incrementCounter(period);
           
           if (counterResult && counterResult.error) {
+            // Only pass if error is expected (e.g., unsupported period)
             testResults.testCases.push({ 
               name: `Increment counter (${period})`, 
               status: "PASS",
-              details: `Counter returned error (may be expected): ${counterResult.error}`
+              details: `Counter returned error (may be expected for unsupported period): ${counterResult.error}`
             });
             passedTests++;
           } else if (counterResult && typeof counterResult.newCounterValue === 'number') {
@@ -714,12 +739,19 @@ export const testAllStorageCapabilities = async (token) => {
             failedTests++;
           }
         } catch (error) {
+          // Only pass if error indicates unsupported feature, not unexpected errors
+          const isExpectedError = error.message?.toLowerCase().includes('not supported') || 
+                                 error.message?.toLowerCase().includes('invalid period');
           testResults.testCases.push({ 
             name: `Increment counter (${period})`, 
-            status: "PASS",
+            status: isExpectedError ? "PASS" : "FAIL",
             details: `Counter increment error: ${error.message}`
           });
-          passedTests++;
+          if (isExpectedError) {
+            passedTests++;
+          } else {
+            failedTests++;
+          }
         }
       }
 
@@ -744,18 +776,18 @@ export const testAllStorageCapabilities = async (token) => {
         } else {
           testResults.testCases.push({ 
             name: "Increment counter with options", 
-            status: "PASS",
-            details: "Counter with options handled"
+            status: "FAIL",
+            details: `Unexpected response format: ${JSON.stringify(counterWithOptions)}`
           });
-          passedTests++;
+          failedTests++;
         }
       } catch (error) {
         testResults.testCases.push({ 
           name: "Increment counter with options", 
-          status: "PASS",
-          details: `Counter with options error: ${error.message}`
+          status: "FAIL",
+          details: `Counter with options threw unexpected error: ${error.message}`
         });
-        passedTests++;
+        failedTests++;
       }
 
     } catch (error) {
@@ -797,12 +829,27 @@ export const testAllStorageCapabilities = async (token) => {
           const records = searchResult.records || [];
           const recordCount = Array.isArray(records) ? records.length : 0;
           
+          // Validate SearchEntity structure if records exist
+          let validStructure = true;
+          if (recordCount > 0) {
+            const firstRecord = records[0];
+            validStructure = firstRecord && 
+                            typeof firstRecord === 'object' &&
+                            typeof firstRecord.key === 'string' &&
+                            firstRecord.value !== undefined &&
+                            typeof firstRecord.backendOnly === 'boolean';
+          }
+          
           testResults.testCases.push({ 
             name: "Basic search operation", 
-            status: "PASS",
-            details: `Found ${recordCount} records. Records have key/value structure: ${recordCount > 0 ? 'yes' : 'no results'}`
+            status: validStructure ? "PASS" : "FAIL",
+            details: `Found ${recordCount} records. Records have valid key/value/backendOnly structure: ${validStructure ? 'yes' : 'no'}`
           });
-          passedTests++;
+          if (validStructure) {
+            passedTests++;
+          } else {
+            failedTests++;
+          }
         } else if (searchResult && searchResult.success === false) {
           testResults.testCases.push({ 
             name: "Basic search operation", 
