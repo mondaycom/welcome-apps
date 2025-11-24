@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "npm run stop && concurrently \"npm run server\" \"npm run expose\"",
+    "init": "mapps init -l",
     "expose": "mapps tunnel:create -p 8306",
     "server": "vite",
     "deploy:build": "vite build",
@@ -32,7 +33,7 @@
     ]
   },
   "devDependencies": {
-    "@mondaycom/apps-cli": "^4.0.0",
+    "@mondaycom/apps-cli": "^4.8.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@vitejs/plugin-react": "^4.3.4",

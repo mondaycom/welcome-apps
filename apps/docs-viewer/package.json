@@ -17,12 +17,13 @@
     "webpack": "^5.0.0"
   },
   "devDependencies": {
-    "@mondaycom/apps-cli": "^2.1.1",
+    "@mondaycom/apps-cli": "^4.8.1",
     "concurrently": "^8.2.2",
     "cross-port-killer": "^1.2.1"
   },
   "scripts": {
     "start": "npm run stop && concurrently \"npm run server\" \"npm run expose\"",
+    "init": "mapps init -l",
     "server": "react-scripts start",
     "build": "react-scripts build",
     "expose": "mapps tunnel:create -p 8304",
