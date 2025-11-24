@@ -1,22 +1,21 @@
 import { Logger, Queue } from "@mondaycom/apps-sdk";
 
 const queue = new Queue();
-const logTag = "QueueService";
-const logger = new Logger(logTag);
+const logger = new Logger("QueueService");
 
 
 export const produceMessage = async (message) => {
-    logger.info(`produce message received ${message}`);
+    logger.info({ message }, `produce message received`);
     const messageId = await queue.publishMessage(message);
-    logger.info(`Message ${messageId} published.`);
+    logger.info({ messageId }, `Message published.`);
     return messageId;
 }
 
 export const readQueueMessage = ({ body, query }) => {
     const envMessageSecret = process.env.MNDY_TOPIC_MESSAGES_SECRET;
-    logger.info(`expected queue secret value: ${envMessageSecret}`)
-    logger.info(`queue message received body ${JSON.stringify(body)}`)
-    logger.info(`queue message query params ${JSON.stringify(query)}`)
+    logger.info({ envMessageSecret }, `expected queue secret value`)
+    logger.info({ body: JSON.stringify(body) }, `queue message received body`)
+    logger.info({ query: JSON.stringify(query) }, `queue message query params`)
     if (!queue.validateMessageSecret(query.secret))  {
         logger.info("Queue message received is not valid, since secret is not matched, this message could come from an attacker.");
         throw new Error('not allowed');

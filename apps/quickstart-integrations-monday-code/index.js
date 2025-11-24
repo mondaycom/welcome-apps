@@ -27,7 +27,6 @@ const envs = new EnvironmentVariablesManager({ updateProcessEnv: true });
 
 dotenv.config();
 
-const logTag = "ExpressServer";
 const PORT = "PORT";
 const SERVICE_TAG_URL = "SERVICE_TAG_URL";
 const TO_UPPER_CASE = "TO_UPPER_CASE";
@@ -35,7 +34,7 @@ const TO_LOWER_CASE = "TO_LOWER_CASE";
 const TO_CURRENT_REGION = "TO_LOWER_CASE";
 const DEV_ACCESS_TOKEN_ENV_NAME = "DEV_ACCESS_TOKEN";
 
-const logger = new Logger(logTag);
+const logger = new Logger("AppRouter");
 const currentPort = getSecret(PORT); // Port must be 8080 to work with monday code
 const currentUrl = getSecret(SERVICE_TAG_URL);
 
@@ -254,14 +253,6 @@ app.get("/networking", async (req, res) => {
       JSON: JSON.stringify(e),
     });
   }
-});
-
-app.get("/storage", async (req, res) => {
-  const item = await testStorage();
-
-  res.status(200).send({
-    item,
-  });
 });
 
 app.get("/storage-test", async (req, res) => {
