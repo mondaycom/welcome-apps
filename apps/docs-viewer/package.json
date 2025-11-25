@@ -22,7 +22,7 @@
     "cross-port-killer": "^1.2.1"
   },
   "scripts": {
-    "start": "npm run stop && concurrently \"npm run server\" \"npm run expose\"",
+    "start": "npm run init && npm run stop && concurrently \"npm run server\" \"npm run expose\"",
     "init": "mapps init -l",
     "server": "react-scripts start",
     "build": "react-scripts build",

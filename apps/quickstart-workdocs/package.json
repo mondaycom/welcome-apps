@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "npm run stop && concurrently \"npm run server\" \"npm run expose\"",
+    "start": "npm run init && npm run stop && concurrently \"npm run server\" \"npm run expose\"",
     "init": "mapps init -l",
     "expose": "mapps tunnel:create -p 8306",
     "server": "vite",

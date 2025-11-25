@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "npm run stop && concurrently \"npm run server\" \"npm run expose\"",
+    "start": "npm run init && npm run stop && concurrently \"npm run server\" \"npm run expose\"",
     "deploy:build": "vite build",
     "deploy:push": "mapps code:push --client-side -d \"build\"",
     "deploy": "npm run deploy:build && npm run deploy:push",
