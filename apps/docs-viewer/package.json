@@ -17,7 +17,7 @@
     "webpack": "^5.0.0"
   },
   "devDependencies": {
-    "@mondaycom/apps-cli": "^4.8.1",
+    "@mondaycom/apps-cli": "^4.9.2",
     "concurrently": "^8.2.2",
     "cross-port-killer": "^1.2.1"
   },

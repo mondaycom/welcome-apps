@@ -33,7 +33,7 @@
     ]
   },
   "devDependencies": {
-    "@mondaycom/apps-cli": "^4.8.1",
+    "@mondaycom/apps-cli": "^4.9.2",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@vitejs/plugin-react": "^4.3.4",
