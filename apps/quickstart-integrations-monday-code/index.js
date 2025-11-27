@@ -270,7 +270,7 @@ app.get("/storage-test", async (req, res) => {
     }
 
     logger.info("Starting comprehensive storage API testing");
-    const testResults = await testAllStorageCapabilities(token);
+    const testResults = await testAllStorageCapabilities(token, !!req.query.shortTest);
     
     // Return appropriate status code based on test results
     const statusCode = testResults.summary.overallStatus === "SUCCESS" ? 200 : 500;

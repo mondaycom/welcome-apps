@@ -41,7 +41,7 @@ const createVerboseDetails = (data) => {
  * @param {string} token - The access token for monday API
  * @returns {Promise<object>} - Returns comprehensive test results with summary
  */
-export const testAllStorageCapabilities = async (token) => {
+export const testAllStorageCapabilities = async (token, shortTest = false) => {
   const testResults = {
     summary: {
       totalTests: 0,
@@ -791,216 +791,220 @@ export const testAllStorageCapabilities = async (token) => {
       failedTests++;
       testResults.errors.push(`Error handling test error: ${error.message}`);
     }
+    if (!shortTest) {
+      // TEST 6: Rate Limiting and Performance Testing
+      logger.info("Starting Test 6: Rate Limiting and Performance Testing");
 
-    // TEST 6: Rate Limiting and Performance Testing
-    logger.info("Starting Test 6: Rate Limiting and Performance Testing");
+      try {
+        const startTime = Date.now();
+        const batchSize = 15;
+        const testTimestamp = Date.now();
+        const rateLimitTestKeys = [];
+        const controlledTestKeys = [];
 
-    try {
-      const startTime = Date.now();
-      const batchSize = 15;
-      const testTimestamp = Date.now();
-      const rateLimitTestKeys = [];
-      const controlledTestKeys = [];
-
-      // Helper function to make a request with retry logic
-      const makeRequestWithRetry = async (key, value, maxRetries = 2) => {
-        for (let attempt = 0; attempt <= maxRetries; attempt++) {
-          try {
-            await storage.set(key, value, { ttl: 300 });
-            return { success: true, attempt };
-          } catch (error) {
-            const isRateLimit =
-              error?.message?.includes("429") ||
-              error?.status === 429 ||
-              error?.code === 429;
-            if (isRateLimit && attempt < maxRetries) {
-              // Wait 1.1 seconds before retry (slightly more than the 1sec window)
-              await new Promise((resolve) => setTimeout(resolve, 1100));
-              continue;
+        // Helper function to make a request with retry logic
+        const makeRequestWithRetry = async (key, value, maxRetries = 2) => {
+          for (let attempt = 0; attempt <= maxRetries; attempt++) {
+            try {
+              await storage.set(key, value, { ttl: 300 });
+              return { success: true, attempt };
+            } catch (error) {
+              const isRateLimit =
+                error?.message?.includes("429") ||
+                error?.status === 429 ||
+                error?.code === 429;
+              if (isRateLimit && attempt < maxRetries) {
+                // Wait 1.1 seconds before retry (slightly more than the 1sec window)
+                await new Promise((resolve) => setTimeout(resolve, 1100));
+                continue;
+              }
+              return {
+                success: false,
+                rateLimited: isRateLimit,
+                error: error.message,
+                attempt,
+              };
             }
-            return {
-              success: false,
-              rateLimited: isRateLimit,
-              error: error.message,
-              attempt,
-            };
           }
+        };
+
+        // Test rate limiting behavior with rapid requests
+        const rapidResults = [];
+        for (let i = 0; i < 20; i++) {
+          const perfKey = `rate_limit_test_${testTimestamp}_${i}`;
+          rateLimitTestKeys.push(perfKey);
+          rapidResults.push(
+            makeRequestWithRetry(perfKey, `Rate limit test value ${i}`, 0) // No retries for rate limit test
+          );
         }
-      };
 
-      // Test rate limiting behavior with rapid requests
-      const rapidResults = [];
-      for (let i = 0; i < 20; i++) {
-        const perfKey = `rate_limit_test_${testTimestamp}_${i}`;
-        rateLimitTestKeys.push(perfKey);
-        rapidResults.push(
-          makeRequestWithRetry(perfKey, `Rate limit test value ${i}`, 0) // No retries for rate limit test
-        );
-      }
-
-      const rapidResponses = await Promise.all(rapidResults);
-      const rapidSuccess = rapidResponses.filter((r) => r.success).length;
-      const rapidRateLimit = rapidResponses.filter((r) => r.rateLimited).length;
-      const rapidOtherErrors = rapidResponses.filter(
-        (r) => !r.success && !r.rateLimited
-      ).length;
-
-      testResults.testCases.push({
-        name: "Rate limiting detection",
-        status: "PASS",
-        details: `${rapidSuccess} success, ${rapidRateLimit} rate-limited (expected), ${rapidOtherErrors} other errors`,
-        verboseDetails: createVerboseDetails({
-          request: { operation: "rapid_requests", count: 20 },
-          response: {
-            rapidResponses,
-            rapidSuccess,
-            rapidRateLimit,
-            rapidOtherErrors,
-          },
-        }),
-      });
-      passedTests++;
-
-      if (rapidRateLimit > 0) {
-        testResults.testCases.push({
-          name: "Rate limiter functioning",
-          status: "PASS",
-          details: "Rate limiter is properly protecting the service",
-          verboseDetails: createVerboseDetails({
-            response: { rapidRateLimit, rapidSuccess, rapidOtherErrors },
-          }),
-        });
-        passedTests++;
-      } else {
-        testResults.testCases.push({
-          name: "Rate limiter functioning",
-          status: "PASS",
-          details:
-            "No rate limiting detected (might be expected in test environment)",
-          verboseDetails: createVerboseDetails({
-            response: { rapidRateLimit, rapidSuccess, rapidOtherErrors },
-          }),
-        });
-        passedTests++;
-      }
-
-      // Test retry logic with slower, controlled requests
-      const controlledResults = [];
-      for (let i = 0; i < batchSize; i++) {
-        const perfKey = `controlled_perf_test_${testTimestamp}_${i}`;
-        controlledTestKeys.push(perfKey);
-        controlledResults.push(
-          makeRequestWithRetry(perfKey, `Controlled test value ${i}`, 2)
-        );
-
-        // Small delay between requests to be more respectful of rate limits
-        if (i < batchSize - 1) {
-          await new Promise((resolve) => setTimeout(resolve, 50));
-        }
-      }
-
-      const controlledResponses = await Promise.all(controlledResults);
-      const controlledSuccess = controlledResponses.filter(
-        (r) => r.success
-      ).length;
-      const controlledRateLimit = controlledResponses.filter(
-        (r) => r.rateLimited
-      ).length;
-      const controlledOtherErrors = controlledResponses.filter(
-        (r) => !r.success && !r.rateLimited
-      ).length;
-
-      const endTime = Date.now();
-      const totalDuration = endTime - startTime;
-
-      testResults.testCases.push({
-        name: `Controlled performance test (${batchSize} items with retries)`,
-        status: controlledSuccess > 0 ? "PASS" : "FAIL",
-        details: `${controlledSuccess}/${batchSize} success, ${controlledRateLimit} rate-limited, ${totalDuration}ms total`,
-        verboseDetails: createVerboseDetails({
-          request: {
-            operation: "controlled_requests",
-            batchSize,
-            testTimestamp,
-          },
-          response: {
-            controlledResponses,
-            controlledSuccess,
-            controlledRateLimit,
-            controlledOtherErrors,
-            totalDuration,
-          },
-        }),
-      });
-      if (controlledSuccess > 0) {
-        passedTests++;
-      } else {
-        failedTests++;
-      }
-
-      // Test retry effectiveness
-      const retriedRequests = controlledResponses.filter((r) => r.attempt > 0);
-      if (retriedRequests.length > 0) {
-        const successfulRetries = retriedRequests.filter(
-          (r) => r.success
+        const rapidResponses = await Promise.all(rapidResults);
+        const rapidSuccess = rapidResponses.filter((r) => r.success).length;
+        const rapidRateLimit = rapidResponses.filter(
+          (r) => r.rateLimited
         ).length;
+        const rapidOtherErrors = rapidResponses.filter(
+          (r) => !r.success && !r.rateLimited
+        ).length;
+
         testResults.testCases.push({
-          name: "Retry logic effectiveness",
-          status: successfulRetries > 0 ? "PASS" : "FAIL",
-          details: `${successfulRetries}/${retriedRequests.length} retries succeeded`,
+          name: "Rate limiting detection",
+          status: "PASS",
+          details: `${rapidSuccess} success, ${rapidRateLimit} rate-limited (expected), ${rapidOtherErrors} other errors`,
           verboseDetails: createVerboseDetails({
+            request: { operation: "rapid_requests", count: 20 },
             response: {
-              retriedRequests,
-              successfulRetries,
-              totalRetries: retriedRequests.length,
+              rapidResponses,
+              rapidSuccess,
+              rapidRateLimit,
+              rapidOtherErrors,
             },
           }),
         });
-        if (successfulRetries > 0) {
+        passedTests++;
+
+        if (rapidRateLimit > 0) {
+          testResults.testCases.push({
+            name: "Rate limiter functioning",
+            status: "PASS",
+            details: "Rate limiter is properly protecting the service",
+            verboseDetails: createVerboseDetails({
+              response: { rapidRateLimit, rapidSuccess, rapidOtherErrors },
+            }),
+          });
+          passedTests++;
+        } else {
+          testResults.testCases.push({
+            name: "Rate limiter functioning",
+            status: "PASS",
+            details:
+              "No rate limiting detected (might be expected in test environment)",
+            verboseDetails: createVerboseDetails({
+              response: { rapidRateLimit, rapidSuccess, rapidOtherErrors },
+            }),
+          });
+          passedTests++;
+        }
+
+        // Test retry logic with slower, controlled requests
+        const controlledResults = [];
+        for (let i = 0; i < batchSize; i++) {
+          const perfKey = `controlled_perf_test_${testTimestamp}_${i}`;
+          controlledTestKeys.push(perfKey);
+          controlledResults.push(
+            makeRequestWithRetry(perfKey, `Controlled test value ${i}`, 2)
+          );
+
+          // Small delay between requests to be more respectful of rate limits
+          if (i < batchSize - 1) {
+            await new Promise((resolve) => setTimeout(resolve, 50));
+          }
+        }
+
+        const controlledResponses = await Promise.all(controlledResults);
+        const controlledSuccess = controlledResponses.filter(
+          (r) => r.success
+        ).length;
+        const controlledRateLimit = controlledResponses.filter(
+          (r) => r.rateLimited
+        ).length;
+        const controlledOtherErrors = controlledResponses.filter(
+          (r) => !r.success && !r.rateLimited
+        ).length;
+
+        const endTime = Date.now();
+        const totalDuration = endTime - startTime;
+
+        testResults.testCases.push({
+          name: `Controlled performance test (${batchSize} items with retries)`,
+          status: controlledSuccess > 0 ? "PASS" : "FAIL",
+          details: `${controlledSuccess}/${batchSize} success, ${controlledRateLimit} rate-limited, ${totalDuration}ms total`,
+          verboseDetails: createVerboseDetails({
+            request: {
+              operation: "controlled_requests",
+              batchSize,
+              testTimestamp,
+            },
+            response: {
+              controlledResponses,
+              controlledSuccess,
+              controlledRateLimit,
+              controlledOtherErrors,
+              totalDuration,
+            },
+          }),
+        });
+        if (controlledSuccess > 0) {
           passedTests++;
         } else {
           failedTests++;
         }
-      }
 
-      // Performance metrics
-      if (controlledSuccess > 0) {
-        const avgTimePerSuccess = totalDuration / controlledSuccess;
+        // Test retry effectiveness
+        const retriedRequests = controlledResponses.filter(
+          (r) => r.attempt > 0
+        );
+        if (retriedRequests.length > 0) {
+          const successfulRetries = retriedRequests.filter(
+            (r) => r.success
+          ).length;
+          testResults.testCases.push({
+            name: "Retry logic effectiveness",
+            status: successfulRetries > 0 ? "PASS" : "FAIL",
+            details: `${successfulRetries}/${retriedRequests.length} retries succeeded`,
+            verboseDetails: createVerboseDetails({
+              response: {
+                retriedRequests,
+                successfulRetries,
+                totalRetries: retriedRequests.length,
+              },
+            }),
+          });
+          if (successfulRetries > 0) {
+            passedTests++;
+          } else {
+            failedTests++;
+          }
+        }
+
+        // Performance metrics
+        if (controlledSuccess > 0) {
+          const avgTimePerSuccess = totalDuration / controlledSuccess;
+          testResults.testCases.push({
+            name: "Performance metrics",
+            status: "PASS",
+            details: `${avgTimePerSuccess.toFixed(
+              1
+            )}ms avg per successful operation`,
+            verboseDetails: createVerboseDetails({
+              response: { totalDuration, controlledSuccess, avgTimePerSuccess },
+            }),
+          });
+          passedTests++;
+        }
+
+        // Cleanup
+        for (const key of rateLimitTestKeys) {
+          await storage.delete(key).catch(() => {});
+        }
+        for (const key of controlledTestKeys) {
+          await storage.delete(key).catch(() => {});
+        }
+      } catch (error) {
         testResults.testCases.push({
-          name: "Performance metrics",
-          status: "PASS",
-          details: `${avgTimePerSuccess.toFixed(
-            1
-          )}ms avg per successful operation`,
+          name: "Rate limiting and performance test",
+          status: "FAIL",
+          details: `Error: ${error.message}`,
           verboseDetails: createVerboseDetails({
-            response: { totalDuration, controlledSuccess, avgTimePerSuccess },
+            error: error,
+            testTimestamp,
+            batchSize,
           }),
         });
-        passedTests++;
+        failedTests++;
+        testResults.errors.push(`Rate limiting test error: ${error.message}`);
       }
-
-      // Cleanup
-      for (const key of rateLimitTestKeys) {
-        await storage.delete(key).catch(() => {});
-      }
-      for (const key of controlledTestKeys) {
-        await storage.delete(key).catch(() => {});
-      }
-    } catch (error) {
-      testResults.testCases.push({
-        name: "Rate limiting and performance test",
-        status: "FAIL",
-        details: `Error: ${error.message}`,
-        verboseDetails: createVerboseDetails({
-          error: error,
-          testTimestamp,
-          batchSize,
-        }),
-      });
-      failedTests++;
-      testResults.errors.push(`Rate limiting test error: ${error.message}`);
     }
-
     // TEST 7: Increment Counter Functionality
     logger.info("Starting Test 7: Increment Counter Functionality");
 
@@ -1161,195 +1165,199 @@ export const testAllStorageCapabilities = async (token) => {
       testResults.errors.push(`Increment counter test error: ${error.message}`);
     }
 
-    // TEST 8: Search Functionality
-    logger.info("Starting Test 8: Search Functionality");
+    if (!shortTest) {
+      // TEST 8: Search Functionality
+      logger.info("Starting Test 8: Search Functionality");
 
-    try {
-      const searchPrefix = `search_test_${Date.now()}`;
-      const searchTestKeys = [];
+      try {
+        const searchPrefix = `search_test_${Date.now()}`;
+        const searchTestKeys = [];
 
-      // Set up test data for search
-      for (let i = 0; i < 3; i++) {
-        const testKey = `${searchPrefix}_item${i}`;
-        searchTestKeys.push(testKey);
+        // Set up test data for search
+        for (let i = 0; i < 3; i++) {
+          const testKey = `${searchPrefix}_item${i}`;
+          searchTestKeys.push(testKey);
+          try {
+            await storage.set(testKey, `Value ${i}`, { ttl: 300 });
+          } catch (error) {
+            logger.warn(
+              { key: testKey, error: error.message },
+              "Failed to set search test data"
+            );
+          }
+        }
+
+        // Wait a moment for storage to propagate
+        await new Promise((resolve) => setTimeout(resolve, 500));
+
+        // Test basic search
         try {
-          await storage.set(testKey, `Value ${i}`, { ttl: 300 });
-        } catch (error) {
-          logger.warn(
-            { key: testKey, error: error.message },
-            "Failed to set search test data"
-          );
-        }
-      }
+          const searchResult = await storage.search(searchPrefix);
 
-      // Wait a moment for storage to propagate
-      await new Promise((resolve) => setTimeout(resolve, 500));
+          if (searchResult && searchResult.success === true) {
+            const records = searchResult.records || [];
+            const recordCount = Array.isArray(records) ? records.length : 0;
 
-      // Test basic search
-      try {
-        const searchResult = await storage.search(searchPrefix);
+            // Validate SearchEntity structure if records exist
+            let validStructure = true;
+            if (recordCount > 0) {
+              const firstRecord = records[0];
+              validStructure =
+                firstRecord &&
+                typeof firstRecord === "object" &&
+                typeof firstRecord.key === "string" &&
+                firstRecord.value !== undefined &&
+                typeof firstRecord.backendOnly === "boolean";
+            }
 
-        if (searchResult && searchResult.success === true) {
-          const records = searchResult.records || [];
-          const recordCount = Array.isArray(records) ? records.length : 0;
-
-          // Validate SearchEntity structure if records exist
-          let validStructure = true;
-          if (recordCount > 0) {
-            const firstRecord = records[0];
-            validStructure =
-              firstRecord &&
-              typeof firstRecord === "object" &&
-              typeof firstRecord.key === "string" &&
-              firstRecord.value !== undefined &&
-              typeof firstRecord.backendOnly === "boolean";
-          }
-
-          testResults.testCases.push({
-            name: "Basic search operation",
-            status: validStructure ? "PASS" : "FAIL",
-            details: `Found ${recordCount} records. Records have valid key/value/backendOnly structure: ${
-              validStructure ? "yes" : "no"
-            }`,
-            verboseDetails: createVerboseDetails({
-              request: { prefix: searchPrefix, operation: "search" },
-              response: searchResult,
-              records: records,
-              recordCount: recordCount,
-              validStructure: validStructure,
-            }),
-          });
-          if (validStructure) {
-            passedTests++;
-          } else {
-            failedTests++;
-          }
-        } else if (searchResult && searchResult.success === false) {
-          testResults.testCases.push({
-            name: "Basic search operation",
-            status: "FAIL",
-            details: `Search failed: ${searchResult.error || "unknown error"}`,
-            verboseDetails: createVerboseDetails({
-              request: { prefix: searchPrefix, operation: "search" },
-              response: searchResult,
-              error: searchResult.error,
-            }),
-          });
-          failedTests++;
-        } else {
-          testResults.testCases.push({
-            name: "Basic search operation",
-            status: "FAIL",
-            details: `Unexpected response format: ${JSON.stringify(
-              searchResult
-            )}`,
-            verboseDetails: createVerboseDetails({
-              request: { prefix: searchPrefix, operation: "search" },
-              response: searchResult,
-            }),
-          });
-          failedTests++;
-        }
-      } catch (error) {
-        testResults.testCases.push({
-          name: "Basic search operation",
-          status: "FAIL",
-          details: `Search error: ${error.message}`,
-          verboseDetails: createVerboseDetails({
-            request: { prefix: searchPrefix, operation: "search" },
-            error: error,
-          }),
-        });
-        failedTests++;
-      }
-
-      // Test search pagination with cursor
-      try {
-        const firstPage = await storage.search(searchPrefix);
-
-        if (firstPage && firstPage.success === true && firstPage.cursor) {
-          const secondPage = await storage.search(searchPrefix, {
-            cursor: firstPage.cursor,
-          });
-
-          if (secondPage && secondPage.success === true) {
             testResults.testCases.push({
-              name: "Search pagination with cursor",
-              status: "PASS",
-              details: `Pagination works. First page: ${
-                firstPage.records?.length || 0
-              } records, Second page: ${
-                secondPage.records?.length || 0
-              } records`,
+              name: "Basic search operation",
+              status: validStructure ? "PASS" : "FAIL",
+              details: `Found ${recordCount} records. Records have valid key/value/backendOnly structure: ${
+                validStructure ? "yes" : "no"
+              }`,
               verboseDetails: createVerboseDetails({
-                request: {
-                  prefix: searchPrefix,
-                  operation: "search",
-                  cursor: firstPage.cursor,
-                },
-                response: { firstPage, secondPage },
+                request: { prefix: searchPrefix, operation: "search" },
+                response: searchResult,
+                records: records,
+                recordCount: recordCount,
+                validStructure: validStructure,
               }),
             });
-            passedTests++;
+            if (validStructure) {
+              passedTests++;
+            } else {
+              failedTests++;
+            }
+          } else if (searchResult && searchResult.success === false) {
+            testResults.testCases.push({
+              name: "Basic search operation",
+              status: "FAIL",
+              details: `Search failed: ${
+                searchResult.error || "unknown error"
+              }`,
+              verboseDetails: createVerboseDetails({
+                request: { prefix: searchPrefix, operation: "search" },
+                response: searchResult,
+                error: searchResult.error,
+              }),
+            });
+            failedTests++;
+          } else {
+            testResults.testCases.push({
+              name: "Basic search operation",
+              status: "FAIL",
+              details: `Unexpected response format: ${JSON.stringify(
+                searchResult
+              )}`,
+              verboseDetails: createVerboseDetails({
+                request: { prefix: searchPrefix, operation: "search" },
+                response: searchResult,
+              }),
+            });
+            failedTests++;
+          }
+        } catch (error) {
+          testResults.testCases.push({
+            name: "Basic search operation",
+            status: "FAIL",
+            details: `Search error: ${error.message}`,
+            verboseDetails: createVerboseDetails({
+              request: { prefix: searchPrefix, operation: "search" },
+              error: error,
+            }),
+          });
+          failedTests++;
+        }
+
+        // Test search pagination with cursor
+        try {
+          const firstPage = await storage.search(searchPrefix);
+
+          if (firstPage && firstPage.success === true && firstPage.cursor) {
+            const secondPage = await storage.search(searchPrefix, {
+              cursor: firstPage.cursor,
+            });
+
+            if (secondPage && secondPage.success === true) {
+              testResults.testCases.push({
+                name: "Search pagination with cursor",
+                status: "PASS",
+                details: `Pagination works. First page: ${
+                  firstPage.records?.length || 0
+                } records, Second page: ${
+                  secondPage.records?.length || 0
+                } records`,
+                verboseDetails: createVerboseDetails({
+                  request: {
+                    prefix: searchPrefix,
+                    operation: "search",
+                    cursor: firstPage.cursor,
+                  },
+                  response: { firstPage, secondPage },
+                }),
+              });
+              passedTests++;
+            } else {
+              testResults.testCases.push({
+                name: "Search pagination with cursor",
+                status: "PASS",
+                details:
+                  "Cursor returned but second page failed (may be expected)",
+                verboseDetails: createVerboseDetails({
+                  request: {
+                    prefix: searchPrefix,
+                    operation: "search",
+                    cursor: firstPage.cursor,
+                  },
+                  response: { firstPage, secondPage },
+                }),
+              });
+              passedTests++;
+            }
           } else {
             testResults.testCases.push({
               name: "Search pagination with cursor",
               status: "PASS",
               details:
-                "Cursor returned but second page failed (may be expected)",
+                "No cursor returned (pagination may not be needed for small result sets)",
               verboseDetails: createVerboseDetails({
-                request: {
-                  prefix: searchPrefix,
-                  operation: "search",
-                  cursor: firstPage.cursor,
-                },
-                response: { firstPage, secondPage },
+                request: { prefix: searchPrefix, operation: "search" },
+                response: firstPage,
               }),
             });
             passedTests++;
           }
-        } else {
+        } catch (error) {
           testResults.testCases.push({
             name: "Search pagination with cursor",
             status: "PASS",
-            details:
-              "No cursor returned (pagination may not be needed for small result sets)",
+            details: `Cursor pagination error: ${error.message}`,
             verboseDetails: createVerboseDetails({
               request: { prefix: searchPrefix, operation: "search" },
-              response: firstPage,
+              error: error,
             }),
           });
           passedTests++;
         }
+
+        // Cleanup search test data
+        for (const key of searchTestKeys) {
+          await storage.delete(key).catch(() => {}); // Ignore cleanup errors
+        }
       } catch (error) {
         testResults.testCases.push({
-          name: "Search pagination with cursor",
-          status: "PASS",
-          details: `Cursor pagination error: ${error.message}`,
+          name: "Search functionality",
+          status: "FAIL",
+          details: `Error: ${error.message}`,
           verboseDetails: createVerboseDetails({
-            request: { prefix: searchPrefix, operation: "search" },
             error: error,
+            searchPrefix: searchPrefix,
           }),
         });
-        passedTests++;
+        failedTests++;
+        testResults.errors.push(`Search test error: ${error.message}`);
       }
-
-      // Cleanup search test data
-      for (const key of searchTestKeys) {
-        await storage.delete(key).catch(() => {}); // Ignore cleanup errors
-      }
-    } catch (error) {
-      testResults.testCases.push({
-        name: "Search functionality",
-        status: "FAIL",
-        details: `Error: ${error.message}`,
-        verboseDetails: createVerboseDetails({
-          error: error,
-          searchPrefix: searchPrefix,
-        }),
-      });
-      failedTests++;
-      testResults.errors.push(`Search test error: ${error.message}`);
     }
   } catch (error) {
     testResults.summary.overallStatus = "FAILED";
