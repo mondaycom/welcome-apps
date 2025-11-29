@@ -17,6 +17,8 @@ export async function checkMongoDBHealth() {
     isConnected: false,
     canWrite: false,
     canRead: false,
+    region: process.env.MNDY_REGION ? process.env.MNDY_REGION.toUpperCase() : "UNKNOWN",
+    collectionCount: null,
     details: {
       connectionString: connectionString ? "***configured***" : "NOT_CONFIGURED",
       timestamp: new Date().toISOString(),
@@ -65,6 +67,21 @@ export async function checkMongoDBHealth() {
         // Cleanup - delete the test document
         await collection.deleteOne({ _id: testDoc._id });
         result.details.cleanup = "SUCCESS";
+
+        // Add a persistent document (not deleted)
+        const persistentDoc = {
+          _id: `persistent_${Date.now()}`,
+          timestamp: new Date(),
+          region: result.region,
+          persistent: true,
+        };
+        await collection.insertOne(persistentDoc);
+        result.details.persistentDocAdded = persistentDoc._id;
+
+        // Get collection count
+        result.collectionCount = await collection.countDocuments();
+        result.details.collectionCount = result.collectionCount;
+        logger.info(`Collection count: ${result.collectionCount}`);
       } catch (readErr) {
         result.details.readTest = `FAILED - ${readErr.message}`;
         logger.error({ error: readErr.message }, "MongoDB read test failed");
