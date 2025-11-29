@@ -22,6 +22,7 @@ import { produceMessage, readQueueMessage } from "./src/queue-service.js";
 import { cacheMovieData, getCachedMovieData } from "./src/storage-service.js";
 import { testAllStorageCapabilities } from "./src/storage-tester-service.js";
 import { transformText } from "./src/transformation-service.js";
+import { checkMongoDBHealth } from "./src/mongodb-health-service.js";
 
 const envs = new EnvironmentVariablesManager({ updateProcessEnv: true });
 
@@ -85,6 +86,30 @@ app.get("/health", (req, res) => {
     status: "OK",
     timestamp: new Date().toISOString(),
   });
+});
+
+app.get("/mongo", async (req, res) => {
+  try {
+    const healthResult = await checkMongoDBHealth();
+    const allHealthy = healthResult.isConnected && healthResult.canWrite && healthResult.canRead;
+    
+    res.status(allHealthy ? 200 : 500).send({
+      status: allHealthy ? "OK" : "UNHEALTHY",
+      ...healthResult,
+    });
+  } catch (err) {
+    logger.error({ error: err.message, stack: err.stack }, "MongoDB health check error");
+    res.status(500).send({
+      status: "ERROR",
+      isConnected: false,
+      canWrite: false,
+      canRead: false,
+      details: {
+        error: err.message,
+        timestamp: new Date().toISOString(),
+      },
+    });
+  }
 });
 
 app.get("/super-health", async (req, res) => {
@@ -369,11 +394,11 @@ app.post(
 // Multi-Region POC Integration Endpoint
 // Simple endpoint to verify multi-region routing works correctly
 // Returns region information to prove it's hitting the correct regional deployment
-app.post("/monday/execute_region_test", authorizeRequest, async (req, res) => {
+app.post("/monday/regional-integration", authorizeRequest, async (req, res) => {
   logger.info(
     JSON.stringify({
       message: "Region test action received",
-      path: "/monday/execute_region_test",
+      path: "/monday/regional-integration", 
       body: req.body,
       headers: req.headers,
     })
