@@ -366,6 +366,62 @@ app.post(
   }
 );
 
+// Multi-Region POC Integration Endpoint
+// Simple endpoint to verify multi-region routing works correctly
+// Returns region information to prove it's hitting the correct regional deployment
+app.post("/monday/execute_region_test", authorizeRequest, async (req, res) => {
+  logger.info(
+    JSON.stringify({
+      message: "Region test action received",
+      path: "/monday/execute_region_test",
+      body: req.body,
+      headers: req.headers,
+    })
+  );
+
+  const { accountId, userId } = req.session;
+  const { payload } = req.body;
+
+  try {
+    // Get region from environment
+    const region = process.env.MNDY_REGION || "UNKNOWN";
+    const regionUpper = region.toUpperCase();
+    
+    // Get timestamp
+    const timestamp = new Date().toISOString();
+    
+    // Get service URL if available
+    const serviceUrl = getSecret(SERVICE_TAG_URL) || "N/A";
+
+    logger.info(
+      `Region test executed: ${JSON.stringify({
+        accountId,
+        userId,
+        region: regionUpper,
+        timestamp,
+      })}`
+    );
+
+    // Return region information to verify correct regional deployment
+    return res.status(200).send({
+      success: true,
+      region: regionUpper,
+      regionRaw: region,
+      timestamp,
+      serviceUrl,
+      message: `✅ Successfully executed in ${regionUpper} region`,
+      accountId,
+      userId,
+    });
+  } catch (err) {
+    logger.error({ error: err.message, stack: err.stack }, "Region test error");
+    return res.status(500).send({ 
+      message: "internal server error",
+      error: err.message 
+    });
+  }
+});
+
 app.post("/produce", async (req, res) => {
   try {
     const { body } = req;
