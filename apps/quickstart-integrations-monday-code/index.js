@@ -1,3 +1,9 @@
+// External dependencies
+import axios from "axios";
+import dotenv from "dotenv";
+import express from "express";
+
+// monday.com Apps SDK
 import {
   EnvironmentVariablesManager,
   Logger,
@@ -5,43 +11,57 @@ import {
   SecureStorage,
   Storage,
 } from "@mondaycom/apps-sdk";
-import axios from "axios";
-import dotenv from "dotenv";
-import express from "express";
 
+// Internal helpers & middleware
 import { getEnv, getSecret, isDevelopmentEnv } from "./src/helpers.js";
 import { authorizeRequest } from "./src/middleware.js";
+
+// Internal services
+import { generateDashboardHtml } from "./src/dashboard-template.js";
+import { checkMongoDBHealth } from "./src/mongodb-health-service.js";
 import {
   changeColumnValue,
   getColumnValue,
-  getBoardColumns,
   platformApiHealthCheck,
 } from "./src/monday-api-service.js";
-import { fetchMovieData, extractMovieInfo } from "./src/omdb-api.js";
+import { processMovieLookup } from "./src/omdb-service.js";
 import { produceMessage, readQueueMessage } from "./src/queue-service.js";
-import { cacheMovieData, getCachedMovieData } from "./src/storage-service.js";
 import { testAllStorageCapabilities } from "./src/storage-tester-service.js";
 import { transformText } from "./src/transformation-service.js";
-import { checkMongoDBHealth } from "./src/mongodb-health-service.js";
 
-const envs = new EnvironmentVariablesManager({ updateProcessEnv: true });
+// =============================================================================
+// Configuration
+// =============================================================================
 
 dotenv.config();
 
+const envs = new EnvironmentVariablesManager({ updateProcessEnv: true });
+const logger = new Logger("AppRouter");
+
+// Environment variable keys
 const PORT = "PORT";
 const SERVICE_TAG_URL = "SERVICE_TAG_URL";
+const DEV_ACCESS_TOKEN_ENV_NAME = "DEV_ACCESS_TOKEN";
+
+// Transformation type constants
 const TO_UPPER_CASE = "TO_UPPER_CASE";
 const TO_LOWER_CASE = "TO_LOWER_CASE";
 const TO_CURRENT_REGION = "TO_LOWER_CASE";
-const DEV_ACCESS_TOKEN_ENV_NAME = "DEV_ACCESS_TOKEN";
 
-const logger = new Logger("AppRouter");
+// Server configuration
 const currentPort = getSecret(PORT); // Port must be 8080 to work with monday code
 const currentUrl = getSecret(SERVICE_TAG_URL);
-
 const app = express();
 app.use(express.json());
 
+// =============================================================================
+// Helper Functions
+// =============================================================================
+
+/**
+ * Produces a message to the queue with the given payload.
+ * If no valid payload is provided, generates a default one.
+ */
 async function produceMessageWithPayload(body) {
   if (!body || typeof body !== "object" || Object.keys(body).length === 0) {
     body = {
@@ -54,32 +74,38 @@ async function produceMessageWithPayload(body) {
   return await produceMessage(message);
 }
 
-app.get("/", (req, res) => {
-  const secrets = new SecretsManager();
-  let secretsObject = {};
-  for (const key of secrets.getKeys()) {
-    secretsObject[key] = secrets.get(key);
-  }
+/**
+ * Tests the Storage SDK by setting and getting a value.
+ */
+const testStorage = async () => {
+  const token = envs.get(DEV_ACCESS_TOKEN_ENV_NAME) + "";
+  const storage = new Storage(token);
+  await storage.set(
+    "maors_test_app",
+    JSON.stringify({ my_key: "my_value", now: new Date().toISOString() }),
+    { ttl: 3600 }
+  );
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  return await storage.get("maors_test_app");
+};
 
-  let envsObject = {};
-  for (const key of envs.getKeys()) {
-    envsObject[key] = envs.get(key);
-  }
+/**
+ * Tests the SecureStorage SDK by setting and getting a value.
+ */
+const testSecureStorage = async () => {
+  const token = envs.get(DEV_ACCESS_TOKEN_ENV_NAME) + "";
+  const secureStorage = new SecureStorage(token);
+  await secureStorage.set(
+    "maors_test_app",
+    JSON.stringify({ my_key: "my_value", now: new Date().toISOString() })
+  );
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  return await secureStorage.get("maors_test_app");
+};
 
-  let processEnv = process.env;
-  res.status(200).send({
-    hard_coded_data: {
-      // FIXME: change for each deployment
-      "region (from env)": processEnv.MNDY_REGION || "null",
-      "last code change (hard coded)": "2025-08-10T23:54:00.000Z",
-      "revision tag (from env)": processEnv.MNDY_TOPIC_NAME || "null",
-    },
-    secretsObject,
-    envsObject,
-    processEnv,
-    now: new Date().toISOString(),
-  });
-});
+// =============================================================================
+// Health & Status Endpoints
+// =============================================================================
 
 app.get("/health", (req, res) => {
   res.status(200).send({
@@ -88,17 +114,28 @@ app.get("/health", (req, res) => {
   });
 });
 
+app.get("/error", (req, res) => {
+  res.status(500).send({
+    status: "ERROR",
+    timestamp: new Date().toISOString(),
+  });
+});
+
 app.get("/mongo", async (req, res) => {
   try {
     const healthResult = await checkMongoDBHealth();
-    const allHealthy = healthResult.isConnected && healthResult.canWrite && healthResult.canRead;
-    
+    const allHealthy =
+      healthResult.isConnected && healthResult.canWrite && healthResult.canRead;
+
     res.status(allHealthy ? 200 : 500).send({
       status: allHealthy ? "OK" : "UNHEALTHY",
       ...healthResult,
     });
   } catch (err) {
-    logger.error({ error: err.message, stack: err.stack }, "MongoDB health check error");
+    logger.error(
+      { error: err.message, stack: err.stack },
+      "MongoDB health check error"
+    );
     res.status(500).send({
       status: "ERROR",
       isConnected: false,
@@ -112,6 +149,44 @@ app.get("/mongo", async (req, res) => {
   }
 });
 
+// =============================================================================
+// Debug & Testing Endpoints
+// =============================================================================
+
+/**
+ * Root endpoint - returns HTML dashboard with environment info and navigation.
+ */
+app.get("/", (req, res) => {
+  // Collect secrets
+  const secrets = new SecretsManager();
+  const secretsObject = {};
+  for (const key of secrets.getKeys()) {
+    secretsObject[key] = secrets.get(key);
+  }
+
+  // Collect env vars from SDK
+  const envsObject = {};
+  for (const key of envs.getKeys()) {
+    envsObject[key] = envs.get(key);
+  }
+
+  // Generate HTML dashboard
+  const html = generateDashboardHtml({
+    region: process.env.MNDY_REGION || "unknown",
+    revisionTag: process.env.MNDY_TOPIC_NAME || "unknown",
+    secretsObject,
+    envsObject,
+    processEnv: process.env,
+    timestamp: new Date().toISOString(),
+  });
+
+  res.setHeader("Content-Type", "text/html");
+  res.status(200).send(html);
+});
+
+/**
+ * Super health check - tests logging, queue, secrets, and env vars.
+ */
 app.get("/super-health", async (req, res) => {
   logger.info(`hello from info`);
   logger.error(`hello from error`);
@@ -140,8 +215,6 @@ app.get("/super-health", async (req, res) => {
     envsObject[key] = envs.get(key);
   }
 
-  // TODO: Add more SDK functionality
-
   res.status(200).send({
     healthy: "OK",
     timestamp: now,
@@ -151,13 +224,9 @@ app.get("/super-health", async (req, res) => {
   });
 });
 
-app.get("/error", (req, res) => {
-  res.status(500).send({
-    status: "ERROR",
-    timestamp: new Date().toISOString(),
-  });
-});
-
+/**
+ * Long-running request endpoint for timeout testing.
+ */
 app.get("/long", (req, res) => {
   const time = req.query.time ? Number(req.query.time) : 15000;
   setTimeout(() => {
@@ -168,46 +237,10 @@ app.get("/long", (req, res) => {
   }, time);
 });
 
-app.post("/mndy-cronjob/test", async (req, res) => {
-  const now = Date.now() + "";
-
-  const messageId = await produceMessageWithPayload({
-    message: "hello from cronjob test endpoint produced message",
-    now,
-  });
-
-  res.status(200).send({
-    healthy: "OK",
-    producedQueueMessageId: messageId,
-  });
-});
-
-const testStorage = async () => {
-  const token = envs.get(DEV_ACCESS_TOKEN_ENV_NAME) + "";
-  const storage = new Storage(token);
-  await storage.set(
-    "maors_test_app",
-    JSON.stringify({ my_key: "my_value", now: new Date().toISOString() }),
-    { ttl: 3600 }
-  );
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-  return await storage.get("maors_test_app");
-};
-
-const testSecureStorage = async () => {
-  const token = envs.get(DEV_ACCESS_TOKEN_ENV_NAME) + "";
-  const secureStorage = new SecureStorage(token);
-  await secureStorage.set(
-    "maors_test_app",
-    JSON.stringify({ my_key: "my_value", now: new Date().toISOString() })
-  );
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-  return await secureStorage.get("maors_test_app");
-};
-
-// TODO: MAOR: Dont forget to add
-//  1. The app signing secret as env var (MONDAY_SINGING_SECRET) to make integration work
-//  2. The dev access token to make API work (DEV_ACCESS_TOKEN)
+/**
+ * Network connectivity test - tests various external endpoints and SDK features.
+ * NOTE: Requires DEV_ACCESS_TOKEN env var for API calls.
+ */
 app.get("/networking", async (req, res) => {
   try {
     const asyncApiCalls = {
@@ -215,8 +248,6 @@ app.get("/networking", async (req, res) => {
       "http://api.ipify.org": axios.get("http://api.ipify.org", {
         timeout: 5000,
       }),
-      // 'http://192.0.43.10 (Example.com public ip)': axios.get('http://192.0.43.10', { timeout: 5000 }),
-      // 'http://8.8.8.8 (Google DNS)': axios.get('http://8.8.8.8', { timeout: 5000 }),
       "http://1.1.1.1 (Cloudflare public DNS)": axios.get("http://1.1.1.1", {
         timeout: 5000,
       }),
@@ -280,6 +311,9 @@ app.get("/networking", async (req, res) => {
   }
 });
 
+/**
+ * Comprehensive storage API test endpoint.
+ */
 app.get("/storage-test", async (req, res) => {
   try {
     const token = envs.get(DEV_ACCESS_TOKEN_ENV_NAME);
@@ -295,14 +329,20 @@ app.get("/storage-test", async (req, res) => {
     }
 
     logger.info("Starting comprehensive storage API testing");
-    const testResults = await testAllStorageCapabilities(token, !!req.query.shortTest);
-    
-    // Return appropriate status code based on test results
-    const statusCode = testResults.summary.overallStatus === "SUCCESS" ? 200 : 500;
-    
+    const testResults = await testAllStorageCapabilities(
+      token,
+      !!req.query.shortTest
+    );
+
+    const statusCode =
+      testResults.summary.overallStatus === "SUCCESS" ? 200 : 500;
+
     return res.status(statusCode).send(testResults);
   } catch (err) {
-    logger.error({ error: err.message, stack: err.stack }, "Error in storage-test endpoint");
+    logger.error(
+      { error: err.message, stack: err.stack },
+      "Error in storage-test endpoint"
+    );
     return res.status(500).send({
       summary: {
         overallStatus: "FAILED",
@@ -315,8 +355,16 @@ app.get("/storage-test", async (req, res) => {
   }
 });
 
-// TODO: MAOR: Dont forget to add the app signing secret as env var (MONDAY_SINGING_SECRET) in production to make integration work
+// =============================================================================
+// monday.com Integration Endpoints
+// =============================================================================
 
+// NOTE: Requires MONDAY_SIGNING_SECRET env var for request authorization
+// NOTE: Requires DEV_ACCESS_TOKEN env var for API calls
+
+/**
+ * Execute action - transforms text from source column to target column.
+ */
 app.post("/monday/execute_action", authorizeRequest, async (req, res) => {
   logger.info(
     JSON.stringify({
@@ -373,6 +421,9 @@ app.post("/monday/execute_action", authorizeRequest, async (req, res) => {
   }
 });
 
+/**
+ * Remote list options - returns available transformation types.
+ */
 app.post(
   "/monday/get_remote_list_options",
   authorizeRequest,
@@ -391,31 +442,26 @@ app.post(
   }
 );
 
-// Multi-Region POC Integration Endpoint
-// Simple endpoint to verify multi-region routing works correctly
-// Returns region information to prove it's hitting the correct regional deployment
+/**
+ * Multi-Region POC Integration Endpoint.
+ * Returns region information to verify correct regional deployment routing.
+ */
 app.post("/monday/regional-integration", authorizeRequest, async (req, res) => {
   logger.info(
     JSON.stringify({
       message: "Region test action received",
-      path: "/monday/regional-integration", 
+      path: "/monday/regional-integration",
       body: req.body,
       headers: req.headers,
     })
   );
 
   const { accountId, userId } = req.session;
-  const { payload } = req.body;
 
   try {
-    // Get region from environment
     const region = process.env.MNDY_REGION || "UNKNOWN";
     const regionUpper = region.toUpperCase();
-    
-    // Get timestamp
     const timestamp = new Date().toISOString();
-    
-    // Get service URL if available
     const serviceUrl = getSecret(SERVICE_TAG_URL) || "N/A";
 
     logger.info(
@@ -427,7 +473,6 @@ app.post("/monday/regional-integration", authorizeRequest, async (req, res) => {
       })}`
     );
 
-    // Return region information to verify correct regional deployment
     return res.status(200).send({
       success: true,
       region: regionUpper,
@@ -440,13 +485,20 @@ app.post("/monday/regional-integration", authorizeRequest, async (req, res) => {
     });
   } catch (err) {
     logger.error({ error: err.message, stack: err.stack }, "Region test error");
-    return res.status(500).send({ 
+    return res.status(500).send({
       message: "internal server error",
-      error: err.message 
+      error: err.message,
     });
   }
 });
 
+// =============================================================================
+// Queue Endpoints
+// =============================================================================
+
+/**
+ * Produce a message to the queue.
+ */
 app.post("/produce", async (req, res) => {
   try {
     const { body } = req;
@@ -458,6 +510,9 @@ app.post("/produce", async (req, res) => {
   }
 });
 
+/**
+ * Queue consumer endpoint - receives messages from monday queue.
+ */
 app.post("/mndy-queue", async (req, res) => {
   try {
     const { body, query } = req;
@@ -469,141 +524,94 @@ app.post("/mndy-queue", async (req, res) => {
   }
 });
 
-app.post("/incoming-webhook", async (req, res) => {
+/**
+ * Cronjob test endpoint - produces a message to verify cron functionality.
+ */
+app.post("/mndy-cronjob/test", async (req, res) => {
+  const now = Date.now() + "";
+
+  const messageId = await produceMessageWithPayload({
+    message: "hello from cronjob test endpoint produced message",
+    now,
+  });
+
+  res.status(200).send({
+    healthy: "OK",
+    producedQueueMessageId: messageId,
+  });
+});
+
+// =============================================================================
+// Webhook Endpoints
+// =============================================================================
+
+/**
+ * OMDb webhook - looks up movie data and updates board columns.
+ * Triggered by monday.com board events (item creation/name change).
+ */
+app.post("/omdb-webhook", async (req, res) => {
   try {
     const { body } = req;
-    logger.info({ payload: body }, "Incoming webhook received");
-    
+    logger.info({ payload: body }, "Incoming OMDb webhook received");
+
     // Handle challenge for webhook verification - first time setup
     if (body.challenge) {
-      return res.status(200).send({challenge: body.challenge});
+      return res.status(200).send({ challenge: body.challenge });
     }
 
-    // Extract event data
+    // Validate event data
     const event = body.event;
     if (!event) {
       logger.warn("No event data in webhook payload");
       return res.status(200).send({});
     }
 
-    // Extract board ID, pulse ID, and pulse name
-    const boardId = event.boardId;
-    const pulseId = event.pulseId;
-    const movieTitle = event.pulseName;
-
-    if (!boardId || !pulseId || !movieTitle) {
-      logger.warn({ boardId, pulseId, movieTitle }, "Missing required data in event");
+    const { boardId, pulseId, pulseName } = event;
+    if (!boardId || !pulseId || !pulseName) {
+      logger.warn(
+        { boardId, pulseId, pulseName },
+        "Missing required data in event"
+      );
       return res.status(200).send({});
     }
 
-    logger.info({ movieTitle, boardId, pulseId }, "Processing movie lookup");
-
-    // Get access token early since we'll need it for both API and caching
+    // Validate access token
     const token = envs.get(DEV_ACCESS_TOKEN_ENV_NAME);
     if (!token) {
       logger.error("DEV_ACCESS_TOKEN not found in environment");
-      return res.status(200).send({ 
-        message: "Could not process request (missing token)"
+      return res.status(200).send({
+        message: "Could not process request (missing token)",
       });
     }
 
-    // Step 1: Check if we have cached movie data
-    let movieData = null;
-    let fromCache = false;
+    // Process movie lookup and board update via service
+    const result = await processMovieLookup(token, event);
 
-    try {
-      movieData = await getCachedMovieData(token, movieTitle);
-      if (movieData) {
-        fromCache = true;
-        logger.info({ movieTitle }, "Using cached data");
-        console.log(`📦 Retrieved movie data from cache for: "${movieTitle}"`);
-      }
-    } catch (cacheErr) {
-      logger.warn({ movieTitle, error: cacheErr.message }, "Cache retrieval failed, will fetch fresh data");
-    }
-
-    // Step 2: If not cached, fetch movie data from OMDb API
-    if (!movieData) {
-      movieData = await fetchMovieData(movieTitle);
-      
-      if (!movieData) {
-        logger.warn({ movieTitle }, "No movie data found");
-        return res.status(200).send({ 
-          message: "Movie not found",
-          searchedTitle: movieTitle 
-        });
-      }
-
-      // Cache the movie data for future requests
-      try {
-        const cached = await cacheMovieData(token, movieTitle, movieData);
-        if (cached) {
-          console.log(`💾 Cached movie data for: "${movieTitle}"`);
-          // Wait for storage to propagate (monday.com Storage API requirement)
-          await new Promise((resolve) => setTimeout(resolve, 1000));
-        }
-      } catch (cacheErr) {
-        logger.warn({ movieTitle, error: cacheErr.message }, "Failed to cache movie data");
-        // Continue processing even if caching fails
-      }
-    }
-
-    // Extract and format movie information
-    const movieInfo = extractMovieInfo(movieData);
-    logger.info({ movieInfo, fromCache }, "Movie data retrieved");
-
-    // Print the result to console
-    console.log("\n=== Movie Information ===");
-    console.log(`Source: ${fromCache ? "Cache" : "OMDb API"}`);
-    console.log(`Title: ${movieInfo.title}`);
-    console.log(`Year: ${movieInfo.year}`);
-    console.log(`IMDb Rating: ${movieInfo.imdbRating}/10`);
-    console.log(`Genre: ${movieInfo.genre}`);
-    console.log(`Director: ${movieInfo.director}`);
-    console.log(`Actors: ${movieInfo.actors}`);
-    console.log(`Plot: ${movieInfo.plot}`);
-    console.log("========================\n");
-
-    // Step 3: Get board structure and find a text or long_text column
-
-    const columns = await getBoardColumns(token, boardId);
-    logger.info({ boardId, columnCount: columns.length }, "Found columns on board");
-
-    // Find the first text or long_text column
-    const textColumn = columns.find(col => col.type === "text" || col.type === "long_text");
-    
-    if (!textColumn) {
-      logger.warn({ boardId }, "No text or long_text column found on the board");
-      return res.status(200).send({ 
-        message: "Movie data retrieved but no text column found on board",
-        movieInfo 
+    if (!result.success && !result.movieInfo) {
+      return res.status(200).send({
+        message: result.message,
+        searchedTitle: result.searchedTitle,
       });
     }
 
-    logger.info({ columnType: textColumn.type, columnTitle: textColumn.title, columnId: textColumn.id }, "Found text column");
-
-    // Step 3: Update the column with the movie plot
-    const columnValue = JSON.stringify(movieInfo.plot);
-    await changeColumnValue(token, boardId, pulseId, textColumn.id, columnValue);
-    
-    logger.info({ columnId: textColumn.id, boardId, pulseId }, "Successfully updated column with movie plot");
-    console.log(`✅ Updated "${textColumn.title}" column with movie plot`);
-
-    return res.status(200).send({ 
-      message: "Movie data retrieved and board updated successfully",
-      fromCache,
-      movieInfo,
-      updatedColumn: {
-        id: textColumn.id,
-        title: textColumn.title,
-        type: textColumn.type
-      }
+    return res.status(200).send({
+      message: result.message,
+      fromCache: result.fromCache,
+      movieInfo: result.movieInfo,
+      updatedColumn: result.updatedColumn,
     });
   } catch (err) {
-    logger.error({ error: err.message, stack: err.stack }, "Internal server error in webhook");
+    logger.error(
+      { error: err.message, stack: err.stack },
+      "Internal server error in webhook"
+    );
     return res.status(500).send({ message: "internal server error" });
   }
 });
+
+// =============================================================================
+// Server Startup
+// =============================================================================
 
 app.listen(currentPort, () => {
   if (isDevelopmentEnv()) {
