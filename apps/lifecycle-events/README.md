@@ -9,7 +9,7 @@ This example app shows developers how to:
 - Handle feature-level lifecycle events (e.g., board view delete, column delete, etc.)
 - Process events synchronously with immediate response (200 OK)
 - Process events asynchronously with deferred response (202 Accepted + callback)
-- Verify JWT tokens for external monday.com apps
+- Verify JWT token
 
 ## Documentation
 
@@ -182,20 +182,27 @@ src/
 
 ## Use Cases
 
-### Sync Processing Examples:
+### Sync Processing Examples
 
-- Simple data updates
-- Logging events
-- Cache invalidation
-- Quick notifications
+Use sync when the work is fast, deterministic, and doesn't depend on external systems.
 
-### Async Processing Examples:
+- Validate and acknowledge the event (payload checks, auth checks, idempotency checks)
+- Small, local state updates (mark "deleted" or "duplicated", update a flag, store a reference)
+- Write an audit log or event record (lightweight insert for observability and debugging)
+- Cache invalidation or lightweight cache refresh (quick local cache updates)
+- Lightweight in-app notifications (signal internally that something happened - avoid anything that requires retries or third-party delivery)
+
+### Async Processing Examples
+
+Use async when the work is slow, may fail or require retries, is rate-limited, or touches external systems.
 
 - External API integrations
-- File processing
-- Email sending
-- Complex calculations
-- Database migrations
+- File processing (generate, parse, upload, transform files)
+- Email sending or external notifications (deliverability, retries, provider downtime)
+- Complex calculations or enrichment (aggregation, ML or AI tagging, heavy compute)
+- Database migrations, backfills, or re-indexing (long-running batch operations)
+
+**Rule of thumb**: if it might take more than a moment or needs retries, handle it async.
 
 ## Error Handling
 
