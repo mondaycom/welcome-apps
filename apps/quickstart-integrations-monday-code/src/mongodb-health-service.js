@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
 import { Logger } from "@mondaycom/apps-sdk";
+import mongoose from "mongoose";
 
 const logger = new Logger("MongoDBHealthService");
 
@@ -12,21 +12,26 @@ const CONNECTION_TIMEOUT = 10000; // 10 seconds
  */
 export async function checkMongoDBHealth() {
   const connectionString = process.env.MNDY_MONGODB_CONNECTION_STRING;
-  
+
   const result = {
     isConnected: false,
     canWrite: false,
     canRead: false,
-    region: process.env.MNDY_REGION ? process.env.MNDY_REGION.toUpperCase() : "UNKNOWN",
-    collectionCount: null,
+    region: process.env.MNDY_REGION
+      ? process.env.MNDY_REGION.toUpperCase()
+      : "UNKNOWN",
+    itemsInCollection: null,
     details: {
-      connectionString: connectionString ? "***configured***" : "NOT_CONFIGURED",
+      connectionString: connectionString
+        ? "***configured***"
+        : "NOT_CONFIGURED",
       timestamp: new Date().toISOString(),
     },
   };
 
   if (!connectionString) {
-    result.details.error = "MNDY_MONGODB_CONNECTION_STRING environment variable is not set";
+    result.details.error =
+      "MNDY_MONGODB_CONNECTION_STRING environment variable is not set";
     return result;
   }
 
@@ -34,10 +39,12 @@ export async function checkMongoDBHealth() {
 
   try {
     // Connect to MongoDB
-    connection = await mongoose.createConnection(connectionString, {
-      serverSelectionTimeoutMS: CONNECTION_TIMEOUT,
-      connectTimeoutMS: CONNECTION_TIMEOUT,
-    }).asPromise();
+    connection = await mongoose
+      .createConnection(connectionString, {
+        serverSelectionTimeoutMS: CONNECTION_TIMEOUT,
+        connectTimeoutMS: CONNECTION_TIMEOUT,
+      })
+      .asPromise();
 
     result.isConnected = true;
     result.details.readyState = connection.readyState;
@@ -61,7 +68,9 @@ export async function checkMongoDBHealth() {
       try {
         const readResult = await collection.findOne({ _id: testDoc._id });
         result.canRead = readResult !== null;
-        result.details.readTest = result.canRead ? "SUCCESS" : "FAILED - Document not found";
+        result.details.readTest = result.canRead
+          ? "SUCCESS"
+          : "FAILED - Document not found";
         logger.info("MongoDB read test passed");
 
         // Cleanup - delete the test document
@@ -78,10 +87,10 @@ export async function checkMongoDBHealth() {
         await collection.insertOne(persistentDoc);
         result.details.persistentDocAdded = persistentDoc._id;
 
-        // Get collection count
-        result.collectionCount = await collection.countDocuments();
-        result.details.collectionCount = result.collectionCount;
-        logger.info(`Collection count: ${result.collectionCount}`);
+        // Get number of items in collection
+        result.itemsInCollection = await collection.countDocuments();
+        result.details.itemsInCollection = result.itemsInCollection;
+        logger.info(`Items in collection: ${result.itemsInCollection}`);
       } catch (readErr) {
         result.details.readTest = `FAILED - ${readErr.message}`;
         logger.error({ error: readErr.message }, "MongoDB read test failed");
@@ -100,11 +109,13 @@ export async function checkMongoDBHealth() {
         await connection.close();
         logger.info("MongoDB connection closed");
       } catch (closeErr) {
-        logger.warn({ error: closeErr.message }, "Error closing MongoDB connection");
+        logger.warn(
+          { error: closeErr.message },
+          "Error closing MongoDB connection"
+        );
       }
     }
   }
 
   return result;
 }
-
