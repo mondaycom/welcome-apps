@@ -11,7 +11,7 @@ export const DASHBOARD_ENDPOINTS = [
     items: [
       { path: "/health", label: "Health Check", desc: "Basic health status" },
       { path: "/error", label: "Error Test", desc: "Returns 500 error" },
-      { path: "/mongo", label: "MongoDB Health", desc: "Check MongoDB connection" },
+      { path: "/documentdb", label: "DocumentDB Health", desc: "Check DocumentDB connection" },
     ],
   },
   {
@@ -51,27 +51,50 @@ export const DASHBOARD_ENDPOINTS = [
  */
 const DASHBOARD_STYLES = `
   :root {
-    --bg-primary: #0f0f0f;
-    --bg-secondary: #1a1a1a;
-    --bg-card: #242424;
-    --accent: #6161ff;
-    --accent-hover: #7878ff;
+    --bg-primary: #0a0a0f;
+    --bg-secondary: #12121a;
+    --bg-card: #1a1a25;
+    --accent: #6c63ff;
+    --accent-hover: #8b85ff;
+    --accent-glow: rgba(108, 99, 255, 0.3);
     --success: #00ca72;
     --warning: #fdab3d;
     --text-primary: #ffffff;
     --text-secondary: #9ca3af;
-    --border: #333;
+    --border: rgba(108, 99, 255, 0.2);
+    --gradient-start: #0a0a0f;
+    --gradient-mid: #0f0f1a;
+    --gradient-end: #0a0a0f;
   }
   
   * { box-sizing: border-box; margin: 0; padding: 0; }
   
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: var(--bg-primary);
+    background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-mid) 50%, var(--gradient-end) 100%);
+    background-attachment: fixed;
     color: var(--text-primary);
     min-height: 100vh;
     padding: 2rem;
+    position: relative;
   }
+  
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(ellipse at 20% 20%, rgba(108, 99, 255, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(138, 43, 226, 0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(99, 102, 241, 0.04) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  body > * { position: relative; z-index: 1; }
   
   .container { max-width: 1200px; margin: 0 auto; }
   
@@ -79,35 +102,50 @@ const DASHBOARD_STYLES = `
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
-    padding-bottom: 1.5rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
     border-bottom: 1px solid var(--border);
   }
   
   h1 {
-    font-size: 1.75rem;
-    font-weight: 600;
+    font-size: 1.85rem;
+    font-weight: 700;
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.85rem;
+    background: linear-gradient(135deg, #ffffff 0%, #c7c7ff 50%, #ffffff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 30px var(--accent-glow);
+    letter-spacing: -0.02em;
   }
   
   .logo {
-    width: 32px;
-    height: 32px;
-    background: linear-gradient(135deg, var(--accent), #ff6b6b);
-    border-radius: 8px;
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, var(--accent), #a855f7, #ec4899);
+    border-radius: 10px;
+    box-shadow: 0 4px 20px var(--accent-glow);
+    animation: logoGlow 3s ease-in-out infinite;
+  }
+  
+  @keyframes logoGlow {
+    0%, 100% { box-shadow: 0 4px 20px var(--accent-glow); }
+    50% { box-shadow: 0 4px 30px rgba(108, 99, 255, 0.5); }
   }
   
   .badge {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.5rem 1rem;
+    padding: 0.6rem 1.2rem;
     background: var(--bg-card);
     border-radius: 9999px;
     font-size: 0.875rem;
+    font-weight: 500;
     border: 1px solid var(--border);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   }
   
   .badge-dot {
@@ -116,20 +154,30 @@ const DASHBOARD_STYLES = `
     background: var(--success);
     border-radius: 50%;
     animation: pulse 2s infinite;
+    box-shadow: 0 0 10px var(--success);
   }
   
   @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
+    0%, 100% { opacity: 1; box-shadow: 0 0 10px var(--success); }
+    50% { opacity: 0.6; box-shadow: 0 0 15px var(--success); }
   }
   
   .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
   
   .card {
-    background: var(--bg-card);
-    border-radius: 12px;
-    padding: 1.5rem;
+    background: linear-gradient(145deg, var(--bg-card) 0%, rgba(26, 26, 37, 0.8) 100%);
+    border-radius: 16px;
+    padding: 1.75rem;
     border: 1px solid var(--border);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  .card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(108, 99, 255, 0.4);
+    box-shadow: 0 8px 30px rgba(108, 99, 255, 0.15);
   }
   
   .card-header {
@@ -140,17 +188,20 @@ const DASHBOARD_STYLES = `
   }
   
   .card h2 {
-    font-size: 1rem;
+    font-size: 0.8rem;
     font-weight: 600;
     color: var(--text-secondary);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
   }
   
   .card-value {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     font-weight: 700;
-    color: var(--accent);
+    background: linear-gradient(135deg, var(--accent), #a855f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
   
   .section-title {
@@ -189,20 +240,22 @@ const DASHBOARD_STYLES = `
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.75rem 1rem;
+    padding: 0.85rem 1.1rem;
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: 10px;
     color: var(--text-primary);
     text-decoration: none;
     font-size: 0.875rem;
-    transition: all 0.2s;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   }
   
   .endpoint-btn:hover {
-    background: var(--accent);
-    border-color: var(--accent);
-    transform: translateX(4px);
+    background: linear-gradient(135deg, var(--accent), #8b5cf6);
+    border-color: transparent;
+    transform: translateX(6px);
+    box-shadow: 0 4px 15px var(--accent-glow);
   }
   
   .endpoint-btn .path {
@@ -354,7 +407,7 @@ export function generateDashboardHtml(data) {
 <body>
   <div class="container">
     <header>
-      <h1><div class="logo"></div> monday-code Dashboard</h1>
+      <h1><div class="logo"></div> Welcome to your monday-code backend!</h1>
       <div class="badge">
         <span class="badge-dot"></span>
         <span>${regionDisplay}</span>

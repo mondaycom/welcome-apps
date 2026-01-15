@@ -121,7 +121,7 @@ app.get("/error", (req, res) => {
   });
 });
 
-app.get("/mongo", async (req, res) => {
+app.get("/documentdb", async (req, res) => {
   try {
     const healthResult = await checkMongoDBHealth();
     const allHealthy =
