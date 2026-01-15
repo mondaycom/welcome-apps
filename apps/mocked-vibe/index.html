@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>monday vibe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Figtree', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #fff;
+      min-height: 100vh;
+      color: #323338;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 40px;
+      background: #fff;
+      border-bottom: 1px solid #e6e9ef;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      font-weight: 700;
+      font-size: 18px;
+      color: #323338;
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 24px;
+      height: 24px;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 12px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #323338;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+
+    .nav-item:hover {
+      background: #f5f6f8;
+    }
+
+    .nav-item svg {
+      width: 16px;
+      height: 16px;
+      opacity: 0.7;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .btn-login {
+      font-size: 14px;
+      font-weight: 500;
+      color: #323338;
+      text-decoration: none;
+      padding: 8px 16px;
+    }
+
+    .btn-demo {
+      font-size: 14px;
+      font-weight: 600;
+      color: #6161ff;
+      text-decoration: none;
+      padding: 10px 20px;
+      border: 1px solid #6161ff;
+      border-radius: 40px;
+      transition: all 0.2s;
+    }
+
+    .btn-demo:hover {
+      background: #6161ff10;
+    }
+
+    .btn-account {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 20px;
+      background: #6161ff;
+      border-radius: 40px;
+      transition: all 0.2s;
+    }
+
+    .btn-account:hover {
+      background: #4e4ec9;
+    }
+
+    .btn-account svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Sub Header */
+    .sub-header {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding: 0 40px;
+      background: #fff;
+    }
+
+    .vibe-brand {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #323338;
+      padding: 16px 0;
+    }
+
+    .vibe-heart {
+      font-size: 18px;
+    }
+
+    .sub-nav {
+      display: flex;
+      gap: 0;
+    }
+
+    .sub-nav-item {
+      font-size: 14px;
+      font-weight: 500;
+      color: #676879;
+      text-decoration: none;
+      padding: 16px 16px;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .sub-nav-item:hover {
+      color: #323338;
+    }
+
+    .sub-nav-item.active {
+      color: #323338;
+      border-bottom-color: #6161ff;
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      min-height: calc(100vh - 120px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 80px 40px 60px;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(ellipse 80% 50% at 50% 100%, rgba(255, 200, 150, 0.4) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 40% at 20% 80%, rgba(255, 180, 200, 0.3) 0%, transparent 50%),
+        radial-gradient(ellipse 50% 30% at 80% 70%, rgba(200, 180, 255, 0.3) 0%, transparent 50%),
+        linear-gradient(180deg, #fff 0%, #faf9fb 100%);
+      z-index: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 800px;
+      text-align: center;
+    }
+
+    .hero-title {
+      font-size: 72px;
+      font-weight: 800;
+      line-height: 1.1;
+      color: #323338;
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-subtitle {
+      font-size: 18px;
+      font-weight: 400;
+      color: #676879;
+      line-height: 1.6;
+      max-width: 540px;
+      margin-bottom: 48px;
+    }
+
+    /* Prompt Card (Original Vibe) */
+    .prompt-card {
+      width: 100%;
+      max-width: 680px;
+      background: #fff;
+      border-radius: 16px;
+      padding: 3px;
+      background: linear-gradient(135deg, #ff9a56 0%, #ff6b8a 50%, #a855f7 100%);
+      box-shadow: 
+        0 4px 24px rgba(255, 154, 86, 0.15),
+        0 8px 48px rgba(168, 85, 247, 0.1);
+    }
+
+    .prompt-card-inner {
+      background: #fff;
+      border-radius: 14px;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .prompt-textarea {
+      width: 100%;
+      min-height: 120px;
+      padding: 24px;
+      border: none;
+      outline: none;
+      font-family: inherit;
+      font-size: 16px;
+      color: #323338;
+      resize: none;
+      background: #f6f7fb;
+      border-radius: 14px 14px 0 0;
+    }
+
+    .prompt-textarea::placeholder {
+      color: #676879;
+    }
+
+    .prompt-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      background: #fff;
+    }
+
+    .prompt-features {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .feature-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #323338;
+      background: none;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .feature-btn:hover {
+      background: #f5f6f8;
+    }
+
+    .feature-btn svg {
+      width: 18px;
+      height: 18px;
+      color: #676879;
+    }
+
+    .prompt-submit {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .connect-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #323338;
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .connect-btn:hover {
+      opacity: 0.7;
+    }
+
+    .connect-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .build-btn {
+      padding: 12px 24px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      background: #323338;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .build-btn:hover {
+      background: #1f1f24;
+    }
+
+    /* Template Link */
+    .template-link {
+      margin-top: 32px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #323338;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      transition: background 0.2s;
+      position: relative;
+      z-index: 1;
+    }
+
+    .template-link:hover {
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    /* Deploy Section (Below the main card) */
+    .deploy-section {
+      margin-top: 48px;
+      width: 100%;
+      max-width: 680px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .deploy-divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .deploy-divider::before,
+    .deploy-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e6e9ef;
+    }
+
+    .deploy-divider-text {
+      font-size: 12px;
+      font-weight: 600;
+      color: #9699a6;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .deploy-inputs {
+      display: flex;
+      gap: 12px;
+      align-items: flex-end;
+    }
+
+    .deploy-input-group {
+      flex: 1;
+    }
+
+    .deploy-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #323338;
+      margin-bottom: 6px;
+    }
+
+    .deploy-input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #e6e9ef;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 14px;
+      color: #323338;
+      background: #fff;
+      transition: all 0.2s;
+    }
+
+    .deploy-input:focus {
+      outline: none;
+      border-color: #6161ff;
+      box-shadow: 0 0 0 3px rgba(97, 97, 255, 0.1);
+    }
+
+    .deploy-input::placeholder {
+      color: #9699a6;
+    }
+
+    .deploy-btn {
+      padding: 12px 24px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      background: linear-gradient(135deg, #6161ff 0%, #a855f7 100%);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .deploy-btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(97, 97, 255, 0.4);
+    }
+
+    .deploy-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .deploy-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Status Messages */
+    .status-container {
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      display: none;
+    }
+
+    .status-container.visible {
+      display: block;
+    }
+
+    .status-container.loading {
+      background: #f0f4ff;
+      border: 1px solid #c8d4ff;
+      color: #4a5568;
+    }
+
+    .status-container.success {
+      background: #e6ffed;
+      border: 1px solid #9ae6b4;
+      color: #22543d;
+    }
+
+    .status-container.error {
+      background: #fff5f5;
+      border: 1px solid #feb2b2;
+      color: #c53030;
+    }
+
+    .status-step {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .status-step:last-child {
+      margin-bottom: 0;
+    }
+
+    .status-icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .spinner {
+      width: 18px;
+      height: 18px;
+      border: 2px solid #e2e8f0;
+      border-top-color: #6161ff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .status-text {
+      font-weight: 500;
+    }
+
+    .status-detail {
+      font-size: 11px;
+      color: #718096;
+      margin-top: 2px;
+      word-break: break-all;
+    }
+
+    /* Grid icon */
+    .grid-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+
+    .grid-btn:hover {
+      background: #f5f6f8;
+    }
+
+    .grid-icon {
+      display: grid;
+      grid-template-columns: repeat(3, 4px);
+      gap: 3px;
+    }
+
+    .grid-icon span {
+      width: 4px;
+      height: 4px;
+      background: #676879;
+      border-radius: 1px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <a href="#" class="logo">
+        <svg class="logo-icon" viewBox="0 0 24 24" fill="none">
+          <path d="M4.5 17.5L2 21h4l-1.5-3.5z" fill="#ff3d57"/>
+          <path d="M10.5 17.5L8 21h4l-1.5-3.5z" fill="#ffcb00"/>
+          <path d="M4.5 10L2 14h4l-1.5-4z" fill="#00d647"/>
+          <path d="M10.5 10L8 14h4l-1.5-4z" fill="#ff3d57"/>
+          <path d="M16.5 10L14 14h4l-1.5-4z" fill="#ffcb00"/>
+          <path d="M10.5 3L8 7h4l-1.5-4z" fill="#00d647"/>
+          <path d="M16.5 3L14 7h4l-1.5-4z" fill="#ff3d57"/>
+          <path d="M22 3L19.5 7h4L22 3z" fill="#00d647"/>
+        </svg>
+        monday<span style="font-weight: 400">.com</span>
+      </a>
+      <nav class="nav">
+        <a href="#" class="nav-item">
+          Products
+          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+        </a>
+        <a href="#" class="nav-item">
+          <svg viewBox="0 0 20 20" fill="currentColor" style="color: #a855f7"><path d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"/></svg>
+          AI
+          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+        </a>
+        <a href="#" class="nav-item">
+          Solutions
+          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+        </a>
+        <a href="#" class="nav-item">
+          Resources
+          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+        </a>
+        <a href="#" class="nav-item">Enterprise</a>
+      </nav>
+    </div>
+    <div class="header-right">
+      <a href="#" class="btn-login">Log in</a>
+      <a href="#" class="btn-demo">Request a demo</a>
+      <a href="#" class="btn-account">
+        Go to my account
+        <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"/></svg>
+      </a>
+      <button class="grid-btn">
+        <span class="grid-icon">
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Sub Header -->
+  <div class="sub-header">
+    <div class="vibe-brand">
+      <span class="vibe-heart">💜</span>
+      <span>monday</span>
+      <span style="color: #6161ff">vibe</span>
+    </div>
+    <nav class="sub-nav">
+      <a href="#" class="sub-nav-item active">Overview</a>
+      <a href="#" class="sub-nav-item">Pricing</a>
+    </nav>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <h1 class="hero-title">Turn your words into work apps</h1>
+      <p class="hero-subtitle">
+        Describe whatever you need and monday vibe will add secure, 
+        custom work apps to your workspace in moments.
+      </p>
+
+      <!-- Original Prompt Card -->
+      <div class="prompt-card">
+        <div class="prompt-card-inner">
+          <textarea class="prompt-textarea" placeholder="Build your new application"></textarea>
+          <div class="prompt-actions">
+            <div class="prompt-features">
+              <button class="feature-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M15 4V2"/>
+                  <path d="M15 16v-2"/>
+                  <path d="M8 9h2"/>
+                  <path d="M20 9h2"/>
+                  <path d="M17.8 11.8L19 13"/>
+                  <path d="M15 9h0"/>
+                  <path d="M17.8 6.2L19 5"/>
+                  <path d="M3 21l9-9"/>
+                  <path d="M12.2 6.2L11 5"/>
+                </svg>
+                Add AI features
+              </button>
+            </div>
+            <div class="prompt-submit">
+              <button class="connect-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 5v14M5 12h14"/>
+                </svg>
+                Connect your data
+              </button>
+              <button class="build-btn">Build it</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a href="#" class="template-link">Start with a template</a>
+
+      <!-- Deploy Section -->
+      <div class="deploy-section">
+        <div class="deploy-divider">
+          <span class="deploy-divider-text">Quick Deploy</span>
+        </div>
+        <div class="deploy-inputs">
+          <div class="deploy-input-group">
+            <label class="deploy-label" for="appVersionId">App Version ID</label>
+            <input 
+              type="text" 
+              id="appVersionId" 
+              class="deploy-input" 
+              placeholder="e.g. 1000000044"
+              autocomplete="off"
+            >
+          </div>
+          <div class="deploy-input-group">
+            <label class="deploy-label" for="token">Internal Token</label>
+            <input 
+              type="password" 
+              id="token" 
+              class="deploy-input" 
+              placeholder="••••••••••••"
+              autocomplete="off"
+            >
+          </div>
+          <button class="deploy-btn" id="deployBtn" onclick="deploy()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 2L11 13"/>
+              <path d="M22 2L15 22L11 13L2 9L22 2Z"/>
+            </svg>
+            Deploy
+          </button>
+        </div>
+        
+        <div class="status-container" id="statusContainer">
+          <div class="status-step" id="step1">
+            <div class="spinner status-icon" id="step1Icon"></div>
+            <div>
+              <div class="status-text" id="step1Text">Initiating deployment...</div>
+              <div class="status-detail" id="step1Detail"></div>
+            </div>
+          </div>
+          <div class="status-step" id="step2" style="display: none;">
+            <div class="spinner status-icon" id="step2Icon"></div>
+            <div>
+              <div class="status-text" id="step2Text">Uploading code...</div>
+              <div class="status-detail" id="step2Detail"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    async function deploy() {
+      const appVersionId = document.getElementById('appVersionId').value.trim();
+      const token = document.getElementById('token').value.trim();
+      const deployBtn = document.getElementById('deployBtn');
+      const statusContainer = document.getElementById('statusContainer');
+      const step1 = document.getElementById('step1');
+      const step2 = document.getElementById('step2');
+      
+      // Validate inputs
+      if (!appVersionId) {
+        alert('Please enter an App Version ID');
+        return;
+      }
+      if (!token) {
+        alert('Please enter a token');
+        return;
+      }
+      
+      // Reset and show status
+      deployBtn.disabled = true;
+      deployBtn.innerHTML = '<div class="spinner"></div> Deploying...';
+      statusContainer.className = 'status-container visible loading';
+      step1.style.display = 'flex';
+      step2.style.display = 'none';
+      document.getElementById('step1Icon').className = 'spinner status-icon';
+      document.getElementById('step1Icon').style = '';
+      document.getElementById('step1Icon').innerHTML = '';
+      document.getElementById('step1Text').textContent = 'Initiating deployment...';
+      document.getElementById('step1Detail').textContent = `POST /api/code/${appVersionId}/fast-deployment`;
+      
+      try {
+        // Step 1: Get upload URL (via proxy to avoid CORS)
+        const response = await fetch(`/api/code/${appVersionId}/fast-deployment`, {
+          method: 'POST',
+          headers: {
+            'Authorization': token,
+            'Content-Type': 'application/json'
+          },
+          body: ''
+        });
+        
+        if (!response.ok) {
+          throw new Error(`Step 1 failed: ${response.status} ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+        const uploadUrl = data.uploadUrl;
+        
+        if (!uploadUrl) {
+          throw new Error('No uploadUrl in response');
+        }
+        
+        // Mark step 1 as complete
+        document.getElementById('step1Icon').innerHTML = '✓';
+        document.getElementById('step1Icon').className = 'status-icon';
+        document.getElementById('step1Icon').style.color = '#22543d';
+        document.getElementById('step1Icon').style.fontWeight = 'bold';
+        document.getElementById('step1Text').textContent = 'Got upload URL';
+        document.getElementById('step1Detail').textContent = uploadUrl.substring(0, 60) + '...';
+        
+        // Step 2: Upload the zip file
+        step2.style.display = 'flex';
+        document.getElementById('step2Icon').className = 'spinner status-icon';
+        document.getElementById('step2Icon').style = '';
+        document.getElementById('step2Icon').innerHTML = '';
+        document.getElementById('step2Text').textContent = 'Uploading code...';
+        document.getElementById('step2Detail').textContent = 'Reading and uploading code.tar.gz';
+        
+        // Fetch the zip file from the same directory
+        let zipBlob;
+        try {
+          const zipResponse = await fetch('/code.tar.gz');
+          if (zipResponse.ok) {
+            zipBlob = await zipResponse.blob();
+          } else {
+            throw new Error('Zip file not found at /code.tar.gz');
+          }
+        } catch (e) {
+          const zipResponse = await fetch('./code.tar.gz');
+          if (zipResponse.ok) {
+            zipBlob = await zipResponse.blob();
+          } else {
+            throw new Error('Please place code.tar.gz in the same directory as index.html');
+          }
+        }
+        
+        // Upload via proxy (uses curl which handles GCS signed URLs correctly)
+        const uploadResponse = await fetch(`/upload/${encodeURIComponent(uploadUrl)}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/zip'
+          },
+          body: zipBlob
+        });
+        
+        if (!uploadResponse.ok) {
+          throw new Error(`Upload failed: ${uploadResponse.status} ${uploadResponse.statusText}`);
+        }
+        
+        // Mark step 2 as complete
+        document.getElementById('step2Icon').innerHTML = '✓';
+        document.getElementById('step2Icon').className = 'status-icon';
+        document.getElementById('step2Icon').style.color = '#22543d';
+        document.getElementById('step2Icon').style.fontWeight = 'bold';
+        document.getElementById('step2Text').textContent = 'Code uploaded successfully!';
+        document.getElementById('step2Detail').textContent = '';
+        
+        // Success state
+        statusContainer.className = 'status-container visible success';
+        deployBtn.innerHTML = `
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 6L9 17L4 12"/>
+          </svg>
+          Deployed!
+        `;
+        
+        setTimeout(() => {
+          deployBtn.disabled = false;
+          deployBtn.innerHTML = `
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 2L11 13"/>
+              <path d="M22 2L15 22L11 13L2 9L22 2Z"/>
+            </svg>
+            Deploy
+          `;
+        }, 3000);
+        
+      } catch (error) {
+        console.error('Deploy error:', error);
+        statusContainer.className = 'status-container visible error';
+        
+        const currentStep = step2.style.display === 'flex' ? 'step2' : 'step1';
+        document.getElementById(`${currentStep}Icon`).innerHTML = '✗';
+        document.getElementById(`${currentStep}Icon`).className = 'status-icon';
+        document.getElementById(`${currentStep}Icon`).style.color = '#c53030';
+        document.getElementById(`${currentStep}Icon`).style.fontWeight = 'bold';
+        document.getElementById(`${currentStep}Text`).textContent = 'Error';
+        document.getElementById(`${currentStep}Detail`).textContent = error.message;
+        
+        deployBtn.disabled = false;
+        deployBtn.innerHTML = `
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 2L11 13"/>
+            <path d="M22 2L15 22L11 13L2 9L22 2Z"/>
+          </svg>
+          Retry
+        `;
+      }
+    }
+  </script>
+</body>
+</html>
