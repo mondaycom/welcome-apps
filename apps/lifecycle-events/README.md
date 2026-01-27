@@ -15,7 +15,7 @@ This example app shows developers how to:
 
 For complete information about monday.com app lifecycle subscriptions, see the official documentation:
 
-- [App Lifecycle Subscriptions API Reference](https://developer.monday.com/api-reference/reference/app-lifecycle-subscriptions)
+- [App Lifecycle Subscriptions API Reference](https://developer.monday.com/apps/docs/app-feature-lifecycle-subscriptions)
 
 ## Features
 
