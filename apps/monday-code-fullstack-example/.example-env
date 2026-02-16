@@ -1,0 +1,13 @@
+# You can use local=true to run the app locally this will require your api key in the .env file, when deployed it will use the oauth token
+
+LOCAL=false
+API_KEY=your_api_key_here
+USER_ID=1234
+ACCOUNT_ID=1234
+SLUG=myaccount.monday.com
+# Setting NODE_ENV=development will:
+# - Disable SSL certificate verification for OAuth in the oauth-route.ts file
+# - Enable test endpoints (like /delete-oauth-token) in the oauth-route.ts file
+# - Use local process.env variables instead of Monday SDK managers in the env-manager.ts file
+# - Use local process.env variables instead of Monday SDK managers in secret-manager.ts file
+NODE_ENV=
