@@ -1,0 +1,57 @@
+{
+  "name": "monday-kitchen-sink-app",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "npm run stop && concurrently \"npm run server\" \"npm run expose\"",
+    "build": "react-scripts build",
+    "expose": "mapps tunnel:create -p 8305",
+    "server": "react-scripts start",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "stop": "kill-port 8305 && kill-port 4049 && kill-port 4040"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.36",
+    "@fortawesome/free-regular-svg-icons": "^5.15.4",
+    "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "@fortawesome/react-fontawesome": "^0.1.15",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "axios": "^0.21.4",
+    "monday-sdk-js": "^0.1.2",
+    "monday-ui-react-core": "0.0.48",
+    "prism-react-renderer": "^1.2.1",
+    "react": "^16.13.0",
+    "react-copy-to-clipboard": "^5.0.4",
+    "react-dom": "^16.13.0",
+    "react-lottie": "^1.2.3",
+    "react-motion": "^0.5.2",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^5.0.1",
+    "react-spring": "^9.2.4",
+    "sass": "^1.68.0"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "concurrently": "^5.2.0",
+    "cross-port-killer": "^1.2.1",
+    "ngrok": "^5.0.0-beta.2"
+  }
+}
