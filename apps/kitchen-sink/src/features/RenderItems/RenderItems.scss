@@ -1,0 +1,9 @@
+@import "../../styles/variables.scss";
+
+.working-with-the-board-items {
+  box-sizing: border-box;
+  overflow: auto;
+  flex-direction: column;
+  justify-content: end;
+  position: relative;
+}

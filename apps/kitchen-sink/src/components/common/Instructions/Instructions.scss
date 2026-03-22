@@ -1,0 +1,39 @@
+.instructions {
+  grid-area: instructions;
+  box-sizing: border-box;
+  padding: 18px;
+  background-color: rgb(244, 245, 247);
+  box-shadow: 0 4px 8px -1px rgba(0, 0, 0, 0.2);
+  overflow: auto;
+
+  ol li {
+    margin-top: 10px;
+
+    &:nth-child(1) {
+      margin-top: 30px;
+    }
+  }
+
+  h3 {
+    margin-top: 0;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #384248;
+    font-size: 24px;
+    line-height: 30px;
+    word-wrap: break-word;
+  }
+  p,
+  li {
+    line-height: 1.5;
+    color: rgb(77, 85, 90);
+    font-weight: 500;
+  }
+  p {
+    display: block;
+  }
+
+  strong {
+    margin-top: 10px;
+  }
+}

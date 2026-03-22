@@ -1,0 +1,37 @@
+@import "../../styles/animations.scss";
+
+.get-sub-items-container {
+  .overlay {
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    animation: fadein 750ms;
+    z-index: 3;
+
+    h3 {
+      padding-left: 7px;
+    }
+    
+    & > .popup {
+      background: #fff;
+      border-radius: 5px;
+      max-width: 80%;
+      max-height: 80%;
+      position: relative;
+      transition: all 5s ease-in-out;
+
+      & > svg {
+        position: absolute;
+        right: 16px;
+        cursor: pointer;
+        top: 10px;
+      }
+    }
+  }
+}
