@@ -1,0 +1,59 @@
+{
+  "name": "fullstack-node-app-template",
+  "version": "0.0.1",
+  "license": "UNLICENSED",
+  "scripts": {
+    "build": "tsc",
+    "start": "node ./dist/app.js",
+    "dev-server": "npm run stop && cd client && npm run build && cd ../ && concurrently \"ts-node-dev --watch ./.env ./src/app.ts\" \"npm run expose\"",
+    "dev:backend": "npm run build && npm run stop && concurrently \"npm run server\" \"npm run expose\"",
+    "server": "nodemon --ignore 'local-secure-storage.db.json' --inspect src/app.js",
+    "client": "cd client && npm run start",
+    "client:build": "cd client && npm run build",
+    "expose": "mapps tunnel:create -p 8080",
+    "stop": "kill-port 8080 && kill-port 4049 && kill-port 4040",
+    "deploy": "cd client && npm run build && cd ../ && mapps code:push"
+  },
+  "dependencies": {
+    "@mondaycom/apps-cli": "^4.0.0",
+    "@mondaycom/apps-sdk": "^3.0.11",
+    "axios": "^1.7.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^5.0.1",
+    "express": "^4.17.1",
+    "express-rate-limit": "^7.4.1",
+    "fs": "^0.0.1-security",
+    "jsonwebtoken": "^9.0.2",
+    "monday-sdk-js": "^0.5.5",
+    "path": "^0.12.7",
+    "querystring": "^0.2.0",
+    "ts-node-dev": "^2.0.0",
+    "url": "^0.11.4"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/dotenv": "^6.1.1",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/node": "^22.10.1",
+    "concurrently": "^8.2.2",
+    "cross-port-killer": "^1.2.1",
+    "debug": "~2.6.9",
+    "eslint": "^v6.8.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.10",
+    "nodemon": "^3.0.2",
+    "prettier": "^3.4.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,css,md}": "prettier --write"
+  }
+}
