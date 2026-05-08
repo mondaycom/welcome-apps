@@ -19,7 +19,7 @@ export default class AppContainerComponent extends React.Component {
     const { selectedItem, searchTerm } = this.state;
     const docs = await getDocs();
     const filteredDocs = await getDocs(searchTerm);
-    const newSelectedItem = selectedItem || docs.length > 0 ? docs[0] : null;
+    const newSelectedItem = selectedItem || (docs.length > 0 ? docs[0] : null);
     this.setState({ docs, filteredDocs, selectedItem: newSelectedItem });
   };
 
@@ -38,11 +38,12 @@ export default class AppContainerComponent extends React.Component {
   };
 
   onRemoveItemClick = async (item) => {
-    const { selectedItem } = this.state;
+    const { selectedItem, searchTerm } = this.state;
     const docs = await removeDoc(item);
+    const filteredDocs = await getDocs(searchTerm);
 
-    const newState = { docs };
-    if (item.id === selectedItem.id) newState.selectedItem = docs.length > 0 ? docs[0] : null;
+    const newState = { docs, filteredDocs };
+    if (!selectedItem || item.id === selectedItem.id) newState.selectedItem = docs.length > 0 ? docs[0] : null;
 
     this.setState(newState);
   };
