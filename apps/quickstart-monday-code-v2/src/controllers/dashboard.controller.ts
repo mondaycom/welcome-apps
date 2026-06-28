@@ -1,13 +1,13 @@
 import type { Request, Response } from "express";
-import { getSecretsObject, getEnvsObject } from "../config/index.js";
+import { getSecretsObject, getEnvsObject, isDevelopmentEnv } from "../config/index.js";
 import { generateDashboardHtml } from "../views/dashboard.js";
 
 export const renderDashboard = (_req: Request, res: Response): void => {
   const html = generateDashboardHtml({
     region: process.env.MNDY_REGION || "unknown",
     revisionTag: process.env.MNDY_TOPIC_NAME || "unknown",
-    secretsObject: getSecretsObject(),
-    envsObject: getEnvsObject(),
+    secretsObject: isDevelopmentEnv() ? {} : getSecretsObject(),
+    envsObject: isDevelopmentEnv() ? (process.env as Record<string, string | undefined>) : getEnvsObject(),
     processEnv: process.env as Record<string, string>,
     timestamp: new Date().toISOString(),
   });

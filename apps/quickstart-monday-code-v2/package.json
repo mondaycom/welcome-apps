@@ -7,8 +7,8 @@
   "scripts": {
     "build": "tsc",
     "start": "NODE_ENV=production node dist/server.js",
-    "dev": "yarn dev:stop && concurrently \"yarn dev:server\" \"yarn dev:expose\"",
-    "dev:server": "NODE_TLS_REJECT_UNAUTHORIZED='0' tsx watch --inspect=8080 ./src/server.ts",
+    "dev": "npm run dev:stop && concurrently \"npm run dev:server\" \"npm run dev:expose\"",
+    "dev:server": "NODE_TLS_REJECT_UNAUTHORIZED='0' NODE_ENV=development tsx watch --inspect=9229 ./src/server.ts",
     "dev:expose": "mapps tunnel:create -p 8080",
     "dev:stop": "kill-port 8080"
   },
