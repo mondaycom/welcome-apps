@@ -14,18 +14,20 @@ export const DASHBOARD_ENDPOINTS: EndpointCategory[] = [
     category: "Health & Status",
     items: [
       { path: "/health", label: "Health Check", desc: "Basic health status" },
+      { path: "/super-health", label: "Super Health", desc: "Comprehensive health + logging test" },
+      { path: "/long?time=5000", label: "Long Request (5s)", desc: "Timeout testing" },
       { path: "/error", label: "Error Test", desc: "Returns 500 error" },
-      { path: "/documentdb", label: "DocumentDB Health", desc: "Check DocumentDB connection" },
     ],
   },
   {
     category: "Debug & Testing",
     items: [
-      { path: "/super-health", label: "Super Health", desc: "Comprehensive health + logging test" },
-      { path: "/long?time=5000", label: "Long Request (5s)", desc: "Timeout testing" },
       { path: "/networking", label: "Networking", desc: "External connectivity test" },
       { path: "/storage-test", label: "Storage Test", desc: "Full storage API test" },
       { path: "/storage-test?shortTest=true", label: "Storage Test (Short)", desc: "Quick storage test" },
+      { path: "/documentdb", label: "DocumentDB Health", desc: "Check DocumentDB connection" },
+      { path: "/agent/webhook", label: "Agent Webhook", desc: "Monday agent webhook — changes item status" },
+      { path: "/agent/create-item", label: "Agent Create Item", desc: "Monday agent — creates a new board item" },
     ],
   },
 ];
