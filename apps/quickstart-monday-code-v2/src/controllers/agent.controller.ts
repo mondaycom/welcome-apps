@@ -5,6 +5,7 @@ import {
   getTriggerOutput,
   firstNonNullValue,
   changeColumnValue,
+  createUpdate,
   createItem,
 } from "../services/agent-api.service.js";
 
@@ -17,9 +18,18 @@ export const agentWebhook = async (req: Request, res: Response): Promise<void> =
 
   const { token: apiToken, source: tokenSource } = resolveApiToken(req.headers.authorization);
 
-  const triggerOutput = getTriggerOutput(req.body as Record<string, unknown>);
-  const itemId = firstNonNullValue(triggerOutput?.itemId as Record<string, unknown>) as string | undefined;
-  const boardId = firstNonNullValue(triggerOutput?.boardId as Record<string, unknown>) as string | undefined;
+  const body = req.body as Record<string, unknown>;
+  const payload = (body?.payload ?? {}) as Record<string, unknown>;
+  const triggerOutput = getTriggerOutput(body);
+
+  // Agent format: payload.itemId is a plain value
+  // Automation format: triggerOutput.itemId is a dynamic-encoded object
+  const itemId = String(
+    payload.itemId ?? firstNonNullValue(triggerOutput?.itemId as Record<string, unknown>) ?? ""
+  ) || undefined;
+  const boardId = String(
+    payload.boardId ?? firstNonNullValue(triggerOutput?.boardId as Record<string, unknown>) ?? ""
+  ) || undefined;
 
   const base = { receivedAt: new Date().toISOString() };
 
@@ -55,6 +65,10 @@ export const agentWebhook = async (req: Request, res: Response): Promise<void> =
       apiToken,
     });
     logger.info(`Status changed to "${statusLabel}"`);
+
+    await createUpdate({ itemId, body: "I worked on this item and now it's Done!", apiToken });
+    logger.info("Update posted on item");
+
     res.status(200).json({
       success: true,
       ...base,
