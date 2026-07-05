@@ -1,8 +1,9 @@
 import { Logger } from "@mondaycom/apps-sdk";
+import {envs} from "../config/index.js";
 
 const logger = new Logger("AgentApiService");
 
-const MONDAY_API = process.env.MONDAY_API_URL ?? "https://api.monday.com/v2";
+const MONDAY_API = process.env.MONDAY_API_URL ?? envs.get('MONDAY_API_URL') as string ?? "https://api.monday.com/v2";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -61,7 +62,8 @@ export function resolveApiToken(authHeader: string | undefined): { token: string
     const bearer = authHeader.replace(/^Bearer\s+/i, "").trim();
     if (bearer) return { token: bearer, source: "authorization" };
   }
-  if (process.env.MONDAY_API_TOKEN) return { token: process.env.MONDAY_API_TOKEN, source: "env" };
+  const envApiToken = process.env.MONDAY_API_TOKEN ?? process.env.M_O_N_D_A_Y__A_P_I__TOKEN ?? envs.get('MONDAY_API_TOKEN') as string ?? null;
+  if (envApiToken) return { token: envApiToken, source: "env" };
   return { token: null, source: "none" };
 }
 

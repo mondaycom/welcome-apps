@@ -8,6 +8,7 @@ import {
   createUpdate,
   createItem,
 } from "../services/agent-api.service.js";
+import {envs} from "../config/index.js";
 
 const logger = new Logger("AgentController");
 
@@ -51,8 +52,8 @@ export const agentWebhook = async (req: Request, res: Response): Promise<void> =
     return;
   }
 
-  const statusColumnId = process.env.MONDAY_STATUS_COLUMN_ID ?? "status";
-  const statusLabel = process.env.MONDAY_STATUS_LABEL ?? "Done";
+  const statusColumnId = process.env.MONDAY_STATUS_COLUMN_ID ?? envs.get('MONDAY_STATUS_COLUMN_ID') as string ?? "status";
+  const statusLabel = process.env.MONDAY_STATUS_LABEL ?? envs.get('MONDAY_STATUS_LABEL') as string ?? "Done";
 
   logger.info(`Changing item ${itemId} status column "${statusColumnId}" → "${statusLabel}"`);
 
@@ -117,7 +118,7 @@ export const agentCreateItem = async (req: Request, res: Response): Promise<void
 
   const today = new Date().toISOString().slice(0, 10);
   const itemName = (body.itemName as string) ?? today;
-  const dateColumnId = (body.dateColumnId as string) ?? process.env.MONDAY_DATE_COLUMN_ID ?? "date";
+  const dateColumnId = (body.dateColumnId as string) ?? process.env.MONDAY_DATE_COLUMN_ID ?? envs.get('MONDAY_DATE_COLUMN_ID') as string ?? "date";
   const columnValues = (body.columnValues as Record<string, unknown>) ?? { [dateColumnId]: { date: today } };
 
   logger.info(`Creating item "${itemName}" on board ${boardId} (token source: ${tokenSource})`);
