@@ -57,13 +57,26 @@ export type TokenSource = "jwt" | "authorization" | "env" | "none";
 
 export function resolveApiToken(authHeader: string | undefined): { token: string | null; source: TokenSource } {
   const shortLived = extractShortLivedToken(authHeader);
-  if (shortLived) return { token: shortLived, source: "jwt" };
+  if (shortLived) {
+    logger.info(`shortLived jwt: ${shortLived}`);
+    return {token: shortLived, source: "jwt"};
+  }
+
   if (authHeader) {
     const bearer = authHeader.replace(/^Bearer\s+/i, "").trim();
-    if (bearer) return { token: bearer, source: "authorization" };
+
+    if (bearer) {
+      logger.info(`bearer authorization: ${bearer}`);
+      return {token: bearer, source: "authorization"};
+    }
   }
+
   const envApiToken = process.env.MONDAY_API_TOKEN ?? process.env.M_O_N_D_A_Y__A_P_I__TOKEN ?? envs.get('MONDAY_API_TOKEN') as string ?? null;
-  if (envApiToken) return { token: envApiToken, source: "env" };
+  if (envApiToken) {
+    logger.info(`envApiToken env: ${envApiToken}`);
+    return {token: envApiToken, source: "env"};
+  }
+
   return { token: null, source: "none" };
 }
 
